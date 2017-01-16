@@ -6,7 +6,7 @@ class QrcodeController extends FrontController
 	public function actionIndex()
 	{
                 $url = trim($_GET['url']);
-                $img = Tool::Qrcode($url);
+                $img = Tool::Qrcode(base64_decode($url));
                 die();
 	}
         

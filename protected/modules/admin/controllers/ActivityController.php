@@ -75,7 +75,7 @@ class ActivityController extends AController
         $type=array(
             1=>array("签到","pccheckin","pccheckin"),
             2=>array("刮刮卡","scratchcard","scratch"),
-            3=>array("报名","signup","signup"),
+         //   3=>array("报名","signup","signup"),
             4=>array("投票","vote","vote"),
             5=>array("大转盘","bigwheel","bigwheel"),
             6=>array("海报","poster","poster"),
@@ -119,9 +119,9 @@ class ActivityController extends AController
             case 1:
                 $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_pccheckin')->where('id=' . $id)->queryRow();
                 break;
-            case 3:
+           /* case 3:
                 $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_signup')->where('id=' . $id)->queryRow();
-                break;
+                break;*/
             case 4:
                 $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_vote')->where('id=' . $id)->queryRow();
                 break;

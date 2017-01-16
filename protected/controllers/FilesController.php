@@ -15,8 +15,9 @@ class FilesController extends CController {
             Mod::app()->session->sessionID = $_POST['PHPSESSID'];
             Mod::app()->session->open();
         }
-        $member = Mod::app()->session['admin_member'];
+        $member = Mod::app()->session['member'];
 
+        
         if(!$member['id']){
             $result = array('error'=>1,'message'=>'没有权限');
             echo json_encode($result);exit;
@@ -35,8 +36,8 @@ class FilesController extends CController {
             exit;
         }
         if ($dir_name !== '') {
-            $root_path .= $dir_name . "/";
-            $root_url .= $dir_name . "/";
+            $root_path .= $dir_name . DIRECTORY_SEPARATOR;
+            $root_url .= $dir_name . DIRECTORY_SEPARATOR;
             if (!file_exists($root_path)) {
                 mkdir($root_path);
             }
@@ -44,12 +45,12 @@ class FilesController extends CController {
 
         //根据path参数，设置各路径和URL
         if (empty($_GET['path'])) {
-            $current_path = realpath($root_path) . '/';
+            $current_path = realpath($root_path) . DIRECTORY_SEPARATOR;
             $current_url = $root_url;
             $current_dir_path = '';
             $moveup_dir_path = '';
         } else {
-            $current_path = realpath($root_path) . '/' . $_GET['path'];
+            $current_path = realpath($root_path) . DIRECTORY_SEPARATOR . $_GET['path'];
             $current_url = $root_url . $_GET['path'];
             $current_dir_path = $_GET['path'];
             $moveup_dir_path = preg_replace('/(.*?)[^\/]+\/$/', '$1', $current_dir_path);
@@ -129,7 +130,7 @@ class FilesController extends CController {
             Mod::app()->session->sessionID = $_POST['PHPSESSID'];
             Mod::app()->session->open();
         }
-        $member = Mod::app()->session['admin_member'];
+         $member = Mod::app()->session['member'];
 
 
 
@@ -153,7 +154,7 @@ class FilesController extends CController {
 //最大文件大小
         $max_size = 20971520;
         @chmod(realpath($save_path), 0777);
-        $save_path = realpath($save_path) . '/';
+        $save_path = realpath($save_path) . "/";
 
 //        file_put_contents('/text3.txt', $save_path);
         //多图上传
@@ -227,25 +228,25 @@ class FilesController extends CController {
             $audio=array();
 
             $type = $_FILES['imgFile']['type'];
-            $typ=substr($type,0,strpos($type,'/'));
+            $typ=substr($type,strpos($type,'/'));
             switch ($typ){
                 case 'image':
-                    if(!in_array($type,$typearray)){
-                        $this->alert("文件类型不允许。");
+                    if(!in_array($typ,$typearray)){
+                        $this->alert($typ);
                     }
                     break;
                 case 'application':
-                    if(!in_array($type,$application)){
+                    if(!in_array($typ,$application)){
                         $this->alert("文件类型不允许。");
                     }
                     break;
                 case 'text':
-                    if(!in_array($type,$text)){
+                    if(!in_array($typ,$text)){
                         $this->alert("文件类型不允许。");
                     }
                     break;
                 case 'audio':
-                    if(!in_array($type,$audio)){
+                    if(!in_array($typ,$audio)){
                         $this->alert("文件类型不允许。");
                     }
                     break;
@@ -292,6 +293,7 @@ class FilesController extends CController {
 
             //创建文件夹
             if ($dir_name !== '') {
+                
                 $save_path .= $dir_name . "/";
                 $save_url .= $dir_name . "/";
                 if (!file_exists($save_path)) {
@@ -315,28 +317,62 @@ class FilesController extends CController {
                 $this->alert("上传文件失败。");
             }
 
-
-            // 按比例生成缩略图 
-            $param = array( 
-              'type' => 'fit', 
-              'width' => 100, 
-              'height' => 100, 
-            ); 
-            $obj = new Imgtool(); 
-//            $obj->set_config($param); 
-//            $flag = $obj->create_thumb($file_path, $save_path.$new_file_name.'_'.$param['width'].'x'.$param['height']. '.' . $file_ext,$param['width'],$param['height'],'fit'); 
-            $flag = $obj->create_thumb_fit($file_path, $save_path.$new_file_name.'_120x120.' . $file_ext,120,120); 
-            $flag = $obj->create_thumb_fit($file_path, $save_path.$new_file_name.'_320x320.' . $file_ext,320,320); 
-            $flag = $obj->create_thumb_fit($file_path, $save_path.$new_file_name.'_640x640.' . $file_ext,640,640); 
+           
+            $file_url = $save_url . $new_file_name;
             
-//            $flag = $obj->create_thumb_crop($file_path, $save_path.$new_file_name.'_120x120_crop.' . $file_ext,120,120); 
-//            $flag = $obj->create_thumb_crop($file_path, $save_path.$new_file_name.'_320x320_crop.' . $file_ext,320,320); 
-//            $flag = $obj->create_thumb_crop($file_path, $save_path.$new_file_name.'_640x640_crop.' . $file_ext,640,640); 
-            
-            
+//            //存数据库
+            $attachment  =  new Attachment();
+            $attachment->mid = $member['id'];
+            $attachment->url = $file_url;
+//            $attachment->path = $file_path;
+            $attachment->fid = 0;
+            $attachment->level = 0;
+            $attachment->file_name = $new_file_name;
+            $attachment->ext = $file_ext;
+            $attachment->original_name = $new_file_name;
+            $attachment->type = $dir_name;
+            $attachment->createtime = time();
+            $attachment->status = 1;
+            $attachment->save();
+            $attachment_id = $attachment->id;
+             
+             
             $result = array('error' => 0, 'url' => $file_url);
+            
+            // 按比例生成缩略图 start
+            if($dir_name=='image'){
+                $param = array(  'type' => 'fit',   'width' => 100,   'height' => 100, ); 
+                $obj = new Imgtool(); 
+                $cut_arr = array(
+                    array('width'=>120,'height'=>120),
+                    array('width'=>320,'height'=>320),
+                    array('width'=>640,'height'=>640),
+                );
+                foreach($cut_arr as $av){
+                     $flag = $obj->create_thumb_fit($file_path, $save_path.$new_file_name.'_'.$av['width'].'x'.$av['height'].'.' . $file_ext,$av['width'],$av['height']); 
+                     if($flag){
+                            $attachment  =  new Attachment();
+                            $attachment->mid = $member['id'];
+                            $attachment->url = $save_url.$new_file_name.'_'.$av['width'].'x'.$av['height'].'.' . $file_ext;
+    //                        $attachment->path = $save_path.$new_file_name.'_'.$av['width'].'x'.$av['height'].'.' . $file_ext;
+                            $attachment->fid = $attachment_id;
+                            $attachment->level = 0;
+                            $attachment->file_name = $new_file_name.'_'.$av['width'].'x'.$av['height'].'.' . $file_ext;
+                            $attachment->ext = $file_ext;
+                            $attachment->ratio = $av['width'].'x'.$av['height'];
+                            $attachment->original_name = $new_file_name;
+                            $attachment->type = $dir_name;
+                            $attachment->createtime = time();
+                            $attachment->status = 1;
+                            $attachment->save();
+                     }
+                }
+    //          $flag = $obj->create_thumb_crop($file_path, $save_path.$new_file_name.'_120x120_crop.' . $file_ext,120,120); //这里是切图不按比例
+            }
+            //按比例生成缩略图 end
+            
+            
         }
-//                file_put_contents('/text2.txt', var_export($result, 1));
         echo json_encode( $result);
     }
 

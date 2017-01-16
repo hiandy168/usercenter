@@ -105,7 +105,7 @@
                                 <!-- <li class="l6"><i></i>活动链接
                     <div class="ad-act-list-wlink">
                       <h4>活动链接</h4>
-                      <span><textarea name="" rows="" cols=""><?php echo "http://".$_SERVER['HTTP_HOST'].$this->createUrl('/activity/bigwheel/view',array('id'=>$val->id))?></textarea></span>
+                      <span><textarea name="" rows="" cols=""><?php echo $this->createUrl('/activity/bigwheel/view',array('id'=>$val->id))?></textarea></span>
                       <em onclick="Copy(this)">点击复制</em>
                     </div>
                     </li> -->

@@ -48,5 +48,32 @@ class TestController extends FrontController{
         echo '<hr>';
         echo Mod::app()->baseUrl;
         
-    }  
+    }
+
+
+    public function actionScandir($dir="D:/www/dachuwang/themes/new/views/activity")
+    {
+        $files = array();
+        if (is_dir($dir)) {
+            if ($handle = opendir($dir)) {
+                while (($file = readdir($handle)) !== false) {
+                    if ($file != "." && $file != "..") {
+                        if (is_dir($dir . "/" . $file)) {
+                            $files[$file] = $this->actionScandir($dir . "/" . $file);
+                        } else {
+                            $url =$dir . "/" . $file;
+                            if (preg_match ("http://", file_get_contents($url), $m))
+                            {
+                                var_dump($m);exit;
+                            }
+                            echo  $dir . "/" . $file."<br/>";
+                        }
+                    }
+                }
+                closedir($handle);
+//                var_dump($files)  ."<br/>";
+            }
+        }
+    }
+
 }

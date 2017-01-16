@@ -58,19 +58,19 @@
         <div class="ad-left-views">
             <img class="bgiphone" src="<?php echo $this->_theme_url; ?>assets/images/iphone-bg.png"/>
             <div class="ad-view-app-maindiv ad-left-views1" id="reloadif">
-                <iframe  src="<?php echo "http://".$_SERVER['HTTP_HOST'].$this->createUrl('/activity/pccheckin/view',array('id'=>$id,'pid'=>$pid))?>"></iframe>
+                <iframe  src="<?php echo $this->createUrl('/activity/pccheckin/view',array('id'=>$id,'pid'=>$pid))?>"></iframe>
             </div>
         </div>
 
         <div class="ad-right-views">
     		<span> <?php if($id){ ?>
-                    <img src="http://qr.topscan.com/api.php?text=<?php echo $this->_siteUrl.'/activity/pccheckin/view/id/'.$id.'/pid/'.$pid?>" />
-                <?php }else{?>
-                    <img src="http://qr.topscan.com/api.php?text=http://m.dachuw.net/h5"/>
-                <?php }?></span>
+                        <img src="<?php echo  $this->createAbsoluteUrl('/qrcode/index',array('url'=>  base64_encode($this->_siteUrl.'/activity/pccheckin/view/id/'.$id)));?>" />
+                        <?php }else{?>
+                           <img src="<?php echo  $this->createAbsoluteUrl('/qrcode/index',array('url'=>base64_encode($this->_siteUrl.'/h5')));?>"/>
+ <?php }?></span>
             <p>为了您的体验更好<br />建议您扫码在手机上体验</p>
             <div class="ad-right-views-links">
-                <textarea id="fe_text" readonly="readonly"><?php echo "http://".$_SERVER['HTTP_HOST'].$this->createUrl('/activity/pccheckin/view',array('id'=>$id,'pid'=>$pid))?></textarea>
+                <textarea id="fe_text" readonly="readonly"><?php echo $this->createAbsoluteUrl('/activity/pccheckin/view',array('id'=>$id,'pid'=>$pid))?></textarea>
                 <em id="d_clip_button" data-clipboard-target="fe_text" >活动链接（点击复制）</em>
             </div>
         </div>

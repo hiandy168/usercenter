@@ -199,7 +199,7 @@ class MemberController extends FrontController
         $arr = array();
  
         foreach ($list as $key => $values) {
-            if ($values['tablename'] == "" || $values['tablename'] == "null" || strpos($values['tablename'],"signup")) {
+            if ($values['tablename'] == ""||$values['tablename'] == "computer" ||$values['tablename'] == "h5"|| $values['tablename'] == "null" || strpos($values['tablename'],"signup")|| strpos($values['tablename'],"computer")) {
                 unset($list[$key]);
             } else {
                 $sql = " SELECT * FROM {{" . $values['tablename'] . "}} WHERE id = " . $values['aid'];

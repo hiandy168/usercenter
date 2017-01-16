@@ -103,7 +103,8 @@
 
                         <div class="ad-act-list-table-con2">
                             <ul>
-                                <li class="l5"><a href="<?php echo $this->createUrl('/activity/scratchcard/add',array('fid'=>$val->id,'pid'=>$config['pid']))?>"><i></i>编辑</a></li>
+                                  <li class="l5"><a href="<?php echo $this->createUrl('/activity/scratchcard/prize',array('id'=>$val->id,'pid'=>$config['pid']))?>"><i></i>奖品/概率</a></li>
+                                <li class="l5"><a href="<?php echo $this->createUrl('/activity/scratchcard/add',array('id'=>$val->id,'pid'=>$config['pid']))?>"><i></i>编辑</a></li>
                                 <li class="l1"><a href="<?php echo $this->createUrl('/activity/scratchcard/pcview',array('id'=>$val->id))?>" target="_blank"><i></i>预览</a></li>
                                 <li class="l2" onclick="getWinList(<?php echo $val->id?>)"><i></i>用户数据</li>
                               
@@ -188,7 +189,7 @@
                 $.post(url, {fid: fid, type: 2}, function (res) {
                     var res = JSON.parse(res);
                     layer.msg(res.msg, {time: 2000}, function () {
-                        location.reload();
+                        window.location.reload();
                     })
                 })
             })
@@ -200,7 +201,7 @@
                 $.post(url, {fid: fid, type: 1}, function (res) {
                     var res = JSON.parse(res);
                     layer.msg(res.msg, {time: 2000}, function () {
-                        location.reload();
+                        window.location.reload();
                     })
                 })
             })

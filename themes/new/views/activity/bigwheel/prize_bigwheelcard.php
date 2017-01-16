@@ -56,14 +56,27 @@
         <div class="ad-edit-app">
             <div class="ad-edit-app-navsd clearfix">
                 <ul> 
-                   <li  >
+                   <li >
+                        <?php if($activity_info['id']){ ?>
                         <a href="<?php echo $this->createUrl('/activity/bigwheel/add',array('id'=>$activity_info['id']))?>">编辑大转盘</a>
+                        <?php }else{ ?>
+                        <a href="<?php echo $this->createUrl('/activity/bigwheel/add',array('id'=>$activity_info['id']))?>">添加大转盘</a>
+                        <?php } ?>
                     </li>
-                    <li class="selected" >
+                    <li  class="selected" >
+                        <?php if($activity_info['id']){ ?>
                         <a href="<?php echo $this->createUrl('/activity/bigwheel/prize',array('id'=>$activity_info['id']))?>">奖品/概率</a>
+                        <?php }else{ ?>
+                         <a href="javascript:void(0)">奖品/概率</a>
+                         <?php } ?>
                     </li>
                     <li class="">
+                         <?php if($activity_info['id']){ ?>
                         <a href="<?php echo $this->createUrl('/activity/bigwheel/example',array('id'=>$activity_info['id']))?>">开发者示例</a>
+                        <?php }else{ ?>
+                         <a href="javascript:void(0)">开发者示例</a>
+                         <?php } ?>
+
                     </li>
                 </ul>
             </div>

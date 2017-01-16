@@ -6,8 +6,8 @@
         <meta name="format-detection" content="telephone=no">
 	<title>分享页</title>
 	<link rel="stylesheet" type="text/css" href="/assets/scratch/default/css/base.css">
-        <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script type="text/javascript" src="/assets/scratch/default/js/wx.js"></script>        	
+        <script src="<?php echo Mod::app()->createUrl('/')?>/assets/js/jquery.js" type="text/javascript"></script>
+         <script src="<?php echo Mod::app()->createUrl('/')?>/assets/js/bootstrap.min.js"></script>    	
 </head>
 <!-- body background: 背景图片铺平颜色 -->
 <body >
@@ -121,11 +121,11 @@
         }); 
     }
 </script>
-        <img src="http://mat1.gtimg.com/hb/chenz/iyong1201/images/bg_3.png" alt="" width="0" height="0">
+        <img src="<?php echo $this->_theme_url;?>assets/images/bg_3.png" alt="" width="0" height="0">
 	<!-- banner以及背景图，640*960，多余部分使用纯色铺开 -->
-	<div class="content_wrap_style_1" style="background:url('/assets/scratch/default/images/bg_1.png') no-repeat center top;background-size: 320px 480px;">
+	<div class="content_wrap_style_1" style="background:url('<?php echo $this->_theme_url;?>/assets/scratch/default/images/bg_1.png') no-repeat center top;background-size: 320px 480px;">
 		<div class="style_1_part_1">
-			<div class = "change" style="background:url('/assets/scratch/default/images/bg_2.png') no-repeat center center;background-size: 276px 133px ">
+			<div class = "change" style="background:url('<?php echo $this->_theme_url;?>/assets/scratch/default/images/bg_2.png') no-repeat center center;background-size: 276px 133px ">
 				<div class="text">
 					您还有<span id="changeNumber"><?php echo $info['FDaycount'];?></span>次机会
 				</div>
@@ -141,7 +141,7 @@
 			<div class="button button1 web_flex_1" id="share"></div>
 			<div class="button button2 web_flex_1" id="myPrizeRecord"></div>
 		</div>
-		<div class="style_1_part_3" style="background:url('/assets/scratch/default/images/bg_7.png') repeat left top;">
+		<div class="style_1_part_3" style="background:url('<?php echo $this->_theme_url;?>/assets/scratch/default/images/bg_7.png') repeat left top;">
 			<div class="info_wrap">
 				<div class="tile web_flex">
 					<div class="icon"></div>

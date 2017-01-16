@@ -193,7 +193,7 @@
 //                    $("#wasPnum").text(waspnum+1);
 //                    $('#'+vid).removeClass('bg2 bsd2').addClass('bg1').text('已投票');
                     if(voteid==voteids){
-                        $("#btnall").html('<div class="closebtn fs30" id="closeBtn">确定</div><a href="http://m.hb.qq.com/activity/bigwheel/view/id/2003/voteid/74"><div  class="closebtn fs30" >前往抽奖</div></a>');
+                        $("#btnall").html('<div class="closebtn fs30" id="closeBtn">确定</div><a href=<?php echo $this->_siteUrl;?>."/activity/bigwheel/view/id/2003/voteid/74"><div  class="closebtn fs30" >前往抽奖</div></a>');
                         showpop('恭喜，您已成功投票，点击"前往抽奖"每日三次抽奖机会！',1,imgsrc,vid);
                         $("#closeBtn").html("关闭");
                     }else{
@@ -204,7 +204,7 @@
 
                 }else if(msg==4){
                     if(voteid==voteids){
-                        $("#btnall").html('<div class="closebtn fs30" id="closeBtn">确定</div><a href="http://m.hb.qq.com/activity/bigwheel/view/id/2003/voteid/74"><div  class="closebtn fs30" >前往抽奖</div></a>');
+                        $("#btnall").html('<div class="closebtn fs30" id="closeBtn">确定</div><a href=<?php echo $this->_siteUrl;?>."/activity/bigwheel/view/id/2003/voteid/74"><div  class="closebtn fs30" >前往抽奖</div></a>');
                         showpop('已经投过票了',2,imgsrc,vid);
                         $("#closeBtn").html("关闭");
                     }else{ showpop('已经投过票了',2,imgsrc,vid);}

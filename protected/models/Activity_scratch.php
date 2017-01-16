@@ -90,18 +90,12 @@ class Activity_scratch extends CActiveRecord
      * @author yuwanqiao
      * 根据用户的userid或openid获取用户当天剩余的刮奖的次数
      */
-    public
-    static function getNum($id, $userid, $openid, $day_count)
+    public static function getNum($id, $userid, $openid, $day_count)
     {
         //判断客户端提交用户userid或openid 查询用户当天已经刮奖剩余的次数
         if ($userid || $openid) {
             $time = strtotime(date('Y-m-d', time()));
-            if ($openid) {
-                $sql = "SELECT count(*) FROM dym_activity_scratch_user WHERE time > $time and scratch_id='" . $id . "' and openid='" . $openid . "'";
-            } else if ($userid) {
-                $sql = "SELECT count(*) FROM dym_activity_scratch_user WHERE time > $time and scratch_id='" . $id . "'  and  mid= '" . $userid . "'";
-            }
-            //return $sql;
+            $sql = "SELECT count(*) FROM dym_activity_scratch_user WHERE time > $time and scratch_id='" . $id . "'  and  mid= '" . $userid . "'";
             $count = Mod::app()->db->createCommand($sql)->queryRow();
             //return $count;
             $count = $count['count(*)'];

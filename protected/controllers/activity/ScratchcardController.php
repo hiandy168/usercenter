@@ -72,12 +72,13 @@ class ScratchcardController extends FrontController {
         // if(!$checkToken || empty($checkToken)){die('token is error');}
 
 //        $backUrl = "?id=".$id."&accesstoken=".$token."&openid=".$openid;
-        
+        $all_prize_count = 0 ;//刮刮卡总奖品数量
         $prize_id = explode(',',rtrim($info['prize_id'],','));
         foreach ($prize_id as $key=>$val){
             //查询奖品信息
             $sql = "SELECT * FROM {{activity_scratch_prize}} WHERE id=$val and status =1";
             $prize[$key]=Mod::app()->db->createCommand($sql)->queryRow();
+            $all_prize_count+=$prize[$key]['count'];
         }
         $parame = array(
             'info'=>$info,
@@ -100,6 +101,7 @@ class ScratchcardController extends FrontController {
                 'Keywords'=>$info['title'].',刮刮卡,抽奖,一等奖',
                 'Description'=>$info['title'].',刮刮卡,抽奖,一等奖',
             ),
+            'all_prize_count'=>$all_prize_count
         );
         $this->render('view_scratch',$parame);
     }
@@ -560,12 +562,8 @@ class ScratchcardController extends FrontController {
                  //end权限
 
 
-                 //查询活动数据
-                 $sql = "select * from {{activity_scratch}} where id=$fid";
-                 $result = Mod::app()->db->createCommand($sql);
-                 $query = $result->queryAll();
                  //查询对应的奖项
-                 $prize_id = rtrim($query[0]['prize_id'],',');
+                 $prize_id = rtrim($activity_info['prize_id'],',');
                  $arr_prize_id = explode(',',$prize_id);
                  foreach ($arr_prize_id as $key=>$val){
                      $sql = "select * from {{activity_scratch_prize}} where id=$val and status =1";
@@ -595,14 +593,14 @@ class ScratchcardController extends FrontController {
              $psql = "SELECT p.type,a.id,a.name from {{project}} as p LEFT JOIN {{application_tag}} as a on p.type=a.classid WHERE p.id=$pid order by a.updatetime desc";
              $ptag = Mod::app()->db->createCommand($psql);
              $tag = $ptag->queryAll();
-             $ptag=explode('_',substr($query[0]['tag'],0,-1));
+             $ptag=explode('_',substr($activity_info['tag'],0,-1));
              $parame = array(
                  'project_list'=>$project_list,
                  'view'=> $project_model,
                  'config'=>$config,
                  'ptag'=>$ptag,
                  'tag'=>$tag,
-                 'activity_info'=>$query[0],
+                 'activity_info'=>$activity_info,
                  'status'=>$this->activity_status('poster'),
                  'prize'=>$prize
              );
@@ -702,7 +700,6 @@ class ScratchcardController extends FrontController {
 
         //type 1表是设置开始 2表示设置结束
         $type = Tool::getValidParam('type','integer',0);
-        echo $type;
         if ($type == 1) {
             $str = '开始';
             $arr = array('status' => 1);
@@ -787,16 +784,18 @@ class ScratchcardController extends FrontController {
         $openid = trim(Tool::getValidParam('openid','string'));
         $mid = $this->member['id'];
         $pid = trim(Tool::getValidParam('pid', 'integer'));
+
        
         //查询刮刮卡信息
         $sql = "SELECT * FROM {{activity_scratch}} WHERE id=$id and status =1";
         $info=Mod::app()->db->createCommand($sql)->queryRow();
-        
+
+
          if(!$id || !$mid || !$info){
             echo "非法访问";
             exit;
         }
-        
+
          //活动未开始
         if($info['start_time']>time()){
             $res_arr = array(
@@ -848,7 +847,7 @@ class ScratchcardController extends FrontController {
         $prize_arr[$count_prize]['v']=abs($info['jishu']-$count_v);
         
 
-        $sql="select ount(id) as con  from {{activity_scratch_user}} where scratch_id=".$id." and  mid=".$mid." and is_win=1";
+        $sql="select count(id) as con  from {{activity_scratch_user}} where scratch_id=".$id." and  mid=".$mid." and is_win=1";
         $zj_con=Mod::app()->db->createCommand($sql)->queryRow();
 
         if($zj_con['con'] >= $info['win_num']){

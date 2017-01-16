@@ -44,7 +44,7 @@ class Activity_vote extends CActiveRecord {
         $as_list['criteria'] = $asModel->findAll($criteria);
         return $as_list;                
     }
-    
+
     /**
      * 根据活动开始时间和结束时间判断活动状态
      * @param type $starTime

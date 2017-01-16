@@ -496,12 +496,12 @@ function showpop(bg,zjtxt,jdname,daycount,kind){
 <?php if($info['share_switch']==1){
     echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info,'url'=>$this->createUrl('/activity/bigwheel/view',array('id'=>$param['id']) )));
 }else { ?>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
     wx.config({
         debug: false,
         appId: '<?php echo $signPackage["appId"];?>',
-        timestamp: <?php echo $signPackage["timestamp"];?>,d
+        timestamp: <?php echo $signPackage["timestamp"];?>,
         nonceStr: '<?php echo $signPackage["nonceStr"];?>',
         signature: '<?php echo $signPackage["signature"];?>',
     });

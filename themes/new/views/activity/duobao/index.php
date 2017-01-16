@@ -386,7 +386,7 @@
 </script>
 
 <!--转发js-->
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 {php $signPackage=$_W['account'][jssdkconfig];}
 {php $setting=$this->module['config'];}
 <script type="text/javascript">

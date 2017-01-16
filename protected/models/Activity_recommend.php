@@ -48,6 +48,23 @@ class Activity_recommend extends CActiveRecord
         return $as_list;
     }
 
+    //活动列表带分页
+    public function apiActivityListPager(){
+        $as_list = array();
+        $list = null;
+        $asModel = new Activity_recommend;
+        $criteria = new CDbCriteria();
+        $criteria->order = 'start_time ASC';
+        $criteria->condition ='type=:type and status=:status';
+        $criteria->params =array(":type"=>4,':status'=>1);
+        $count = $asModel->count($criteria);
+        $as_list['count'] = $count;
+        $as_list['criteria'] = $asModel->findAll($criteria);
+        return $as_list;
+    }
+
+
+
     /*
      * 活动推荐列表带url 奖励积分  分类  活动点击量*/
     public function getRecommendList($datetime)

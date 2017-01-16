@@ -41,7 +41,6 @@ class ProjectController extends FrontController {
         if(isset($_GET['status'])){
             $criteria->compare('status','0');
         }
-        
         $membergroup = $this->selectmembergroup();
         if($membergroup) {
             $tmp = $this->getpermission();
@@ -51,6 +50,7 @@ class ProjectController extends FrontController {
         }else{
             $criteria->compare('t.mid', $this->member['id']);
         }
+       
         
         $criteria->compare('t.status',1);
         //$search_text=Mod::app()->request->getParam('search_text');

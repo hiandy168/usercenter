@@ -6,8 +6,8 @@
         <meta name="format-detection" content="telephone=no">
 	<title>刮刮乐</title>
 	<link rel="stylesheet" type="text/css" href="/assets/scratch/default/css/base.css">
-        <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script type="text/javascript" src="/assets/scratch/default/js/wx.js"></script>        	
+        <script src="<?php echo Mod::app()->createUrl('/')?>/assets/js/jquery.js" type="text/javascript"></script>
+	<script type="text/javascript" src="<?php echo Mod::app()->createUrl('/')?>/assets/scratch/default/js/wx.js"></script>          	
 </head>
 <!-- body background: 背景图片铺平颜色 -->
 <body >

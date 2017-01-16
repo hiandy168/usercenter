@@ -12,8 +12,8 @@
     <link href="<?php echo Mod::app()->createUrl('/')?>/assets/css/main.css?v=2.1&d=20140618" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo Mod::app()->createUrl('/')?>/assets/lessCss/style.css?v=2.1&d=20140618" rel="stylesheet"/>
     <link href="<?php echo Mod::app()->createUrl('/')?>/assets/css/bootstrap.min.css" rel="stylesheet">
-    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript"></script>
-    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="<?php echo Mod::app()->createUrl('/')?>/assets/js/jquery.js" type="text/javascript"></script>
+    <script src="<?php echo Mod::app()->createUrl('/')?>/assets/js/bootstrap.min.js"></script>
 	<script type="text/javascript">if(typeof window.console == 'undefined'){window.console={'log':function(){},'error':function(){}}}</script>
 </head>
 <script src="<?php echo Mod::app()->createUrl('/')?>/assets/js/jquery-1.11.0.min.js" type="text/javascript"></script>

@@ -1,7 +1,7 @@
 <?php
 
 class FilesController extends CController {
-    public  $root_path;
+//    public  $root_path;
 //    public function init() {
 //        parent::init();
 //        //根目录路径，可以指定绝对路径，比如 /var/www/attached/
@@ -334,8 +334,8 @@ class FilesController extends CController {
 //            $flag = $obj->create_thumb_fit($file_path, $save_path.$new_file_name.'_640x640.' . $file_ext,640,640); 
 //            
 //            $flag = $obj->create_thumb_crop($file_path, $save_path.$new_file_name.'_120x120_crop.' . $file_ext,120,120); 
-//            $flag = $obj->create_thumb_crop($file_path, $save_path.$new_file_name.'_320x320_crop.' . $file_ext,320,320); 
-//            $flag = $obj->create_thumb_crop($file_path, $save_path.$new_file_name.'_640x640_crop.' . $file_ext,640,640); 
+////            $flag = $obj->create_thumb_crop($file_path, $save_path.$new_file_name.'_320x320_crop.' . $file_ext,320,320); 
+////            $flag = $obj->create_thumb_crop($file_path, $save_path.$new_file_name.'_640x640_crop.' . $file_ext,640,640); 
 //
 //            
 //            

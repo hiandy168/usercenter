@@ -136,7 +136,7 @@ $(document).ready(function(){
   
 	 $('.review_for_phone').hover(
 	   function(){
-		   var url='http://api.kuaipai.cn/qr?chs=180x180&chl=';
+		   var url='https://api.kuaipai.cn/qr?chs=180x180&chl=';
 		  // var FWechatID = "<?php echo $numberInfo['FWechatID'];?>";
 		  // var FAppID = "<?php echo $numberInfo['FAppID'];?>";
 		   url+=$(this).attr('data-index');
@@ -156,7 +156,7 @@ $(document).ready(function(){
 
 	 $('.review_for_weixin').hover(
 			   function(){
-				   var url='http://api.kuaipai.cn/qr?chs=180x180&chl=';
+				   var url='https://api.kuaipai.cn/qr?chs=180x180&chl=';
 					   url+=$(this).attr('data-index');
 					   
 		           var $img=$('#review_for_weixin_img');

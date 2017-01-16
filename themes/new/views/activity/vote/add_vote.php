@@ -1085,7 +1085,7 @@
                 share_img:share_img,
                 share_desc:share_desc,
                 rule:rule,
-                hold_vote:hold_votes
+                hold_vote:hold_votes?hold_votes:0,
             };
             $.post(url,data,function(res){
                 var res = JSON.parse(res);

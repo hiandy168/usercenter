@@ -22,6 +22,7 @@
             </a>
         </div>-->
     </div>
+
     <!--tit end-->
     <div class="ad-edit-app">
         <div class="ad-edit-app-navsd clearfix">
@@ -37,14 +38,14 @@
                         <?php if($activity_info['id']){ ?>
                         <a href="<?php echo $this->createUrl('/activity/scratchcard/prize',array('id'=>$activity_info['id']))?>">奖品/概率</a>
                         <?php }else{ ?>
-                         <a href="javascript:void()">奖品/概率</a>
+                         <a href="javascript:void(0)">奖品/概率</a>
                          <?php } ?>
                     </li>
                     <li class="">
                          <?php if($activity_info['id']){ ?>
                         <a href="<?php echo $this->createUrl('/activity/scratchcard/example',array('id'=>$activity_info['id']))?>">开发者示例</a>
                         <?php }else{ ?>
-                         <a href="javascript:void()">开发者示例</a>
+                         <a href="javascript:void(0)">开发者示例</a>
                          <?php } ?>
 
                     </li>
