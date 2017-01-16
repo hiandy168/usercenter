@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<script type="text/javascript" src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/jquery.js"></script>
+<title>伪静态设置 - 软件</title>
+<meta name="keywords" content="软件,soft,cms,PHP软件开发">
+<meta name="description" content="软件提供中大型项目开发,主要作品有cms网站内容管理系统。且提供香港云主机和服务器维护等服务。">
+<meta name="generator" content="soft.cn">
+<meta name="author" content="soft.cn">
+<meta name="copyright" content="2012-2013 soft">
+<link href="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/manual.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+	<h2 class="book_title">伪静态设置</h2>
+    <div class="manual_content" id="manual_content"><p>
+	CMS借助YII框架强大的路由管理组件，可实现url规则的多样化，可将原本超长的且不美观的url变化优雅，默认已经内定几条相关规则。
+</p>
+<p>
+	如正常的地址：http://www.soft.cn/index.php?r=page/show&amp;name=about &nbsp;
+</p>
+<p>
+	重写为&nbsp;
+</p>
+<p>
+	http://www.soft.cn/page/show/about
+</p>
+<p>
+	只需要以下2个步骤即可开启，但是需要服务器支持。
+</p>
+<p>
+	第一步：修改系统配置文件中的路由组件&nbsp;urlManager 部分改成以下内容
+</p>
+<div class="syntaxhighlighter  " id="highlighter_959541"><div class="bar "><div class="toolbar"><a class="item viewSource" style="width: 16px; height: 16px;" title="view source" href="#viewSource">view source</a><div class="item copyToClipboard"><embed id="highlighter_959541_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_959541" menu="false" src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/clipboard.swf" width="16" height="16"></div><a class="item printSource" style="width: 16px; height: 16px;" title="print" href="#printSource">print</a><a class="item about" style="width: 16px; height: 16px;" title="?" href="#about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>01</code></td><td class="content"><code class="string">'urlManager'</code><code class="plain">=&gt;</code><code class="keyword">array</code><code class="plain">(</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>02</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="string">'urlFormat'</code><code class="plain">=&gt;</code><code class="string">'path'</code><code class="plain">,</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>03</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="string">'showScriptName'</code><code class="plain">=&gt;false,</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>04</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="comments">//'urlSuffix'=&gt;'.html',</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>05</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="string">'rules'</code><code class="plain">=&gt;</code><code class="keyword">array</code><code class="plain">(</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>06</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="string">'list/catalog_&lt;catalog:\d+&gt;/*'</code><code class="plain">=&gt;</code><code class="string">'list/index'</code><code class="plain">,</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>07</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="string">'post/&lt;id:\d+&gt;/*'</code><code class="plain">=&gt;</code><code class="string">'post/show'</code><code class="plain">,</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>08</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="string">'post/&lt;id:\d+&gt;_&lt;title:\w+&gt;/*'</code><code class="plain">=&gt;</code><code class="string">'post/show'</code><code class="plain">,</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>09</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="string">'post/catalog/&lt;catalog:[\w-_]+&gt;/*'</code><code class="plain">=&gt;</code><code class="string">'post/index'</code><code class="plain">,</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>10</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="string">'page/show/&lt;name:\w+&gt;/*'</code><code class="plain">=&gt;</code><code class="string">'page/show'</code><code class="plain">,</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>11</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="string">'&lt;controller:\w+&gt;/&lt;action:\w+&gt;'</code><code class="plain">=&gt;</code><code class="string">'&lt;controller&gt;/&lt;action&gt;'</code><code class="plain">,</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>12</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">),</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>13</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">),</code></td></tr></tbody></table></div></div></div>
+<p>
+	<br>
+</p>
+<p>
+	实际上就是将urlFormat 和 showScriptName 前台的注释 <span>//&nbsp;</span>去掉，若需要在 url后台带上 .html 如：<span>http://www.soft.cn/page/show/about.html，则需要将 urlSuffix前面的注释 // 去掉</span> 
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;">第二步：配置WEB服务，让支WEB服务的软件支持URL重写，下面介绍常见的WEB软件支持URL重写的配置方法</span> 
+</p>
+<p>
+	<strong>IIS6：</strong> 
+</p>
+<p>
+	在IIS6下要支持伪静态必须安装第三方的组件&nbsp;ISAPI_Rewrite，装完此软件后在网站根目录新建一文件 http.ini 内容为：
+</p>
+<p>
+	<br>
+</p>
+<div class="syntaxhighlighter  " id="highlighter_670198"><div class="bar"><div class="toolbar"><a class="item viewSource" style="width: 16px; height: 16px;" title="view source" href="#viewSource">view source</a><div class="item copyToClipboard"><embed id="highlighter_670198_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_670198" menu="false" src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/clipboard.swf" width="16" height="16"></div><a class="item printSource" style="width: 16px; height: 16px;" title="print" href="#printSource">print</a><a class="item about" style="width: 16px; height: 16px;" title="?" href="#about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="plain">[ISAPI_Rewrite]</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="plain">CacheClockRate 3600</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="plain">RepeatLimit 32</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="plain">RewriteRule (.*\.(js|ico|gif|jpg|jpeg|png|swf|css|php|rar|zip|xml|ani|cur|mp3|mp4|flv|exe))$ /$1 [L,U] </code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content"><code class="plain">RewriteRule (?!/static)(.*)$ /index.php/$1 [L]</code></td></tr></tbody></table></div></div></div>
+<p>
+	<img src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/529f17798a1de.jpg" alt=""> 
+</p>
+<p>
+	<br>
+</p>
+<p>
+	即可支持URL的重写，至于<span>ISAPI_Rewrite软件的下载和安装，请自行baidu：<a href="http://www.baidu.com/s?wd=ISAPI_Rewrite" target="_blank">http://www.baidu.com/s?wd=ISAPI_Rewrite</a></span> 
+</p>
+<p>
+	<strong>IIS7.X</strong> 
+</p>
+<p>
+	IIS7/IIS7.5可使用微软官方的组件&nbsp;<a href="http://www.iis.net/downloads/microsoft/url-rewrite" target="_blank">http://www.iis.net/downloads/microsoft/url-rewrite</a>&nbsp;直接安装后即可支持，配置文件名称是 web.config，内容为
+</p>
+<p>
+	<br>
+</p>
+<div class="syntaxhighlighter  " id="highlighter_688830"><div class="bar"><div class="toolbar"><a class="item viewSource" style="width: 16px; height: 16px;" title="view source" href="#viewSource">view source</a><div class="item copyToClipboard"><embed id="highlighter_688830_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_688830" menu="false" src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/clipboard.swf" width="16" height="16"></div><a class="item printSource" style="width: 16px; height: 16px;" title="print" href="#printSource">print</a><a class="item about" style="width: 16px; height: 16px;" title="?" href="#about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>01</code></td><td class="content"><code class="plain">&lt;?xml version=</code><code class="string">"1.0"</code> <code class="plain">encoding=</code><code class="string">"UTF-8"</code><code class="plain">?&gt;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>02</code></td><td class="content"><code class="plain">&lt;configuration&gt;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>03</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;system.webServer&gt;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>04</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;rewrite&gt;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>05</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;rules&gt;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>06</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;rule name=</code><code class="string">"Imported Rule 1"</code><code class="plain">&gt;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>07</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;match url=</code><code class="string">"."</code> <code class="plain">ignoreCase=</code><code class="string">"false"</code> <code class="plain">/&gt;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>08</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;conditions logicalGrouping=</code><code class="string">"MatchAll"</code><code class="plain">&gt;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>09</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;add input=</code><code class="string">"{REQUEST_FILENAME}"</code> <code class="plain">matchType=</code><code class="string">"IsFile"</code> <code class="plain">ignoreCase=</code><code class="string">"false"</code> <code class="plain">negate=</code><code class="string">"true"</code> <code class="plain">/&gt;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>10</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;add input=</code><code class="string">"{REQUEST_FILENAME}"</code> <code class="plain">matchType=</code><code class="string">"IsDirectory"</code> <code class="plain">ignoreCase=</code><code class="string">"false"</code> <code class="plain">negate=</code><code class="string">"true"</code> <code class="plain">/&gt;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>11</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;/conditions&gt;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>12</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;action type=</code><code class="string">"Rewrite"</code> <code class="plain">url=</code><code class="string">"index.php"</code> <code class="plain">/&gt;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>13</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;/rule&gt;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>14</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;/rules&gt;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>15</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;/rewrite&gt;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>16</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">&lt;/system.webServer&gt;</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>17</code></td><td class="content"><code class="plain">&lt;/configuration&gt;</code></td></tr></tbody></table></div></div></div>
+<p>
+	<br>
+</p>
+<p>
+	若你的网站web.config已经有其它配置，不能直接覆盖，可以将 &lt;rewrite&gt;&lt;/rewirte&gt; 之间的内容复制到你WEB的配置文件web.config中即可
+</p>
+<p>
+	<br>
+</p>
+<img src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/529f1911a9174.jpg" alt=""> 
+<p>
+	<br>
+</p>
+<p>
+	<strong>NGINX:</strong> 
+</p>
+<p>
+	nginx支持伪静态只需要在nginx server配置段加入伪静态规则即可，以 lnmp 环境为例：
+</p>
+<p>
+	lnmp是将伪静态的配置段单独放到文件中再加载到lnmp中的
+</p>
+<p>
+	<br>
+</p>
+<p>
+	<img src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/529f20044e500.jpg" alt=""> 
+</p>
+<p>
+	<br>
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;">所以需要编辑网站配置中的</span><span style="font-size:10pt;line-height:1.5;">伪静态文件，加入以下内容</span> 
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;"><br>
+</span>
+</p>
+<p>
+	<span> </span> 
+</p>
+<div class="syntaxhighlighter  " id="highlighter_874264"><div class="bar"><div class="toolbar"><a class="item viewSource" style="width: 16px; height: 16px;" title="view source" href="#viewSource">view source</a><div class="item copyToClipboard"><embed id="highlighter_874264_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_874264" menu="false" src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/clipboard.swf" width="16" height="16"></div><a class="item printSource" style="width: 16px; height: 16px;" title="print" href="#printSource">print</a><a class="item about" style="width: 16px; height: 16px;" title="?" href="#about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>1</code></td><td class="content"><code class="plain">location / {</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>2</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">if (!-e $request_filename){</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>3</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">rewrite ^/(.*) /index.php last;</code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>4</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="plain">}</code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>5</code></td><td class="content"><code class="plain">}</code></td></tr></tbody></table></div></div></div>
+<img src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/529f207d981b9.jpg" alt=""><br>
+<p>
+	<br>
+</p>
+<p>
+	<strong>APACHE:</strong> 
+</p>
+<p>
+	apache默认的伪静态文件名称是 .htaccess ，内容为：
+</p>
+<div class="syntaxhighlighter  " id="highlighter_432520"><div class="bar"><div class="toolbar"><a class="item viewSource" style="width: 16px; height: 16px;" title="view source" href="#viewSource">view source</a><div class="item copyToClipboard"><embed id="highlighter_432520_clipboard" type="application/x-shockwave-flash" title="copy to clipboard" allowscriptaccess="always" wmode="transparent" flashvars="highlighterId=highlighter_432520" menu="false" src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/clipboard.swf" width="16" height="16"></div><a class="item printSource" style="width: 16px; height: 16px;" title="print" href="#printSource">print</a><a class="item about" style="width: 16px; height: 16px;" title="?" href="#about">?</a></div></div><div class="lines"><div class="line alt1"><table><tbody><tr><td class="number"><code>01</code></td><td class="content"><code class="plain">&lt;IfModule mod_rewrite.c&gt;&nbsp; </code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>02</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="plain">Options +FollowSymLinks&nbsp; </code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>03</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="plain">IndexIgnore */*&nbsp; </code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>04</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="plain">RewriteEngine on&nbsp; </code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>05</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>06</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="preprocessor"># if a directory or a file exists, use it directly&nbsp; </code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>07</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="plain">RewriteCond %{REQUEST_FILENAME} !-f&nbsp; </code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>08</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="plain">RewriteCond %{REQUEST_FILENAME} !-d&nbsp; </code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>09</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code>&nbsp;</td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>10</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="preprocessor"># otherwise forward it to index.php&nbsp; </code></td></tr></tbody></table></div><div class="line alt1"><table><tbody><tr><td class="number"><code>11</code></td><td class="content"><code class="spaces">&nbsp;&nbsp;</code><code class="plain">RewriteRule . index.php&nbsp; </code></td></tr></tbody></table></div><div class="line alt2"><table><tbody><tr><td class="number"><code>12</code></td><td class="content"><code class="plain">&lt;/IfModule&gt;</code></td></tr></tbody></table></div></div></div>
+<p>
+	<br>
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;"><img src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/529f1aa4364ae.jpg" alt=""><br>
+</span> 
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;"><br>
+</span>
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;">同样也是将配置文件 .htaccess&nbsp;放在网站根目录下，打开网站测试是否可以正常浏览，若提示404错误，说明apache伪静态组件是未开启的，需要手动去开启，步骤以下：</span> 
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;">1.打开apache配置文件，一般在apache安
+装目录&nbsp;conf/httpd.conf ，找到组件配置项 &nbsp; #LoadModule rewrite_module 
+modules/mod_rewrite.so &nbsp;将前面的 # 注释去掉</span> 
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;"><br>
+</span>
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;"><img src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/529f1b9c12fc4.jpg" alt=""><br>
+</span> 
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;"><br>
+</span>
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;">2.找到&nbsp;&lt;Directory 配置段，将&nbsp;AllowOverride 后面的 None 改成&nbsp;All</span> 
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;"><br>
+</span>
+</p>
+<p>
+	<span style="font-size:10pt;line-height:1.5;"><img src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/529f1c32bb2b0.jpg" alt=""></span> 
+</p>
+<p>
+	<br>
+</p></div>
+
+</div>
+<script type="text/javascript" src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/brush.js"></script>
+<link type="text/css" rel="stylesheet" href="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/shCore.css">
+<link type="text/css" rel="stylesheet" href="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/shThemeDefault.css">
+<script type="text/javascript">
+<!--
+$(document).ready(function(){
+	SyntaxHighlighter.config.clipboardSwf = '/static/js/syntaxhighlighter/scripts/clipboard.swf';
+	SyntaxHighlighter.all();
+});
+//-->
+</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_5619831'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s9.cnzz.com/stat.php%3Fid%3D5619831%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script><span id="cnzz_stat_icon_5619831"><a href="http://www.cnzz.com/stat/website.php?web_id=5619831" target="_blank" title="站长统计"><img src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/pic1.gif" vspace="0" border="0" hspace="0"></a></span><script src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/stat.php" type="text/javascript"></script><script src="%E4%BC%AA%E9%9D%99%E6%80%81%E8%AE%BE%E7%BD%AE_files/core.php" charset="utf-8" type="text/javascript"></script>
+
+
+</body></html>
+<!-- Time: 0.01047ms, memory: 2.17MB-->

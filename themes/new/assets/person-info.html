@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="all">
+    <meta name="renderer" content="webkit">
+    <title>大楚用户开放平台</title>
+    <meta name="Keywords" content="大楚用户开放平台" />
+    <meta name="Description" content="大楚用户开放平台" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/validate.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="ad-bg ad-top-bg">
+        <div class="ad-head w1000 clearfix">
+            <div class="fl ad-logo">
+                <a href=""><img src="images/ad-logo.png" /></a>
+            </div>
+            <!--<div class="fr ad-login">
+					<ul>
+                    <li><a class="linear" id="loginshow">登录</a></li>
+                    <li><a class="linear ad-regbtn" href="">注册</a></li>
+                  </ul>
+				</div>-->
+            <div class="fr ad-haslogin">
+                <div class="ad-haslogin1">
+                    <div class="ad-haslogin-img"><img src="images/ad-user-default-icon.png" /></div>
+                    <div class="ad-haslogin-info linear">
+                        <i><img src="images/ad-user-default-icon.png"/></i>
+                        <span class="clearfix">
+								<a href="">修改资料</a>
+							<a href="" class="loginout">退出</a>
+							</span>
+                        <p>
+                            如不上传头像，可自动默认
+                            <br />为规格为100*100的默认头
+                            <br />像png图片。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="ad-nav fr clearfix">
+                <ul>
+                    <li>
+                        <i></i>
+                        <a href="">首页</a>
+                    </li>
+                    <li class="selected">
+                        <i></i>
+                        <a href="">管理中心</a>
+                    </li>
+                    <li>
+                        <i></i>
+                        <a href="">文档资料</a>
+                    </li>
+                    <li>
+                        <i></i>
+                        <a href="">帮助中心</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-app-nav w1000 clearfix bxbg mgt30">
+        <ul>
+            <li>
+                <div class="ad-app-nav1">
+                    <a href="">
+                        <i class="b1 linear"></i>
+                        <img class="linear" src="images/1471257878_Settings_gear_setting_tools.png" />
+                        <span><em class="linear">应用管理</em></span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="ad-app-nav1">
+                    <a href="">
+                        <i class="b2 linear"></i>
+                        <img class="linear" src="images/1471257878_Settings_gear_setting_pen.png" />
+                        <span><em class="linear">修改资料</em></span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="ad-app-nav1">
+                    <a href="">
+                        <i class="b3 linear"></i>
+                        <img class="linear" src="images/1471257808_Download_save_down.png" />
+                        <span><em class="linear">SDK下载</em></span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="ad-app-nav1">
+                    <a href="">
+                        <i class="b4 linear"></i>
+                        <img class="linear" src="images/1471257729_add_cross_new_plus_create.png" />
+                        <span><em class="linear">创建应用</em></span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="ad-app-list w1000 clearfix bxbg mgt30">
+        <div class="ad-app-list-tit clearfix">
+            <div class="fl tl">
+                <h3>修改资料</h3>
+            </div>
+            <!--<div class="fr tr">
+                <a href="#">
+                    <i class="aicon linear"></i> 添加应用
+                </a>
+            </div>-->
+        </div>
+        <!--tit end-->
+      
+      
+      <div class="ad-edit-info mg20 clearfix">
+         
+            <form action="" id="regform1" method="post" accept-charset="utf-8">
+           <div class="ad-edit-info-form1">
+               
+               <div class="ad-haslogin-info linear">
+                        <i><img id="imgPreview" src="images/ad-user-default-icon.png"/></i>
+                        <span class="clearfix">
+								<a>修改图像
+								<input type="file" onchange="uploadImg(this)"  name="" id="upimg" value="" />
+								</a>
+							</span>
+                        <p>
+                                                                       如不上传头像，可自动默认
+                            <br />为规格为100*100的默认头
+                            <br />像png图片。
+                        </p>
+                    </div>
+           	
+           </div>
+         
+           
+            <div class="ad-edit-info-form">
+            	
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">手机号码：</span>
+            		<span class="sp2">
+            			<input class="form-control" type="text" placeholder="" name="itel" id="itel" value="" />
+            		</span>
+            		
+            		
+            	</div>
+            	
+            	
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">邮箱地址：</span>
+            		<span class="sp2">
+            			<input class="form-control" type="text" placeholder="" name="iemail" id="iemail" value="" />
+            		</span>
+            		
+            		
+            	</div>
+            	
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">所属行业：</span>
+            		<span class="sp2">
+            			<input class="form-control" type="text" placeholder="" name="" id="infohy" value="" />
+            		</span>
+            		
+            		
+            	</div>
+            	
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">公司名称：</span>
+            		<span class="sp2">
+            			<input class="form-control" type="text" placeholder="" name="" id="infogs" value="" />
+            		</span>
+            		
+            		
+            	</div>
+            	
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">公司地址：</span>
+            		<span class="sp2">
+            			<input class="form-control" type="text" placeholder="" name="" id="infodz" value="" />
+            		</span>
+            		
+            		
+            	</div>
+            	
+            		
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1"></span>
+            		<span class="sp2">
+            			<div class="ad-creat-app-formbtn">
+            				<input class="linear adbtn" type="submit" name="" id="" value="保存修改" />
+            			</div>
+            		</span>
+            		
+            	</div>
+            	
+            	
+            	
+            </div>
+        </form>
+      </div>
+         
+         
+    </div>
+
+    <script type="text/javascript">
+var Validator = $("#regform1").validate({
+    ignore:"#upimg,#infohy,#infogs,#infodz",
+    rules: {
+        itel: {
+            required: true,
+            minlength: 11,
+            isMobile: true
+        },
+        iemail: {
+            required: true,
+            email: true,
+        },
+       
+    },
+
+    messages: {
+        itel: {
+            required: "请输入用户名（手机号）",
+            minlength: "手机号长度因为11位",
+            isMobile: "请输入正确手机号"
+        },
+        iemail: {
+            required: "密码不能为空",
+             email: "邮箱格式不正确",
+        },
+       
+    },
+    errorElement: "em",
+    errorPlacement: function(error, element) {
+        if (element.parent().parent().find('em') != null) {
+            element.parent().parent().find('em').remove()
+        }
+        error.appendTo(element.parent().parent());
+    },
+
+    errorClass: "cerror",
+    validClass: "cright",
+
+    success: function(obj) {
+        obj.text("正确").removeClass('cerror').addClass("cright");
+    },
+
+
+});
+
+// 手机号码验证
+jQuery.validator.addMethod("isMobile", function(value, element) {
+    var length = value.length;
+    var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+    return this.optional(element) || (length == 11 && mobile.test(value));
+}, "请正确填写您的手机号码");
+
+</script>
+
+    <div class="ad-bg ad-foot-bg">
+        <div class="ad-app-foot clearfix w1000">
+            <div class="fl ad-app-footl">
+                <ul>
+                    <li><a href="">关于平台</a></li>
+                    <li><a href="">应用管理</a></li>
+                    <li><a href="">文档中心</a></li>
+                    <li><a href="">帮助问答</a></li>
+                    <li><a href="">意见反馈</a></li>
+                    <li><a href="">联系我们</a></li>
+                </ul>
+                <p>Copyright © 1998 - 2016 Tencent. All Rights Reserved. 腾讯·大楚网·版权所有 鄂ICP备15021300号 <a>网站统计</a></p>
+            </div>
+            <div class="fr ad-app-footr">
+                <img src="images/ad-tel-icon.png" height="49" width="49" alt="">
+                <span>
+						<p>400-888-5555</p>
+						<em>电话（工作日  9:00-18:00）</em>
+					</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

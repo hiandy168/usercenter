@@ -1,0 +1,633 @@
+
+.fall {
+    color: #fff !important;
+    font-size: 20px !important;
+}
+.projectlist .pic_model {
+    width: 365px;
+    overflow: hidden
+}
+
+.projectlist .pic_model .title {
+    font-weight: bold;
+    height: 70px;
+    padding: 10px;
+    width:auto;
+}
+
+.projectlist .pic_model .title a {
+    font-size: 18px;
+    line-height: 40px;
+    color:#000;
+}
+
+.projectlist .pic_model .title p.sm_title {
+    line-height: 22px;
+    overflow: hidden;
+    font-weight: normal
+}
+
+.projectlist .pic_model .pic {
+    width: 365px;
+    height: 170px;
+    overflow: hidden
+}
+
+.lcc-h {
+    height: 100% !important
+}
+
+.projectlist .pic_model .other {
+    padding: 2px 10px 20px 10px;
+    height: 12px
+}
+
+.projectlist .pic_model .other span em {
+    color: #8c8c8c;
+    padding-left: 5px
+}
+
+.projectlist .pic_model .other i {
+    padding: 5px 5px 14px 20px;
+    background: url("../images/icopeng.png") 0 -242px no-repeat;
+    color: #ff5b5c;
+    float: right;
+    margin-top: -7px
+}
+
+.projectlist .pic_model2 {
+    width: 365px
+}
+
+.projectlist .pic_model2 .title a {
+    font-size: 16px;
+    line-height: 38px;
+    font-weight: bold
+}
+
+.projectlist .pic_model2 .con a.lf_title {
+    width: 234px;
+    margin-left: 18px;
+    line-height: 18px;
+    height: 52px;
+    overflow: hidden
+}
+
+.move_nav .title {
+    width: 54px;
+    height: 54px;
+    background-color: #fea405;
+    font-size: 20px;
+    color: #fff;
+    line-height: 54px;
+    margin:0;
+}
+
+.move_nav .con {
+    width: 1100px;
+    position: relative;
+    padding:0;
+}
+
+.move_nav .con .left_btn {
+    display: block;
+    width: 10px;
+    height: 24px;
+    background: url("../images/icopeng.png") 0 -296px no-repeat;
+    position: absolute;
+    left: -20px;
+    top: 18px
+}
+
+.move_nav .con .right_btn {
+    display: block;
+    width: 10px;
+    height: 24px;
+    background: url("../images/icopeng.png") -10px -296px no-repeat;
+    position: absolute;
+    right: 8px;
+    top: 18px
+}
+
+.move_nav .con .con_wt {
+    width: 1070px;
+    height: 62px;
+    overflow: hidden
+}
+
+.move_nav .con .con_wt ul {
+    width: 2000px;
+    display: block
+}
+
+.move_nav .con .con_wt ul li {
+    width: 40px;
+    float: left;
+    margin: 0 0 0 30px
+}
+
+.move_nav .con .con_wt ul li a {
+    padding-top: 40px;
+    display: block;
+    background: url("../images/move_nav_img.jpg") no-repeat;
+    font-size: 16px;
+    color: #b1aaaa;
+    text-align: center
+}
+
+.move_nav .con .con_wt ul li a:hover {
+    color: #fea405;
+    background: url("../images/move_nav_hover.jpg") no-repeat
+}
+
+.move_nav .con .con_wt ul li a.active {
+    color: #fea405;
+    background: url("../images/move_nav_hover.jpg") no-repeat
+}
+
+.move_nav .con .con_wt ul li.cy a {
+    background-position: 0 -4px
+}
+
+.move_nav .con .con_wt ul li.cy a:hover {
+    background-position: 0 -4px
+}
+
+.move_nav .con .con_wt ul li.jz a {
+    background-position: -65px -4px
+}
+
+.move_nav .con .con_wt ul li.jz a:hover {
+    background-position: -65px -4px
+}
+
+.move_nav .con .con_wt ul li.my a {
+    background-position: -133px -4px
+}
+
+.move_nav .con .con_wt ul li.my a:hover {
+    background-position: -133px -4px
+}
+
+.move_nav .con .con_wt ul li.qc a {
+    background-position: -202px -4px
+}
+
+.move_nav .con .con_wt ul li.qc a:hover {
+    background-position: -202px -4px
+}
+
+.move_nav .con .con_wt ul li.ly a {
+    background-position: -262px -4px
+}
+
+.move_nav .con .con_wt ul li.ly a:hover {
+    background-position: -262px -4px
+}
+
+.move_nav .con .con_wt ul li.yl a {
+    background-position: -330px -4px
+}
+
+.move_nav .con .con_wt ul li.yl a:hover {
+    background-position: -330px -4px
+}
+
+.move_nav .con .con_wt ul li.jr a {
+    background-position: -395px -4px
+}
+
+.move_nav .con .con_wt ul li.jr a:hover {
+    background-position: -395px -4px
+}
+
+.move_nav .con .con_wt ul li.yj a {
+    background-position: -457px -4px
+}
+
+.move_nav .con .con_wt ul li.yj a:hover {
+    background-position: -457px -4px
+}
+
+.move_nav .con .con_wt ul li.sj a {
+    background-position: -521px -4px
+}
+
+.move_nav .con .con_wt ul li.sj a:hover {
+    background-position: -521px -4px
+}
+
+.move_nav .con .con_wt ul li.fc a {
+    background-position: -589px -4px
+}
+
+.move_nav .con .con_wt ul li.fc a:hover {
+    background-position: -589px -4px
+}
+
+.move_nav .con .con_wt ul li.jy a {
+    background-position: -656px -4px
+}
+
+.move_nav .con .con_wt ul li.jy a:hover {
+    background-position: -656px -4px
+}
+
+.move_nav .con .con_wt ul li.cx a {
+    background-position: -727px -4px
+}
+
+.move_nav .con .con_wt ul li.cx a:hover {
+    background-position: -727px -4px
+}
+
+.move_nav .con .con_wt ul li.ds a {
+    background-position: -791px -4px
+}
+
+.move_nav .con .con_wt ul li.ds a:hover {
+    background-position: -791px -4px
+}
+
+.move_nav .con .con_wt ul li.yx a {
+    background-position: -861px -4px
+}
+
+.move_nav .con .con_wt ul li.yx a:hover {
+    background-position: -861px -4px
+}
+
+.move_nav .con .con_wt ul li.dt a {
+    background-position: -925px -4px
+}
+
+.move_nav .con .con_wt ul li.dt a:hover {
+    background-position: -925px -4px
+}
+
+.move_nav .con .con_wt ul li.yd a {
+    background-position: -986px -4px
+}
+
+.move_nav .con .con_wt ul li.yd a:hover {
+    background-position: -986px -4px
+}
+
+.move_nav .con .con_wt ul li.yy a {
+    background-position: -1049px -4px
+}
+
+.move_nav .con .con_wt ul li.yy a:hover {
+    background-position: -1049px -4px
+}
+
+.move_nav .con .con_wt ul li.zx a {
+    background-position: -1114px -4px
+}
+
+.move_nav .con .con_wt ul li.zx a:hover {
+    background-position: -1114px -4px
+}
+
+.move_nav .con .con_wt ul li.qt a {
+    background-position: -1179px -4px
+}
+
+.move_nav .con .con_wt ul li.qt a:hover {
+    background-position: -1179px -4px
+}
+
+
+.move_nav .con .con_wt ul li.zp a {
+    background:  url("../images/zhaopin.png") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.zp a:hover {
+    background:  url("../images/zhaopin_hover.jpg") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.my a {
+    background:  url("../images/muying.png") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.my a:hover {
+    background:  url("../images/muying_hover.jpg") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.ny a {
+    background:  url("../images/nongye.png") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.ny a:hover {
+    background:  url("../images/nongye_hover.jpg") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.js a {
+    background:  url("../images/jianshen.png") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.js a:hover {
+    background:  url("../images/jianshen_hover.jpg") no-repeat;
+}
+.move_nav .con .con_wt ul li.qt a {
+    background:  url("../images/qita.png") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.qt a:hover {
+    background:  url("../images/qita_hover.jpg") no-repeat;
+}
+.move_nav .con .con_wt ul li.fw a {
+    background:  url("../images/fuwu.png") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.fw a:hover {
+    background:  url("../images/fuwu_hover.jpg") no-repeat;
+}
+
+.move_nav .con .con_wt ul li.aq a {
+    background: url("../images/security.png") no-repeat;
+    background-position: 7px 5px;
+    background-size: 26px
+}
+
+.move_nav .con .con_wt ul li.aq a:hover {
+    background: url("../images/security_hover.png") no-repeat;
+    background-position: -2px 5px;
+    background-size: 43px;
+    color: #fea405
+}
+
+.move_nav .con .con_wt ul li.aq a.active {
+    background: url("../images/security_hover.png") no-repeat;
+    background-position: -2px 5px;
+    background-size: 43px;
+    color: #fea405
+}
+
+.move_nav .con .con_wt ul li.gj a {
+    background: url("../images/tools.png") no-repeat;
+    background-position: 6px 8px;
+    background-size: 30px
+}
+
+.move_nav .con .con_wt ul li.gj a:hover {
+    background: url("../images/tools_hover.png") no-repeat;
+    background-position: 0 6px;
+    background-size: 40px;
+    color: #fea405
+}
+
+.move_nav .con .con_wt ul li.gj a.active {
+    background: url("../images/tools_hover.png") no-repeat;
+    background-position: 0 6px;
+    background-size: 40px;
+    color: #fea405
+}
+
+.move_nav .con .con_wt ul li.yjs a {
+    background: url("../images/cloud.png") no-repeat;
+    background-position: 6px 10px;
+    background-size: 35px
+}
+
+.move_nav .con .con_wt ul li.yjs a:hover {
+    background: url("../images/cloud_hover.png") no-repeat;
+    background-position: 4px 8px;
+    background-size: 38px;
+    color: #fea405
+}
+
+.move_nav .con .con_wt ul li.yjs a.active {
+    background: url("../images/cloud_hover.png") no-repeat;
+    background-position: 4px 8px;
+    background-size: 38px;
+    color: #fea405
+}
+
+.move_nav .con .con_wt ul li.hhr {
+    width: 60px;
+    text-align: center
+}
+
+.move_nav .con .con_wt ul li.hhr a {
+    background-position: -1233px -7px
+}
+
+.move_nav .con .con_wt ul li.hhr a:hover {
+    background-position: -1233px -7px
+}
+
+.move_nav .con .con_wt ul li.cy a.active {
+    background-position: 0 -4px
+}
+
+.move_nav .con .con_wt ul li.jz a.active {
+    background-position: -65px -4px
+}
+
+.move_nav .con .con_wt ul li.my a.active {
+    background-position: -133px -4px
+}
+
+.move_nav .con .con_wt ul li.qc a.active {
+    background-position: -202px -4px
+}
+
+.move_nav .con .con_wt ul li.ly a.active {
+    background-position: -262px -4px
+}
+
+.move_nav .con .con_wt ul li.yl a.active {
+    background-position: -330px -4px
+}
+
+.move_nav .con .con_wt ul li.jr a.active {
+    background-position: -395px -4px
+}
+
+.move_nav .con .con_wt ul li.yj a.active {
+    background-position: -457px -4px
+}
+
+.move_nav .con .con_wt ul li.sj a.active {
+    background-position: -521px -4px
+}
+
+.move_nav .con .con_wt ul li.fc a.active {
+    background-position: -589px -4px
+}
+
+.move_nav .con .con_wt ul li.jy a.active {
+    background-position: -656px -4px
+}
+
+.move_nav .con .con_wt ul li.cx a.active {
+    background-position: -727px -4px
+}
+
+.move_nav .con .con_wt ul li.ds a.active {
+    background-position: -791px -4px
+}
+
+.move_nav .con .con_wt ul li.yx a.active {
+    background-position: -861px -4px
+}
+
+.move_nav .con .con_wt ul li.dt a.active {
+    background-position: -925px -4px
+}
+
+.move_nav .con .con_wt ul li.yd a.active {
+    background-position: -986px -4px
+}
+
+.move_nav .con .con_wt ul li.yy a.active {
+    background-position: -1049px -4px
+}
+
+.move_nav .con .con_wt ul li.zx a.active {
+    background-position: -1114px -4px
+}
+
+.move_nav .con .con_wt ul li.qt a.active {
+    background-position: -1179px -4px
+}
+
+.move_nav .con .con_wt ul li.hhr a.active {
+    background-position: -1233px -7px
+}
+
+
+
+.index .three_w {
+    padding-top: 30px;
+}
+
+h2.wzjh {
+     display: block;
+    font-size: 18px;
+    padding-top: 15px;
+    font-weight: bold;
+    color:#000
+}
+
+.projectlist{}
+
+.projectlist .pic_model {
+    border: 1px solid #e6e6e6;
+    margin-left: 46px;
+    margin: 36px 0 0 46px
+}
+
+.projectlist .first {
+    margin-left: 0
+}
+
+.hangye {font-size: 12px;color:#333;font-weight:bold}
+
+.projectlist .pic_model.action {
+    box-sizing: border-box;
+    color: #8c8c8c;
+    font-size: 12px;
+    margin-top: 22px;
+    padding: 0 22px 20px;
+    position: relative;
+}
+
+.num-show span i {
+    color: #fea405;
+}
+
+
+.ar-project-list3 {
+    margin-top: 0;
+}
+.ar-project-list3 li {
+    box-sizing: border-box;
+    margin: 36px 0 0 46px;
+    margin-left: 2%;
+    width: 365px;
+}
+.ar-project-list3 li.first {
+    margin-left: 0;
+}
+.ar-project-list3 li .item {
+    border: 1px solid #e4e4e4;
+    width: 100%;
+}
+.ar-project-list3 li .item img {
+    height: 168px;
+    width: 100%;
+    display:block
+}
+.ar-project-list3 li .item h4.title {
+    box-sizing: border-box;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+    height: 22px;
+    margin-top: 22px;
+    overflow: hidden;
+    padding: 0 22px;
+    width:100%;
+}
+.ar-project-list3 li .item .desc {
+    box-sizing: border-box;
+    color: #8c8c8c;
+    font-size: 12px;
+    height: 40px;
+    line-height: 20px;
+    margin-top: 22px;
+    overflow: hidden;
+    padding: 0 22px;
+}
+.ar-project-list3 li .item .action {
+    box-sizing: border-box;
+    color: #8c8c8c;
+    font-size: 12px;
+    margin-top: 22px;
+    padding: 0 22px 20px;
+    position: relative;
+}
+.ar-project-list3 li .item .action .infos {
+    border-top: 1px dashed #eee;
+    box-sizing: border-box;
+    margin-top: 18px;
+    padding-bottom: 25px;
+    padding-right: 85px;
+    padding-top: 22px;
+    width: 100%;
+}
+.ar-project-list3 li .item .action .ratio {
+    background: #f2867f none repeat scroll 0 0;
+    color: #fff;
+    font-size: 14px;
+    padding: 6px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 30px;
+}
+.ar-project-list3 li .item .action .infos li {
+    float: left;
+    margin: 0 0 5px;
+    width: 50%;
+}
+.ar-project-list3 li .item .action .infos li span.property {
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+}
+.ar-project-list3 li .item .action .infos li span.value {
+    font-size: 12px;
+    font-weight: bold;
+}
+.ar-project-list3 li .item .action .favrite {
+    color: #ff6869;
+    font-family: Sun;
+}
+.ar-project-list3 li .item .action .favrite i {
+    background: rgba(0, 0, 0, 0) url("/images/web/icopeng.png") no-repeat scroll 0 -242px;
+    color: #ff5b5c;
+    padding: 2px 5px 14px 20px;
+}

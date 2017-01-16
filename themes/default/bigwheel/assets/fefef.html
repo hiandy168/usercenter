@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>女神投票1</title>
+<link href="http://ud.hb.qq.com/statics/css/style.css?20130328" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://q1.city.qq.com/js/jquery-1.4.4.min.js?20130328"></script>
+<script type="text/javascript" src="http://q1.city.qq.com/js/D.login.js?20130328"></script>
+<script type="text/javascript" src="http://ud.hb.qq.com/statics/js/act.js?20131126"></script>
+<style type="text/css">
+		body { background: #ECECEC; }
+
+.box .hd .btn{display:none}
+
+#join{display:none}
+/* 整体部局 */
+.header { border: 1px solid #CCCCCC; border-bottom-width: 0; background: white; }
+.header h1 { background: #1C87D5; color: white; }
+.top { border-left: 1px solid #CCCCCC; border-right: 1px solid #CCCCCC; background: white; }
+.main { border: 1px solid #CCCCCC; border-top-width: 0; background: white; }
+.footer { text-align: center; background: #ECECEC; }
+
+/* 分页 */
+.page a,.page span {  background: #E8F2FD; color: #333; }
+.page a:hover,.page span { background: #7AB5FB; color: #FFF; }
+
+/* 定义通用块样式 */
+.box .hd { padding: 0 10px; border-bottom: 1px solid #1C87D5; }
+.box .hd h3 { background: #1C87D5; color: white; }
+.box .bd { padding: 10px; }
+
+/* 报名按钮 */
+.join a.btn { padding: 6px 15px 6px 0; border: 2px solid #E1DEDE; background: #eee; }
+.join a.btn:hover { background: #1C87D5; color: white; }
+</style>
+</head>
+<body>
+<div id="body" class="body">
+	<div id="nav" class="nav">
+		<span id="D_login"></span>
+	</div>
+	<div id="header" class="header">
+					<div style="background:url(http://mat1.gtimg.com/hb/00yjz/banner2) center top no-repeat; width:100%; height:351px"></div>
+
+		</div>
+<div id="main" class="main small">
+	<div id="list" class="list box left">
+		<div style="margin:5px 5px;">
+			<div style="float:right;">
+									<select name="search">
+											<option value="field_3" >姓名</option>
+										</select>
+					<input type="text" name="searchval" value="" />
+					<input type="button" onclick="dosearch(this);" value="搜索" />
+							</div>
+		</div>
+		<div class="hd">
+			<h3 class="title">作品列表</h3>
+		</div>
+		<ul class="bd cl">
+								<li>
+				<div class="pic"><a href="http://ud.hb.qq.com/9022/image/35866427?img_id=197664" target="_blank"><img src="http://p.qpic.cn/areabbs/0/act_197664d469c74a442d599cd89d0dcb837ae09f_thumb/0" /></a></div>
+																<div class="name">手机: 1211111****</div>
+																<div class="name">姓名: <a href="http://ud.hb.qq.com/9022/user/35866427" target="_blank">zxb</a></div>
+																																<div class="vote" style="display:none"><span>分数: <strong class="poll" id="image_vote_weight_197664">1</strong></span></div>
+				<div class="vote"><span>票数: <strong class="poll" id="image_vote_197664">1</strong></span><button type="button" onclick="ACT.vote(9022, 197664)">投票</button></div>
+							</li>
+						<li>
+				<div class="pic"><a href="http://ud.hb.qq.com/9022/image/35089365?img_id=165823" target="_blank"><img src="http://p.qpic.cn/areabbs/0/act_165823b72e2ab3e9263afcfa8a10f0d9dc1d9d_thumb/0" /></a></div>
+																<div class="name">手机: 1211111****</div>
+																<div class="name">姓名: <a href="http://ud.hb.qq.com/9022/user/35089365" target="_blank">zxb</a></div>
+																																<div class="vote" style="display:none"><span>分数: <strong class="poll" id="image_vote_weight_165823">2</strong></span></div>
+				<div class="vote"><span>票数: <strong class="poll" id="image_vote_165823">2</strong></span><button type="button" onclick="ACT.vote(9022, 165823)">投票</button></div>
+							</li>
+							</ul>
+		
+	</div>
+	<div id="side" class="side">
+		<div id="join" class="join">
+			<a href="http://ud.hb.qq.com/9022/join" target="_blank" class="btn">立即报名</a>
+		</div>
+				<div id="workrank" class="workrank box">
+			<div class="hd">
+				<h3 class="title">作品排行</h3>
+			</div>
+			<ul class="bd">
+							<li>
+					<a href="http://ud.hb.qq.com/9022/image/35089365?img_id=165823" target="_blank"><img src="http://p.qpic.cn/areabbs/0/act_165823b72e2ab3e9263afcfa8a10f0d9dc1d9d_thumb/0"></a>
+					<span>2 票</span>
+				</li>
+							<li>
+					<a href="http://ud.hb.qq.com/9022/image/35866427?img_id=197664" target="_blank"><img src="http://p.qpic.cn/areabbs/0/act_197664d469c74a442d599cd89d0dcb837ae09f_thumb/0"></a>
+					<span>1 票</span>
+				</li>
+						</ul>
+		</div>
+					</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+ACT.catagory = 'image';
+</script>
+	<div id="footer" class="footer">
+			<p>Copyright &copy; 1998 - 2014 Tencent. All Rights Reserved.   腾讯公司 版权所有 [报名系统V2]</p>
+		</div>
+</div>
+
+<script language="javascript" src="http://pingjs.qq.com/ping.js"></script>
+<script language="javascript">if(typeof(pgvMain) == 'function'){pgvMain();}</script>
+
+</body>
+</html>
+

@@ -1,0 +1,10 @@
+$(function(){
+	     		if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+	     		$("input,textarea").focus(function(){
+	     			$(".vote-foot").hide();
+	     		})
+	     		$("input,textarea").blur(function(){
+	     			$(".vote-foot").show();	
+	     		})
+	     	}
+	     	})

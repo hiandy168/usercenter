@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="all">
+    <meta name="renderer" content="webkit">
+    <title>大楚用户开放平台</title>
+    <meta name="Keywords" content="大楚用户开放平台" />
+    <meta name="Description" content="大楚用户开放平台" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function(){
+        	var navact=$("#navact");
+        	$(".ad-topnav2 span").css({"left":navact[0].offsetLeft+20,"width":navact.width()});
+        	$(".ad-topnav2 ul li").hover(function(){
+        		$(".ad-topnav2 span").stop().animate({"left":$(this)[0].offsetLeft+20,"width":$(this).width()},300)
+        	},function(){
+        		$(".ad-topnav2 span").stop().animate({"left":navact[0].offsetLeft+20,"width":navact.width()},300)
+        	})
+        	$(".tips-close").click(function(){
+        		$(".ad-top-tips").hide();
+        	})
+        	
+        	$(".ad-newkind").hover(function(){
+        		$(this).find(".ad-newkind2").stop().slideDown(300);
+        	},function(){
+        		$(this).find(".ad-newkind2").stop().slideUp(300);
+        		
+        	})
+        })
+        
+    </script>
+</head>
+
+<body>
+    <div class="ad-bg ad-top-bg">
+        <div class="ad-head w1000 clearfix">
+            <div class="fl ad-logo">
+                <a href=""><img src="images/ad-logo.png" /></a>
+            </div>
+            <!--<div class="fr ad-login">
+					<ul>
+                    <li><a class="linear" id="loginshow">登录</a></li>
+                    <li><a class="linear ad-regbtn" href="">注册</a></li>
+                  </ul>
+				</div>-->
+            <div class="fr ad-haslogin">
+                <div class="ad-haslogin1">
+                    <div class="ad-haslogin-img"><img src="images/ad-user-default-icon.png" /></div>
+                    <div class="ad-haslogin-info linear">
+                        <i><img src="images/ad-user-default-icon.png"/></i>
+                        <span class="clearfix">
+								<a href="">修改资料</a>
+							<a href="" class="loginout">退出</a>
+							</span>
+                        <p>
+                            如不上传头像，可自动默认
+                            <br />为规格为100*100的默认头
+                            <br />像png图片。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ad-nav fr clearfix">
+                <ul>
+                    <li>
+                       
+                        <a href="">首页</a>
+                    </li>
+                    <li class="selected">
+                        
+                        <a href="">管理中心</a>
+                    </li>
+                    <li>
+                       
+                        <a href="">文档资料</a>
+                    </li>
+                    <li>
+                        
+                        <a href="">帮助中心</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+   <div class="ad-bg ad-topnav-bg clearfix">
+   	<div class="ad-topnav clearfix w1000">
+   	 	<div class="fl ad-topnav1">
+   	 		<span><i><img src="images/ad-tit-icon1.png"/></i>管理中心</span>
+   	 		<em><i>></i>应用管理</em>
+   	 	</div>
+   	 	
+   	 	<div class="fl ad-topnav2">
+   	 		<ul>
+   	 		    <li id="navact"><a href="">应用管理</a></li>
+   	 		    <li><a href="">修改资料</a></li>
+   	 		    <li><a href="">SDK下载</a></li>
+   	 		    <li><a href="">创建应用</a></li>
+   	 		</ul>
+   	 		<span></span>
+   	 	</div>
+   	 	
+   	 	<div class="fr ad-topnav3">
+   	 		<ul>
+   	 		    <li><a class="c1" href="">应用数据</a></li>
+   	 		    <li><a class="c2" href="">活动组件</a></li>
+   	 		    <li><a class="c3" href="">应用配置</a></li>
+   	 		</ul>
+   	 		
+   	 	</div>
+   	 	
+   	 	</div>
+   </div>
+   
+   
+   <div class="ad-top-tips w1000 mgt30 clearfix">
+   	 <span>温馨提示：现在所有应用、组件属于初始阶段，如有意见或者建议请联系制作团队，感谢您协助完善产品,联系人QQ：22465878
+   	 </span>
+   	 <i class="tips-close fr"><img src="images/ad-tit-icon2.png"/></i>
+   	 
+   </div>
+   
+   
+   
+    <div class="ad-app-list w1000 clearfix bxbg mgt30">
+        <!--<div class="ad-app-list-tit clearfix">
+            <div class="fl tl">
+                <h3>我的应用</h3>
+            </div>
+            <div class="fr tr">
+                <a href="#">
+                    <i class="aicon linear"></i> 添加应用
+                </a>
+            </div>
+        </div>-->
+        
+        <div class="clearfix ad-alltit mgb30 mgt30">
+        	
+        	<div class="fl ad-alltit-left">
+        		<i><img src="images/ad-tit-icon-yingyong.png"/></i>
+        		<span>应用管理</span>
+        	</div>
+        	
+        	
+        	<div class="fr ad-alltit-right clearfix">
+        		
+        		<!--选择分类跳转-->
+
+                   <div class="ad-newkind fr">
+                   <div class="ad-newkind1">
+                   	<span>测试的实时</span>
+                   	<i></i>
+                   </div>
+                   <div class="ad-newkind2 bxbg">
+                   	<ul>
+                   	    <li><a href="">测试的</a></li>
+                   	    <li><a href="">你们好的撒旦</a></li>
+                   	    <li><a href="">你们</a></li>
+                   	    <li><a href="">储蓄罐项目</a></li>
+                   	    <li><a href="">武汉交警</a></li>
+                   	    <li><a href="">打算打算的哈斯殴打司机</a></li>
+                   	</ul>
+                   </div>
+                   </div>
+        		
+        		<div class="ad-alltit-rightnav fr">
+        			<a href="" class="a1" title="返回上一级"></a>
+        			<a href="" class="a2" title="添加应用"></a>
+        		</div>
+ 
+        	</div>
+        	
+        	
+        	
+        </div>
+       
+        
+      
+        
+        <div class="ad-nodata w1000 mgb30 mgt30">
+      		
+      		<img src="images/ad-nodata-bg.png"/>
+      		<p>噢噢，还没有记录！！！</p>
+      		<a href="" class="linear adbtn">创建应用</a>
+      	</div>
+      	  	
+      	<!--没有记录的情况-->
+        
+        <!--tit end-->
+        <div class="ad-app-list1">
+            <div class="ad-app-listdiv clearfix bxbg">
+                <div class="fl ad-app-listdiv-fl">
+                    <img src="images/1556c138f70cd73.png" />
+                </div>
+                <div class="ad-app-listdiv-fr">
+                    <div class="ad-app-listdiv-fr1">
+                        <div class="fl">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon1"></i> 运行状态：
+                            </div>
+                            <div class="ad-app-listdiv-run ad-app-list-mgf">
+                                <i class="r1">正在运行</i>
+                            </div>
+                        </div>
+                        <div class="fr">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon2"></i> 创建时间：
+                            </div>
+                            <div class="ad-app-list-time ad-app-list-mgf">2016-08-08 22:22:22</div>
+                        </div>
+                    </div>
+                    <div class="ad-app-listdiv-fr1 clearfix">
+                        <div class="fl">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon3"></i> 应用名称：
+                            </div>
+                            <div class="ad-app-listdiv-tit ad-app-list-mgf">
+                                <i>武汉交警</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ad-app-listdiv-fr1 ad-app-listdiv-fr1-3 clearfix">
+                        <div class="fl">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon4"></i> 应用数据：
+                            </div>
+                            <div class="ad-app-list-mgf">
+                                <div class="ad-app-listdiv-data">
+                                    <div class="ad-app-listdiv-datanav">
+                                        <ul>
+                                            <li class="selected">昨日数据</li>
+                                            <li>本周数据</li>
+                                        </ul>
+                                    </div>
+                                    <div class="ad-app-listdiv-datadiv">
+                                        <div class="datadiv1">
+                                            <ul>
+                                                <li>
+                                                    <p>新增用户数</p>
+                                                    <em>150</em>
+                                                </li>
+                                                <li class="midd">
+                                                    <p>独立访客数（UV）</p>
+                                                    <em>200</em>
+                                                </li>
+                                                <li>
+                                                    <p>浏览量（PV）</p>
+                                                    <em>22000</em>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="datadiv1" style="display: none;">
+                                            <ul>
+                                                <li>
+                                                    <p>新增用户数</p>
+                                                    <em>400</em>
+                                                </li>
+                                                <li class="midd">
+                                                    <p>独立访客数（UV）</p>
+                                                    <em>22500</em>
+                                                </li>
+                                                <li>
+                                                    <p>浏览量（PV）</p>
+                                                    <em>452000</em>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ad-app-listdiv-fr1 ad-app-listdiv-fr1-4 clearfix">
+                        <div class="fl">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon5"></i> 快捷操作：
+                            </div>
+                            <div class="ad-app-listdiv-opt ad-app-list-mgf">
+                                <a class="c1 linear" href="">查看应用数据</a>
+                                <a class="c2 linear" href="">添加活动组件</a>
+                                <a class="c3 linear" href="">查看应用配置</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--list right end-->
+            </div>
+            <div class="ad-app-listdiv clearfix bxbg">
+                <div class="fl ad-app-listdiv-fl">
+                    <img src="images/1556c138f70cd73.png" />
+                </div>
+                <div class="ad-app-listdiv-fr">
+                    <div class="ad-app-listdiv-fr1">
+                        <div class="fl">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon1"></i> 运行状态：
+                            </div>
+                            <div class="ad-app-listdiv-run ad-app-list-mgf">
+                                <i class="r2">待审核</i>
+                            </div>
+                        </div>
+                        <div class="fr">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon2"></i> 创建时间：
+                            </div>
+                            <div class="ad-app-list-time ad-app-list-mgf">2016-08-08 22:22:22</div>
+                        </div>
+                    </div>
+                    <div class="ad-app-listdiv-fr1 clearfix">
+                        <div class="fl">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon3"></i> 应用名称：
+                            </div>
+                            <div class="ad-app-listdiv-tit ad-app-list-mgf">
+                                <i>武汉交警</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ad-app-listdiv-fr1 ad-app-listdiv-fr1-3 clearfix">
+                        <div class="fl">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon4"></i> 应用数据：
+                            </div>
+                            <div class="ad-app-list-mgf">
+                                <div class="ad-app-listdiv-data">
+                                    <div class="ad-app-listdiv-datanav">
+                                        <ul>
+                                            <li class="selected">昨日数据</li>
+                                            <li>本周数据</li>
+                                        </ul>
+                                    </div>
+                                    <div class="ad-app-listdiv-datadiv">
+                                        <div class="datadiv1">
+                                            <ul>
+                                                <li>
+                                                    <p>新增用户数</p>
+                                                    <em>2200</em>
+                                                </li>
+                                                <li class="midd">
+                                                    <p>独立访客数（UV）</p>
+                                                    <em>2150</em>
+                                                </li>
+                                                <li>
+                                                    <p>浏览量（PV）</p>
+                                                    <em>2320</em>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="datadiv1" style="display: none;">
+                                            <ul>
+                                                <li>
+                                                    <p>新增用户数</p>
+                                                    <em>2300</em>
+                                                </li>
+                                                <li class="midd">
+                                                    <p>独立访客数（UV）</p>
+                                                    <em>3000</em>
+                                                </li>
+                                                <li>
+                                                    <p>浏览量（PV）</p>
+                                                    <em>21200</em>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ad-app-listdiv-fr1 ad-app-listdiv-fr1-4 clearfix">
+                        <div class="fl">
+                            <div class="fl ad-app-list-icontit">
+                                <i class="icon5"></i> 快捷操作：
+                            </div>
+                            <div class="ad-app-listdiv-opt ad-app-list-mgf">
+                                <a class="c1 linear" href="">查看应用数据</a>
+                                <a class="c2 linear" href="">添加活动组件</a>
+                                <a class="c3 linear" href="">查看应用配置</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--list right end-->
+            </div>
+        </div>
+        <!--list end-->
+        
+        
+        <div class="ad-page-list mgt30 mgb30">
+            <ul class="pagelist">
+                <li><a href="">上一页</a></li>
+                <li class="thisclass">1</li>
+                <li><a href="">2</a></li>
+                <li><a href="">3</a></li>
+                <li><span>...</span></li>
+                <li><a href="">8</a></li>
+                <li><a href="">下一页</a></li>
+                <li><span>共 10页20个应用</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="ad-bg ad-foot-bg">
+        <div class="ad-app-foot clearfix w1000">
+            <div class="fl ad-app-footl">
+                <ul>
+                    <li><a href="">关于平台</a></li>
+                    <li><a href="">应用管理</a></li>
+                    <li><a href="">文档中心</a></li>
+                    <li><a href="">帮助问答</a></li>
+                    <li><a href="">意见反馈</a></li>
+                    <li><a href="">联系我们</a></li>
+                </ul>
+                <p>Copyright © 1998 - 2016 Tencent. All Rights Reserved. 腾讯·大楚网·版权所有 鄂ICP备15021300号 <a>网站统计</a></p>
+            </div>
+            <div class="fr ad-app-footr">
+                <img src="images/ad-tel-icon.png" height="49" width="49" alt="">
+                <span>
+						<p>400-888-5555</p>
+						<em>电话（工作日  9:00-18:00）</em>
+					</span>
+            </div>
+        </div>
+    </div>
+    
+    <!--login-->
+    <div class="op-mask"></div>
+    <div class="op-login-div" style="padding: 20px 40px; z-index: 999; display: none;">
+        
+        <form>
+           
+           <div class="op-login-tit">
+            <img src="images/login-div-txt.png">
+           </div>
+        
+        <div class="op-login-input">
+            <input type="text" id="uname" placeholder="请输入用户名/手机号" value="">
+        </div>
+         
+         <div class="op-login-input">
+            <input type="password" id="upwd" placeholder="请输入密码">
+         </div>
+         
+         <div class="op-login-error" style="margin: 5px auto;"></div>
+         
+         <div class="op-login-reg clearfix">
+                <span class="fl"><input type="checkbox" checked="checked" name="regname" id="regname" value="1"><label for="regname">记住账号</label></span>
+                <span class="fr"><a href="/member/findPass">忘记密码</a></span>
+            </div>
+            
+          <div class="op-login-dlbtn">
+            <a id="loginbtn">登录</a>
+          </div>
+  
+          <div class="op-login-dlbtn op-login-regbtn">
+            <a href="/member/regone">注册</a>
+          </div>
+          
+
+        </form>
+    </div>
+    
+    
+</body>
+
+</html>

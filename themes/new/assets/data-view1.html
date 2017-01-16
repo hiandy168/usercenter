@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="all">
+    <meta name="renderer" content="webkit">
+    <title>大楚用户开放平台</title>
+    <meta name="Keywords" content="大楚用户开放平台" />
+    <meta name="Description" content="大楚用户开放平台" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="ad-bg ad-top-bg">
+        <div class="ad-head w1000 clearfix">
+            <div class="fl ad-logo">
+                <a href=""><img src="images/ad-logo.png" /></a>
+            </div>
+            <!--<div class="fr ad-login">
+					<ul>
+                    <li><a class="linear" id="loginshow">登录</a></li>
+                    <li><a class="linear ad-regbtn" href="">注册</a></li>
+                  </ul>
+				</div>-->
+				
+            <div class="fr ad-haslogin">
+                <div class="ad-haslogin1">
+                    <div class="ad-haslogin-img"><img src="images/ad-user-default-icon.png" /></div>
+                    <div class="ad-haslogin-info linear">
+                        <i><img src="images/ad-user-default-icon.png"/></i>
+                        <span class="clearfix">
+								<a href="">修改资料</a>
+							<a href="" class="loginout">退出</a>
+							</span>
+                        <p>
+                            如不上传头像，可自动默认
+                            <br />为规格为100*100的默认头
+                            <br />像png图片。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="ad-nav fr clearfix">
+                <ul>
+                    <li>
+                        <i></i>
+                        <a href="">首页</a>
+                    </li>
+                    <li class="selected">
+                        <i></i>
+                        <a href="">管理中心</a>
+                    </li>
+                    <li>
+                        <i></i>
+                        <a href="">文档资料</a>
+                    </li>
+                    <li>
+                        <i></i>
+                        <a href="">帮助中心</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="ad-data-nav w1000 clearfix bxbg mgt30">
+    	
+    	<ul>
+    	    <li>
+    	    	<div class="ad-data-nav1">
+    	    		<a href="">
+                        <i class="b1 linear"></i>
+                        <span class="b1"><em class="linear">访问数据</em></span>
+                        <img class="linear" src="images/ad-num-icon1.png" />
+                   </a>
+    	    	</div>
+    	    </li>
+    	    
+    	    <li>
+    	    	<div class="ad-data-nav1">
+    	    		<a href="">
+                        <i class="b2 linear"></i>
+                        <span class="b2"><em class="linear">用户数据</em></span>
+                        <img class="linear" src="images/ad-num-icon2.png" />
+                   </a>
+    	    	</div>
+    	    </li>
+    	    
+    	   <li>
+    	    	<div class="ad-data-nav1">
+    	    		<a href="">
+                        <i class="b3 linear"></i>
+                        <span class="b3"><em class="linear">行为数据</em></span>
+                        <img class="linear" src="images/ad-num-icon3.png" />
+                   </a>
+    	    	</div>
+    	    </li>
+    	    
+    	    <li>
+    	    	<div class="ad-data-nav1">
+    	    		<a href="">
+                        <i class="b4 linear"></i>
+                        <span class="b4"><em class="linear">积分数据</em></span>
+                        <img class="linear" src="images/ad-num-icon4.png" />
+                   </a>
+    	    	</div>
+    	    </li>
+    	   
+    	</ul>
+    	
+    </div>
+    
+    <!--nav end-->
+    
+    <div class="ad-data-con w1000 clearfix bxbg mgt30">
+        
+   <div class="ad-app-list-tit  ad-data-list-tit clearfix">
+            <div class="fl tl">
+                <h3>访问数据柱状图</h3>
+            </div>
+           <div class="ad-data-selectkind fr">
+           	<div class="kind1">
+           		<span>大楚特产</span>
+           		<i></i>
+           	</div>
+           	
+
+           	<div class="kind1-list">
+           		<ul>
+           		    <li>
+           		        <a href="">武汉交武汉</a>
+           		    </li>
+           		     <li>
+           		        <a href="">这个项目</a>
+           		    </li>
+           		     <li>
+           		        <a href="">你们好</a>
+           		    </li>
+           		</ul>
+           	</div>
+           	
+           </div>
+        </div>
+    	
+    	
+    	<!--tit end-->
+    	
+    	
+    	<div class="ad-data-map">
+    		
+    		<div class="ad-data-maptit clearfix">
+    		     
+    		     <div class="fl date-select">
+    		     	<form action="" method="post">
+    		     		<div class="ad-data-search">
+    		     		<span>
+    		     			<b>年份</b>
+    		     			<select name="z-year">
+    		     			    <option value="2016">2016</option>
+    		     			    <option value="2015">2015</option>
+    		     			</select>
+    		     		</span>
+    		     		<input class="schbtn linear adbtn" type="submit" name="" id="" value="查询" />
+    		               
+    		     		</div>
+    		     		
+    		     	</form>
+    		    
+    		     </div>
+    		     
+    		     <div class="fr">
+    		     	<ul>
+    		     	    <li><i class="cc c1"></i><span>PV</span></li>
+    		     	    <li><i class="cc c2"></i><span>UV</span></li>
+    		     	</ul>
+    		     </div>
+    		</div>
+    		
+    		
+    		<div class="ad-data-map-zhu fl">
+    			
+    			<div id="ad_data_map_zhu" style="width: 100%; height: 100%;"></div>
+    			
+    		</div>
+    		
+    		<div class="ad-data-rightnum fr">
+    			
+    			<div class="ad-data-rightnum1">
+    			    <h3>浏览量总数</h3>
+    			    <span>
+    			    	<img src="images/ad-data-icon1.png"/>
+    			    	<em>61254<font>次</font></em>
+    			    </span>
+    			</div>
+    			
+    			<div class="ad-data-rightnum1">
+    			    <h3>独立访客总数</h3>
+    			    <span>
+    			    	<img src="images/ad-data-icon2.png"/>
+    			    	<em>66444<font>次</font></em>
+    			    </span>
+    			</div>
+    			
+    			<div class="ad-data-rightnum1">
+    			    <h3>(PV-UV)在当前中的占比</h3>
+    			    <div class="ad-data-rightnum2">
+    			    	<li>
+    			    		<i>54<font>%</font></i>
+    			    		<em>PV</em>
+    			    	</li>
+    			    	<li class="fr">
+    			    		<i>80<font>%</font></i>
+    			    		<em>UV</em>
+    			    	</li>
+    			    </div>
+    			</div>
+    			
+    		</div>
+    		
+    	</div>
+    	
+    	
+    	
+    </div>
+    
+    
+    
+
+    <div class="ad-bg ad-foot-bg">
+        <div class="ad-app-foot clearfix w1000">
+            <div class="fl ad-app-footl">
+                <ul>
+                    <li><a href="">关于平台</a></li>
+                    <li><a href="">应用管理</a></li>
+                    <li><a href="">文档中心</a></li>
+                    <li><a href="">帮助问答</a></li>
+                    <li><a href="">意见反馈</a></li>
+                    <li><a href="">联系我们</a></li>
+                </ul>
+                <p>Copyright © 1998 - 2016 Tencent. All Rights Reserved. 腾讯·大楚网·版权所有 鄂ICP备15021300号 <a>网站统计</a></p>
+            </div>
+            <div class="fr ad-app-footr">
+                <img src="images/ad-tel-icon.png" height="49" width="49" alt="">
+                <span>
+						<p>400-888-5555</p>
+						<em>电话（工作日  9:00-18:00）</em>
+					</span>
+            </div>
+        </div>
+    </div>
+    <script src="js/src/echarts.js" type="text/javascript" charset="utf-8"></script>
+      <script type="text/javascript">
+       require.config({
+            paths: {
+                echarts: 'js/src/'
+            }
+        });
+        
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar',
+                'echarts/chart/line', 
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+            var myChart = ec.init(document.getElementById("ad_data_map_zhu")); 
+                
+            option = {
+		    title : {
+		        text: '访问数据',
+		        subtext: '独立访客数（UV）和浏览量（PV）',
+		        textStyle:{
+		        	color:"#858585",
+		        	fontFamily: 'microsoft yahei',
+		        	fontWeight:"normal",
+		        	
+		        },
+		        itemGap: 10,
+		        
+		    },
+		    tooltip : {
+		        trigger: 'axis',
+		        axisPointer:{
+		    	type: 'none'
+		       }
+		    },
+		    
+		   
+            //工具导航显示 
+		    toolbox: {
+		        show : true,
+		        feature : { 
+		            magicType : {show: true, type: ['line', 'bar']},
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+        
+           grid:{
+          x: 50,
+          y:80,
+          x2: 0,
+
+width: '660px',
+height: '240px',
+ borderWidth:0,
+          },
+        
+        
+        //x轴坐标显示
+        
+        xAxis : {
+            type : 'category',
+            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+            axisLine:{
+            	lineStyle:{
+            		color: '#333',
+                    width: 1,
+                    type: 'solid',
+            	}
+            },
+            splitLine:{
+            	show:false,
+            },    
+           
+        },
+
+    yAxis : {
+            type : 'value',
+            splitNumber: 7,
+            axisLine:{show:false,},
+            splitLine:{
+                lineStyle: {
+                    color: ['#e6e6e6'],
+                    width: 1,
+                    type: 'solid',
+                },
+            }, 
+            
+        },
+        
+    series : [
+        {
+            name:'独立访客数（UV）',
+            type:'bar',
+            data:[2000, 100, 7000, 2300, 2560, 760, 1350, 160, 3220, 2000, 600, 330],
+            markPoint : {
+                data : [
+                    {name : '年最高', value : 162.2, xAxis: 7, yAxis: 163, symbolSize:18},
+                    // {name : '年最低', value : 2.0, xAxis: 0, yAxis: 2}
+                ]
+            },
+
+            itemStyle:{
+                normal: {
+               barBorderRadius: [3, 3, 0, 0],
+               color: '#f96a30',
+             },
+            },
+            // markLine : {
+            //     data : [
+            //         {type : 'average', name: '平均值'}
+            //     ]
+            // }
+        },
+        {
+            name:'浏览量（PV）',
+            type:'bar',
+            data:[2000, 100, 700, 230, 2560, 760, 150, 160, 3220, 2000, 600, 330],
+            markPoint : {
+                data : [
+                    {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
+                    // {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                ],
+                itemStyle:{
+                normal: {
+               color: '#6ed0d3',
+             },
+            },
+            },
+            
+             itemStyle:{
+                normal: {
+               barBorderRadius: [3, 3, 0, 0],
+               color: '#6ed0d3',
+             },
+            },
+            // markLine : {
+            //     data : [
+            //         {type : 'average', name : '平均值'}
+            //     ]
+            // }
+        }
+    ]
+};
+        
+                // 为echarts对象加载数据 
+                myChart.setOption(option); 
+            }
+        );
+
+        
+    </script>
+    
+</body>
+
+</html>

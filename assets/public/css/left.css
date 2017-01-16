@@ -1,0 +1,26 @@
+*{margin:0;padding:0}
+body{font-size:13px;background:#F7FBFC}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td,span,img{margin:0;padding:0;border:0;}
+
+ul,li{list-style:none;}/*列表样式为无*/
+html{height: 100%}
+body{height:100%}
+
+#left_nav{float:left;height:100%;width:176px;padding:10px 0 0 10px;}
+#left_nav h1{ font-size: 14px;border-bottom: 1px solid #D9E4EA;color: #275D96; font-weight: 700;  height: 24px;line-height: 24px; margin-bottom: 5px;}
+#left_nav ul{width:176px;}
+#left_nav li{color: #666666;display: block; margin-right: 1px;height: 29px;line-height: 29px;padding:0 0 0 5px}
+#left_nav li span{padding:5px 10px;color:#666666}
+#left_nav li span:hover{cursor: pointer}
+#left_nav li.active{background:#E2E9EA;}
+#left_nav li.active span{color:#000000}
+#left_nav li a{text-decoration:none;color:#666666}
+#left_nav li a:visited{color:#666666}
+
+
+
+html{height: 100%}
+body{height:100%}
+#switch_bar{width:10px;height:100%;min-height:500px;float:left;background:#E2E9EA;  position:relative; }
+#switch_bar #p{position:absolute; height:47px;width:10px;top:50%; left:0;}
+#switch_bar #p img{ width: 10px;height: 47px;position: absolute; margin-top: -24px; overflow: hidden;} 

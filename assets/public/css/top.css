@@ -1,0 +1,44 @@
+*{margin:0;padding:0;border:0}
+body{font-size:12px;color:#ffffff}
+a{text-decoration:none;color:#ffffff}
+a:visited{color:#ffffff}
+span{color:#ffffff}
+ul,li{list-style:none;}/*列表样式为无*/
+/*清除浮动代码*/
+.clearfix:after{display:block;clear:both;content:"";visibility:hidden;height:0}
+.clearfix{zoom:1}
+
+
+.top{height:89px;background:#3A6EA5;overflow: hidden;min-width:1003px;border-bottom:1px solid #E2E9EA}
+/*background-image: linear-gradient(to bottom, #3c3c3c 0px, #222 100%);
+    background-repeat: repeat-x;
+    background-color: #222;
+    border-color: #080808;*/
+.top .top_left{float:left;height:86px;width:7px;background:#3A6EA5}
+.top .top_right{float:right;height:86px;width:7px;background:#3A6EA5}
+.top a{color:#fff}
+
+.logo{float:left;width:191px;height:70px;margin:6px 0 0 0px;padding:0 8px;}
+.logo img{margin:10px}
+.top_nr{height:97px;margin:6px 0 0 200px;overflow:auto; _display:inline-block;position: relative;}
+.top_nr p{}
+.member_mess{float:left;width:360px;height:26px;line-height:26px;margin:0 0 0 10px;padding:0 0 0 18px;background:url("../images/top_1.gif") no-repeat left;}
+.nav_r{height:26px;overflow: hidden;position: absolute;right:0;margin-left:360px;padding:0 20px 0 100px;}
+.nav_r ul li{float:left;height:26px;line-height:26px;padding:0 8px;}
+.nav_r ul li img{float:left;margin:7px 2px 0 0}
+.nav_r ul li a{float:left;display:block}
+
+
+.nav_m{height:35px;width:100%;min-width: 780px;overflow: hidden;position: absolute;top:36px;margin:12px 0 0 0;}
+.nav_m div{height:35px;margin:0 0 0 15px;}
+.nav_m ul{padding:0px;}
+.nav_m ul li{float:left;margin:0 0 0 0;padding:0 0 0 20px;text-align:center;height:35px;line-height:38px;background:url(../images/nav_bg.png) no-repeat; cursor:pointer}
+.nav_m ul li span{display:block;height:35px;line-height:38px;padding:0 20px 0 0;font-size:14px;font-weight:700;background:url(../images/nav_bg.png) no-repeat right top;}
+.nav_m ul li.active{background:url(../images/nav_bg.png) no-repeat 0px -44px;}
+.nav_m ul li.active span{color:#367ABB;background:url(../images/nav_bg.png) no-repeat right -44px;}
+
+.nav_y{height:22px;overflow: hidden;text-align:right;position: absolute;top:28px;right:20px;}
+.nav_y ul{float:right;wdith:auto}
+.nav_y ul li{float:left;height:22px;line-height:22px;padding:0 8px;}
+.nav_y ul li img{float:left;margin:3px 3px 0 0}
+.nav_y ul li a{float:left;display:block;}

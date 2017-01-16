@@ -1,0 +1,37 @@
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, select, input, textarea, p, blockquote, th, td, strong { margin: 0; padding: 0; }
+body {  min-width: 950px; font-family: "Microsoft Yahei"; font-size: 14px }
+ul, li, ol { list-style: none; }
+*html { background-image: url(about:blank); background-attachment: fixed; }/*解决IE6下滚动抖动的问题*/
+a { text-decoration: none; color: #333; }
+a:hover { text-decoration: underline; }
+.clear { clear: both; height: 0; line-height: 0; font-size: 0; visibility: hidden; }
+div img { vertical-align: middle; border: none; }
+.bold { font-weight: bold; }
+div:after, ul:after { clear: both; content: ""; display: block; height: 0; visibility: hidden; }
+table { border-collapse: collapse; border-spacing: 0; width: 80% }
+table tr{border:1px solid #CCC; }
+table tr:hover{ background: #EFEFEF }
+table th{text-align: left; background: #F3F3F3}
+table th,table td {padding:2px 5px; }
+.hover:hover { opacity: 0.8; }
+.fix { zoom: 1; }
+.floatL { float: left; }
+.floatR { float: right; }
+.f14 { font-size: 14px }
+.f20 { font-size: 20px }
+.select { font-size: 25px }
+h2 { font-style: normal; font-weight: normal; }
+cite, em, strong, th { font-style: normal; }
+.container{padding:10px;}
+.container .book_title{font-size: 24px;font-weight: 500;line-height: 40px;margin-right: 12px; padding-bottom: 20px}
+#manual_content{line-height: 25px}
+#manual_content img { max-width: 80%; width:(document.body.clientWidth>document.getElementById("manual_content").scrollWidth*7/10? "90%": "auto" );}
+#manual_content a{color:#3B5999;}
+#manual_content blockquote {
+margin: 15px 10px;
+border: 2px solid #eee;
+padding: 5px 5px 5px 35px;
+background: #f4f5f7 url('../images/blockquote.gif') no-repeat left top;
+color: #060;
+font-size: 9pt;
+}

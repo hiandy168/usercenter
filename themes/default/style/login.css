@@ -1,0 +1,11 @@
+body{ margin:0; padding:0;border: 0px none;font: inherit;vertical-align: baseline;}
+.w1000{ width:1000px; margin:0 auto;}
+.top{ width:100%; height:70px; line-height:70px; border-bottom:2px solid #0074B3;}
+.top img{ padding-top:10px;}
+.content{ width:1600px; margin:0 auto; height:545px; background:url(../images/bg.jpg) no-repeat;}
+.login{ position:relative; left:590px; top:100px; }
+/*footer*/
+.footer {width: 100%; height: auto; margin: 40px auto;padding: 8px 0px; font-size: 12px; line-height: 28px; color: #8C8C8C; text-align: center; overflow: hidden; clear: both;}
+.footer a { color: #8C8C8C; padding-right:5px;}
+.qq2wei { position: fixed; right: 0; bottom: 20px; z-index: 999;  width: 73px; height: 180px;}
+.goTop { display: block; width: 65px; height: 65px; margin: 0px auto;background: transparent url(../images/lcc-top.jpg) repeat scroll 0% 0%;}

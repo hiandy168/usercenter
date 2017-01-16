@@ -1,0 +1,58 @@
+大楚用户中心开发新增文件：
+	前台：
+		用户签到插件用的控制器     			-->/protected/controllers/activity/PcCheckInController.php  
+		对应签到插件控制器使用的model类	-->/protected/models/Activity_pccheckin.php				   
+		对应签到插件控制器使用的model类	-->/protected/models/Activity_pccheckin_user.php			   
+		签到插件对应的html页面：
+			/themes/default/views/activity/pcCheckIn/list_pccheckin.php //用户添加的签到活动列表页面
+			/themes/default/views/activity/pcCheckIn/add_pccheckin.php  //用户添加和编辑活动的表单录入页面
+			/themes/default/views/activity/pcCheckIn/addlist.php		//用户签到列表页面，查看具体是哪个用户在什么时间签到了
+			/themes/default/views/activity/pcCheckIn/view.php			//手机端用签到的页面，用户点击签到按钮进行签到
+			
+		刮刮卡插件用的	控制器	   		 -->/protected/controllers/activity/ScratchcardController.php
+		对应刮刮卡插件控制器使用的model类	 -->/protected/models/Activity_scratch.php
+		对应刮刮卡插件控制器使用的model类	 -->/protected/models/Activity_scratch_user.php
+		对应刮刮卡插件控制器使用的model类	 -->/protected/models/Activity_scratch_prize.php
+		刮刮卡插件对应的html页面：
+			/themes/default/views/activity/scratchcard/list_scratchcard.php //用户添加的刮刮卡活动列表页面
+			/themes/default/views/activity/scratchcard/add_scratchcard.php  //用户添加和编辑活动的表单录入页面
+			/themes/default/views/activity/scratchcard/winlist.php			//查看用户刮卡记录和中奖记录的页面
+			/themes/default/views/activity/scratchcard/view_scratch.php		//手机端给用户刮卡的html页面
+			
+		
+		用户报名插件使用的控制器			 -->/protected/controllers/activity/SignUpController.php
+		对应报名插件控制器使用的model类	 -->/protected/models/Activity_signup.php
+		对应报名插件控制器使用的model类	 -->/protected/models/Activity_signup_user.php
+		报名插件对应的html页面：
+			/themes/default/views/activity/signUp/list_signup.php 	//用户添加的报名活动列表页面
+			/themes/default/views/activity/signUp/add_signup.php 	//用户添加和编辑活动的表单录入页面
+			/themes/default/views/activity/signUp/addlist.php		//查看用户报名参加活动记录页面
+			/themes/default/views/activity/signUp/view.php			//手机端给用户刮卡的html页面
+		
+		首页数据统计
+			/protected/controllers/ProjectController.php
+			统计代码在这个控制器的Appmgt中
+			对应的html代码如下：
+			/themes/default/views/common/main-con-behavior.php 用户行为数据统计页面
+			/themes/default/views/common/main-con-points.php   用户获得积分数据统计页面
+			/themes/default/views/common/main-con-user.php     用户数据统计页面
+			
+			
+		用户添加积分的控制器
+			/protected/controllers/BehaviorController.php   
+			上面这个文件中我只新增了actionBehavior方法，
+			如果在登录的时候需要给用户增加积分，可以调用这个方法调用成功后会给增加用户的积分
+			调用地址http://localhost/ucenter/Behavior/Behavior
+			传入的参数有mark（用户行为操作的标识，在后台积分管理里面有一个积分标识），openid（用户的openid），pid（用户创建应用的id）
+		日历工具控制器
+			/protected/controllers/CalendarController.php
+			完成了添加记事的功能，日历页面显示的活动列表的没做完
+	后台：
+		用户积分管理控制器
+		/protected/modules/controllers/mamagementContoller.php
+		对应的html页面
+		/protected/modules/views/management/list.php //可以增加积分的行为数据列表和具体说明
+		/protected/modules/views/management/add.php  //增加用户行为
+		/protected/modules/views/management/jilu.php //用户获得积分的所有记录
+		
+	

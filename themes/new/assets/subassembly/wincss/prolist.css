@@ -1,0 +1,541 @@
+@CHARSET "UTF-8";
+.application_app_info h2 {
+    border-bottom: 1px solid #e9e9e9;
+    font-size: 16px;
+    padding: 18px 0 12px;
+}
+.application_app_info h2 a {
+    color: #444;
+    font-size: 14px;
+    font-weight: 400;
+}
+.application_app_info h2 a.dashed {
+    color: #e5e5e5;
+}
+.application_app_info h2 a.dashed:hover {
+    color: #e5e5e5 !important;
+}
+.application_app_info h2 a.dashed span {
+    background: #e5e5e5 none repeat scroll 0 0;
+    display: inline-block;
+    float: left;
+    height: 2px;
+    margin-right: 7px;
+    margin-top: 6px;
+    position: relative;
+    width: 14px;
+}
+.application_app_info h2 a.dashed span::before {
+    background: #e5e5e5 none repeat scroll 0 0;
+    content: " ";
+    display: inline-block;
+    height: 14px;
+    left: 6px;
+    position: absolute;
+    top: -6px;
+    width: 2px;
+}
+.application_app_info h2 a span {
+    background: #59c6c2 none repeat scroll 0 0;
+    display: inline-block;
+    float: left;
+    height: 2px;
+    margin-right: 7px;
+    margin-top: 6px;
+    position: relative;
+    width: 14px;
+}
+.application_app_info h2 a span::before {
+    background: #59c6c2 none repeat scroll 0 0;
+    content: " ";
+    display: inline-block;
+    height: 14px;
+    left: 6px;
+    position: absolute;
+    top: -6px;
+    width: 2px;
+}
+.application_app_info .application_list_cont {
+    padding-top: 30px;
+}
+.application_app_info .application_list_cont .my_application {
+    border: 1px solid #e9e9e9;
+    display: block;
+    height: auto;
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding: 20px;
+    position: relative;
+    width: 938px;
+}
+.application_app_info .application_list_cont .my_application .delete {
+    display: none;
+}
+.application_app_info .application_list_cont .my_application:hover {
+    border: 1px solid #29b6b0;
+}
+.application_app_info .application_list_cont .my_application:hover .delete {
+    background: rgba(0, 0, 0, 0) url("<?php echo $this->_theme_url.'/images/application_icon.png'?>") no-repeat scroll 0 -72px;
+    display: inline-block;
+    height: 26px;
+    position: absolute;
+    right: -13px;
+    top: -13px;
+    width: 26px;
+}
+.application_app_info .application_list_cont .my_application .my_application_l {
+    padding: 15px 0;
+    width: 36%;
+}
+.application_app_info .application_list_cont .my_application .my_application_l .my_application_cont {
+    margin-left: 20px;
+    width: 200px;
+}
+.application_app_info .application_list_cont .my_application .my_application_l .my_application_cont p {
+    color: #444;
+    line-height: 24px;
+}
+.application_app_info .application_list_cont .my_application .my_application_l .my_application_cont p span {
+    color: #666;
+    display: inline-block;
+    width: 86px;
+}
+.application_app_info .application_list_cont .my_application .my_application_l .my_application_cont p label {
+    padding-left: 22px;
+}
+.application_app_info .application_list_cont .my_application .my_application_l .my_application_cont p label.normal {
+    background: rgba(0, 0, 0, 0) url("http://yun.duiba.com.cn/developer/img/application_icon.png") no-repeat scroll 0 -2px;
+    color: #00873c;
+}
+.application_app_info .application_list_cont .my_application .my_application_l .my_application_cont p label.not_open {
+    background: rgba(0, 0, 0, 0) url("http://yun.duiba.com.cn/developer/img/application_icon.png") no-repeat scroll 0 -33px;
+    color: #f98022;
+    line-height: 16px;
+    display:inline-block;
+    height:16px;
+}
+.application_app_info .application_list_cont .my_application .my_application_l .my_application_cont h3 {
+    font-size: 16px;
+    overflow: hidden;
+    padding: 16px 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 190px;
+}
+.application_data {
+    border: 1px solid #ebebeb;
+    border-radius: 6px;
+    color: #666;
+    display: block;
+}
+.application_data tr th {
+    background: #fafafa none repeat scroll 0 0;
+    border-bottom: 1px solid #ebebeb;
+    height: 38px;
+    line-height: 38px;
+}
+.application_data tr td {
+    border-bottom: 1px solid #ebebeb;
+    height: 45px;
+    line-height: 45px;
+	text-align:center;
+}
+.application_data tr td:first-child {
+    text-align: center;
+}
+.application_data tr td:first-child span {
+    border-right: 1px dotted #29b6b0;
+    display: inline-block;
+    height: 10px;
+    line-height: 10px;
+    vertical-align: middle;
+    width: 100%;
+}
+.application_data tr:last-child td {
+    border: medium none;
+}
+.application_data tr:nth-child(2n) td {
+    background: #fafafa none repeat scroll 0 0;
+}
+.lotter_info_content input[type="text"] {
+    width: 580px;
+}
+.lotter_info_content dl dd .appli_icon img {
+    border-radius: 15px;
+    cursor: pointer;
+    float: left;
+    margin-right: 15px;
+}
+.lotter_info_content dl dt {
+    width: 100px;
+}
+.lotter_info_content dl dd .appli_icon p {
+    display: inline-block;
+    float: left;
+    line-height: 50px;
+}
+.lotter_info_content select {
+    border-radius: 5px;
+    float: left;
+    height: 32px;
+    line-height: 32px;
+    width: 130px;
+}
+.popup-title {
+    border-bottom: 1px dashed #f0f0f0;
+    color: #444;
+    font-size: 14px;
+    padding: 0 0 20px;
+}
+.tel-info p {
+    font-size: 14px;
+    padding: 15px 0;
+}
+.tel-info .input input {
+    height: 34px;
+    line-height: 34px;
+    margin-right: 10px;
+    width: 158px;
+}
+.tel-info .input input[type="submit"] {
+    color: #444 !important;
+}
+.lotter_info_content dl dd input.error[type="text"] {
+    margin-bottom: 20px;
+}
+.forbid + .tooltip.bottom .tooltip-arrow {
+    border: medium none;
+}
+.forbid + .tooltip.bottom .tooltip-arrow::before {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: transparent transparent #29b6b0;
+    border-image: none;
+    border-style: solid;
+    border-width: 4px;
+    content: "";
+    display: block;
+    left: 0;
+    position: absolute;
+    top: -3px;
+}
+.forbid + .tooltip.bottom .tooltip-arrow::after {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: transparent transparent #fff;
+    border-image: none;
+    border-style: solid;
+    border-width: 4px;
+    content: "";
+    display: block;
+    left: 0;
+    position: absolute;
+    top: -2px;
+}
+.forbid + .tooltip.bottom .tooltip-inner {
+    background-color: #fff;
+    border: 1px solid #29b6b0;
+    color: #29b6b0;
+    font-weight: 400;
+}
+
+.new_wrap{
+	width:1168px;
+	margin:0 auto;
+	overflow:hidden;
+}
+.new_wrap .left {
+    width: 15%;
+    height: 624px;
+    border: 1px solid #d1d1d1;
+    background: #fff;
+    float: left;
+}
+
+.new_wrap .right {
+    width: 84%;
+    height: min-624px;
+    border: 1px solid #d1d1d1;
+    background: #fff;
+    float: right;
+	padding:10px;
+}
+
+.new_wrap .left .title1 {
+    height: 57px;
+    line-height: 60px;
+    font-family: "微软雅黑";
+    font-size: 14px;
+    color: #050505;
+    margin-left: 9px;
+    width: 151px;
+    text-indent: 28px;
+}
+
+.new_wrap .left .title22 {
+    position: relative;
+    height: 46px;
+    line-height: 46px;
+    color: #333;
+    width: 151px;
+    margin-left: 9px;
+    text-indent: 28px;
+    font-size: 14px;
+    font-family: "微软雅黑";
+    cursor: pointer;
+}
+
+.new_wrap .left .title22 .arrow {
+    width: 10px;
+    height: 10px;
+    background: url("../images/new15.png") no-repeat;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    margin-top: -5px;
+}
+
+.new_wrap .right .title {
+    height: 102px;
+    position: relative;
+    /*border-bottom: 1px solid #d1d1d1;*/
+}
+
+.new_wrap .right .table_content {
+}
+
+.new_wrap .left .title22 .arrow_down {
+    width: 10px;
+    height: 10px;
+    background: url("../images/new14.png") no-repeat;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    margin-top: -5px;
+}
+
+.new_wrap .left .title2 .subtitle {
+    margin-top: 6px;
+    display: none;
+}
+
+.new_wrap .left .title2 .subtitle li {
+    height: 30px;
+    line-height: 30px;
+    text-indent: 42px;
+}
+
+.new_wrap .left .title2 .subtitle li a {
+    font-family: "微软雅黑";
+    font-size: 14px;
+    color: #333;
+}
+
+.new_wrap .left .on_hover {
+    background: #f0f0f0;
+}
+
+.new_wrap .right .title .item1 {
+    padding: 0 6px;
+    line-height: 102px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 24px;
+}
+
+.new_wrap .right .title .item1,
+.new_wrap .right .title .item1 a {
+    font-family: "微软雅黑";
+    font-size: 15px;
+    color: #909090;
+}
+
+.new_wrap .right .title .item2 {
+    padding: 0 6px;
+    line-height: 102px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 124px;
+}
+
+.new_wrap .right .title .item2,
+.new_wrap .right .title .item2 a {
+    font-family: "微软雅黑";
+    font-size: 15px;
+    color: #909090;
+}
+
+.new_wrap .right .title .item2.select,
+.new_wrap .right .title .item2.select a {
+    color: #2d8ed8;
+}
+
+.new_wrap .right .title .item2.select a:after {
+    display: block;
+    content: " ";
+    height: 2px;
+    border-top: 2px solid #2d8ed8;
+    position: relative;
+    top: -34px;
+}
+
+.new_wrap .right .title .item3 {
+    width: 286px;
+    height: 38px;
+    border: 1px solid #d1d1d1;
+    position: absolute;
+    top: 50%;
+    margin-top: -19px;
+    left: 356px;
+}
+
+.new_wrap .right .title .item3 .input,
+.new_wrap .right .title .item3 .button {
+    height: 38px;
+    float: left;
+}
+
+.new_wrap .right .title .item3 .input {
+    width: 226px;
+}
+
+.new_wrap .right .title .item3 .input input[type="text"] {
+    width: 216px;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    /*height: 30px;*/
+    font-size: 15px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.new_wrap .right .title .item3 .button {
+    width: 50px;
+    cursor: pointer;
+    background: url("../images/new16.png") no-repeat center right;
+}
+
+.new_wrap .right .title .item4 {
+    width: 101px;
+    height: 38px;
+    border: 1px solid #d1d1d1;
+    line-height: 38px;
+    text-align: center;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-family: "微软雅黑";
+    font-size: 15px;
+    color: #636363;
+    position: absolute;
+    top: 50%;
+    margin-top: -19px;
+    right: 32px;
+}
+
+.new_wrap .right .table_content .table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.new_wrap .right .table_content .table thead td {
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    color: #909090;
+    font-family: "微软雅黑";
+    background: #fcfcfc;
+}
+
+.new_wrap .right .table_content .table td {
+    height: 68px;
+    text-align: center;
+    font-size: 16px;
+    color: #000;
+    font-family: "微软雅黑";
+    border-bottom: 1px solid #ececec;
+    cursor: pointer;
+}
+
+.new_wrap .right .table_content .table .hover {
+    background: #f9f9f9;
+}
+
+.new_wrap .right .page_num {
+    width: 100%;
+    height: 28px;
+    display: table;
+}
+
+.new_wrap .right .tips {
+    height: 31px;
+    line-height: 31px;
+    background: #fffbea;
+    border: 1px solid #e5dec1;
+    font-size: 14px;
+    font-family: "微软雅黑";
+    color: #ba9c6d;
+    text-indent: 34px;
+    background: url("../images/new17.png") no-repeat 10px center #fffbea;
+}
+.add_application .item{
+	padding:10px;
+	overflow:hidden;
+}
+.add_application .item .l{
+	width:20%;
+	float:left;
+	color: #222;
+    font-family: "微软雅黑";
+    font-size: 14px;
+    height: 32px;
+    line-height: 32px;
+}
+.add_application .item .r{
+	width:80%;
+	float:left;
+}
+.add_application .item .r .input_text{
+	width:400px;
+	border:1px solid #CDCDCD;
+	line-height:32px;
+	padding:0 10px;
+}
+.add_application .item .r .textarea_text{
+	width:400px;
+	border:1px solid #CDCDCD;
+	padding:10px;
+}
+.add_application .item .r .p{
+	color: #222;
+    font-family: "微软雅黑";
+    font-size: 14px;
+    height: 32px;
+    line-height: 32px;
+	color:red;
+}
+.add_application .item .r .p1{
+	color: #222;
+    font-family: "微软雅黑";
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+}
+.add_application .item .r .button{
+	color:white;
+	background:#0093E0;
+	width: 236px;
+    height: 44px;
+	border:0px;
+	border-radius:5px;
+	line-height:44px;
+	text-align:center;
+	cursor:pointer;
+}

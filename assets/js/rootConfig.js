@@ -1,0 +1,86 @@
+/**
+ * Created by Administrator on 13-10-28.
+ */
+seajs.config({
+    alias: {
+        /*lib*/
+        'jquery'                : 'lib/jquery',
+        'jquery-ui'             : 'lib/jquery-ui',
+	    'jquery-cookie'         : 'lib/jquery.cookie',
+        'editor'                : 'lib/bootstrap-wysiwyg',
+        'hotkey'                : 'lib/jquery.hotkeys',
+        'template'              : 'lib/template',
+        'template-tag'          : 'lib/template-tag',
+        'zClip'                 : 'lib/zeroclipboard',
+        'timepicker'            : 'lib/timepicker',
+        'bootstrap'             : 'lib/bootstrap.min',
+        'ajax_form'             : 'lib/jquery.form.js',
+        'paginate'              : 'lib/jquery.paginate',
+        /*plugins*/
+        'main'                  : 'src/plugins/main',
+        /***********zeng**start*/
+        'components_main'        : 'src/plugins/components_main',
+        'activity_main'        : 'src/plugins/activity_main',
+        /*******************end*/
+        'en_placeholder'        : 'src/plugins/en_placeholder',
+        'province'              : 'src/plugins/provinceCity',
+        'province_data'         : 'src/plugins/provincesdata',
+        'form_validator'        : 'src/plugins/form_validator',
+        'img_text_opera'        : 'src/plugins/img_text_opera',
+        'editor_init'           : 'src/plugins/editor_init',
+        'form_init'             : 'src/plugins/form_init',
+        'pager'                 : 'src/plugins/pager.ajax.js',
+        'jquery_extend'         : 'src/plugins/jquery_extend',
+        'table_init'            : 'src/plugins/table_init',
+        'menu_index_init'       : 'src/plugins/menu_index_init',
+        /*requires*/
+        'sitehpage_refresh'     : 'src/requires/sitehpage_refresh',
+        'image_word_require'    : 'src/requires/image_word_require',
+        'focus_link'            : 'src/requires/focus_link',
+        'opera_btns'            : 'src/requires/opera_btns',
+        'order_btn'             : 'src/requires/order_btn',
+        'word_text'             : 'src/requires/word_text',
+        'word_type'             : 'src/requires/word_type',
+        'word_content'          : 'src/requires/word_content',
+        'image_word'            : 'src/requires/image_word',
+        'keyword'              : 'src/requires/keyword',
+        /*app*/
+        'login'                 : 'src/app/login',
+        'adminlogin'            : 'src/app/adminlogin',
+        'bindpublic'            : 'src/app/bindpublic',
+        'menu_index'            : 'src/app/menu_index',
+        'sitehpage'             : 'src/app/sitehpage',
+        'navform'               : 'src/app/nav_form',
+        'changepassword'        : 'src/app/changepassword',
+        'word_index'            : 'src/app/word_index',
+        'mysite'                : 'src/app/mysite',
+        'reply'                 : 'src/app/reply',
+        'message_board'         : 'src/app/message_board',
+        'message'               : 'src/app/message',
+        'site_index_form'       : 'src/app/site_index_form',
+        'module_index'          : 'src/app/module_index',
+        'admin_user'            : 'src/app/admin_user',
+		'map'                   : 'src/app/map',
+        'group_on'              : 'src/app/group_on',
+        'come_grab'             : 'src/app/come_grab',
+        'sitesetting'           : 'src/app/sitesetting',
+        'admin_module'          : 'src/app/admin_module',
+        'user_module'           : 'src/app/user_module',
+        'vbSchoolCmsEditor'     : 'src/app/vbSchoolCmsEditor',
+        'module_draw'           : 'src/app/module_draw',
+        'word_add'              : 'src/app/word_add',
+        'article_add'           : 'src/app/article_add',
+        'reservation'           : 'src/app/reservation',
+        'vote'                  : 'src/app/vote',
+        'apply'                 : 'src/app/apply',
+        'subject'               : 'src/app/subject',
+	    'module_question'       : 'src/app/module_question',
+	    'module_moption'        : 'src/app/module_moption',
+        'module_questionoption' :'src/app/module_questionoption',
+        'tdc_index' :'src/app/tdc_index'
+    },
+    charset: 'utf-8',
+    'map': [
+        [ /^(.*\.(?:css|js))(.*)$/i, '$1?v=2.1.1' ]
+    ]
+});

@@ -1,0 +1,65 @@
+
+*{margin:0;padding:0;}
+
+.cl{*zoom:1;}
+.cl:after{display:block;overflow:hidden;clear:both;height:0;visibility:hidden;content:".";}
+
+a{text-decoration:none;color:#910A2B;}
+a:hover{color:#ff0000;}
+img,input{border:none;}
+body,button,input,select,textarea{ font:12px/normal "宋体",Arial, Helvetica, sans-serif ;}
+h1,h2,h3,h4,h5,h6{font-size:12px;}
+i,b,em{font-style:normal;font-weight:normal;}
+ul,ol{ list-style-type:none;}
+.none{display:none;height:0;overflow:hidden;}
+.hide,ins{display:none;}
+.clear{clear:both;}
+
+body{background:#ffffff;height:740px;overflow-y:auto;}
+.wp{margin:0px auto;width:1000px;}
+.mt10{margin:10px 0 0 0;}
+/*------------------------------------------------*/
+
+.logobox{background:#ffffff;height:65px;border-bottom:1px solid #e3e3e3;}
+.logo{margin:0 auto 0;width:1000px;}
+.logo h2{float:left;height:40px;margin:12px 0 0 20px;padding:0 0 0 20px;line-height:40px;font-size:18px;color:#333;}
+
+.logo .mess{float:right;text-align:left;margin:20px 10px 0 0;color:#333;}
+.logo .mess p{height:24px;line-height:24px;}
+
+
+
+/* 登陆 */
+.loginbox{width:1000px;margin:0 auto;background:#fff;padding:30px 0;}
+
+.recommend{float:left;width:500px;margin:5px 0 0 20px;display:inline;}
+
+.formLogin{width:330px;float:right;margin:0 40px 0 0;border:1px solid #CACACA;background:#FAFAFA; box-shadow:0 3px 3px 0 rgba(200,200,200,.5);}
+.formLogin h2{height:35px;color:#333;font-size:14px;font-weight:bold;line-height:35px;margin:0 20px;border-bottom:1px solid #e3e3e3;}
+.formLogin form{width: 100%;padding-top: 20px;}
+.formLogin .con-box{padding:15px 0 11px;}
+.fLRow{position:relative; height:34px; padding-bottom:10px; }
+.fLRow label{float:left;width:75px;text-align:right;line-height:28px;color:#444;margin:0 8px 0 0;font-weight:bold;}
+.fLRcell{float:left;line-height:22px;}
+.inputL{height:22px; line-height:22px; padding:2px 4px; width:210px; border:1px solid #b9c4d4; border-left-color:#c6cfdb; border-bottom-color:#d4dae2; border-right-color:#c6cfdb; border-radius:3px; box-shadow:1px 1px 1px 0px rgba(210,210,210,.2) inset;}
+.inputL:focus{outline:none;border-color:#4992f2;}
+.fLRow .focus{outline:none;border-color:#4882f2;}
+
+
+.rember{margin:0 0 0 85px;}
+.rember input{vertical-align:middle;}
+.rember label{float:none;text-align:left;color:#666;font-weight:400;}
+
+.loginBtm{height:61px;padding:22px 43px 0 34px; background:#D8E0EA;border-top:1px solid #CACACA;}
+.loginBtm a.lgBtn{float:right;background:#346ac2 url("../images/btn_login.png") no-repeat;height:33px;width:112px;border:1px solid #153d7e;border-radius:3px;box-shadow:1px 1px 1px rgba(0,0,0,.2);}
+.loginBtm a.lgBtn:hover{background-position:0 -33px;}
+.loginBtm a.lgBtn button{display:block;border:none;background:none;height:33px;width:112px;text-indent:-999em;overflow:hidden;cursor:pointer;}
+.loginBtm p{float:left;}
+.loginBtm p a{color:#666;line-height:18px;}
+.loginBtm p a:hover{color:#0450A2;text-decoration:underline;}
+
+/*---------------footer-----------------*/
+
+#footer{width:1000px;margin:10px auto;padding:5px;border-top:1px solid #e3e3e3;text-align:right}
+#footer a{color:#000;text-decoration: underline}
+

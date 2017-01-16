@@ -1,0 +1,475 @@
+body,
+div,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+td,
+dl,
+dd,
+form,
+iframe,
+input,
+textarea,
+select,
+label,
+article,
+aside,
+footer,
+header,
+menu,
+nav,
+section,
+time,
+audio,
+video
+{
+    margin: 0;
+    padding: 0;
+}
+
+div,
+article,
+aside,
+footer,
+header,
+hgroup,
+nav,
+section,
+audio,
+canvas,
+video,
+img
+{
+    display: block;
+}
+
+body
+{
+    font-family: Helvetica,STHeiti,Droid Sans Fallback;
+    font-size: 100%;
+
+    -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+textarea
+{
+    resize: none;
+}
+
+iframe,
+img
+{
+    border: 0;
+}
+
+ul,
+ol
+{
+    list-style: none;
+}
+
+input,
+select,
+textarea
+{
+    outline: 0;
+
+    -webkit-user-modify: read-write-plaintext-only;
+}
+
+input
+{
+    /*-webkit-appearance: none;*/
+}
+input[type='text'],
+textarea,
+div
+{
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+        -ms-box-sizing: border-box;
+}
+
+input[type='text']
+{
+    font-size: 16px;
+
+    width: 100%;
+    /*margin:               6px 0;*/
+    height: 32px;
+    padding: 0 10px;
+
+    -webkit-user-select: auto;
+       -moz-user-select: auto;
+        -ms-user-select: auto;
+            user-select: auto;
+    vertical-align: middle;
+    vertical-align: middle;
+    word-break: normal;
+
+    border: 1px #ccc solid;
+    border-radius: 3px;
+    background: #fff;
+
+    -webkit-writing-mode: horizontal-tb;
+}
+a
+{
+    text-decoration: none;
+
+    color: #fff;
+}
+
+i
+{
+    font-style: normal;
+}
+
+div
+{
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.web_flex
+{
+    display: -webkit-flex;
+    display:         flex;
+    display: -webkit-box;
+    display:         box;
+}
+
+.web_flex_1
+{
+    -webkit-flex: 1;
+            flex: 1;
+    -webkit-box-flex: 1;
+            box-flex: 1;
+}
+.content_wrap_style_1
+{
+    width: 100%;
+    max-width: 320px;
+    min-height: 480px;
+    margin: 0 auto;
+    padding-bottom: 28px;
+}
+.content_wrap_style_1 .style_1_part_1
+{
+    position: relative;
+
+    height: 256px;
+    padding-top: 123px;
+}
+.content_wrap_style_1 .change
+{
+    position: relative;
+
+    height: 133px;
+    margin: 0 auto;
+}
+.content_wrap_style_1 .change .text
+{
+    font-size: 12px;
+    line-height: 30px;
+
+    position: absolute;
+    top: 17px;
+    left: 20px;
+
+    width: 115px;
+    height: 30px;
+
+    text-indent: 14px;
+
+    color: #fff;
+}
+.content_wrap_style_1 .change .text span
+{
+    font-size: 16px;
+
+    margin: 0 4px;
+}
+.content_wrap_style_1 .scratchCard,
+.content_wrap_style_1 .prizeText
+{
+    position: absolute;
+    top: 61px;
+    left: 70px;
+
+    width: 185px;
+    height: 40px;
+}
+.content_wrap_style_1 .scratchCard
+{
+    z-index: 1;
+}
+.content_wrap_style_1 .prizeText
+{
+    font-size: 15px;
+    font-weight: bolder;
+    line-height: 40px;
+
+    overflow: hidden;
+
+    text-align: center;
+
+    color: #000;
+}
+.style_1_part_2
+{
+    width: 272px;
+    height: 28px;
+    margin: 12px auto 6px auto;
+}
+.style_1_part_2 .button
+{
+    height: 28px;
+
+    cursor: pointer;
+}
+.style_1_part_2 .button1
+{
+    background: url(../images/bg_5.png) no-repeat center center;
+    background-size: 94px 28px;
+}
+.style_1_part_2 .button2
+{
+    background: url(../images/bg_6.png) no-repeat center center;
+    background-size: 94px 28px;
+}
+.style_1_part_3
+{
+    width: 272px;
+    margin: 0 auto;
+    padding: 4px 25px 8px 0;
+    border-radius:   5px;
+}
+.style_1_part_3 .info_wrap .icon,
+.style_1_part_3 .info_wrap .text
+{
+    height: 34px;
+}
+.style_1_part_3 .info_wrap .icon
+{
+    width: 19px;
+
+    background: url(../images/bg_8.png) no-repeat left center;
+    background-size: 16px 30px;
+}
+.style_1_part_3 .info_wrap .text
+{
+    font-size: 20px;
+    line-height: 34px;
+
+    padding-left: 8px;
+
+    text-align: left;
+
+    color: #fff;
+    background: url(../images/bg_9.png) repeat-x left bottom;
+    background-size: 5px 3px;
+}
+.style_1_part_3 .info_wrap .content
+{
+    padding: 10px 0 10px 25px;
+
+    color: #fff;
+}
+.style_1_part_3 .info_wrap .content .icon
+{
+    position: relative;
+    top: 2px;
+
+    display: inline-block;
+
+    width: 13px;
+    height: 13px;
+    margin-right: 10px;
+
+    background: url(../images/bg_10.png) no-repeat center center;
+    background-size: 13px 13px;
+}
+.style_1_part_3 .info_wrap .content p
+{
+    line-height: 28px;
+}
+.wx_share_layer
+{
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    left: 0;
+
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    background: url(../images/bg_11.png) no-repeat right top rgba(0, 0, 0, .8);
+    background-size: 192px 183px;
+}
+.sign_up_layer_wrap
+{
+    position: fixed;
+    z-index: 12;
+    top: 0;
+    left: 0;
+
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, .8);
+}
+.sign_up_layer
+{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+
+    width: 246px;
+    margin-left: -123px;
+}
+.sign_up_layer .ad
+{
+    height: 125px;
+}
+.sign_up_layer .content
+{
+    padding: 15px 10px;
+
+    background: url(../images/bg_15.png) repeat center center;
+    background-size: 216px 208px;
+}
+.sign_up_layer .content .input
+{
+    margin-bottom: 10px;
+}
+.sign_up_layer .content ::-webkit-input-placeholder
+{
+    color: #000;
+}
+.sign_up_layer .bottom
+{
+    height: 32px;
+
+    background: url(../images/bg_16.png) no-repeat center bottom;
+    background-size: 247px 32px;
+}
+.sign_up_layer .button
+{
+    width: 140px;
+    height: 44px;
+    margin: 12px auto;
+
+    background: url(../images/bg_12.png) no-repeat center center;
+    background-size: 140px 44px;
+}
+.prize_layer_wrap {
+    position:   fixed;
+    width:      100%;
+    height:     100%;
+    z-index:    11;
+    background: rgba(0, 0, 0, 0.8);
+    left:       0;
+    top:        0;
+    display:    none;
+}
+.prize_layer {
+    width:          247px;
+    position:       absolute;
+    left:           50%;
+    margin-left:    -124px;
+    top:            30%;
+    background:     #e2e2e2;
+    border-radius:  10px;
+    padding-bottom: 10px;
+}
+.prize_layer .top {
+    height:          40px;
+    background:      url(../images/bg_19.png) no-repeat center top;
+    background-size: 247px 40px;
+}
+.prize_layer .content {
+    padding: 10px 20px;
+}
+.prize_layer .content p {
+    margin-top:  10px;
+    font-size:   24px;
+    text-align:  center;
+    line-height: 30px;
+    color:       #012d78;
+}
+.prize_layer .button {
+    width:           74px;
+    height:          30px;
+    background:      url(../images/bg_18.png) no-repeat center center;
+    background-size: 74px 30px;
+    margin:          10px auto;
+}
+.winning_list {
+    width:       272px;
+    position:    fixed;
+    top:         50%;
+    left:        50%;
+    margin-left: -136px;
+    margin-top:  -124px;
+    height:      300px;
+    background:  rgba(0, 0, 0, 0.8);
+    z-index:     11;
+    display:     none;
+}
+.winning_list .title {
+    height:      24px;
+    font-weight: bolder;
+    font-size:   20px;
+    line-height: 24px;
+    padding:     12px 0;
+    color:       #fff;
+    text-align:  center;
+}
+.winning_list .content {
+    padding: 10px;
+}
+.winning_list .h {
+    text-align: center;
+    color:      #fff;
+}
+.winning_list .l {
+    /*height:     22px;*/
+    line-height:  22px;
+    text-align:   center;
+    color:        #fff;
+    word-wrap:    break-word;
+    word-break:   normal;
+    text-align:   left;
+    padding-left: 20px;
+}
+.winning_list .list {
+    height:   180px;
+    overflow: hidden;
+}
+.winning_list .list li{
+    padding: 6px 0;
+}
+.winning_list .button {
+    width:           73px;
+    height:          30px;
+    background:      url(../images/bg_18.png) no-repeat center center;
+    background-size: 73px 30px;
+    margin:          0 auto;
+    margin-top:      10px;
+}

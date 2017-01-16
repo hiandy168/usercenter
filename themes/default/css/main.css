@@ -1,0 +1,25 @@
+*{margin: 0; padding: 0; outline: 0; border: 0;}
+html, body{width: 100%; overflow-x: hidden;}
+body{font-family: "微软雅黑"; font-size: 14px; border-top: 4px solid #1399e5;}
+a{text-decoration: none; color: #222;}
+ul, ol, li{list-style: none;}
+.clearH{clear: both; height: 0; overflow: hidden;}
+
+/*header*/
+.da_header{width: 1070px; height: 65px; margin: 0 auto;}
+.da_header h1{float: left; margin-top: 15px;}
+.da_header h1 a{display: inline-block; width: 185px; height: 35px; text-indent: -9999px; background: url("../images/log.png") no-repeat 0 0;}
+.da_header ul{display: inline-block; width: 500px; height: auto; margin-left: 100px; line-height: 65px; text-align: center; overflow: hidden;}
+.da_header ul li{float: left; height: 65px; }
+.da_header ul li a{padding: 10px 20px;}
+.da_header ul li.action a{color: #fff; background-color: #1399e5; border-radius: 3px;}
+.header_login{float: right;}
+.header_login span, .header_login a{line-height: 65px;}
+.header_login a{color: #009dd9;}
+
+/*脚步*/
+.da_footer{color: #a3a3a3; background-color: #1a1a1a; padding: 20px 0;}
+.da_footer ul{width: 468px; height: auto; margin: 0 auto; text-align: center; overflow: hidden;}
+.da_footer ul li{float: left; width: 116px; line-height: 28px; text-align: center;}
+.da_footer ul li a{color: #a3a3a3;}
+.da_footer p{line-height: 28px; text-align: center;}

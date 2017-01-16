@@ -1,0 +1,76 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 6455143515247804549 (0x599546d388830085)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=WeBank DEV CA, O=WeBank Co., Ltd., L=Shenzhen, C=CN
+        Validity
+            Not Before: Dec 27 02:00:16 2016 GMT
+            Not After : Dec 25 02:00:16 2026 GMT
+        Subject: C=CN, O=WeBank Co., Ltd., CN=W0000020
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:d2:6d:0e:16:46:5a:d4:97:cd:62:93:29:31:ee:
+                    28:2b:2b:c3:74:3a:8e:3d:35:3b:68:db:d1:08:fe:
+                    8c:53:d4:62:bb:5f:90:8e:2a:db:87:6d:f6:57:31:
+                    16:17:d2:2d:cc:0d:3c:23:29:93:a4:95:c5:8e:95:
+                    2a:96:1e:d8:0b:f8:5c:95:7a:21:0a:39:5e:7e:7a:
+                    cb:e1:03:65:ed:c8:c2:fd:91:49:aa:48:f7:b6:5a:
+                    c1:11:49:6d:ea:c8:43:85:05:30:52:a3:ab:82:2c:
+                    7f:05:cc:cc:d5:ae:a9:6e:74:2c:3b:42:7c:71:91:
+                    61:21:96:8d:bd:75:3c:13:ab:8b:98:f1:1a:0c:e4:
+                    9d:94:9e:c2:43:3c:4b:96:a2:e9:ad:64:33:71:f2:
+                    ce:96:44:ce:98:5a:6b:f7:7c:62:13:4b:fb:e7:0a:
+                    5a:dc:d2:eb:14:80:c2:53:c6:d9:cd:6b:84:dd:5b:
+                    ff:64:6d:f8:d0:a6:7e:bb:c6:dc:b4:3a:d9:c9:9e:
+                    96:ec:7a:e4:8a:3f:98:38:34:2e:ae:a6:44:d3:4e:
+                    d6:f6:ff:0d:0d:99:74:04:b3:3e:b2:88:e4:84:d1:
+                    21:7e:55:87:15:d7:fb:9f:29:4c:14:45:69:50:e4:
+                    4d:06:b4:42:b4:c5:13:8b:af:66:6b:02:b6:ee:59:
+                    d5:19
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Key Usage: 
+                Digital Signature, Non Repudiation, Key Encipherment
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication, E-mail Protection
+    Signature Algorithm: sha256WithRSAEncryption
+         75:a4:7b:e4:fc:77:d5:3b:ce:35:be:2c:13:2c:dd:48:1e:ce:
+         50:36:27:6e:65:1d:de:27:21:1d:49:80:9c:be:86:00:9a:e6:
+         7f:70:fa:df:25:44:93:cd:1b:d4:64:58:54:3f:22:f5:48:c9:
+         c5:0d:43:7d:45:22:2c:f6:e4:7a:bd:4e:3a:29:a6:af:49:9f:
+         6b:0c:7c:f5:8e:d4:7f:89:32:5a:e2:94:66:2d:e6:94:b7:1c:
+         86:3a:32:07:d8:86:b9:52:e7:23:48:6d:06:22:e0:e7:29:4a:
+         9d:e9:d7:ab:87:8c:4c:e9:4f:5e:46:aa:20:10:e5:ab:f3:25:
+         8f:44:78:4a:f7:fe:a8:b3:34:53:eb:7c:f8:35:d9:1c:bc:e9:
+         e1:a5:7f:0d:61:cc:d8:54:8b:c6:60:90:63:da:58:a5:9c:e9:
+         e9:42:0a:a0:32:9e:12:24:fc:25:cd:0e:29:46:9e:dc:07:d9:
+         bf:1e:71:68:ff:e1:57:24:f6:69:63:83:49:97:46:06:9c:c0:
+         1c:b0:9a:48:1b:f1:01:fa:a2:7a:c7:7e:36:d3:73:07:5d:d6:
+         17:54:61:f4:13:7f:c1:7a:1f:29:06:09:9d:fd:c2:6d:fa:de:
+         6d:67:73:8c:4a:11:12:7a:b8:5f:5b:e3:69:fb:6b:7e:3a:3d:
+         37:b7:94:bd
+-----BEGIN CERTIFICATE-----
+MIIDSTCCAjGgAwIBAgIIWZVG04iDAIUwDQYJKoZIhvcNAQELBQAwUzEWMBQGA1UE
+AwwNV2VCYW5rIERFViBDQTEZMBcGA1UECgwQV2VCYW5rIENvLiwgTHRkLjERMA8G
+A1UEBwwIU2hlbnpoZW4xCzAJBgNVBAYTAkNOMB4XDTE2MTIyNzAyMDAxNloXDTI2
+MTIyNTAyMDAxNlowOzELMAkGA1UEBhMCQ04xGTAXBgNVBAoMEFdlQmFuayBDby4s
+IEx0ZC4xETAPBgNVBAMMCFcwMDAwMDIwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A
+MIIBCgKCAQEA0m0OFkZa1JfNYpMpMe4oKyvDdDqOPTU7aNvRCP6MU9Riu1+Qjirb
+h232VzEWF9ItzA08IymTpJXFjpUqlh7YC/hclXohCjlefnrL4QNl7cjC/ZFJqkj3
+tlrBEUlt6shDhQUwUqOrgix/BczM1a6pbnQsO0J8cZFhIZaNvXU8E6uLmPEaDOSd
+lJ7CQzxLlqLprWQzcfLOlkTOmFpr93xiE0v75wpa3NLrFIDCU8bZzWuE3Vv/ZG34
+0KZ+u8bctDrZyZ6W7Hrkij+YODQurqZE007W9v8NDZl0BLM+sojkhNEhflWHFdf7
+nylMFEVpUORNBrRCtMUTi69mawK27lnVGQIDAQABozkwNzAJBgNVHRMEAjAAMAsG
+A1UdDwQEAwIF4DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwDQYJKoZI
+hvcNAQELBQADggEBAHWke+T8d9U7zjW+LBMs3UgezlA2J25lHd4nIR1JgJy+hgCa
+5n9w+t8lRJPNG9RkWFQ/IvVIycUNQ31FIiz25Hq9Tjoppq9Jn2sMfPWO1H+JMlri
+lGYt5pS3HIY6MgfYhrlS5yNIbQYi4OcpSp3p16uHjEzpT15GqiAQ5avzJY9EeEr3
+/qizNFPrfPg12Ry86eGlfw1hzNhUi8ZgkGPaWKWc6elCCqAynhIk/CXNDilGntwH
+2b8ecWj/4Vck9mljg0mXRgacwBywmkgb8QH6onrHfjbTcwdd1hdUYfQTf8F6HykG
+CZ39wm363m1nc4xKERJ6uF9b42n7a346PTe3lL0=
+-----END CERTIFICATE-----

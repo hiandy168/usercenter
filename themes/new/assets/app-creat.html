@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="all">
+    <meta name="renderer" content="webkit">
+    <title>大楚用户开放平台</title>
+    <meta name="Keywords" content="大楚用户开放平台" />
+    <meta name="Description" content="大楚用户开放平台" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/validate.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="ad-bg ad-top-bg">
+        <div class="ad-head w1000 clearfix">
+            <div class="fl ad-logo">
+                <a href=""><img src="images/ad-logo.png" /></a>
+            </div>
+            <!--<div class="fr ad-login">
+					<ul>
+                    <li><a class="linear" id="loginshow">登录</a></li>
+                    <li><a class="linear ad-regbtn" href="">注册</a></li>
+                  </ul>
+				</div>-->
+            <div class="fr ad-haslogin">
+                <div class="ad-haslogin1">
+                    <div class="ad-haslogin-img"><img src="images/ad-user-default-icon.png" /></div>
+                    <div class="ad-haslogin-info linear">
+                        <i><img src="images/ad-user-default-icon.png"/></i>
+                        <span class="clearfix">
+								<a href="">修改资料</a>
+							<a href="" class="loginout">退出</a>
+							</span>
+                        <p>
+                            如不上传头像，可自动默认
+                            <br />为规格为100*100的默认头
+                            <br />像png图片。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="ad-nav fr clearfix">
+                <ul>
+                    <li>
+                        <i></i>
+                        <a href="">首页</a>
+                    </li>
+                    <li class="selected">
+                        <i></i>
+                        <a href="">管理中心</a>
+                    </li>
+                    <li>
+                        <i></i>
+                        <a href="">文档资料</a>
+                    </li>
+                    <li>
+                        <i></i>
+                        <a href="">帮助中心</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-app-nav w1000 clearfix bxbg mgt30">
+        <ul>
+            <li>
+                <div class="ad-app-nav1">
+                    <a href="">
+                        <i class="b1 linear"></i>
+                        <img class="linear" src="images/1471257878_Settings_gear_setting_tools.png" />
+                        <span><em class="linear">应用管理</em></span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="ad-app-nav1">
+                    <a href="">
+                        <i class="b2 linear"></i>
+                        <img class="linear" src="images/1471257878_Settings_gear_setting_pen.png" />
+                        <span><em class="linear">修改资料</em></span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="ad-app-nav1">
+                    <a href="">
+                        <i class="b3 linear"></i>
+                        <img class="linear" src="images/1471257808_Download_save_down.png" />
+                        <span><em class="linear">SDK下载</em></span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div class="ad-app-nav1">
+                    <a href="">
+                        <i class="b4 linear"></i>
+                        <img class="linear" src="images/1471257729_add_cross_new_plus_create.png" />
+                        <span><em class="linear">创建应用</em></span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="ad-app-list w1000 clearfix bxbg mgt30">
+        <div class="ad-app-list-tit clearfix">
+            <div class="fl tl">
+                <h3>创建应用</h3>
+            </div>
+            <!--<div class="fr tr">
+                <a href="#">
+                    <i class="aicon linear"></i> 添加应用
+                </a>
+            </div>-->
+        </div>
+        <!--tit end-->
+      
+      
+      <div class="ad-creat-app mg20">
+         
+         <div class="ad-creat-app-tit">创建一个项目后才能申请入驻！</div>
+            
+           <form action="" id="regform1" method="post" accept-charset="utf-8">
+                
+            <div class="ad-creat-app-form">
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">应用名称：</span>
+            		<span class="sp2">
+            			<input class="form-control" type="text" placeholder="我们的应用" name="pname" id="pname" value="" />
+            		</span>
+            		
+            		
+            	</div>
+            	
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">简介：</span>
+            		<span class="sp2">
+            			<input class="form-control" type="text" placeholder="应用的简单介绍" name="pname1" id="pname1" value="" />
+            		</span>
+            		
+            		
+            	</div>
+            	
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">服务器地址：</span>
+            		<span class="sp2">
+            			<input class="form-control" type="text" placeholder="http://www.baidu.com/" name="purl" id="purl" value="" />
+            		</span>
+            		
+            		
+            	</div>
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">应用类别：</span>
+            		<span class="sp2 sp3">
+            			<div class="ad-reg-form-sel">
+                            <select name="ykind" style="width: 97%;">
+                                <option value="">请选择应用类别</option>
+                                <option value="1">教育</option>
+                                <option value="2">事业</option>
+                                <option value="3">互联网</option>
+                            </select>
+                        </div>
+            		</span>
+            		
+            	</div>
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1">帮助文档：</span>
+            		<span class="sp2">
+            			<i style="color: #f96a30;">项目创建完毕后可在项目管理页面进行项目信息编辑</i>
+            		</span>
+            		
+            	</div>
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1"></span>
+            		<span class="sp2 sp3 sp4 clearfix">
+            			<label for="xiyi">
+            				<input type="checkbox" checked="checked" name="xiyi" id="xiyi" value="" />
+            				同意<a href="">《大楚开放平台协议》</a>
+            			</label>
+            			
+            			<label for="wechatid" class="fr">
+            				<input checked="checked" type="checkbox" name="wechatid" id="wechatid" value="" />
+            				关注大楚开放平台微信号
+            			</label>
+            			
+            		</span>
+            		
+            	</div>
+            	
+            	
+            	<div class="ad-creat-app-inp">
+            		<span class="sp1"></span>
+            		<span class="sp2">
+            			<div class="ad-creat-app-formbtn">
+            				<input class="linear adbtn" type="submit" name="" id="" value="确认提交" />
+            			</div>
+            		</span>
+            		
+            	</div>
+            	
+            	
+            	
+            </div>
+      
+          </form>
+      </div>
+         
+         
+    </div>
+    
+    
+    <script type="text/javascript">
+    var Validator = $("#regform1").validate({
+
+    rules: {
+        pname: {
+            required: true,
+            
+        },
+        purl: {
+            required: true,
+            isUrl:true,
+        },
+        ykind:{
+        	required: true,
+        },
+        xiyi: {
+            required: true,
+
+        },
+       
+    },
+
+    messages: {
+        pname: {
+            required: "请填写应用名",
+          
+        },
+        purl: {
+            required: "请填写服务器地址",
+            isUrl:"请输入正确服务器地址",
+        },
+        ykind:{
+        	required: "请选择应用类别",
+        },
+        xiyi: {
+            required: "请同意协议",
+
+        },
+    },
+    errorElement: "em",
+    errorPlacement: function(error, element) {
+        if (element.parent().parent().find('em') != null) {
+            element.parent().parent().find('em').remove()
+        }
+        error.appendTo(element.parent().parent());
+    },
+
+    errorClass: "cerror",
+    validClass: "cright",
+
+    success: function(obj) {
+        obj.text("正确").removeClass('cerror').addClass("cright");
+    },
+
+
+});
+
+// 服务器地址验证
+jQuery.validator.addMethod("isUrl", function(value, element) {
+    var strRegex = "^((https|http|ftp|rtsp|mms)://)?[a-z0-9A-Z]{1,3}\.[a-z0-9A-Z][a-z0-9A-Z]{0,61}?[a-z0-9A-Z]\.com|net|cn|cc (:s[0-9]{1-4})?/$";
+    var reg = new RegExp(strRegex);
+    return this.optional(element) || (reg.test(value));
+}, "请输入正确服务器地址");
+
+
+</script>
+    
+
+    <div class="ad-bg ad-foot-bg">
+        <div class="ad-app-foot clearfix w1000">
+            <div class="fl ad-app-footl">
+                <ul>
+                    <li><a href="">关于平台</a></li>
+                    <li><a href="">应用管理</a></li>
+                    <li><a href="">文档中心</a></li>
+                    <li><a href="">帮助问答</a></li>
+                    <li><a href="">意见反馈</a></li>
+                    <li><a href="">联系我们</a></li>
+                </ul>
+                <p>Copyright © 1998 - 2016 Tencent. All Rights Reserved. 腾讯·大楚网·版权所有 鄂ICP备15021300号 <a>网站统计</a></p>
+            </div>
+            <div class="fr ad-app-footr">
+                <img src="images/ad-tel-icon.png" height="49" width="49" alt="">
+                <span>
+						<p>400-888-5555</p>
+						<em>电话（工作日  9:00-18:00）</em>
+					</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

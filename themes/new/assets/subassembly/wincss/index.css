@@ -1,0 +1,78 @@
+/*首页*/
+.da_box{position: relative; width: 960px; height: auto; margin: 0 auto;}
+.da_ad{width: 100%; height: auto; overflow: hidden;}
+.ad_login{position: absolute; top: -455px; right: 0; width: 320px; height: auto; padding: 30px; background-color: #fff; border-radius: 3px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); overflow: hidden;}
+.ad_login h3{margin-bottom: 10px; font-size: 20px; font-weight: normal; color: #222;}
+.ad_login input{width: 245px; height: 45px;  padding: 0 20px 0 55px; border: 1px solid #ccc;}
+.ad_login input:nth-child(2){background: url("../images/h-bg01.png")no-repeat 15px 50%; border-bottom: 0;}
+.ad_login input:nth-child(3){margin-bottom: 15px; background: url("../images/h-bg02.png")no-repeat 15px 50%;}
+.ad_login input:nth-child(4){float: left; width: 16px; height: 16px; margin-top: 3px; background: url("../images/h-bg03.png") no-repeat 0 0; border: 0;}
+.ad_login input[type=checkbox]{width: 16px; height: 16px; margin: 0; visibility: hidden;}
+.checkboxFour{display: inline-block; position: relative; top: 4px; width: 16px; height: 16px; border: 1px solid #ccc; overflow: hidden;}
+.checkboxFour label {display: block; width: 16px; height: 16px; cursor: pointer; position: absolute; top: 0; left: 0;  z-index: 1;}
+.checkboxFour input[type=radio]:checked + label {background: url("../images/h-bg03.png") no-repeat 0 0;}
+.checkboxFour input[type=checkbox]:checked + label {background: url("../images/h-bg03.png") no-repeat 0 0;}
+.ad_login a:nth-child(5){float: right; color: #1399e5;}
+.ad_login a:nth-child(6){display: block; width: 120px; height: 33px; margin-top: 20px; line-height: 33px; text-align: center; color: #fff; background-color: #1399e5; border: 1px solid #1860a9; border-radius: 2px;}
+.ad_login a:nth-child(6):hover{font-size: 15px; box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);}
+.da_content{height: auto; margin-top: 20px; margin-bottom: 120px; overflow: hidden;}
+.da_content > ul{width: 100%; height: auto; margin-bottom: 60px; font-size: 14px; overflow: hidden;}
+.da_content > ul li{width: 450px; height: 50px; line-height: 50px; padding-left: 20px; border: 1px solid #ccc;}
+.da_content > ul li i{margin-right: 10px; color: #d5d5d5; font-size: 16px;}
+.da_content > ul li:first-child{float: left;}
+.da_content > ul li:last-child{float: right; color: #656565;}
+.da_content > ul li:last-child span{text-decoration: underline; color: #222;}
+.da_content > ul li:last-child span a{color: #459ae9;}
+.da_content h3{margin-bottom: 32px; font-size: 23px; color: #555;}
+.da_content h3 a{float: right; font-size: 14px; color: #1399e5;}
+.da_component{width: 100%; height: auto; margin-bottom: 80px; overflow: hidden;}
+.da_component dl{float: left; padding: 20px 150px; background-color: #ecf2f8; border: 1px solid #e7e7eb; border-radius: 3px; cursor: pointer;}
+.da_component dl dd{text-indent: 2px;}
+.da_component dl:last-child{float: right;}
+.da_component dl:last-child dd{text-indent: 7px;}
+.da_news{float: left; width: 425px; padding-right: 50px;}
+.da_news ul{width: 420px; height: 210px; padding-right: 50px; border-right: 1px solid #e4e4e4; overflow: hidden;}
+.da_news ul li{line-height: 30px; color: #666;}
+.da_news ul li a{width: 320px; color: #666; overflow: hidden;}
+.da_news ul li span{float: right;}
+.da_together{float: right;}
+.da_together img{width: 100%;}
+
+/*创建账户*/
+.lo_box{width:1200px; height: auto; margin: 0 auto; background-color: #fff;  overflow: hidden;}
+.lo_content{width: 100%; height: auto; padding: 28px 0; background-color: #e7e8eb; border-top: 1px solid #d9dadc; overflow: hidden;}
+.lo_content ul{overflow: hidden;}
+.lo_content ul li{float: left; width: 33%; height: 46px; line-height: 46px; text-align: center;}
+.lo_content ul li:nth-child(2){width: 34%;}
+.lo_content ul li.lo_style{color: #fff; background-color: #1399e5;}
+.lo_content ul li.lo2{background:#1399e5 url("../images/02_03.png") no-repeat 0 0;}
+
+.lo_content ul li.lo_style span{float: right; display: inline-block; width: 13px; height: 46px; background: url("../images/lo_bg01.png") no-repeat 0 0;}
+.lo_content form{float: left; width: 550px; padding: 70px 0 70px 120px;}
+.lo_content form > div{height: 80px;width: 550px;}
+.lo_content form em{display: inline-block; width: 80px; height: 32px; line-height: 32px; font-style: normal;}
+.lo_content form input[type="text"],.lo_content form input[type="password"],.lo_content form .company{width: 324px; line-height: 30px;height: 30px; padding: 0 8px; border: 1px solid #3d7bc2;}
+.lo_content form .company{width:340px}
+.lo_content form >div > span{line-height: 32px; font-size: 12px; color: #ea524a;}
+.lo_content form i:nth-child(3){display: inline-block; width: 21px; height: 32px; margin-left: 10px; line-height: 32px; color: #ea524a;}
+.lo_content form p{line-height: 32px; font-size: 12px; color: #969696;}
+.lo_content form p i{font-size: 14px; margin: 0 5px 0 80px;}
+.lo_content form a{color: #009dd9;}
+.lo_content form .input_style input{width: 130px; border-color: #e7e7eb;}
+.lo_content form .input_style a{display: inline-block; width: 172px; height: 30px; margin-left: 16px; line-height: 30px; text-align: center; color: #fff; background-color: #ea524a; border: 1px solid #e7e7eb;}
+.lo_content form .checkboxFour{height: 16px;}
+.lo_content form > div.input_style03{height: 130px;}
+.lo_content form > div:last-child{width: 430px; border-bottom: 1px solid #e7e7eb;}
+.lo_content form > a{display: inline-block; width: 236px; height: 44px; margin-left: 80px; line-height: 44px; font-size: 18px; text-align: center; color: #fff; background-color: #1399e5; border: 1px solid #e7e7eb; border-radius: 4px;}
+.lo_content form > a:hover{box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);}
+.lo_content dl{float: right; margin: 135px 30px 0 0; padding-left: 100px; color: #8d8d8d; border-left: 1px solid #e7e7eb;}
+.lo_content dl dd{text-indent: 55px;}
+.lo_content dl dd:nth-child(2){font-size: 12px;}
+.lo_content dl dd:nth-child(3){font-size: 20px; font-weight: 300;}
+#passstrength01{margin-left: 80px;}
+#passstrength01, #passstrength02, #passstrength03{display: inline-block; width: 14px; height: 5px; background-color: #e5e5e5;}
+
+/*完善信息*/
+.lo_content form > div.input_style04 input{width: 190px; border-color: #e7e7eb;}
+.lo_content form > div.input_style05 input{width: 190px; margin-right: 16px; color: #8d8d8d;}
+.lo_content form > div.input_style06 .checkboxFour{margin: 0 15px;}
