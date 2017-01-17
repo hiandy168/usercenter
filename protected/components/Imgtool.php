@@ -225,6 +225,13 @@ class Imgtool{ // class start
   
     // 判断是否要转为RGB 
     $source_info = getimagesize($this->_source); 
+    
+    
+    list($owidth, $oheight)  = $source_info;
+    if( $this->_width >$owidth &&  $this->_height> $oheight){//切的图比原图还大 没必要return
+      return false;
+    }
+
 
     $colorspace = (!isset($source_info['channels']) || $source_info['channels']!=3)? ' -colorspace RGB ' : ''; 
        
@@ -280,6 +287,12 @@ class Imgtool{ // class start
     list($pic_w, $pic_h) = $this->get_size(); 
   
     list($owidth, $oheight, $otype) = getimagesize($this->_source); 
+    
+    if( $this->_width >$owidth &&  $this->_height> $oheight){//切的图比原图还大 没必要return
+      return false;
+    }
+    
+    
   
     switch($otype){ 
       case 1: $source_img = imagecreatefromgif($this->_source); break; 
@@ -419,7 +432,7 @@ class Imgtool{ // class start
      list($pic_w, $pic_h) = getimagesize($this->_source); 
     $offset_w = 0; 
     $offset_h = 0; 
-//    ECHO $this->_croppos ='TM';
+//    ECHO $this->_croppos ='BR';
     switch(strtoupper($this->_croppos)){ 
       case 'TL': 
         $offset_w = 0; 

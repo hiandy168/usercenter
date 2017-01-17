@@ -527,20 +527,35 @@ class JkCms {
         return $position;
     }
 
-    static function show_img($thumb='',$host ='') {
-        if ($thumb) {
-            $key_str ='data/attachment/';
-            $host = $host?$host:Mod::app()->baseUrl;
-            if(substr(trim($thumb), 0,4) == 'http'){
-                    $new_thumb =$thumb;
-            }else{
-                if(substr(trim($thumb), 0,16) == $key_str || strstr($thumb,$key_str))
-                    $new_thumb = $host.'/' . $thumb;
-                else
-                   $new_thumb = $host.'/' .$key_str. $thumb;
-            }
-        } else {
-            $new_thumb = Mod::app()->baseUrl.'/data/nopic.jpg';
+    static function show_img($thumb='',$width='',$height='',$host ='') {
+       
+        $cache_key = $thumb.'_'.$width.'_'.$height.'_'.$host;
+        $new_thumb = MyCache::get($cache_key);
+        if(!$new_thumb){
+                if ($thumb) {
+                    if($width && $height){
+                       $res  = Attachment::model()->find('url="'.$thumb.'"')->attributes;
+                       if($res){
+                           $res2  = Attachment::model()->find('fid='.$res['id'].' and ratio ="'.$width.'x'.$height.'"' )->attributes;
+                           if($res2){
+                               $thumb = $res2['url'];
+                           }
+                       }
+                    }
+                    $key_str ='data/attachment/';
+                    $host = $host?$host:Mod::app()->baseUrl;
+                    if(substr(trim($thumb), 0,4) == 'http'){
+                            $new_thumb =$thumb;
+                    }else{
+                        if(substr(trim($thumb), 0,16) == $key_str || strstr($thumb,$key_str))
+                            $new_thumb = $host.'/' . $thumb;
+                        else
+                           $new_thumb = $host.'/' .$key_str. $thumb;
+                    }  
+                } else {
+                    $new_thumb = Mod::app()->baseUrl.'/data/nopic.jpg';
+                }
+                MyCache::set($cache_key,$new_thumb);
         }
         return $new_thumb;
     }

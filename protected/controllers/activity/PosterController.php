@@ -212,7 +212,7 @@ class PosterController extends FrontController {
                     $attachment  =  new Attachment();
                     $attachment->mid = $this->member['id'];
                     $attachment->url = $path;
-                    $attachment->path = $path;
+//                    $attachment->path = $path;
                     $attachment->fid = 0;
                     $attachment->level = 0;
                     $attachment->file_name = basename($path);

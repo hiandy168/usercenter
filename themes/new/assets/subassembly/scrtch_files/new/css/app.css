@@ -198,6 +198,7 @@ em, i { font-style: normal; }
 }
 .gg-div2-info1 p{
     margin-bottom: 5px;
+    word-break: break-all;
 }
 .gg-div2-info1 p i{color: #efff31; font-size: 20px;}
 .gg-div2-gz p{

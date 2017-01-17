@@ -318,7 +318,7 @@ class FilesController extends CController {
             }
 
            
-            $file_url = $save_url . $new_file_name;
+            $file_url = $save_url . $new_file_name_full;
             
 //            //存数据库
             $attachment  =  new Attachment();
@@ -327,9 +327,9 @@ class FilesController extends CController {
 //            $attachment->path = $file_path;
             $attachment->fid = 0;
             $attachment->level = 0;
-            $attachment->file_name = $new_file_name;
+            $attachment->file_name = $new_file_name_full;
             $attachment->ext = $file_ext;
-            $attachment->original_name = $new_file_name;
+            $attachment->original_name = $new_file_name_full;
             $attachment->type = $dir_name;
             $attachment->createtime = time();
             $attachment->status = 1;
@@ -341,7 +341,7 @@ class FilesController extends CController {
             
             // 按比例生成缩略图 start
             if($dir_name=='image'){
-                $param = array(  'type' => 'fit',   'width' => 100,   'height' => 100, ); 
+//                $param = array(  'type' => 'fit',   'width' => 100,   'height' => 100, ); 
                 $obj = new Imgtool(); 
                 $cut_arr = array(
                     array('width'=>120,'height'=>120),
@@ -360,7 +360,7 @@ class FilesController extends CController {
                             $attachment->file_name = $new_file_name.'_'.$av['width'].'x'.$av['height'].'.' . $file_ext;
                             $attachment->ext = $file_ext;
                             $attachment->ratio = $av['width'].'x'.$av['height'];
-                            $attachment->original_name = $new_file_name;
+                            $attachment->original_name = $new_file_name_full;
                             $attachment->type = $dir_name;
                             $attachment->createtime = time();
                             $attachment->status = 1;
