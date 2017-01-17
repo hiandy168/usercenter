@@ -50,6 +50,15 @@
                     </td>
                 </tr>
                 <tr>
+                    <td width='120' align="right">状态:</td>
+                    <td>
+                        <label for="status1" class='w_30'>启用</label> <input class='w_30'   type="radio" name="status" value="1" <?php if(!isset($result['status'])||$result['status']==1){echo 'checked';} ?> />
+
+                        <label for="status0" class='w_30'>禁用</label> <input  class='w_30'  type="radio" name="status" value="2" <?php if(isset($result['status'])&&$result['status']==2){echo 'checked';} ?>  />
+
+                    </td>
+                </tr>
+                <tr>
                     <td width='120' align="right">组件logo地址:</td>
                     <td>
                         <input  type="text" name="activity_img" id="activity_img"  value="<?php echo isset($result['activity_img'])?$result['activity_img']:'';?>" ><div style="float:left;" id="name_msg"></div>

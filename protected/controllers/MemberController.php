@@ -2201,6 +2201,12 @@ class MemberController extends FrontController
             //根据aid 查找pid
             //如果没有aid 表示是pc 或者h5 首页 注册登录的！ 默认是1
             if ($aid > 1) {
+
+                //因为 刮刮卡 model 名字和控制器不统一 避免报错 所以做判断
+                if($model=="scratchcard"){
+                    $model="scratch";
+                }
+                //查找pid
                 $model = "Activity_" . $model;
                 $res = $model::model()->findByPk($aid);
                 if ($res) {

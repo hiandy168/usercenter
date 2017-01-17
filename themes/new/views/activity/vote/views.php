@@ -338,7 +338,13 @@ $userinfo = Activity_signup::getuserinfo($openid,$pid);
 </script>
 
 </body>
-<?php  echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info,'url'=>$this->createUrl('/activity/signup/view',array('id'=>$id) ))); ?>
+
+<?php
+if(strpos($user_agent, 'MicroMessenger') === true){
+echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info,'url'=>$this->createUrl('/activity/signup/view',array('id'=>$id) )));
+}?>
+
+
 
 </html>
 <?php  exit; ?>

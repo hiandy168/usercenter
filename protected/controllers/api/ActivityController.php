@@ -29,11 +29,11 @@ class ActivityController extends FrontController {
                     }
 
                     $msg['title']=$res->title;
-                    $msg['linkDetail']="http://".$this->_siteUrl."/activity/vote/views/id/$res->id";
+                    $msg['linkDetail']=$this->_siteUrl."/activity/vote/views/id/$res->id";
                     $msg['id']=$res->id;
                     $msg['desc']=$res->desc;
                     $msg['background']=$res->background;
-                    $msg['img']="http://".$this->_siteUrl."/".$res->img;
+                    $msg['img']=$this->_siteUrl."/".$res->img;
                     $msg['start_time']=$res->start_time;
                     $msg['end_time']=$res->end_time;
                     $msg['address']=$res->address;

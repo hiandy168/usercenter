@@ -212,7 +212,8 @@ class ActivityController extends AController
             $activity_name = Tool::getValidParam('activity_name','string');
             $activity_table_name = Tool::getValidParam('activity_table_name','string');
             $id   = Tool::getValidParam('id','integer');
-            $see_status  = $_POST['see_status'];
+            $see_status  = Tool::getValidParam('see_status','integer');
+            $status  = Tool::getValidParam('status','integer');
             $activity_img = trim(Tool::getValidParam('activity_img','string'));
             $activity_nouse_img =trim(Tool::getValidParam('activity_nouse_img','string'));
             $cid =Tool::getValidParam('cid','integer');
@@ -220,6 +221,7 @@ class ActivityController extends AController
                 $data =array(
                     'activity_name'=>$activity_name,
                     'activity_table_name'=>$activity_table_name,
+                    'status'=>$status,
                     'see_status'=>$see_status,
                     'activity_img'=>$activity_img,
                     'activity_nouse_img'=>$activity_nouse_img,

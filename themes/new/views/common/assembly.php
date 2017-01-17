@@ -1,16 +1,22 @@
 <!-- 组件 start -->
 <?php
 function   status($activity_name,$pid){
-    $sql = "SELECT a.status FROM dym_activity_project_relation a, dym_activity b WHERE a.activity_id=b.id and b.activity_name='".$activity_name."' and a.pid=".$pid;
+    $sql_activity = "select * from dym_activity where status=1 and activity_name='".$activity_name."'";
+    $sql = "SELECT a.status FROM dym_activity_project_relation a, dym_activity b WHERE a.activity_id=b.id  and b.activity_name='".$activity_name."' and a.pid=".$pid;
     $res=Mod::app()->db->createCommand($sql)->queryRow();
-    if($res){
-        if($res['status']==1){
+    $activity=Mod::app()->db->createCommand($sql_activity)->queryRow();
+    if($activity) {
+        if ($res) {
+            if ($res['status'] == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
             return true;
-        }else{
-            return false;
         }
     }else{
-        return true;
+        return false;
     }
 }
 ?>

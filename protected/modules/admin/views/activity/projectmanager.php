@@ -10,7 +10,6 @@
                     <td width='120' align="right">应&nbsp;&nbsp;用:</td>
                     <td>
                         <select id="pid" name="pid" style="width:155px">
-                            <option value="0">--无--</option>
                             <?php
                             $pid = isset($pid)?$pid:0;
                             if($project) {

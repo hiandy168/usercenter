@@ -177,3 +177,25 @@ CREATE TABLE `dym_membergroup_admin` (
   `updatetime` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+
+/*wenlijiang 20170116*/
+ALTER TABLE `dym_attachment`
+MODIFY COLUMN `file_name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文件名，不带后缀' AFTER `mid`;
+ALTER TABLE `dym_attachment`
+MODIFY COLUMN `original_name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '原始名称' AFTER `ext`;
+ALTER TABLE `dym_attachment`
+ADD COLUMN `ratio`  varchar(255) NOT NULL DEFAULT '' COMMENT '分辨率' AFTER `ext`;
+ALTER TABLE `dym_attachment`
+ADD COLUMN `uid`  int(11) NOT NULL DEFAULT '' COMMENT '后台操作的id' AFTER `mid`;
+ALTER TABLE `dym_attachment`
+ADD COLUMN `uid`  int(11) NOT NULL DEFAULT 0 COMMENT '后台操作的用户ID' AFTER `mid`
+
+
+/*优化表字段*/
+ALTER TABLE `dym_activity_project_relation`
+MODIFY COLUMN `pid`  int(11) NOT NULL DEFAULT 0 COMMENT '应用id' FIRST ,
+MODIFY COLUMN `activity_id`  int(11) NOT NULL DEFAULT 0 COMMENT '组件id' AFTER `pid`,
+MODIFY COLUMN `status`  int(2) NOT NULL DEFAULT 0 COMMENT '启用 默认1=启用 2=不启用' AFTER `activity_id`,
+MODIFY COLUMN `create_time`  int(10) NOT NULL DEFAULT 0 COMMENT '创建时间' AFTER `status`,
+MODIFY COLUMN `update_time`  int(10) NOT NULL DEFAULT 0 AFTER `create_time`

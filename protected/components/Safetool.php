@@ -4,7 +4,7 @@ class Safetool {
 
     public static function SafeFilter($value) {
         $value = Safetool::remove_xss($value);
-        $value = mysql_escape_string($value);
+        //$value = mysql_escape_string($value);
        // $value = mysql_real_escape_string($value);
         return $value;
     }

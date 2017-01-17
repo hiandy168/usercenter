@@ -73,7 +73,7 @@ var temp='<div id="winlogin" class="login-mask">'+
                         '<ul>'+
                             '<li><a href="http://'+window.location.host+'/member/qqlogin'+reurl+'"><em><img src="/themes/new/assets/h5/login/images/login-qq-icon.png"/></em><p>使用QQ快捷登录</p></a></li>';
 							
-		if(!(!isWeiXin()&& isMobile())){			
+		if(!(!resisWeiXin() && isMobile())){
 		temp +=					'<li id="weixinshow">'+
                                 '<a id="wxlogin" href="http://'+window.location.host+'/member/WeixinLogin'+reurl+'">'+
                                     '<em style="padding:30px"><img src="/themes/new/assets/h5/login/images/login-wx-icon.png"/></em>'+
@@ -113,14 +113,7 @@ var temp='<div id="winlogin" class="login-mask">'+
     '</div>';
 
 
-function isWeiXin(){
-    var ua = window.navigator.userAgent.toLowerCase();
-    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-        $("#weixinshow").show();
-    }else{
-        document.getElementById("wxlogin").href = "http://"+window.location.host+"/member/WXgetcode"+reurl;
-    }
-}
+
 
 function showlogin(){
     $("body").append(temp);
@@ -134,6 +127,17 @@ $("html").on('click',".close",function(){
 function showloginssss(){
     $("#winlogin").show();
 }
+
+function isWeiXin(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        $("#weixinshow").show();
+    }else{
+        document.getElementById("wxlogin").href = "http://"+window.location.host+"/member/WXgetcode"+reurl;
+    }
+}
+
+
 var disable_click = false;
 //发送短信验证码
 $("html").on('click',"#sendCode",function(){
@@ -395,7 +399,7 @@ function showTips(content,picsrc) {
 
 
 
-function isWeiXin(){
+function resisWeiXin(){
     var ua = window.navigator.userAgent.toLowerCase();
     if(ua.match(/MicroMessenger/i) == 'micromessenger'){
         return true;

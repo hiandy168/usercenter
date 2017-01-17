@@ -157,205 +157,165 @@
 			var number = 0;
 			var show   = 0;
 
-            $("#wScratchPad2").wScratchPad({
-             image2: '<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img4.png',
-            
-            scratchMove: function(e)
-		    {
-                   
-		    	<?php if(!$param['mid']){?>
-					showloginssss();
-					return false;
-					<?php } ?>
-
-					var time = <?php echo $time;?>;
-					var startTime = <?php echo $info['start_time']?>;
-					var endTime = <?php echo $info['end_time']?>;
-
-			      
-					if(time<startTime){
-					showpop("","活动未开始！","","",3);
-						return false;
+	$("#wScratchPad2").wScratchPad({
+	image2: '<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img4.png',
+	scratchMove: function(e) {
+		<?php if(!$param['mid']){ ?>
+		showloginssss();
+		return false;
+		<?php } ?>
+		var d = <?php echo $time;?>;
+		var f = <?php echo $info['start_time'] ?>;
+		var g = <?php echo $info['end_time'] ?>;
+		if (d < f) {
+			showpop("", "活动未开始！", "", "", 3);
+			return false
+		}
+		if (d > g) {
+			showpop("", "活动已结束！", "", "", 3);
+			return false
+		}
+		<?php if(!$info['status']){?>
+		showpop("", "活动暂停中！", "", "", 3);
+		return false;
+		<?php } ?>
+		if (parseInt(count) < 1) {
+			showpop("", "今天次数用完了，明天再玩吧", "", "", 3);
+			return false
+		}
+		var h = this.ctx;
+		h.lineTo(e.pageX, e.pageY);
+		h.stroke();
+		if (e.pageX > 80 && e.pageX < 160) {
+			number++;
+			if (number == 1) {
+				$.ajax({
+					type: "post",
+					cache: !1,
+					async: !1,
+					url: "<?php echo $this->createUrl('/activity/scratchcard/getwin') ?>",
+					dataType: "json",
+					data: {
+						"id": id,
+						"mid": mid
+					},
+					beforeSend: function() {},
+					success: function(a) {
+						console.log(a);
+						if (a.code == 0) {
+							showpop("", a.msg, "", "", 3);
+							return false
+						}
+						if (a.code == -1) {
+							showpop("", a.msg, "", "", 3);
+							return false
+						}
+						if (a.code == -2) {
+							showpop("", a.msg, "", "", 3);
+							return false
+						}
+						if (a.code == -3) {
+							showpop("", a.msg, "", "", 3);
+							return false
+						}
+						if (a.state == 0) {
+							$("#wScratchPad3").text(a.msg);
+							setTimeout(function() {
+								h.lineTo(40, 28);
+								h.lineTo(80, 28);
+								h.lineTo(120, 28);
+								h.lineTo(160, 28);
+								h.lineTo(200, 28);
+								h.stroke();
+								showpop("", a.msg, "", (count - 1), 2)
+							}, 1500)
+						}
+						if (a.state == 1) {
+							$("#wScratchPad3").text(a.msg);
+							setTimeout(function() {
+								h.lineTo(40, 28);
+								h.lineTo(80, 28);
+								h.lineTo(120, 28);
+								h.lineTo(160, 28);
+								h.lineTo(200, 28);
+								h.stroke();
+								showpop("", a.msg, a.code, (count - 1), 1)
+							}, 1500)
+						}
+					},
+					error: function(a, b, c) {
+						showpop("", data.msg, "", "", 3)
 					}
-					if(time>endTime){
-						showpop("","活动已结束！","","",3);
-						return false;
-					}
+				})
+			}
+		}
+	},
+	scratchUp: function(e) {
+		this.ctx.closePath()
+	},
+});
 
-					<?php if(!$info['status']){?>
-			            showpop("","活动暂停中！","","",3);
-						return false;
-			        <?php } ?>
-
-			        if(parseInt(count)<1){
-						showpop("","今天次数用完了，明天再玩吧","","",3);
-						return false;
-					}
-
-					var cc=this.ctx;
-			        cc.lineTo(e.pageX, e.pageY);
-					cc.stroke();
-			        
-			        if(e.pageX>80&&e.pageX<160){
-                      
-                     //ajax请求
-			        // 
-					number++;
-					if(number == 1){
-//						console.log(123);
-//						return  false;
-						$.ajax({
-							type: "post",
-							cache: !1,
-							async: !1,
-							url: "<?php echo $this->createUrl('/activity/scratchcard/getwin')?>",
-							dataType: "json",
-							data: {
-								"id": id,
-								"mid": mid
-							},
-							beforeSend: function () {
-							},
-							success: function (data) {
-								console.log(data);
-								if(data.code ==0){
-									showpop("",data.msg,"","",3);
-									return false;
-								}
-								if(data.code ==-1){
-									showpop("",data.msg,"","",3);
-									return false;
-								}
-
-								if(data.code ==-2){
-									showpop("",data.msg,"","",3);
-									return false;
-								}
-
-								if(data.code ==-3){
-									showpop("",data.msg,"","",3);
-									return false;
-								}
-
-
-								if(data.state==0){
-									$("#wScratchPad3").text(data.msg);
-                                      setTimeout(function(){
-										cc.lineTo(40, 28);
-										cc.lineTo(80, 28);
-										cc.lineTo(120, 28);
-										cc.lineTo(160, 28);
-										cc.lineTo(200, 28);
-										cc.stroke();
-										showpop("",data.msg,"",(count-1),2);
-									},1500)
-								
-								}
-
-								if(data.state == 1){
-									$("#wScratchPad3").text(data.msg);
-									setTimeout(function(){
-										cc.lineTo(40, 28);
-										cc.lineTo(80, 28);
-										cc.lineTo(120, 28);
-										cc.lineTo(160, 28);
-										cc.lineTo(200, 28);
-										cc.stroke();
-										showpop("",data.msg,data.code,(count-1),1);
-									},1500)
-                                   
-
-								}
-							},
-							error: function(XMLHttpRequest, textStatus, errorThrown) {
-					           showpop("",data.msg,"","",3);
-						    }
-
-						})
-
-
-					}
-
-                  }
-					
-			
-		  },
-		  scratchUp: function(e)
-		   {
-			this.ctx.closePath();
-		  },
-        });
-
-  function myjiangp(){
-
-        var _myjiangp = $(".pop-zjlist");
-        _myjiangp.html("<p><br />加载中...</p>");
-        $.post('<?php echo $this->createUrl('/activity/scratchcard/userwinprize')?>',{id:id,openid:openid,mid:mid},function(data){
-        var data = JSON.parse(data);
-        _myjiangp.html("");
-        var _li = '<li ><span>奖品名称</span><span>中奖码</span></li>';
-        if(data.code == 1){
-						for(var i in data.msg){
-                _li+= '<li ><span>'+data.msg[i].title+'</span><span>'+data.msg[i].code+'</span></li>';
-            }
-        }else{
-            _li = '<li>无中奖记录</li>';
-        }
-        _myjiangp.append(_li);
-
-       });
-
-    }
-
-
-
-$(".dial-logbtn").on("click",function(){
-    <?php if(!$param['mid']){?>
-    showloginssss();
-    return false;
-    <?php } ?>
-   showpop('<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img8-1.png',"","","","4");
-   myjiangp();
+function myjiangp() {
+	var c = $(".pop-zjlist");
+	c.html("<p><br />加载中...</p>");
+	$.post("<?php echo $this->createUrl('/activity/scratchcard/userwinprize') ?>", {
+		id: id,
+		openid: openid,
+		mid: mid
+	}, function(a) {
+		var a = JSON.parse(a);
+		c.html("");
+		var b = '<li ><span>奖品名称</span><span>中奖码</span></li>';
+		if (a.code == 1) {
+			for (var i in a.msg) {
+				b += '<li ><span>' + a.msg[i].title + '</span><span>' + a.msg[i].code + '</span></li>'
+			}
+		} else {
+			b = '<li>无中奖记录</li>'
+		}
+		c.append(b)
+	})
+}
+$(".dial-logbtn").on("click", function() {
+	<?php if(!$param['mid']){?>
+	showloginssss();
+	return false;
+	<?php } ?>
+	showpop('<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img8-1.png', "", "", "", "4");
+	myjiangp()
 })
-
-
-         function showpop(bg,msg,zjnum,daycount,kind){
+function showpop(a, b, c, d, e) {
 	$(".mask").show();
 	$(".dial-pop").show().addClass("active");
-	if(kind==1){
-		$(".dial-poptxt").html('<h3>恭喜！你中奖了</h3>'
-		  		+'<p>中得<i>“'+msg+'”</i>领奖码 <i>'+zjnum+'</i><br />'
-                                         +'你还有<b>'+daycount+'</b>次刮奖机会</p>');
+	if (e == 1) {
+		$(".dial-poptxt").html('<h3>恭喜！你中奖了</h3>' + '<p>中得<i>“' + b + '”</i>领奖码 <i>' + c + '</i><br />' + '你还有<b>' + d + '</b>次刮奖机会</p>')
 	}
-	if(kind==2){
-		$(".dial-poptxt").html('<h3>很遗憾！没中奖</h3>'
-		  		+'<p>你还有<b>'+daycount+'</b>次刮奖机会</p>');
+	if (e == 2) {
+		$(".dial-poptxt").html('<h3>很遗憾！没中奖</h3>' + '<p>你还有<b>' + d + '</b>次刮奖机会</p>')
 	}
-	if(kind==3){
-		$(".dial-poptxt").html('<h3>@__@</h3>'
-		  		+'<p>'+msg+'</p>');
+	if (e == 3) {
+		$(".dial-poptxt").html('<h3>@__@</h3>' + '<p>' + b + '</p>')
 	}
-	if(kind==4){
-		$(".popbg").html('<img src="'+bg+'" width="100%" />');
-		$(".dial-poptxt").html('<h3>中奖记录</h3>'
-		  		+'<div class="pop-zjlist"></div>');
+	if (e == 4) {
+		$(".popbg").html('<img src="' + a + '" width="100%" />');
+		$(".dial-poptxt").html('<h3>中奖记录</h3>' + '<div class="pop-zjlist"></div>')
 	}
-	
-	
-	
 }
-
-        $(".confirmbtn").on("click",function(){
-			   window.location.reload();
-		    })
-
+$(".confirmbtn").on("click", function() {
+	window.location.reload()
+})
            
         </script>
+
 		<script src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/js/layout.js" type="text/javascript" charset="utf-8"></script>
 		<!--微信分享-->
-		<?php if($info['share_switch']==1){
+
+		<?php
+
+		if(strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') == true){
+			if($info['share_switch']==1){
 			echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info,'url'=>$this->createUrl('/activity/scratchcard/view',array('id'=>$param['id']) )));
-		}else { ?>
+			}else { ?>
 			<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 			<script>
 				wx.config({
@@ -372,7 +332,7 @@ $(".dial-logbtn").on("click",function(){
 				})
 
 			</script>
-		<?php }?>
+		<?php }}?>
 		<!--微信分享-->
 	</body>
 </html>

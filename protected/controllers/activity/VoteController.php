@@ -285,7 +285,7 @@ class VoteController extends FrontController{
         }
         //获取当前应用
         $project_model = Project::model()->findByPk($pid);
-        if($this->member['id'] != $project_model['mid']){
+        if($this->memberverify($project_model['mid'])){
             $this->redirect(Mod::app()->request->getHostInfo());
             exit;
         }
@@ -405,7 +405,7 @@ class VoteController extends FrontController{
             $pid = trim(Tool::getValidParam('pid', 'integer'));
 
             $projectinfo =  JkCms::getprojectByid($pid);
-            if($this->member['id'] !=   $projectinfo['mid']  || !$this->member['pstatus']){
+            if($this->memberverify($projectinfo['mid']) || !$this->member['pstatus']){
                 die('非法访问');
             }
 
