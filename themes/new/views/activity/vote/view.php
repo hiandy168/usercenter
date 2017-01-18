@@ -447,7 +447,7 @@
                         $('#'+vid).removeClass('bg2 bsd2').addClass('bg1').text('已投票');
                     }
                     //是否参与抽奖
-                    if(<?php echo $info['is_lucky']?true:false;?>){
+                    if(<?php echo $info['is_lucky']?1:0;?>){
                         //是否支持回调
                         var callback="";
                         <?php if($info['callback']){ ?>

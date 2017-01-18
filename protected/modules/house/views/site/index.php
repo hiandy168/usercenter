@@ -69,8 +69,17 @@
 </div>
 <script src="<?php echo $this->_siteUrl;?>/assets/house/js/slides.js" type="text/javascript" charset="utf-8"></script>
 
+
+
 </body>
 <?php echo $this->renderpartial('/layouts/foot'); ?>
 
 
-
+<script type="text/javascript" charset="utf-8">
+$(function(){
+$(window).scroll(function(){
+                  scrollF();
+                 })
+})
+             
+</script>

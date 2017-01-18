@@ -21,5 +21,7 @@
             }
             document.addEventListener('touchstart', shield, false);
             window.onload=function(){
-    document.getElementById("loaddiv").style.display="none";
+                if(document.getElementById("loaddiv")) {
+                    document.getElementById("loaddiv").style.display = "none";
+                }
 }

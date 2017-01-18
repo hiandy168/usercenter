@@ -387,7 +387,7 @@ class ScratchcardController extends FrontController {
                     //head_app中的 应用首页（1）、基础配置（2）、应用组件（3）三个按钮选中加背景
                     $config['active_1'] = '3';
                     //组件assembly中的选中高亮背景图片 刮刮卡(1)、签到(2)、报名(3)
-                    $config['active'] = 6;
+                    $config['active'] = 1;
                     $config['site_title']='奖品设置-编辑刮刮卡活动-大楚网用户开放平台';
                     $config['Keywords']='大楚网用户开放平台,刮刮卡，抽奖，一等奖';
                     $config['Description']='添加刮刮卡活动_编辑刮刮卡活动'; 

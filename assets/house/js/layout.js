@@ -320,7 +320,8 @@ $(function() {
 })
 
 var page=2;
-$(window).scroll(function() {
+
+  function scrollF(){
   //获取滚动条当前的位置
   function getScrollTop() {
     var scrollTop = 0;
@@ -417,7 +418,7 @@ $(window).scroll(function() {
 
 
 
-})
+} 
 
 
 

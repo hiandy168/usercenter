@@ -1,5 +1,5 @@
 <?php echo $this->renderpartial('/common/header_new', $config); ?>
-  
+
     <!--组件目录-->
 <?php echo $this->renderpartial('/common/assembly', array('active' => $config['active'], 'pid' => $activity_info['pid'])) ?>
     <script src="<?php echo $this->_theme_url; ?>assets/js/jqueryform.js" type="text/javascript"

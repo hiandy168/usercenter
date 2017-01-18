@@ -79,7 +79,6 @@ html, body { height: 100%; }
     	
     </div>
 
-    <?php  echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info,'url'=>$this->createUrl('/activity/vote/pcview',array('id'=>$id) ))); ?>
 </body>
 
 
