@@ -64,7 +64,7 @@ html, body { height: 100%; }
     	
     	<div class="ad-right-views">
     		<span> <?php if($id){ ?>
-                      <img src="<?php echo  $this->createAbsoluteUrl('/qrcode/index',array('url'=>base64_encode($this->_siteUrl.'/activity/vote/view/id/'.$id)));?>" />
+                      <img src="<?php echo  $this->createAbsoluteUrl('/qrcode/index',array('url'=>base64_encode($this->_siteUrl.'/activity/vote/signup/id/'.$id)));?>" />
                         <?php }else{?>
                            <img src="<?php echo  $this->createAbsoluteUrl('/qrcode/index',array('url'=>base64_encode($this->_siteUrl.'/h5')));?>"/> 
                        

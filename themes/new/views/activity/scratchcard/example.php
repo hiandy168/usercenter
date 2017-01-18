@@ -59,13 +59,13 @@
             <div class="ad-edit-app-navsd clearfix">
                 <ul>
                    <li  >
-                        <a href="<?php echo $this->createUrl('/activity/scratch/add',array('id'=>$activity_info['id']))?>">编辑大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/scratchcard/add',array('id'=>$activity_info['id']))?>">编辑大转盘</a>
                     </li>
                     <li>
-                        <a href="<?php echo $this->createUrl('/activity/scratch/prize',array('id'=>$activity_info['id']))?>">奖品/概率</a>
+                        <a href="<?php echo $this->createUrl('/activity/scratchcard/prize',array('id'=>$activity_info['id']))?>">奖品/概率</a>
                     </li>
                     <li  class="selected">
-                        <a href="<?php echo $this->createUrl('/activity/scratch/example',array('id'=>$activity_info['id']))?>">开发者示例</a>
+                        <a href="<?php echo $this->createUrl('/activity/scratchcard/example',array('id'=>$activity_info['id']))?>">开发者示例</a>
                     </li>
                 </ul>
             </div>
@@ -141,7 +141,7 @@
                     <div class="ad-view-app-code">
                         <?php if ($activity_info['id']) { ?>
                             <img
-                                src="http://qr.topscan.com/api.php?text=<?php echo $this->_siteUrl . '/activity/scratch/view/id/' . $activity_info['id'] ?>"
+                                src="http://qr.topscan.com/api.php?text=<?php echo $this->_siteUrl . '/activity/scratchcard/view/id/' . $activity_info['id'] ?>"
                                 width="150" height="150"/>
                         <?php } else { ?>
                             <img src="http://qr.topscan.com/api.php?text=http://m.dachuw.net/h5" width="150"
@@ -159,7 +159,7 @@
                         <div class="ad-view-app-maindiv">
                             <?php if ($activity_info['id']) { ?>
                                 <iframe
-                                    src="<?php echo $this->createUrl('/activity/scratch/view', array('id' => $activity_info['id'])) ?>"
+                                    src="<?php echo $this->createUrl('/activity/scratchcard/view', array('id' => $activity_info['id'])) ?>"
                                     scrolling="yes" width="" height=""></iframe>
                             <?php } else {
                                 if ($status['see_status'] == 1) {

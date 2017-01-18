@@ -57,9 +57,9 @@
 		  		</div>
 		  	</div>
 		 
-		 <div class="confirmbtn">
+		 <a href="" title=""><div class="confirmbtn">
 		 	<img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img9.png" width="100%" />
-		 </div>
+		 </div></a>
 	    		
 	    	</div>
 	    </div>
@@ -301,9 +301,11 @@ function showpop(a, b, c, d, e) {
 		$(".dial-poptxt").html('<h3>中奖记录</h3>' + '<div class="pop-zjlist"></div>')
 	}
 }
-$(".confirmbtn").on("click", function() {
-	window.location.reload()
-})
+// $(".confirmbtn").on("click", function() {
+// 	// location.replace(location.href);
+// 	window.location.href=document.location.pathname+'?v='+Math.random();
+// 	// window.location.href = "?status#"+Math.random();
+// })
            
         </script>
 
