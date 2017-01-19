@@ -11,15 +11,21 @@ class ActivityController extends FrontController {
     public function actionSignupList(){
         //根据推荐活动 type 规则  4等于 投票 &报名，
         $page=Tool::getValidParam("page",'integer');
+        $num=Tool::getValidParam("num",'integer',2);
         $Activity_recommend= new Activity_recommend;
+
         $list=$Activity_recommend->apiActivityListPager();
 /*        $list=Activity_recommend::model()->findAll("type=:type and status=:status",array(":type"=>4,':status'=>1));*/
         $data=array();
+
         if($list['criteria']){
             $msg=array();
+           
             foreach($list['criteria'] as $key=>$val){
                 //0代表报名
                 $res=Activity_vote::model()->find("id=:id and component=:component ",array(":id"=>$val->aid,":component"=>0));
+               
+                
                 if($res){
                     if($res->start_time>time()){
                         $msg['status']=1;//未开始
@@ -39,14 +45,20 @@ class ActivityController extends FrontController {
                     $msg['address']=$res->address;
                     $datas[]=$msg;
                 }
+               
 
             }
-            $page=$page*2?$page:0;
-            $datapage=array_slice($datas,$page,2);
-            $data=array('code'=>1,'data'=>$datapage);
+            $page=$page*$num?$page:0;
+            if($datas){
+                    $datapage=array_slice($datas,$page,$num);
+                    $data=array('code'=>1,'data'=>$datapage);
+            }else{
+                 $data=array("code"=>0,'data'=>"There is no data");
+            }
         }else{
            $data=array("code"=>0,'data'=>"There is no data");
         }
+                        
         $result=json_encode($data);
         echo "flightHandler($result)";
     }

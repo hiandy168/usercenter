@@ -208,10 +208,10 @@ class Tool
                         else
                            $new_thumb = $host.'/' .$key_str. $thumb;
                     }  
-                } 
+                } else{
+                     $new_thumb = Mod::app()->baseUrl.'/data/nopic.jpg';
+                }
                 MyCache::set($cache_key,$new_thumb);
-        }else{
-            $new_thumb = Mod::app()->baseUrl.'/data/nopic.jpg';
         }
         return $new_thumb;
     }

@@ -1891,16 +1891,21 @@ class VoteController extends FrontController{
         $criteria = new CDbCriteria();
         $criteria->condition = 'voteid=:voteid and shows=:shows and status=:status';
         $criteria->params = array(':voteid'=>$id,':shows'=>1,':status'=>1);
-        $criteria->order = 'createtime asc';
+        $criteria->order = 'list desc';
         $formList['type'] = $formModel->findAll($criteria);
         $tmp = array();
+
         foreach($formList['type'] as $key=>$val){
+
             $sql = "SELECT * FROM {{activity_vote_form_question}} where formid=".$val['id'];
-            $questionlist=Mod::app()->db->createCommand($sql)->queryAll();
+           $questionlist=Mod::app()->db->createCommand($sql)->queryAll();
+
             $tmp[$val['id']]['id'] = $val['id'];
             $tmp[$val['id']]['title'] = $val['title'];
             $tmp[$val['id']]['forms'] = $val['forms'];
             $tmp[$val['id']]['question'] = $questionlist;
+
+
         }
         $parame = array(
             'info'=>$info,
@@ -1908,6 +1913,7 @@ class VoteController extends FrontController{
             'pid'=>$info['pid'],
             'signup'=>$signup,
             'joinstatus'=>$joinstatus,
+            'votejoin'=>$votejoin,
             'signPackage'=>$signPackage,
             'end_activity'=>$end_activity,
             'formList'=> $tmp,

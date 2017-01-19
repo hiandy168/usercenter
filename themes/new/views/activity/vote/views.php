@@ -85,7 +85,7 @@ $userinfo = Activity_signup::getuserinfo($openid,$pid);
                     <img src="/themes/new/assets/vote/images/User.png">
                 </i>
                 <span class="inp">
-                    <input type="text" placeholder="请填写名称 ..." name="title" id="title" value="">
+                    <input type="text" placeholder="请填写名称 ..." name="title" id="title" value="<?php echo $votejoin['title']?>">
                 </span>
             </div>
             <div class="vote-form-inp pos-r bb">
@@ -93,7 +93,7 @@ $userinfo = Activity_signup::getuserinfo($openid,$pid);
                     <img src="/themes/new/assets/vote/images/num.png">
                 </i>
                 <span class="inp">
-                    <input type="text" placeholder="请填写号码 ..." name="phone" id="phone" value="">
+                    <input type="text" placeholder="请填写号码 ..." name="phone" id="phone" value="<?php echo $votejoin['phone']?>">
                 </span>
             </div>
         </div>
@@ -174,11 +174,11 @@ $userinfo = Activity_signup::getuserinfo($openid,$pid);
 <!--            <div class="error" id="error">带<i>*</i>为 必填项目</div>-->
             <div class="btn" style="margin-top: 30px; padding-bottom:30px;">
                 <?php if(isset($end_activity)){?>
-                    <input onclick="times()" type="button" value="未开始" />
+                    <input  onclick="times()" type="button" value="未开始" />
                 <?php }elseif($joinstatus==1){?>
                     <input id="btn" class="save_button" type="submit" value="报名" />
                 <?php }elseif($joinstatus==0) { ?>
-                    <input onclick="signup()" type="button" value="已报名" />
+                    <input style="background: #a9acaf;"type="button" value="已报名" />
                 <?php } ?>
                <a href="<?php echo $this->createUrl('/activity/vote/mysignup')?>"> <input  type="button" value="我的报名" /></a>
                 <i class="loadingdiv" id="loadingdiv"><img src="<?php echo $this->_theme_url;?>assets/h5/1.1/images/load.gif"/></i>
