@@ -21,7 +21,7 @@ class HactivityController extends HaController{
         $criteria->params = array(':authorid'=>$member['id'],':status'=>1);
         $count = $application_class->count($criteria);
         $pages = new CPagination($count);
-        $pages->pageSize = 3;
+        $pages->pageSize = 5;
         $pages->applyLimit($criteria);
         $returnData['houslist']= $application_class->findAll($criteria);
         $endtime=explode("|", $returnData['houslist']['validity'])[1];
@@ -74,6 +74,7 @@ class HactivityController extends HaController{
             }
         }
         $viewData['houseinfo'] = $houseinfo;
+        //var_dump($viewData['houseinfo']);
         $this->render("add",$viewData);
     }
 
@@ -89,6 +90,8 @@ class HactivityController extends HaController{
             $houseInfo->status = 2;
             if ($houseInfo->save()) {
                 $returnData = '100';
+            }else{
+                $returnData = '200';
             }
         }
         echo $returnData;

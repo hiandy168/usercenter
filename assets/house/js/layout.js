@@ -111,6 +111,7 @@ var v1 = $("#username"),
   v3 = $("#usercodeid");
 var reg = /^1[3|5|7|8]\d{9}$/;
 var checkform = function() {
+    var money=$('#money').val();
   if (!v1.val()) {
     v1.parent().prev().show().addClass("icon-error");
     popshow("请填写姓名");
@@ -138,6 +139,7 @@ var checkform = function() {
               realname: v1.val(),
               realphone:v2.val(),
               realid: v3.val(),
+              money: money,
               id: $("#houseid").val()
           },
           url: "/house/stored/ajaxinfo",
@@ -146,9 +148,9 @@ var checkform = function() {
 
           },
           success: function(data) {
-                if(data){
-                    alert(data);
-                }
+               if(data.code==0){
+                   location.href = data.url;//location.href实现客户端页面的跳转
+               }
           },
           error: function(XMLHttpRequest, textStatus, errorThrown) {
               closepop()
@@ -158,6 +160,34 @@ var checkform = function() {
 
   }
 }
+
+
+/*var checkorder = function() {
+
+    $.ajax({
+        type: "post",
+        data: {
+            realname: v1.val(),
+            realphone:v2.val(),
+            realid: v3.val(),
+            id: $("#houseid").val()
+        },
+        url: "/house/stored/ajaxorder",
+        dataType: "json",
+        success: function(data) {
+            if(data.code==0){
+                location.href = data.url;//location.href实现客户端页面的跳转
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            closepop()
+            alert("网络异常");
+        }
+    })
+
+
+}*/
+
 
 
 v1.blur(function() {
@@ -320,7 +350,7 @@ $(function() {
 })
 
 var page=2;
-
+var number=0;  
   function scrollF(){
   //获取滚动条当前的位置
   function getScrollTop() {
@@ -351,11 +381,14 @@ var page=2;
 
     if (getScrollTop() + getClientHeight() === getScrollHeight()) {
      $(".f-index-list-loading").show();
-     console.log(page);
-     console.log(getScrollTop());
-     console.log(getClientHeight());
-     console.log(getScrollHeight());
-     $.ajax({
+     // console.log(page);
+     // console.log(getScrollTop());
+     // console.log(getClientHeight());
+     // console.log(getScrollHeight());
+     
+     number++;
+     if(number==1){
+         $.ajax({
           url:"/house/site/gethouse",
           data:{"page":page},
           dataType:'json',
@@ -394,9 +427,9 @@ var page=2;
                     }
 
                   }
-
                   $(".f-index-list-loading").hide();
                   $(".f-index-list ul").append(html);
+                  number=0;
                   $(function() {
                           $('.icon-time').countdown(function(s, d) {
                             var items = $(this).find("span");
@@ -413,7 +446,10 @@ var page=2;
                 }
 
           })
+     }
+   
 
+   
    } 
 
 

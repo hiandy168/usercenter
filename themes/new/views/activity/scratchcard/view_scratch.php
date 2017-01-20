@@ -57,7 +57,7 @@
 		  		</div>
 		  	</div>
 		 
-		 <a href="" title=""><div class="confirmbtn">
+		 <a href="javascript:history.go(0)" title=""><div class="confirmbtn">
 		 	<img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img9.png" width="100%" />
 		 </div></a>
 	    		

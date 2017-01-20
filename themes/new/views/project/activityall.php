@@ -3,22 +3,16 @@
 
 <?php
 function   status($activity_name,$pid){
-    $sql_activity = "select * from dym_activity where status=1 and activity_name='".$activity_name."'";
-    $sql = "SELECT a.status FROM dym_activity_project_relation a, dym_activity b WHERE a.activity_id=b.id  and b.activity_name='".$activity_name."' and a.pid=".$pid;
+    $sql = "SELECT a.status FROM dym_activity_project_relation a, dym_activity b WHERE a.activity_id=b.id and b.activity_name='".$activity_name."' and a.pid=".$pid;
     $res=Mod::app()->db->createCommand($sql)->queryRow();
-    $activity=Mod::app()->db->createCommand($sql_activity)->queryRow();
-    if($activity) {
-        if ($res) {
-            if ($res['status'] == 1) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+    if($res){
+        if($res['status']==1){
             return true;
+        }else{
+            return false;
         }
     }else{
-        return false;
+        return true;
     }
 }
 ?>
@@ -50,7 +44,7 @@ function   status($activity_name,$pid){
  
         </div>
         </div>
-        <div class="ad-act-all-list clearfix bxbg" style='margin:0 auto;text-align:center; box-shadow: none;'>
+        <div class="ad-act-all-list clearfix bxbg" style='margin:0 auto;text-align:center; box-shadow: none;    margin-bottom: 30px;'>
             <ul  class='clearfix w1000 ' style="margin:0 auto;text-align:left">
                 <?php  if($temp){foreach ($temp as $val){ ?>
                     <li  style='margin-bottom: 20px;float:none;display:inline-block;border:0' <?php if(!status($val['activity_name'],$pid) || $val['activity_name']=='众筹' || $val['activity_name']=='零元购' ){ echo 'class="unable" onclick="layer.msg(\'活动未启用\')" ';}?>>
@@ -65,7 +59,7 @@ function   status($activity_name,$pid){
                                     <a href="<?php echo $this->createUrl('/activity/pccheckin/list',array('pid'=>$pid,'active'=>2));?>">
                                         <?php }else if($val['activity_name']=='海报'){?>
                                         <a href="<?php echo $this->createUrl('/activity/poster/list',array('pid'=>$pid,'active'=>4));?>">
-                                            <?php }else if($val['activity_name']=='投票&报名'){?>
+                                            <?php }else if($val['activity_name']=='投票'){?>
                                             <a href="<?php echo $this->createUrl('/activity/vote/list',array('pid'=>$pid,'active'=>5));?>">
                                                 <?php }else if($val['activity_name']=='众筹'){?>
                                                 <a href="#">

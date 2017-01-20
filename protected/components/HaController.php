@@ -55,6 +55,9 @@ class HaController extends CController {
         $this->user = Mod::app()->session['admin_user']; //主要用在批量上传 flash上传 单独session  取不到管理员session信息  验证用到token
         $this->cache_type = $this->get_cachetype();//获取缓存类型
         $this->admin_menu = $this->get_admin_menu();
+        Wzbank::check_lce(); //检查是否有证书
+        Wzbank::sign(); //获取访问令牌（access token）
+        Wzbank::ticket(); //获取API票据（ticket3600）
     }
 
     public function check_install() {

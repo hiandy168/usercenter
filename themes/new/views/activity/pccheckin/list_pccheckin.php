@@ -6,9 +6,10 @@
 
 
 
-    <div class="ad-act-list w1000 bxbg mgt30 clearfix">
+    
+    <div class="ad-act-list  bxbg ">
 
-        <div class="ad-app-list-tit clearfix">
+        <div class="ad-app-list-tit ">
             <div class="fl tl">
                 <h3>我的应用</h3>
             </div>
@@ -26,7 +27,7 @@
 
         <!--没有记录的情况-->
         <?php if(empty($asList)){ ?>
-        <div class="ad-nodata w1000 mgb30 mgt30">
+        <div class="ad-nodata  mgb30 mgt30">
             <img src="<?php echo $this->_theme_url; ?>assets/images/ad-nodata-bg.png"/>
             <p>噢噢，还没有记录！！！</p>
             <a href="<?php echo $this->createUrl('/activity/pccheckin/add',array('pid'=>$config['pid']))?>" class="linear adbtn">创建活动</a>
@@ -37,7 +38,7 @@
         <div class="ad-act-list-table">
 
 
-            <div class="ad-act-list-table-tit clearfix">
+            <div class="ad-act-list-table-tit ">
                 <ul>
                     <li class="lw1">活动ID<i></i></li>
                     <li class="lw2">活动名称<i></i></li>
@@ -51,7 +52,7 @@
                 <ul>
                     <?php if($asList):foreach($asList as $val): ?>
                         <li class="li">
-                            <div class="ad-act-list-table-con1 clearfix">
+                            <div class="ad-act-list-table-con1 ">
                                 <ul>
                                     <li class="lw1"><?php echo $val->id;?></li>
                                     <li class="lw2"><?php echo $val->title;?></li>

@@ -4,20 +4,25 @@
 <script src="<?php echo $this->_theme_url;?>assets/js/laydate/laydate.js" type="text/javascript" charset="utf-8"></script>
 <link rel="stylesheet" href="<?php echo $this->_theme_url; ?>assets/css/vote.css">
 
-    <div class="ad-act-list w1000 bxbg mgt30 clearfix" xmlns="http://www.w3.org/1999/html">
-        <div class="ad-app-list-tit clearfix">
+    <!-- <div class="ad-act-list w1000 bxbg mgt30 clearfix" xmlns="http://www.w3.org/1999/html">
+        <div class="ad-app-list-tit clearfix"> -->
+
+          <div class="ad-act-list  bxbg " xmlns="http://www.w3.org/1999/html">
+      <!--   <div class="ad-app-list-tit">
             <div class="fl tl">
                 <h3>编辑活动</h3>
             </div>
-            <!--<div class="fr tr">
+            <div class="fr tr">
                 <a href="#">
                     <i class="aicon linear"></i>新增活动
                 </a>
-            </div>-->
-        </div>
+            </div>
+        </div> -->
         <!--tit end-->
         <div class="ad-edit-app">
-            <div class="ad-edit-app-nav clearfix">
+        <!-- <div class="ad-edit-app-nav clearfix"> -->
+        
+            <div class="ad-edit-app-nav ">
                 <ul>
                     <li class="selected">
                         <a href="">编辑活动</a>

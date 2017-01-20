@@ -3,7 +3,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $this->theme_url; ?>/assets/public/css/dateRange.css"/>
 <div class='bgf clearfix'>
     <div class="form_list">
-        <form name="formview" id="formview" action="<?php echo $this->createUrl('/houseadmin/Hactivity/add'); ?>" method="post">
+        <form name="formview" id="formview" action="<?php echo $this->createUrl('/houseadmin/hactivity/add'); ?>" method="post">
             <?php if($houseinfo['id']){?>
                 <input type="hidden" name="id" value="<?php echo isset($houseinfo['id']) ? $houseinfo['id'] : ''; ?>">
             <?php }?>
@@ -150,8 +150,18 @@
     var dateRange1 = new pickerDateRange('actime', {
         stopToday : false,
         isTodayValid : true,
-        startDate: '2015-11-05',
-        endDate: '2015-11-06',
+        <?php if($houseinfo){
+        ?>
+        startDate: '<?php echo date('Y-m-d',explode("|",$houseinfo['actime'])[0]); ?>',
+        endDate: '<?php echo date('Y-m-d',explode("|",$houseinfo['actime'])[1]); ?>',
+        <?php
+        }else{
+        ?>
+        startDate: '<?php echo date('Y-m-d',time()); ?>',
+        endDate: '<?php echo date('Y-m-d',time()); ?>',
+        <?php
+        }
+        ?>
         needCompare : false,
         defaultText : ' | ',
         autoSubmit : false,
@@ -162,8 +172,18 @@
     var dateRange1 = new pickerDateRange('validity', {
         stopToday : false,
         isTodayValid : true,
-        startDate: '2015-11-05',
-        endDate: '2015-11-06',
+        <?php if($houseinfo){
+       ?>
+        startDate: '<?php echo date('Y-m-d',explode("|",$houseinfo['validity'])[0]); ?>',
+        endDate: '<?php echo date('Y-m-d',explode("|",$houseinfo['validity'])[1]); ?>',
+        <?php
+        }else{
+        ?>
+        startDate: '<?php echo date('Y-m-d',time()); ?>',
+        endDate: '<?php echo date('Y-m-d',time()); ?>',
+        <?php
+        }
+        ?>
         needCompare : false,
         defaultText : ' | ',
         autoSubmit : false,
@@ -313,7 +333,7 @@
                 return false;
             }
         }
-        alert("成功");
+        //alert("成功");
 
     })
 

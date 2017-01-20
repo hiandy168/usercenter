@@ -2,29 +2,47 @@
         <div class='bgf clearfix'>
           
             <div class="center_top clearfix">
-                <span>项目</span>
-                <select  name="activity" id="project">
+                <form action="" method="post">
+                    <span>项目</span>
+                    <select name="project" id="project">
+                        <option value="">全部</option>
+                        <?php foreach ($project as $k => $v) { ?>
+                            <option value="<?php echo $v->id ?>" <?php if ($v->id == $projectid) {
+                                echo "selected";
+                            } ?>><?php echo $v->name ?></option>
+                        <?php } ?>
+                    </select>
 
-                    <?php foreach ($project as $k=>$v){?>
-                        <option value="<?php echo $v['id']?>" <?php if($v['id'] == $projectid){echo "selected";} ?>><?php echo $v['name']?></option>
-                    <?php }?>
-                </select>
+                    <span>活动组件</span>
+                    <select name="activity">
+                        <option value="2" <?php if ($id == 2) {
+                            echo "selected";
+                        } ?>>刮刮卡
+                        </option>
+                        <option value="1" <?php if ($id == 1) {
+                            echo "selected";
+                        } ?>>签到
+                        </option>
 
-            <span>活动组件</span>
-           <select  name="activity" onchange="chooes($(this).val())">
-               <option value="2" <?php if($_GET['id'] == 2){echo "selected";} ?>>刮刮卡</option>
-               <option value="1" <?php if($_GET['id'] == 1){echo "selected";} ?>>签到</option>
-               <option value="3" <?php if($_GET['id'] == 3){echo "selected";} ?>>报名</option>
-               <option value="4" <?php if($_GET['id'] == 4){echo "selected";} ?>>投票</option>
-               <option value="5" <?php if($_GET['id'] == 5){echo "selected";} ?>>大转盘</option>
-               <option value="6" <?php if($_GET['id'] == 6){echo "selected";} ?>>海报</option>
-           </select>
-
-
-
-                
+                        <option value="4" <?php if ($id == 4) {
+                            echo "selected";
+                        } ?>>投票
+                        </option>
+                        <option value="5" <?php if ($id == 5) {
+                            echo "selected";
+                        } ?>>大转盘
+                        </option>
+                        <option value="6" <?php if ($id == 6) {
+                            echo "selected";
+                        } ?>>海报
+                        </option>
+                    </select>
+                    <span>标题</span>
+                    <input type="text" name="title" value="<?php echo $title?>" placeholder="请输入标题">
+                    <input type="submit" class="button" value="查找">
+                    <input type="button" onclick="chooes()" class="button" value="全部列表">
             </div>
-
+            </from>
 
 
             <div class="clearfix"></div>
@@ -33,7 +51,7 @@
                     <table width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>id</th>
+                                <th style='width:50px;text-align:center'>id</th>
                                 <th>标题</th>
                                 <th>类型</th>
                                 <th>项目</th>
@@ -51,7 +69,7 @@
                                 <tr id="list_<?php echo $item['id'] ?>">
 
                                 <?php $image=isset($item['img'])?$item['img']:$item['share_img'];?>
-                                    <td><?php echo $item['id'] ?></td>
+                                    <td style='width:50px;text-align:center'><?php echo $item['id'] ?></td>
                                     <td><?php echo $item['title'] ?></td>
                                     <td>
                                         <?php echo $type_id[0] ;$type=$type_id[1]?>
@@ -107,11 +125,8 @@
         </div>   
 
 <script>
-    function chooes(type){
-        if(type){
-            var project=  $('#project').val();
-            window.location.href='<?php echo $this->createUrl('activity/list')?>/id/'+type+'/project/'+project;
-        }
+    function chooes(){
+            window.location.href='<?php echo $this->createUrl('activity/list')?>';
 
     }
 
@@ -122,7 +137,7 @@
             url: "<?php echo $this->createUrl('activity/recommende')?>",
             data:{
                 "id": id,
-                "aid":<?php echo intval($_GET['id'])?>,
+                "aid":<?php echo intval($id)?>,
                 "isstar":isStar,
                 "project":project
             },

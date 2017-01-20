@@ -43,20 +43,21 @@
             charset="utf-8"></script>
 
     <!--act nav-->
-    <div class="ad-act-list w1000 bxbg mgt30 clearfix">
-        <div class="ad-app-list-tit clearfix">
+    <div class="ad-act-list  bxbg ">
+    
+        <!-- <div class="ad-app-list-tit">
             <div class="fl tl">
                 <h3>编辑活动</h3>
             </div>
-            <!--<div class="fr tr">
+            <div class="fr tr">
                 <a href="#">
                     <i class="aicon linear"></i>新增活动
                 </a>
-            </div>-->
-        </div>
+            </div>
+        </div> -->
         <!--tit end-->
         <div class="ad-edit-app">
-            <div class="ad-edit-app-navsd clearfix">
+            <div class="ad-edit-app-navsd ">
                 <ul>
                     <li  class="selected" >
                         <?php if($activity_info['id']){ ?>

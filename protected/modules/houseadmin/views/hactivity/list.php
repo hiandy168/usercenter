@@ -4,7 +4,7 @@
     <div class="center_top clearfix">
         <div class="center_top clearfix">
             <ul>
-                <li><a class="btn btn-primary" href="<?php echo $this->createUrl('add') ?>">添加</a></li>
+                <li><a class="btn btn-primary" href="<?php echo $this->createUrl('add') ?>">新增活动</a></li>
             </ul>
         </div>
     </div>

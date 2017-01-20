@@ -41,7 +41,7 @@ input[type="button"], input, select { font-family: 'microsoft yahei', 'Hiragino 
 .ad-top-bg { position: relative; z-index: 99; height: 60px; background: #2d3443; }
 .ad-head { }
 .ad-head .ad-logo { }
-.ad-head .ad-logo img { height: 30px; margin: 15px 0; }
+.ad-head .ad-logo img {height: 20px;margin: 20px 0;}
 .ad-head .ad-nav { }
 .ad-head .ad-nav ul { }
 .ad-head .ad-nav ul li { display: block; font-size: 15px; float: left; height: 60px; line-height: 60px; padding: 0px 20px; position: relative; margin-left: 1px; }
@@ -73,7 +73,7 @@ input[type="button"], input, select { font-family: 'microsoft yahei', 'Hiragino 
 .ad-login ul li .ad-regbtn { background: #0091d5; border: 1px solid #0091d5; }
 
 /*foot*/
-.ad-foot-bg { position: relative; z-index: 99; background: #262626; margin-top: 60px; }
+.ad-foot-bg {position: relative;z-index: 99;background: #262626; margin-top: 20px; }
 .ad-app-foot { color: #d1d1d1; padding: 25px 0px; }
 .ad-app-foot a { color: #d1d1d1; -webkit-transition: all .3s linear; -moz-transition: all .3s linear; -ms-transition: all .3s linear; -o-transition: all .3s linear; transition: all .3s linear; }
 .ad-app-foot a:hover { color: #fff; }

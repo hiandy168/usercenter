@@ -1,16 +1,4 @@
 
-<link type="text/css" rel="stylesheet"
-      href="<?php echo $this->_theme_url; ?>assets/dp.SyntaxHighlighter/css/SyntaxHighlighter.css"></link>
-<script language="javascript"
-        src="<?php echo $this->_theme_url; ?>assets/dp.SyntaxHighlighter/js/shCore.js"></script>
-<script language="javascript"
-        src="<?php echo $this->_theme_url; ?>assets/dp.SyntaxHighlighter/js/shBrushCSharp.js"></script>
-<script language="javascript"
-        src="<?php echo $this->_theme_url; ?>assets/dp.SyntaxHighlighter/js/shBrushXml.js"></script>
-<script language="javascript">
-    dp.SyntaxHighlighter.ClipboardSwf = '<?php echo $this->_theme_url;?>assets/dp.SyntaxHighlighter//flash/clipboard.swf';
-    dp.SyntaxHighlighter.HighlightAll('code');
-</script>
     <div class="ad-bg ad-foot-bg">
         <div class="ad-app-foot clearfix w1000" >
             <div class="fl ad-app-footl">

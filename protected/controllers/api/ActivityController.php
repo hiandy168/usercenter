@@ -1,66 +1,90 @@
 <?php
 
-class ActivityController extends FrontController {
-        
-    public function Init(){
+class ActivityController extends FrontController
+{
+
+    public $type;
+
+    public function Init()
+    {
         parent::init();
+
+        $this->type = array(
+            1 => array("签到", "pccheckin", "pccheckin"),
+            2 => array("刮刮卡", "scratchcard", "scratch"),
+            3 => array("报名", "signup", "signup"),
+            4 => array("投票", "vote", "vote"),
+            5 => array("大转盘", "bigwheel", "bigwheel"),
+            6 => array("海报", "poster", "poster"),
+        );
     }
+
     /*
      * 活动推荐 列表接口  报名
      * */
-    public function actionSignupList(){
-        //根据推荐活动 type 规则  4等于 投票 &报名，
-        $page=Tool::getValidParam("page",'integer');
-        $num=Tool::getValidParam("num",'integer',2);
-        $Activity_recommend= new Activity_recommend;
 
-        $list=$Activity_recommend->apiActivityListPager();
-/*        $list=Activity_recommend::model()->findAll("type=:type and status=:status",array(":type"=>4,':status'=>1));*/
-        $data=array();
+    public function actionRecommend()
+    {
 
-        if($list['criteria']){
-            $msg=array();
-           
-            foreach($list['criteria'] as $key=>$val){
-                //0代表报名
-                $res=Activity_vote::model()->find("id=:id and component=:component ",array(":id"=>$val->aid,":component"=>0));
-               
-                
-                if($res){
-                    if($res->start_time>time()){
-                        $msg['status']=1;//未开始
+
+        //根据推荐活动
+        $page = Tool::getValidParam("page", 'integer');
+        $num = Tool::getValidParam("num", 'integer', 2);
+        $Activity_recommend = new Activity_recommend;
+
+        $list = $Activity_recommend->apiActivityListPager();
+        /*        $list=Activity_recommend::model()->findAll("type=:type and status=:status",array(":type"=>4,':status'=>1)); */
+        $data = array();
+        if ($list['criteria']) {
+            $msg = array();
+            foreach ($list['criteria'] as $key => $val) {
+                $model = "Activity_" . $this->type[$val->type][2];
+                $res = $model::model()->find("id=:id", array(":id" => $val->aid));
+                if ($res) {
+                    if ($res->start_time > time()) {
+                        $msg['status'] = 1; //未开始
                     }
-                    if($res->end_time<time()){
-                        $msg['status']=2;//已结束
+                    if ($res->end_time < time()) {
+                        $msg['status'] = 2; //已结束
                     }
+                    $msg['title'] = $res->title;
+                    if ($val->type == 4) {//投票
+                        if ($res->component == 0) {//报名
+                            $msg['type'] = "报名";
+                            $msg['linkDetail'] = $this->_siteUrl . "/activity/vote/views/id/$res->id";
+                            $msg['address'] = $res->address;
+                            $msg['desc'] = $res->desc;
+                            $msg['background'] = $res->background;
+                        } else {
+                            $msg['type'] = $this->type[$val->type][0];
+                            $msg['linkDetail'] = $this->_siteUrl . "/activity/" . $this->type[$val->type][1] . "/view/id/$res->id";
+                        }
+                    } else {
+                        $msg['type'] = $this->type[$val->type][0];
+                        $msg['linkDetail'] = $this->_siteUrl . "/activity/" . $this->type[$val->type][1] . "/view/id/$res->id";
+                    }
+                    $msg['id'] = $res->id;
+                    $msg['img'] = $this->_siteUrl . "/" . $res->img;
+                    $msg['start_time'] = $res->start_time;
+                    $msg['end_time'] = $res->end_time;
 
-                    $msg['title']=$res->title;
-                    $msg['linkDetail']=$this->_siteUrl."/activity/vote/views/id/$res->id";
-                    $msg['id']=$res->id;
-                    $msg['desc']=$res->desc;
-                    $msg['background']=$res->background;
-                    $msg['img']=$this->_siteUrl."/".$res->img;
-                    $msg['start_time']=$res->start_time;
-                    $msg['end_time']=$res->end_time;
-                    $msg['address']=$res->address;
-                    $datas[]=$msg;
+                    $datas[] = $msg;
                 }
-               
-
             }
-            $page=$page*$num?$page:0;
-            if($datas){
-                    $datapage=array_slice($datas,$page,$num);
-                    $data=array('code'=>1,'data'=>$datapage);
-            }else{
-                 $data=array("code"=>0,'data'=>"There is no data");
+            $page = $page - 1;
+            $page = $page * $num ? $page : 0;
+            if ($datas) {
+                $datapage = array_slice($datas, $page, $num);
+                $data = array('code' => 1, 'data' => $datapage);
+            } else {
+                $data = array("code" => 0, 'data' => "There is no data");
             }
-        }else{
-           $data=array("code"=>0,'data'=>"There is no data");
+        } else {
+            $data = array("code" => 0, 'data' => "There is no data");
         }
-                        
-        $result=json_encode($data);
+
+        $result = json_encode($data);
         echo "flightHandler($result)";
     }
-    
+
 }

@@ -131,14 +131,14 @@
              cache: !1,
              async: !1,
              data: {
-                 account:account,
+                 mobile:account,
                  password:password,
                  verify:verify,
                  rember:rember,
-                 codes:codes,
+                 smsCode:codes,
              },
            //  url: Siteurl+'/member/Ajaxsitelogin',   //输入密码登录地址
-             url: Siteurl+'/member/Ajaxsitelogincode',  //输入验证码登录地址
+             url: Siteurl+'/member/Ajaxlogin',  //输入验证码登录地址
              dataType: "json",
              success: function(data) {
                  if (data.state == 1) {
@@ -170,11 +170,11 @@
   	    var n=5;
         var $v_show = $(obj).next().find("ul");
         var $v_content = $(obj).next(".ad-act-con-d2");
-        var v_width = $v_content.height();
+        var v_width = $v_content.width();
         var len = $v_show.find("li").length;
         var page_count = Math.ceil(len / n);
         if (!$v_show.is(":animated")) {
-            if ($v_show.css("top")==((page_count-1)*(-500)+"px")) {
+            if ($v_show.css("left")==((page_count-1)*(-900)+"px")) {
                 /*$v_show.animate({
                     left: '0px'
                 }, "slow");
@@ -183,7 +183,7 @@
                 
             } else {
                 $v_show.animate({
-                    top: '-=' + v_width
+                    left: '-=' + v_width
                 }, "slow");
             }
         }
@@ -196,11 +196,11 @@
         var n=5;
         var $v_show = $(obj).next().next().find("ul");
         var $v_content = $(obj).next().next(".ad-act-con-d2");
-        var v_width = $v_content.height();
+        var v_width = $v_content.width();
         var len = $v_show.find("li").length;
         var page_count = Math.ceil(len / n);
         if (!$v_show.is(":animated")) {
-            if ($v_show.css("top")==(0+"px")) {
+            if ($v_show.css("left")==(0+"px")) {
                 /*$v_show.animate({
                     left: '-=' + v_width * (page_count - 1)
                 }, "slow");
@@ -208,7 +208,7 @@
                 return false;
             } else {
                 $v_show.animate({
-                    top: '+=' + v_width
+                    left: '+=' + v_width
                 }, "slow");
                 
             }

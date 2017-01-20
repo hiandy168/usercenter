@@ -25,7 +25,7 @@
                         <div class="f-index-listdiv clearfix">
                             <a href="<?php echo $this->createUrl('/house/site/detail', array('id' => $house['id'])) ?>">
                                 <div class="f-index-listdiv-img"><img
-                                        src="<?php echo Tool::show_img($house['img']) ?>"/></div>
+                                        src="<?php echo $this->_siteUrl . '/' . $house['img'] ?>"/></div>
                                 <div class="f-index-listdiv-txt">
                                     <h3>[<?php echo $house['city'] ?>]<?php echo isset($house['title']) ? $house['title'] : "" ?></h3>
 
@@ -81,5 +81,5 @@ $(window).scroll(function(){
                   scrollF();
                  })
 })
-             
+
 </script>

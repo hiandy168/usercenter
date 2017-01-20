@@ -9,29 +9,49 @@
     <div class="f-order-info3  pos-r bb">预存产品：<?php echo $houseinfo['title']?></div>
     <div class="f-order-info3  pos-r bb">购买期限：<?php echo $houseinfo['cycle']?></div>
     <div class="f-order-info3  pos-r bb">支付金额：<i class="fcf74"><?php echo $houseinfo['figue']?>元</i></div>
-
 </div>
+<input type="hidden" name="money" id="money" value="<?php echo $houseinfo['figue']?>"/>
 
 
 <div class="mgt4 bgfff fs28">
     <input type="hidden" name="houseid" id="houseid" value="<?php echo $houseinfo['id']?>" />
-    <div class="pos-r bb f-form-inp">
-        <label>用户姓名：</label>
-        <i class=""></i>
-        <span><input type="text" name="username" id="username" placeholder="请填写用户姓名" value="范春阳" /></span>
-    </div>
+    <?php /*if($memberinfo['wxstatus']==2){*/?>
+        <div class="pos-r bb f-form-inp">
+            <label>用户姓名：</label>
+            <i class=""></i>
+            <span><input type="text" name="username" id="username" placeholder="请填写用户姓名" value="" /></span>
+        </div>
 
-    <div class="pos-r bb f-form-inp">
-        <label>联系电话：</label>
-        <i class=""></i>
-        <span><input type="tel" name="usertel" id="usertel" placeholder="请填写联系电话" value="13323163036" /></span>
-    </div>
+        <div class="pos-r bb f-form-inp">
+            <label>联系电话：</label>
+            <i class=""></i>
+            <span><input type="tel" name="usertel" id="usertel" placeholder="请填写联系电话" value="" /></span>
+        </div>
 
-    <div class="pos-r bb f-form-inp">
-        <label>身份证号：</label>
-        <i class=""></i>
-        <span><input type="text" name="usercodeid" id="usercodeid" placeholder="请填写身份证号" value="412723199306079017"  /></span>
-    </div>
+        <div class="pos-r bb f-form-inp">
+            <label>身份证号：</label>
+            <i class=""></i>
+            <span><input type="text" name="usercodeid" id="usercodeid" placeholder="请填写身份证号" value=""  /></span>
+        </div>
+    <?php /*} elseif($memberinfo['wxstatus']==1){*/?><!--
+        <div class="pos-r bb f-form-inp">
+            <label>用户姓名：</label>
+            <i class=""></i>
+            <span><input type="text" name="username" id="username" readonly="readonly" placeholder="请填写用户姓名" value="<?php /*echo $memberinfo['realname'] */?>" /></span>
+        </div>
+
+        <div class="pos-r bb f-form-inp">
+            <label>联系电话：</label>
+            <i class=""></i>
+            <span><input type="tel" name="usertel" id="usertel" readonly="readonly" placeholder="请填写联系电话" value="<?php /*echo $memberinfo['phone'] */?>" /></span>
+        </div>
+
+        <div class="pos-r bb f-form-inp">
+            <label>身份证号：</label>
+            <i class=""></i>
+            <span><input type="text" name="usercodeid" id="usercodeid" readonly="readonly" placeholder="请填写身份证号" value="<?php /*echo $memberinfo['realcard'] */?>"  /></span>
+        </div>
+    --><?php /*} */?>
 </div>
 
 <div class="f-form-xy fs28">

@@ -137,7 +137,7 @@ class SiteController extends HouseController{
         $id=Tool::getValidParam('id','integer');
         $cookie_mod=Cookie::get('city');
         if(!empty($id)){
-            $sql = "SELECT a.id,a.phone,a.city,a.financingid,a.actime,a.coupon,a.desc,a.figue,a.img,a.dtitle,m.title,m.earnings FROM {{house_activity}} as a LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE a.status=1 and a.type=1 and city=$cookie_mod and a.id=$id";
+            $sql = "SELECT a.id,a.phone,a.city,a.financingid,a.actime,a.coupon,a.desc,a.figue,a.img,a.dtitle,a.share_img,m.title,m.earnings FROM {{house_activity}} as a LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE a.status=1 and a.type=1 and city=$cookie_mod and a.id=$id";
             $houseinfo=Mod::app()->db->createCommand($sql)->queryRow();
             if($houseinfo){
                 if($houseinfo['city']==1){

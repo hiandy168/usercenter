@@ -6,10 +6,10 @@
 
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <a><img src="<?php echo Tool::show_img($houseinfo['img'])?>"/></a>
+                <a><img src="<?php echo $this->_siteUrl . '/' . $houseinfo['img']?>"/></a>
             </div>
             <div class="swiper-slide">
-                <a><img src="<?php echo Tool::show_img($houseinfo['share_img'])?>"/></a>
+                <a><img src="<?php echo $this->_siteUrl . '/' . $houseinfo['share_img']?>"/></a>
             </div>
         </div>
         <div class="pagination"></div>

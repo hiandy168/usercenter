@@ -21,9 +21,9 @@ function   status($activity_name,$pid){
 }
 ?>
 
-<div class="ad-act-kind w1000 bxbg clearfix mgt30">
+<div class="ad-act-kind bxbg">
 
-    <div class="ad-act-nav w1000 clearfix">
+    <div class="ad-act-nav ">
         <ul>
             <?php   $activity_class = Mod::app()->db->createCommand()->select('*')->from('dym_activity_class')->queryAll();
             foreach ($activity_class as $val){
