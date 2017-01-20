@@ -34,7 +34,7 @@ function   status($activity_name,$pid){
 //             }
 
         ?>
-        <div class="ad-app-list-tit clearfix" style='margin-top:10px;margin-right:0;border-top: 1px solid #E6E6E6;'>
+        <div class="ad-app-list-tit clearfix" style='margin-top:10px;margin-right:0;border-top: 1px solid #E6E6E6;padding: 0;overflow: inherit;'>
             
             <div class="clearfix ad-alltit" style='margin:0;background:#ffffff'>
             <div class="fl ad-alltit-left" style='margin:-5px 0 0 20px;height:30px;line-height:30px;'>

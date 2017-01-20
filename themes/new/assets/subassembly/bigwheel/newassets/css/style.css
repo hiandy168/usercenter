@@ -61,5 +61,5 @@ em, i { font-style: normal; }
   .dial-poptuletxt { background: #f8f6d9; width: 12.5rem; border-radius: 5px; word-break: break-word; text-align: left; padding: 15px; box-sizing: border-box; font-size: 14px; line-height: 24px; min-height: 8rem; padding-bottom: 3rem; }
   .dial-poptxt { font-size: .48rem; max-height: 9rem; overflow-y: auto; }
   .dial-poptxt li { font-size: .6rem; margin-top: .5rem; overflow: hidden; line-height: .8rem; }
-   .dial-poptxt li span{ width:33.33%; float: left; text-align: center; }
+   .dial-poptxt li span{ width:33.33%; float: left; text-align: center; word-break: break-word; }
   .dial-poptxt li span { display: block; color: #e82b2c; }

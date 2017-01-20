@@ -151,7 +151,7 @@
 .ad-data-nav1 span { }
 .ad-data-con { min-height: 600px; }
 .ad-app-list { min-height: 500px; }
-.ad-app-list-tit {padding: 20px;position: relative;padding-left: 0px;overflow: hidden;}
+.ad-app-list-tit { padding: 20px; position: relative;padding-left: 0px; overflow: hidden; }
 .ad-app-list-tit .tl { }
 .ad-app-list-tit .tl h3 { padding-left: 20px; display: inline-block; height: 40px; line-height: 40px; border-left: 4px solid #008bcc; color: #858585; font-size: 16px; }
 .ad-app-list-tit .tr a {display: block;height: 30px;border: 1px solid #008bcc;color: #008bcc;font-size: 14px;line-height: 30px;padding: 0px 30px;border-radius: 3px;}
@@ -319,6 +319,24 @@ border-color: #008bcc; }
 .ad-act-list-table-con .li {border-top: 1px solid #e6e6e6;}
 .ad-act-list-table-con1 {padding: 20px 0px;overflow: hidden;}
 .ad-act-list-table-con1 ul li { color: #858585 }
+.ad-act-list-table-con1 .lspan{     
+ display: inline-block;
+    position: relative;
+    padding-right: 25px;text-decoration: underline;}
+.ad-act-list-table-con1 .lspan i{    width: 25px;
+    height: 20px;
+    margin-right: 2px;
+    position: absolute;
+    right: -5px;}    
+.ad-act-list-table-con1 .l3_1 { color: #f1aa02; }
+.ad-act-list-table-con1 .l3_2 { color: #009BE4; }
+.ad-act-list-table-con1 .l3_3 { color: #f7467f; }
+.ad-act-list-table-con1 .l3_4 { color: #999999; }
+.ad-act-list-table-con1 .l3_1 i{  background: url(../images/ad-act-opt-icon3_zt1.png) no-repeat  center;}
+.ad-act-list-table-con1 .l3_2 i{  background: url(../images/ad-act-opt-icon3_zt2.png) no-repeat  center;}
+.ad-act-list-table-con1 .l3_3 i{  background: url(../images/ad-act-opt-icon3_zt3.png) no-repeat  center;}
+.ad-act-list-table-con1 .l3_4 i{  background: url(../images/ad-act-opt-icon3_zt4.png) no-repeat  center;}
+
 .ad-act-list-table-con2 {background: #f2f2f2;text-align: right;}
 .ad-act-list-table-con2 ul li { display: inline-block; line-height: 36px; padding: 0px 15px; cursor: pointer; position: relative; }
 .ad-act-list-table-con2 ul li:hover { background: #eaeaea; }

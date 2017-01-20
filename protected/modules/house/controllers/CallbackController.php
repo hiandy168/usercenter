@@ -21,7 +21,7 @@ class CallbackController extends Controller{
      * author  Fancy
      */
 
-    public function actionWithdraw(){
+    public function actionIndex(){
         file_put_contents("notify.txt","支付成功",FILE_APPEND);
         /*$nonce = trim(Tool::getValidParam('nonce','string'));
         $timestamp = trim(Tool::getValidParam('timestamp','string'));

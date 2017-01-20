@@ -321,7 +321,7 @@ class ScratchcardController extends FrontController {
                                     //查询历史中数量
                                      $sql = "select * from {{activity_scratch_user}} where scratch_id =".$activity_info['id']." and prize_id = ".$val." and is_win =1 ";
                                      $this_win_list = Mod::app()->db->createCommand($sql)->queryAll();
-                                     if(($prize_data['remainder']+count($this_win_list)) >$prize_data['probability']){
+                                     if(($prize_data['remainder']+count($this_win_list)) >$prize_data['count']){
                                            $transaction->rollBack();
                                            //严重数据错误
                                             echo json_encode(array(  'state' => 0,   'msg' => '中奖的数量加上+剩余的数量已经大于奖品的数量' )); exit;

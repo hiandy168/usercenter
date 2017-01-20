@@ -47,6 +47,8 @@
                                     echo "已支付";
                                 }elseif($order['paystatus']==3){
                                     echo "已使用";
+                                }elseif($order['paystatus']==4){
+                                    echo "已退款";
                                 }
                             ?>
                         </i>
@@ -60,7 +62,12 @@
                             </div>
                         </a>
                     </div>
-                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d',explode('|',$order['actime'])[1])?> 23:59:59前完成存款</p></div>
+
+                    <?php if($order['paystatus']==1){?>
+                        <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d',explode('|',$order['actime'])[1])?> 23:59:59前完成存款</p></div>
+                    <?php }else{ ?>
+                        <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>完成存款</p></div>
+                    <?php } ?>
                 </div>
             </li>
             <?php }}else{?>

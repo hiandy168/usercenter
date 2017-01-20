@@ -47,32 +47,7 @@
                 <li class="lw2">活动状态</li>
             </ul>
         </div>
-<style>
-    
-.ad-act-list-table-con1 .l3 {
-    color: #f1aa02;
-}
-.ad-act-list-table-con1 .l3_1 {
-    color: #f1aa02;
-}
- .ad-act-list-table-con1 span {width:150px;display:inline-block;}
- .ad-act-list-table-con1 i { display: inline-block; height: 20px;  margin: 0 10px; position: relative; top: 4px; width: 25px;}
- .ad-act-list-table-con1 .l3 i {
-    background: rgba(0, 0, 0, 0) url("<?php echo $this->_theme_url?>assets/images/ad-act-opt-icon3.png") no-repeat scroll center center;
-}
-.ad-act-list-table-con1 .l3_1 i {
-    background: rgba(0, 0, 0, 0) url("<?php echo $this->_theme_url?>assets/images/ad-act-opt-icon3_1.png") no-repeat scroll center center;
-}
-.ad-act-list-table-con1 .l4 i {
-    background: rgba(0, 0, 0, 0) url("<?php echo $this->_theme_url?>assets/images/ad-act-opt-icon4.png") no-repeat scroll center center;
-}
-.ad-act-list-table-con1 .l5 i {
-    background: rgba(0, 0, 0, 0) url("<?php echo $this->_theme_url?>assets/images/ad-act-opt-icon5.png") no-repeat scroll center center;
-}
-.ad-act-list-table-con1 .l6 i {
-    background: rgba(0, 0, 0, 0) url("<?php echo $this->_theme_url?>assets/images/ad-act-opt-icon6.png") no-repeat scroll center center;
-}
-</style>
+
         <div class="ad-act-list-table-con">
             <ul>
                 <?php if($asList):foreach($asList as $val): ?>
@@ -83,20 +58,28 @@
                                 <li class="lw2"><?php echo $val->title;?></li>
                                 <li class="lw3"><?php echo date('Y-m-d H:i:s',$val->start_time);?></li>
                                 <li class="lw3"><?php echo date('Y-m-d H:i:s',$val->end_time);?></li>
-                                <li class="lw2" style='cursor:pointer;height:26px;'><?php $result = Activity_bigwheel::activityStatus($val->start_time,$val->end_time,$val->id);?>
-                                 <span style='display:inline-block;height:20px;line-height:20px;font-size:14px;padding:0 5px;text-decoration: underline' <?php if($result['status'] == 1 ||  $result['message']=='已结束'){echo 'class="l3_1" ';}else{echo 'class="l3" '; }?>  href="javascript:void(0)" onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)">
-                                      <?php
-                                    if($result['status'] == 0 ){
-                                        echo '活动已结束<i></i>';
-                                    } elseif( $result['status']==-1){
-                                        echo '活动未开始<i></i>';
-                                    }elseif($result['status'] == 1){
-                                        echo '活动进行中<i></i>';
-                                    }elseif($result['status'] == 2){
-                                        echo $result['message'].'<i></i>';
-                                    }
-                                    ?>
-                                     </span>
+                                <li class="lw2" style='cursor:pointer;'><?php $result = Activity_bigwheel::activityStatus($val->start_time,$val->end_time,$val->id);?>
+   
+                                   <?php if($result['status'] == 0 ){?>
+                                    <span  class="lspan l3_4" href="javascript:void(0)" 
+                                            onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)">
+                                           活动已结束<i></i>
+                                          </span>
+                                    <?php } elseif( $result['status']==-1){ ?>
+                                    <span  class="lspan l3_3" href="javascript:void(0)" onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)">活动未开始<i></i>
+                                          </span>
+                                    
+                                     <?php }elseif($result['status'] == 1){ ?>
+                                     <span  class="lspan l3_2" href="javascript:void(0)" onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)">活动进行中<i></i>
+                                          </span>
+                                       
+                                    <?php }elseif($result['status'] == 2){ ?>
+                                     <span  class="lspan l3_1" href="javascript:void(0)" onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)"><?php echo  $result['message'] ?><i></i>
+                                          </span>
+                                  
+                                    <?php }?> 
+
+                                    
                                 </li>
                             </ul>
                         </div>

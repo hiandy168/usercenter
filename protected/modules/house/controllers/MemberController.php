@@ -13,14 +13,14 @@ class MemberController extends HouseController{
      */
 
     public function actionIndex(){
-        //$userid=$this->member['id'];
-        $userid=7776;
+        $userid=$this->member['id'];
+        //$userid=7776;
         //$userid=78120;
         $wxstatus=$this->member['wxstatus'];
         if($wxstatus==1){
             $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid order by o.createtime desc";
             $orderlist=Mod::app()->db->createCommand($sql)->queryAll();
-            var_dump($orderlist);
+            //var_dump($orderlist);
         }
         $data = array(
             'config'=>array(
@@ -37,8 +37,24 @@ class MemberController extends HouseController{
      * author  Fancy
      */
     public function actionOrderd(){
-
-        $this->render("orderd");
+        $orderid=Tool::getValidParam('id','string');
+        $userid=$this->member['id'];
+        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,a.title,a.img,a.actime,a.city,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
+        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        //var_dump($orderdetail);
+        if(!$orderdetail){
+            echo "error";
+            die();
+        }
+        $data = array(
+            'config'=>array(
+                'site_title'=> $orderdetail['title'],
+                'Keywords'=>$orderdetail['title'],
+                'Description'=>$orderdetail['title'],
+            ),
+            'orderdetail'=>$orderdetail,
+        );
+        $this->render("orderd",$data);
     }
     /**
      * 确认使用
