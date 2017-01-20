@@ -95,7 +95,7 @@ class StoredController extends HouseController{
                 $timestamp=time();
                 $data=array('userId' => $userid, 'userName' => $username,'idType' => '01','idNo' => $realid, 'name' => $realname, 'phoneNo' =>$realphone,);
                 $sign =Wzbank::housesign($nonce,strval($timestamp),json_encode($data));
-                $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;//同步开户信息
+                $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;//同步个人开户信息
                 $postData = array(
                     'userId' => $userid,
                     'userName' =>$username,
@@ -145,6 +145,11 @@ class StoredController extends HouseController{
      * author  Fancy
      */
     public function actionConfirmorder(){
+        $userid=$this->member['id'];
+        $orderid=Tool::getValidParam('orderid','string');
+        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid order by o.createtime desc";
+        $orderlist=Mod::app()->db->createCommand($sql)->queryRow();
+        var_dump($orderlist);
         $this->render('confirmorder');
     }
 

@@ -92,6 +92,39 @@ class MemberController extends HouseController{
         $this->redirect($Url);
        // var_dump($Url);die();
     }
+    /**
+     * 未支付订单支付
+     * author  Fancy
+     */
+    public function actionPay(){
+        $orderid=Tool::getValidParam('orderid','string');
+        $userid=$this->member['id'];
+        $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$orderid";
+        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        $ordernum=$orderdetail['ordernum'];
+        if($orderdetail){
+            $access_token=Mod::app()->memcache->get('access_token');
+            $app_Id=Wzbank::appid;
+            $nonce = Wzbank::strings(32);
+            $ticket =Wzbank::h5ticket($access_token,$userid);
+            $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
+            $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/transIn/".$ordernum."/".$userid."/".$nonce."/".$sign."/".$app_Id;
+            $results=array(
+                'code'=>0,
+                'url'=>$Url
+            );
+            echo json_encode($results);
+        }else{
+            echo "error";
+            die();
+        }
+
+
+
+    }
+
+
+
 
     /**
      * 查询定期存入支取订单结果

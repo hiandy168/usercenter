@@ -34,6 +34,7 @@ class Wzbank {
         if($access_token){
             return $access_token;
         }else{
+            Mod::app()->memcache->delete('tickets');
             $url=self::bankurl."/h/api/oauth2/access_token?app_id=".$appid."&secret=".$secret."&grant_type=client_credential&version=".$version;
             $result=self::curl_get_ssl($url);
             Mod::app()->memcache->set('access_token', $result['access_token'], $result['expire_in']);

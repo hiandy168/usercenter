@@ -3,6 +3,7 @@
     <div class="f-user-ddlistdiv bgfff mgt4">
         <div class="fs28 f-user-ddlistdiv1">
             <i>订单号：<?php echo $orderdetail['ordernum']?></i>
+            <input type="hidden" id="orderid" name="orderid" value="<?php echo $orderdetail['id']?>">
             <i class="fr fcf74">
                 <?php
                 if($orderdetail['paystatus']==1){
@@ -52,23 +53,22 @@
             <i>购房优惠</i>
             <ul>
                 <?php if($orderdetail['paystatus']==1){?>
-                    <li><a href="" class="bg1 fcfff">立即预存</a></li>
+                    <li><a onclick="checkpay()" href="javascript:void(0)" class="bg1 fcfff">立即预存</a></li>
                 <?php }elseif($orderdetail['paystatus']==2){ ?>
                     <li><a href="" class="bgfff fcf74 b1px boru5">确认使用</a></li>
-                    <li><a href="" class="bg2 fcfff">申请提现</a></li>
+                    <?php if(explode('|',$orderdetail['actime'])[1]<time()){?>
+                        <li><a href="refund.html" class="bg1 fcfff">申请提现</a></li>
+                    <?php }else{ ?>
+                        <li><a href="" class="bg2 fcfff">申请提现</a></li>
+                    <?php } ?>
                 <?php }elseif($orderdetail['paystatus']==3){ ?>
                     <li><a href="javascript:void(0)" class="bg2 fcfff">已使用</a></li>
                 <?php }elseif($orderdetail['paystatus']==4){ ?>
                     <li><a href="javascript:void(0)" class="bg2 fcfff">已退款</a></li>
                 <?php } ?>
-
             </ul>
         </div>
-
     </div>
-
-
-
     <div class="fs28 f-user-ddlistdiv3 bgfff pos-r bb mgt4"><p>购买详情</p></div>
 
     <div class="bgfff pos-r bb f-order-buyinfo fs26 fc777">
@@ -80,7 +80,9 @@
         <p>活动有效期：<?php echo date('Y-m-d H:i:s',explode('|',$orderdetail['actime'])[0])?> 至 <?php echo date('Y-m-d H:i:s',explode('|',$orderdetail['actime'])[1])?></p>
         <?php if($orderdetail['paystatus']==1){?>
         <?php }else{ ?>
-            <p>预存状态：<i class="fcf74"><?php
+            <p>预存状态：
+                <i class="fcf74">
+                    <?php
                     if($orderdetail['paystatus']==2){
                         echo "已预存";
                     }elseif($orderdetail['paystatus']==3){
@@ -88,7 +90,9 @@
                     }elseif($orderdetail['paystatus']==4){
                         echo "已退款";
                     }
-                    ?></i></p>
+                    ?>
+                </i>
+            </p>
             <p>兑 换 码：<?php echo $orderdetail['code']?></p>
         <?php } ?>
 

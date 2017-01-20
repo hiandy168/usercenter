@@ -162,17 +162,14 @@ var checkform = function() {
 }
 
 
-/*var checkorder = function() {
-
+var checkpay = function() {
+    var orderid=$('#orderid').val();
     $.ajax({
         type: "post",
         data: {
-            realname: v1.val(),
-            realphone:v2.val(),
-            realid: v3.val(),
-            id: $("#houseid").val()
+            orderid: orderid
         },
-        url: "/house/stored/ajaxorder",
+        url: "/house/member/pay",
         dataType: "json",
         success: function(data) {
             if(data.code==0){
@@ -180,13 +177,29 @@ var checkform = function() {
             }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            closepop()
             alert("网络异常");
         }
     })
-
-
-}*/
+}
+var Confirmorder = function() {
+    var orderid=$('#orderid').val();
+    $.ajax({
+        type: "post",
+        data: {
+            orderid: orderid
+        },
+        url: "/house/member/Confirmorder",
+        dataType: "json",
+        success: function(data) {
+            if(data.code==0){
+                location.href = data.url;//location.href实现客户端页面的跳转
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("网络异常");
+        }
+    })
+}
 
 
 
@@ -442,7 +455,11 @@ var number=0;
                  }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("网络超时")
+                    $(".f-index-list-loading").html("网络超时");
+                    setTimeout(function(){
+                      $(".f-index-list-loading").hide();
+                      $(".f-index-list-loading").html("加载中<i class='icon-loading'></i>");
+                    },3000)
                 }
 
           })

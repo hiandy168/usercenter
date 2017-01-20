@@ -742,11 +742,10 @@ class ScratchcardController extends FrontController {
       
         $where = array(
             ':mid'=>$mid,
-            ':openid'=>$openid,
             ':scratch_id'=>$id,
             ':is_win'=>1
         );
-        $win_prize_res = Mod::app()->db->createCommand()->select('*')->from('{{activity_scratch_user}}')->where("scratch_id=:scratch_id and mid=:mid and openid=:openid and is_win=:is_win",$where)->queryAll();
+        $win_prize_res = Mod::app()->db->createCommand()->select('*')->from('{{activity_scratch_user}}')->where("scratch_id=:scratch_id and mid=:mid  and is_win=:is_win",$where)->queryAll();
         if($win_prize_res){
             foreach ($win_prize_res as $key=>$val){
                 $id = $val['prize_id'];

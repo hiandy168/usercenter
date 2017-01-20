@@ -1134,7 +1134,7 @@ class MemberController extends FrontController
             if (!ctype_alpha($temptable)) {
                 die('非法请求');
             } else {
-                $table = "activity_" . $table;
+                $table = "Activity_" . $table;
             }
             $sql = "SELECT p.* FROM {{project}} as p left join {{" . strtolower($table) . "}} as t on p.id = t.pid  WHERE t.id=$zid";
             $project_info = Mod::app()->db->createCommand($sql)->queryRow(); //根据组件查出project的id
@@ -1720,6 +1720,7 @@ class MemberController extends FrontController
 
                 //查找pid
                 $model = "Activity_" . $model;
+                $model =  ucfirst($model);
                 $res = $model::model()->findByPk($aid);
                 if ($res) {
                     $projectid = $res->pid ? $res->pid : 1;
@@ -1873,6 +1874,7 @@ class MemberController extends FrontController
         //如果没有aid 表示是pc 或者h5 首页 注册登录的！ 默认是1
         if ($member['aid'] > 1) {
             $model = "Activity_" . $member['model'];
+            $model =  ucfirst($model);
             $res = $model::model()->find($member['aid']);
             if ($res) {
                 $pid = $res->pid ? $res->pid : 1;
@@ -1985,7 +1987,8 @@ class MemberController extends FrontController
                 }
 
                 //查找pid
-                $model = "activity_" . $model;
+                $model = "Activity_" . $model;
+                $model =  ucfirst($model);
                 $res = $model::model()->findByPk($aid);
                 if ($res) {
                     $projectid = $res->pid ? $res->pid : 1;
@@ -2226,6 +2229,7 @@ class MemberController extends FrontController
 
                 //查找pid
                 $model = "Activity_" . $model;
+                $model =  ucfirst($model);
                 $res = $model::model()->findByPk($aid);
                 if ($res) {
                     $projectid = $res->pid ? $res->pid : 1;

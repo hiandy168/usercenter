@@ -71,7 +71,7 @@ var temp='<div id="winlogin" class="login-mask">'+
                     
                     '<div class="login-kj-conkind">'+
                         '<ul>'+
-                            '<li><a href="http://'+window.location.host+'/member/qqlogin'+reurl+'"><em><img src="/themes/new/assets/h5/login/images/login-qq-icon.png"/></em><p>使用QQ快捷登录</p></a></li>';
+                            '<a href="http://'+window.location.host+'/member/qqlogin'+reurl+'"><li><em><img src="/themes/new/assets/h5/login/images/login-qq-icon.png"/></em><p>使用QQ快捷登录</p></li></a>';
 							
 		if(!(!resisWeiXin() && isMobile())){
 		temp +=					'<li id="weixinshow">'+
