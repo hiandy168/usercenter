@@ -199,3 +199,8 @@ MODIFY COLUMN `activity_id`  int(11) NOT NULL DEFAULT 0 COMMENT '组件id' AFTER
 MODIFY COLUMN `status`  int(2) NOT NULL DEFAULT 0 COMMENT '启用 默认1=启用 2=不启用' AFTER `activity_id`,
 MODIFY COLUMN `create_time`  int(10) NOT NULL DEFAULT 0 COMMENT '创建时间' AFTER `status`,
 MODIFY COLUMN `update_time`  int(10) NOT NULL DEFAULT 0 AFTER `create_time`
+
+/*海报修改字段*/
+ALTER TABLE `dym_activity_poster`
+CHANGE COLUMN `starttime` `start_time`  int(11) NULL DEFAULT 0 COMMENT '开始时间' AFTER `share_img`,
+CHANGE COLUMN `endtime` `end_time`  int(11) NULL DEFAULT 0 COMMENT '结束时间' AFTER `start_time`

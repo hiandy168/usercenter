@@ -66,9 +66,8 @@ class Wzbank {
      * 证书签名算法sign 3600
      * author  Fancy
      */
-    public static function housesign($nonce="",$timestamp="",$data="",$type=""){
+    public static function housesign($nonce="",$timestamp="",$data="",$type="",$version=""){
         $app_Id=self::appid;
-        $version = self::version;
         $ticket = Mod::app()->memcache->get('tickets');
         $_signatureParamArr = array($version,$app_Id,$nonce,$ticket,$timestamp,$type,$data);
         sort($_signatureParamArr);

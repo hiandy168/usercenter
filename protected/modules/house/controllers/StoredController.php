@@ -66,7 +66,6 @@ class StoredController extends HouseController{
             $realname=Tool::getValidParam('realname','string');
             $realphone=Tool::getValidParam('realphone','string');
             $realid=Tool::getValidParam('realid','string');
-
             $userid=$this->member['id'];
             //var_dump($userid);die();
             $sqls = "UPDATE  {{member}} SET realcard='".$realid."',realname='".$realname."' WHERE id= ".$userid;
@@ -94,7 +93,7 @@ class StoredController extends HouseController{
                 $nonce = Wzbank::strings(32);
                 $timestamp=time();
                 $data=array('userId' => $userid, 'userName' => $username,'idType' => '01','idNo' => $realid, 'name' => $realname, 'phoneNo' =>$realphone,);
-                $sign =Wzbank::housesign($nonce,strval($timestamp),json_encode($data));
+                $sign =Wzbank::housesign($nonce,strval($timestamp),$version,json_encode($data));
                 $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;//同步个人开户信息
                 $postData = array(
                     'userId' => $userid,
@@ -143,13 +142,16 @@ class StoredController extends HouseController{
     /**
      * 支付完成回跳页面
      * author  Fancy
+     * type 1: 购买，2：提现，3：确认使用
+     * status 1.成功， 2： 失败， 3： 处理中， 4： 拉取订单失败
      */
     public function actionConfirmorder(){
         $userid=$this->member['id'];
         $orderid=Tool::getValidParam('orderid','string');
+        $type=Tool::getValidParam('type','string');
+        $status=Tool::getValidParam('status','string');
         $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,a.title,a.img,a.actime,a.city,a.coupon  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid order by o.createtime desc";
         $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
-        //var_dump($orderdetail);
         $data = array(
             'config'=>array(
                 'site_title'=> $orderdetail['title'],
@@ -157,6 +159,8 @@ class StoredController extends HouseController{
                 'Description'=>$orderdetail['title']
             ),
             'orderdetail'=>$orderdetail,
+            'type'=>$type,
+            'status'=>$status,
         );
         $this->render('confirmorder',$data);
     }
@@ -178,7 +182,7 @@ class StoredController extends HouseController{
             'companyProceeds'=>$money,//公司收款金额
             'expireTime'=>"2017-01-16",//定期到期日期
         );
-        $sign =Wzbank::housesign($nonce,strval($timestamp),json_encode($data));
+        $sign =Wzbank::housesign($nonce,strval($timestamp),$version,json_encode($data));
         $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/term/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
         $postData = array(
             'orderNo'=>$orderid,//订单号
@@ -233,7 +237,7 @@ class StoredController extends HouseController{
         $data=array(
             'userId'=>"2",//平台用户号
         );
-        $sign =Wzbank::housesign($nonce,strval($timestamp),json_encode($data));
+        $sign =Wzbank::housesign($nonce,strval($timestamp),$version,json_encode($data));
         $postUrl =Wzbank::bankurl."/h/api/wallet/server/account_manage/unlock?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
         $postData = array(
             'userId'=>"2",//平台用户号

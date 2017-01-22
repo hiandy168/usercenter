@@ -54,10 +54,6 @@
         <div class="op-login-dlbtn">
             <a id="loginbtn">登录</a>
         </div>
-
-        <div class="op-login-dlbtn op-login-regbtn">
-            <a href="<?php echo $this->createUrl('/member/regone'); ?>">注册</a>
-        </div>
     </form>
 </div>
 
