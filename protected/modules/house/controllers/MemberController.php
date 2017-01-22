@@ -18,7 +18,7 @@ class MemberController extends HouseController{
         //$userid=78120;
         $wxstatus=$this->member['wxstatus'];
         if($wxstatus==1){
-            $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid order by o.createtime desc";
+            $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid order by o.createtime desc";
             $orderlist=Mod::app()->db->createCommand($sql)->queryAll();
             //var_dump($orderlist);
         }

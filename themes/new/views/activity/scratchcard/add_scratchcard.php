@@ -30,8 +30,8 @@
                      <li  class="selected" >
                         <?php if($activity_info['id']){ ?>
                         <a href="<?php echo $this->createUrl('/activity/scratchcard/add',array('id'=>$activity_info['id']))?>">编辑刮刮卡</a>
-                        <?php }else{ ?>
-                        <a href="<?php echo $this->createUrl('/activity/scratchcard/add',array('id'=>$activity_info['id']))?>">添加刮刮卡</a>
+                        <?php }else if($config['pid']){ ?>
+                        <a href="<?php echo $this->createUrl('/activity/bigwheel/add',array('pid'=>$config['pid']))?>">添加大转盘</a>
                         <?php } ?>
                     </li>
                     <li>

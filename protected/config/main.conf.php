@@ -17,8 +17,8 @@ define('APPID', 101370101);
 define('APPKEY', "d808fd63cf99a7fb06e87cc4582d0067");
 
 //QQ登录成功后跳转的地址,请确保地址真实可用，否则会导致登录失败。
-//define('CALLBACK',"http://m.hb.qq.com/member/qqcallback");//
-define('CALLBACK',"http://m.tengchu.com/member/qqcallback");
+//define('CALLBACK',"https://m.hb.qq.com/member/qqcallback");//
+define('CALLBACK',"https://m.tengchu.com/member/qqcallback");
 
 //QQ授权api接口.按需调用
 define('SCOPE',"get_user_info,add_share,list_album,add_album,upload_pic,add_topic,add_one_blog,add_weibo");
@@ -37,8 +37,8 @@ define('WXAPPID', 'wx4d8ae9e53cd0d563');
 define('WXAPPKEY', "cb590d2800edacadbc2fc62840807ee1");
 
 //登录成功后跳转的地址,请确保地址真实可用，否则会导致登录失败。
-//define('REDIRECT_URI',"http://m.hb.qq.com/member/WXgetaccesstoken");
-define('REDIRECT_URI',"http://m.tengchu.com/member/WXgetaccesstoken");
+//define('REDIRECT_URI',"https://m.hb.qq.com/member/WXgetaccesstoken");
+define('REDIRECT_URI',"https://m.tengchu.com/member/WXgetaccesstoken");
 /***********************微信相关参数***********************/
 
 
@@ -158,7 +158,7 @@ return array(
                 'autoStart' => true,
                 'cacheID' => 'memcache', // we only use the sessionCache to store the session
                 'cookieMode' => 'only',
-                'timeout' => 1400,
+                'timeout' => 86400,
         ),
     ),
       

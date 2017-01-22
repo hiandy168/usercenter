@@ -147,10 +147,18 @@ class StoredController extends HouseController{
     public function actionConfirmorder(){
         $userid=$this->member['id'];
         $orderid=Tool::getValidParam('orderid','string');
-        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid order by o.createtime desc";
-        $orderlist=Mod::app()->db->createCommand($sql)->queryRow();
-        var_dump($orderlist);
-        $this->render('confirmorder');
+        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,a.title,a.img,a.actime,a.city,a.coupon  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid order by o.createtime desc";
+        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        //var_dump($orderdetail);
+        $data = array(
+            'config'=>array(
+                'site_title'=> $orderdetail['title'],
+                'Keywords'=>$orderdetail['title'],
+                'Description'=>$orderdetail['title']
+            ),
+            'orderdetail'=>$orderdetail,
+        );
+        $this->render('confirmorder',$data);
     }
 
     /**

@@ -1,7 +1,7 @@
 var reur="/?state="+encodeURIComponent(window.location.href);
 var  reurl="";
 if(reur.match('login')){
-     reurl="/?state=http://"+window.location.host+"/h5/member/index";
+     reurl="/?state=https://"+window.location.host+"/h5/member/index";
 }else{
     reurl=reur;
 }
@@ -71,11 +71,11 @@ var temp='<div id="winlogin" class="login-mask">'+
                     
                     '<div class="login-kj-conkind">'+
                         '<ul>'+
-                            '<a href="http://'+window.location.host+'/member/qqlogin'+reurl+'"><li><em><img src="/themes/new/assets/h5/login/images/login-qq-icon.png"/></em><p>使用QQ快捷登录</p></li></a>';
+                            '<li><a href="https://'+window.location.host+'/member/qqlogin'+reurl+'"><em><img src="/themes/new/assets/h5/login/images/login-qq-icon.png"/></em><p>使用QQ快捷登录</p></a></li>';
 							
 		if(!(!resisWeiXin() && isMobile())){
 		temp +=					'<li id="weixinshow">'+
-                                '<a id="wxlogin" href="http://'+window.location.host+'/member/WeixinLogin'+reurl+'">'+
+                                '<a id="wxlogin" href="https://'+window.location.host+'/member/WeixinLogin'+reurl+'">'+
                                     '<em style="padding:30px"><img src="/themes/new/assets/h5/login/images/login-wx-icon.png"/></em>'+
                                     '<p>使用微信快捷登录</p>'+
                                 '</a>'+
@@ -106,7 +106,7 @@ var temp='<div id="winlogin" class="login-mask">'+
     '<div class="cal-mask">'+
     '<div class="cal-mask-con" id="regtips">'+
     '<span class="img" id="tsimg">'+
-    '<img  src="http://m.dachuw.net/themes/default/h5/login/images/cal-error-icon.png"/>'+
+    '<img  src="https://m.dachuw.net/themes/default/h5/login/images/cal-error-icon.png"/>'+
     '</span>'+
     '<p id="msg">提示文字</p>'+
     '</div>'+
@@ -133,7 +133,7 @@ function isWeiXin(){
     if(ua.match(/MicroMessenger/i) == 'micromessenger'){
         $("#weixinshow").show();
     }else{
-        document.getElementById("wxlogin").href = "http://"+window.location.host+"/member/WXgetcode"+reurl;
+        document.getElementById("wxlogin").href = "https://"+window.location.host+"/member/WXgetcode"+reurl;
     }
 }
 
@@ -236,7 +236,7 @@ $("html").on('click',"#login",function(){
         success: function (data) {
             console.log(data);
             if(data.status == 1){
-                 showTips('登录中...','<img  src="http://m.dachuw.net/themes/default/h5/login/images/cal-right-icon.png"/>');
+                 showTips('登录中...','<img  src="https://m.dachuw.net/themes/default/h5/login/images/cal-right-icon.png"/>');
                 if(openid && openid!='undefined'){
                     setTimeout(function () {
                         window.location.href = "?openid="+openid
@@ -339,7 +339,7 @@ $("html").on('click',"#login2",function(){
         success: function (data) {
             console.log(data);
             if(data.status == 1){
-                 showTips('登录中...','<img  src="http://m.dachuw.net/themes/default/h5/login/images/cal-right-icon.png"/>');
+                 showTips('登录中...','<img  src="https://m.dachuw.net/themes/default/h5/login/images/cal-right-icon.png"/>');
                 if(openid && openid!='undefined'){
                     setTimeout(function () {
                         window.location.href = "?openid="+openid
