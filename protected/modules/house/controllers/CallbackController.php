@@ -22,31 +22,44 @@ class CallbackController extends Controller{
      */
 
     public function actionIndex(){
-
-
         $type = Tool::getValidParam('type','string');
-        $nonce = Tool::getValidParam('nonce','string');
+        $nonce = Tool::getValidParam('nonce_str','string');
         $sign = Tool::getValidParam('sign','string');
         $timestamp = Tool::getValidParam('timestamp','string');
-        $data = $_POST;
+        $data = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $info=json_decode($data,true);
+        $signs =Wzbank::housesign($nonce,$timestamp,$type,$data);
         $myfile = fopen("notify.txt", "w") or die("Unable to open file!");
         fwrite($myfile, $type.'|');
         fwrite($myfile, $nonce.'|');
         fwrite($myfile, $sign.'|');
         fwrite($myfile, $timestamp.'|');
         fwrite($myfile, $data.'|');
+        fwrite($myfile, $signs.'|');
+        fwrite($myfile, $info.'|');
         fclose($myfile);
-        die();
         //开户结果通知
         if($type=="OPEN_ACCOUNT_NOTICE"){
-           // file_put_contents("notify.txt",2,FILE_APPEND);
-            file_put_contents("notify.txt",1,FILE_APPEND);
-            $signs =Wzbank::housesign($nonce,$timestamp,$type,$data);
             if($sign==$signs){
-                $info=json_decode($data);
-                $sql = "UPDATE  {{member}} SET wxstatus=2 WHERE id= ".$info['userId'];
-                $res=Mod::app()->db->createCommand($sql)->execute();
-                file_put_contents("notify.txt","开户成功",FILE_APPEND);
+                if($info['result']==1){
+                    file_put_contents("notify.txt","1",FILE_APPEND);
+                    $sql = "UPDATE  {{member}} SET wxstatus=1 WHERE id= ".$info['userId'];
+                    $res=Mod::app()->db->createCommand($sql)->execute();
+                    if($res){
+                        file_put_contents("notify.txt","2",FILE_APPEND);
+                        $results=array(
+                            'code'=>0,
+                            'message'=>"成功"
+                        );
+                    }else{
+                        file_put_contents("notify.txt","3",FILE_APPEND);
+                        $results=array(
+                            'code'=>1,
+                            'message'=>"失败"
+                        );
+                    }
+                    return $results;die();
+                }
             }
         }
         //支付结果通知
