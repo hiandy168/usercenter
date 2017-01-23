@@ -17,42 +17,39 @@ class CallbackController extends Controller{
     }
 
     /**
-     * 定期存入支取结果通知
+     * 微众返回结果通知
      * author  Fancy
      */
 
     public function actionIndex(){
         $type = Tool::getValidParam('type','string');
         $nonce = Tool::getValidParam('nonce_str','string');
-        $sign = Tool::getValidParam('sign','string');
+        $sign = strtolower(Tool::getValidParam('sign','string'));
         $timestamp = Tool::getValidParam('timestamp','string');
         $data = $GLOBALS['HTTP_RAW_POST_DATA'];
         $info=json_decode($data,true);
         $signs =Wzbank::housesign($nonce,$timestamp,$type,$data);
-        $myfile = fopen("notify.txt", "w") or die("Unable to open file!");
+       /* $myfile = fopen("notify.txt", "w") or die("Unable to open file!");
         fwrite($myfile, $type.'|');
         fwrite($myfile, $nonce.'|');
         fwrite($myfile, $sign.'|');
         fwrite($myfile, $timestamp.'|');
         fwrite($myfile, $data.'|');
         fwrite($myfile, $signs.'|');
-        fwrite($myfile, $info.'|');
         fclose($myfile);
+        die();*/
         //开户结果通知
         if($type=="OPEN_ACCOUNT_NOTICE"){
             if($sign==$signs){
                 if($info['result']==1){
-                    file_put_contents("notify.txt","1",FILE_APPEND);
                     $sql = "UPDATE  {{member}} SET wxstatus=1 WHERE id= ".$info['userId'];
                     $res=Mod::app()->db->createCommand($sql)->execute();
                     if($res){
-                        file_put_contents("notify.txt","2",FILE_APPEND);
                         $results=array(
                             'code'=>0,
                             'message'=>"成功"
                         );
                     }else{
-                        file_put_contents("notify.txt","3",FILE_APPEND);
                         $results=array(
                             'code'=>1,
                             'message'=>"失败"
@@ -64,20 +61,22 @@ class CallbackController extends Controller{
         }
         //支付结果通知
         if($type=="TERM_RESULT_NOTICE"){
-            $signs =Wzbank::housesign($nonce,$timestamp,$type,$data);
             if($sign==$signs){
-                $info=json_decode($data);
-                if($info['type'==1]){
-                    //支付失败
-                    $sql = "UPDATE  {{house_order}} SET paystatus=1 WHERE ordernum= ".$info['orderNo']."and mid=".$info['userId'];
+                if($info['type']==1&&$info['result']==0){
+                    //支付成功
+                    $paytime=intval(mb_substr($timestamp,0,10));
+                    $sql = "UPDATE  {{house_order}} SET paystatus=2,paytime=".$paytime." WHERE ordernum= '".$info['orderNo']."' and mid=".$info['userId'];
                     $res=Mod::app()->db->createCommand($sql)->execute();
                     if($res){
-                        return "支付失败";die();
+                        $results=array(
+                            'code'=>1,
+                            'message'=>"成功"
+                        );
                     }
                 }elseif($info['type'==2]){
                     //支付成功
-                    if($info['result']==1){
-                        $sql = "UPDATE  {{house_order}} SET paystatus=2 WHERE ordernum= ".$info['orderNo']."and mid=".$info['userId'];
+                    if($info['result']==0){
+                        $sql = "UPDATE  {{house_order}} SET paystatus=2 WHERE ordernum= '".$info['orderNo']."'and mid=".$info['userId'];
                         $res=Mod::app()->db->createCommand($sql)->execute();
                         if($res){
                             return "支付成功";die();
@@ -102,6 +101,7 @@ class CallbackController extends Controller{
                         }
                     }
                 }
+                return $results;die();
             }
     }
 

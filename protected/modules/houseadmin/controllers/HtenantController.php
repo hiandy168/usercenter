@@ -72,7 +72,7 @@ class HtenantController extends HaController{
             $access_token=Mod::app()->memcache->get('access_token');
             $timestamp=time();
             $userid=$admininfo['id'];
-            $sign =Wzbank::housesign($nonce,strval($timestamp),json_encode($newtenant));
+            $sign =Wzbank::housesign($nonce,$version,strval($timestamp),json_encode($newtenant));
             $postUrl =Wzbank::bankurl."/h/api/wallet/server/corporation/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
             $postData = $newtenant;
             $result= Wzbank::curl_post_ssl($postUrl,json_encode($postData));//同步公司信息

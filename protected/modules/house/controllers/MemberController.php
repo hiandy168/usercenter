@@ -16,9 +16,10 @@ class MemberController extends HouseController{
         $userid=$this->member['id'];
         //$userid=7776;
         //$userid=78120;
-        $wxstatus=$this->member['wxstatus'];
-        if($wxstatus==1){
-            $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid order by o.createtime desc";
+        $sql = "SELECT wxstatus  FROM {{member}} WHERE id=".$userid;
+        $memberinfo=Mod::app()->db->createCommand($sql)->queryRow();
+        if($memberinfo['wxstatus']==1){
+            $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,o.usetime,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid order by o.createtime desc";
             $orderlist=Mod::app()->db->createCommand($sql)->queryAll();
             //var_dump($orderlist);
         }
@@ -39,7 +40,7 @@ class MemberController extends HouseController{
     public function actionOrderd(){
         $orderid=Tool::getValidParam('id','string');
         $userid=$this->member['id'];
-        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,a.title,a.img,a.actime,a.city,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
+        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,o.usetime,a.title,a.img,a.actime,a.city,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
         $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
         //var_dump($orderdetail);
         if(!$orderdetail){
@@ -62,16 +63,27 @@ class MemberController extends HouseController{
      */
     public function actionConfirmorder(){
         $access_token=Mod::app()->memcache->get('access_token');
-        $orderid=Tool::getValidParam('orderid','string');
-        //$orderid="011911665728";
-        $userid=$this->member['id'];
+        $id=Tool::getValidParam('id','string');
         $app_Id=Wzbank::appid;
-        $nonce = Wzbank::strings(32);
-        $ticket =Wzbank::h5ticket($access_token,$userid);
-        $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-        $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/confirm/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
-        $this->redirect($Url);
-        //var_dump($Url);die();
+        $userid=$this->member['id'];
+        $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$id";
+        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        $orderid=$orderdetail['ordernum'];
+        if($orderdetail){
+            $nonce = Wzbank::strings(32);
+            $ticket =Wzbank::h5ticket($access_token,$userid);
+            $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
+            $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/confirm/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
+            $results=array(
+                'code'=>0,
+                'url'=>$Url
+            );
+            echo json_encode($results);
+        }else{
+            echo "error";
+            die();
+        }
+
     }
 
     /**
@@ -80,26 +92,36 @@ class MemberController extends HouseController{
      */
     public function actionWithdraw(){
         $access_token=Mod::app()->memcache->get('access_token');
-        $orderid=Tool::getValidParam('orderid','string');
+        $id=Tool::getValidParam('id','string');
         $userid=$this->member['id'];
-        //$orderid="011911665728";
-        //$userid="7776";
         $app_Id=Wzbank::appid;
-        $nonce = Wzbank::strings(32);
-        $ticket =Wzbank::h5ticket($access_token,$userid);
-        $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-        $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/transOut/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
-        $this->redirect($Url);
-       // var_dump($Url);die();
+        $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$id";
+        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        $orderid=$orderdetail['ordernum'];
+        if($orderdetail){
+            $nonce = Wzbank::strings(32);
+            $ticket =Wzbank::h5ticket($access_token,$userid);
+            $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
+            $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/transOut/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
+            $results=array(
+                'code'=>0,
+                'url'=>$Url
+            );
+            echo json_encode($results);
+        }else{
+            echo "error";
+            die();
+        }
+
     }
     /**
      * 未支付订单支付
      * author  Fancy
      */
     public function actionPay(){
-        $orderid=Tool::getValidParam('orderid','string');
+        $id=Tool::getValidParam('id','string');
         $userid=$this->member['id'];
-        $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$orderid";
+        $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$id";
         $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
         $ordernum=$orderdetail['ordernum'];
         if($orderdetail){
@@ -118,9 +140,6 @@ class MemberController extends HouseController{
             echo "error";
             die();
         }
-
-
-
     }
 
 
@@ -145,7 +164,7 @@ class MemberController extends HouseController{
             'orderNo'=>$orderid,//订单号
             'type'=>"1",//1 存入 2 支取
         );
-        $sign =Wzbank::housesign($nonce,strval($timestamp),json_encode($data));
+        $sign =Wzbank::housesign($nonce,$version,strval($timestamp),json_encode($data));
         $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/term/result?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
         $postData = array(
             'userId'=>$userid,//个人用户userId
@@ -177,7 +196,7 @@ class MemberController extends HouseController{
             'orderNo'=>$orderid,//订单号
             'type'=>"2",//1 存入 2 支取
         );
-        $sign =Wzbank::housesign($nonce,strval($timestamp),json_encode($data));
+        $sign =Wzbank::housesign($nonce,$version,strval($timestamp),json_encode($data));
         $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/term/result?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
         $postData = array(
             'userId'=>$userid,//个人用户userId

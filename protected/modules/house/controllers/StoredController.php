@@ -41,8 +41,8 @@ class StoredController extends HouseController{
             die();
         }
         $userid=$this->member['id'];
-       /* $sqls="SELECT phone,realcard,realname,wxstatus FROM {{member}} WHERE id=78120";
-        $memberinfo=Mod::app()->db->createCommand($sqls)->queryRow();*/
+        $sqls="SELECT phone,realcard,realname,wxstatus FROM {{member}} WHERE id=".$userid;
+        $memberinfo=Mod::app()->db->createCommand($sqls)->queryRow();
         $data = array(
             'config'=>array(
                 'site_title'=> $houseinfo['dtitle'],
@@ -50,7 +50,7 @@ class StoredController extends HouseController{
                 'Description'=>'产品详细'
             ),
             'houseinfo'=>$houseinfo,
-            //'memberinfo'=>$memberinfo,
+            'memberinfo'=>$memberinfo,
         );
         $this->render("index",$data);
 
@@ -152,6 +152,9 @@ class StoredController extends HouseController{
         $status=Tool::getValidParam('status','string');
         $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,a.title,a.img,a.actime,a.city,a.coupon  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid order by o.createtime desc";
         $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        if(!$orderdetail){
+            echo "error";die();
+        }
         $data = array(
             'config'=>array(
                 'site_title'=> $orderdetail['title'],

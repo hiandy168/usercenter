@@ -15,7 +15,7 @@
 
 <div class="mgt4 bgfff fs28">
     <input type="hidden" name="houseid" id="houseid" value="<?php echo $houseinfo['id']?>" />
-    <?php /*if($memberinfo['wxstatus']==2){*/?>
+    <?php if($memberinfo['wxstatus']==2){?>
         <div class="pos-r bb f-form-inp">
             <label>用户姓名：</label>
             <i class=""></i>
@@ -33,25 +33,25 @@
             <i class=""></i>
             <span><input type="text" name="usercodeid" id="usercodeid" placeholder="请填写身份证号" value=""  /></span>
         </div>
-    <?php /*} elseif($memberinfo['wxstatus']==1){*/?><!--
+    <?php } elseif($memberinfo['wxstatus']==1){?>
         <div class="pos-r bb f-form-inp">
             <label>用户姓名：</label>
             <i class=""></i>
-            <span><input type="text" name="username" id="username" readonly="readonly" placeholder="请填写用户姓名" value="<?php /*echo $memberinfo['realname'] */?>" /></span>
+            <span><input type="text" name="username" id="username" readonly="readonly" placeholder="请填写用户姓名" value="<?php echo $memberinfo['realname'] ?>" /></span>
         </div>
 
         <div class="pos-r bb f-form-inp">
             <label>联系电话：</label>
             <i class=""></i>
-            <span><input type="tel" name="usertel" id="usertel" readonly="readonly" placeholder="请填写联系电话" value="<?php /*echo $memberinfo['phone'] */?>" /></span>
+            <span><input type="tel" name="usertel" id="usertel" readonly="readonly" placeholder="请填写联系电话" value="<?php echo $memberinfo['phone'] ?>" /></span>
         </div>
 
         <div class="pos-r bb f-form-inp">
             <label>身份证号：</label>
             <i class=""></i>
-            <span><input type="text" name="usercodeid" id="usercodeid" readonly="readonly" placeholder="请填写身份证号" value="<?php /*echo $memberinfo['realcard'] */?>"  /></span>
+            <span><input type="text" name="usercodeid" id="usercodeid" readonly="readonly" placeholder="请填写身份证号" value="<?php echo $memberinfo['realcard'] ?>"  /></span>
         </div>
-    --><?php /*} */?>
+    <?php } ?>
 </div>
 
 <div class="f-form-xy fs28">

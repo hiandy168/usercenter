@@ -161,13 +161,13 @@ var checkform = function() {
   }
 }
 
-
+//未支付订单支付
 var checkpay = function() {
-    var orderid=$('#orderid').val();
+    var id=$('#id').val();
     $.ajax({
         type: "post",
         data: {
-            orderid: orderid
+            id: id
         },
         url: "/house/member/pay",
         dataType: "json",
@@ -181,14 +181,15 @@ var checkpay = function() {
         }
     })
 }
-var Confirmorder = function() {
-    var orderid=$('#orderid').val();
+//确认使用
+var confirmorder = function() {
+    var id=$('#id').val();
     $.ajax({
         type: "post",
         data: {
-            orderid: orderid
+            id: id
         },
-        url: "/house/member/Confirmorder",
+        url: "/house/member/confirmorder",
         dataType: "json",
         success: function(data) {
             if(data.code==0){
@@ -200,6 +201,28 @@ var Confirmorder = function() {
         }
     })
 }
+
+//提现
+var withdraw = function() {
+    var id=$('#id').val();
+    $.ajax({
+        type: "post",
+        data: {
+            id: id
+        },
+        url: "/house/member/withdraw",
+        dataType: "json",
+        success: function(data) {
+            if(data.code==0){
+                location.href = data.url;//location.href实现客户端页面的跳转
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("网络异常");
+        }
+    })
+}
+
 
 
 

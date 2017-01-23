@@ -3,7 +3,7 @@
     <div class="f-user-ddlistdiv bgfff mgt4">
         <div class="fs28 f-user-ddlistdiv1">
             <i>订单号：<?php echo $orderdetail['ordernum']?></i>
-            <input type="hidden" id="orderid" name="orderid" value="<?php echo $orderdetail['id']?>">
+            <input type="hidden" id="id" name="id" value="<?php echo $orderdetail['id']?>">
             <i class="fr fcf74">
                 <?php
                 if($orderdetail['paystatus']==1){
@@ -27,7 +27,15 @@
                 </div>
             </a>
         </div>
-        <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d',explode('|',$orderdetail['actime'])[1])?> 23:59:59前完成存款</p></div>
+        <?php if($orderdetail['paystatus']==1){?>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d',explode('|',$orderdetail['actime'])[1])?> 23:59:59前完成存款</p></div>
+        <?php }elseif($orderdetail['paystatus']==2){ ?>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$orderdetail['actime'])[1])?>  23:59:59过期，请于案场使用</p></div>
+        <?php }elseif($orderdetail['paystatus']==3){ ?>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d',$orderdetail['usetime'])?> 23:59:59取出存款</p></div>
+        <?php }elseif($orderdetail['paystatus']==4){ ?>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$orderdetail['actime'])[1])?> 23:59:59已结束</p></div>
+        <?php } ?>
     </div>
     <div class="bgfff mgt4 f-order-info">
         <div class="f-order-info1 pos-r">
@@ -55,9 +63,9 @@
                 <?php if($orderdetail['paystatus']==1){?>
                     <li><a onclick="checkpay()" href="javascript:void(0)" class="bg1 fcfff">立即预存</a></li>
                 <?php }elseif($orderdetail['paystatus']==2){ ?>
-                    <li><a href="" class="bgfff fcf74 b1px boru5">确认使用</a></li>
+                    <li><a onclick="confirmorder()" href="javascript:void(0)" class="bgfff fcf74 b1px boru5">确认使用</a></li>
                     <?php if(explode('|',$orderdetail['actime'])[1]<time()){?>
-                        <li><a href="refund.html" class="bg1 fcfff">申请提现</a></li>
+                        <li><a onclick="withdraw()" href="javascript:void(0)" class="bg1 fcfff">申请提现</a></li>
                     <?php }else{ ?>
                         <li><a href="" class="bg2 fcfff">申请提现</a></li>
                     <?php } ?>

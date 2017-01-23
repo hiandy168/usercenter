@@ -65,8 +65,12 @@
 
                     <?php if($order['paystatus']==1){?>
                         <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d',explode('|',$order['actime'])[1])?> 23:59:59前完成存款</p></div>
-                    <?php }else{ ?>
-                        <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>完成存款</p></div>
+                    <?php }elseif($order['paystatus']==2){ ?>
+                        <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$order['actime'])[1])?>  23:59:59过期，请于案场使用</p></div>
+                    <?php }elseif($order['paystatus']==3){ ?>
+                        <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d',$order['usetime'])?> 23:59:59取出存款</p></div>
+                    <?php }elseif($order['paystatus']==4){ ?>
+                        <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$order['actime'])[1])?> 23:59:59已结束</p></div>
                     <?php } ?>
                 </div>
             </li>
@@ -79,80 +83,6 @@
                     <a href="<?php echo $this->_siteUrl;?>/house/site" class="bg1 fcfff fs24">活动首页</a>
                 </div>
             <?php } ?>
-
-            <!--<li>
-                <div class="f-user-ddlistdiv">
-                    <div class="fs28 f-user-ddlistdiv1">
-                        <i>订单号：101827420909</i>
-                        <i class="fr fcf74">已支付</i>
-                    </div>
-                    <div class="f-index-listdiv clearfix pos-r bb bt">
-                        <a href="order1.html">
-                            <div class="f-index-listdiv-img"><img src="<?php /*echo $this->_siteUrl;*/?>/assets/house/images/f-index-listtest.jpg"></div>
-                            <div class="f-index-listdiv-txt">
-                                <h3>[天津] 华业东方玫瑰预售火热启动预定即可获得超高优惠</h3>
-                                <p>在线预存：<i>10000元</i></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于2016/01/04 23:59:59过期，请于案场使用</p></div>
-                </div>
-            </li>
-
-            <li>
-                <div class="f-user-ddlistdiv">
-                    <div class="fs28 f-user-ddlistdiv1">
-                        <i>订单号：101827420909</i>
-                        <i class="fr fcf74">已使用</i>
-                    </div>
-                    <div class="f-index-listdiv clearfix pos-r bb bt">
-                        <a href="order2.html">
-                            <div class="f-index-listdiv-img"><img src="<?php /*echo $this->_siteUrl;*/?>/assets/house/images/f-index-listtest.jpg"></div>
-                            <div class="f-index-listdiv-txt">
-                                <h3>[天津] 华业东方玫瑰预售火热启动预定即可获得超高优惠</h3>
-                                <p>在线预存：<i>10000元</i></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于2016/01/04 23:59:59取出存款</p></div>
-                </div>
-            </li>
-            <li>
-                <div class="f-user-ddlistdiv">
-                    <div class="fs28 f-user-ddlistdiv1">
-                        <i>订单号：101827420909</i>
-                        <i class="fr fcf74">已退款</i>
-                    </div>
-                    <div class="f-index-listdiv clearfix pos-r bb bt">
-                        <a href="order3.html">
-                            <div class="f-index-listdiv-img"><img src="<?php /*echo $this->_siteUrl;*/?>/assets/house/images/f-index-listtest.jpg"></div>
-                            <div class="f-index-listdiv-txt">
-                                <h3>[天津] 华业东方玫瑰预售火热启动预定即可获得超高优惠</h3>
-                                <p>在线预存：<i>10000元</i></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于2016/01/04 23:59:59已结束</p></div>
-                </div>
-            </li>
-            <li>
-                <div class="f-user-ddlistdiv">
-                    <div class="fs28 f-user-ddlistdiv1">
-                        <i>订单号：101827420909</i>
-                        <i class="fr fcf74">已结束</i>
-                    </div>
-                    <div class="f-index-listdiv clearfix pos-r bb bt">
-                        <a href="">
-                            <div class="f-index-listdiv-img"><img src="<?php /*echo $this->_siteUrl;*/?>/assets/house/images/f-index-listtest.jpg"></div>
-                            <div class="f-index-listdiv-txt">
-                                <h3>[天津] 华业东方玫瑰预售火热启动预定即可获得超高优惠</h3>
-                                <p>在线预存：<i>10000元</i></p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于2016/01/04 23:59:59完成使用</p></div>
-                </div>
-            </li>-->
         </ul>
     </div>
 </div>
