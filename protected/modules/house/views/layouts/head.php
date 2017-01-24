@@ -9,7 +9,9 @@
         <div class="f-head-help fr">
             <ul>
                <!--  <li><a href=""><i class="icon-help"></i></a></li> -->
-                <li><a href="<?php echo $this->createUrl('/house/member/index',array('id'=>$this->member['id'])) ?>"><i class="icon-member"></i></a></li>
+                <li><a class="icon-member-a fs48 fc777" href="<?php echo $this->createUrl('/house/member/index',array('id'=>$this->member['id'])) ?>"><i class="icon-member"></i>
+                    <span>个人中心</span>     
+                </a></li>
             </ul>
         </div>
 

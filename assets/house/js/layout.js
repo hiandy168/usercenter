@@ -155,6 +155,8 @@ var checkform = function() {
                       num=0;
                   }else if(data.code==1){
                       popshow(data.message);
+                      $(".dial-closebtn").remove();
+                      $(".dial-pop-txt").append('<i class="pos-r bt fs28 fc444 dial-hrefbtn"><a href="'+data.murl+'" class="fc444 pos-r br">个人中心</a><a href="'+data.ourl+'" class="fc444">订单详细</a></i>')
                       num=0;
                   }
 

@@ -125,7 +125,6 @@
         <i class="dial-closebtn pos-r bt fs28 fc444" onclick="closepop()">确定</i>
     </div>
 </div>
-
 </body>
 
 <?php echo $this->renderpartial('/layouts/foot'); ?>

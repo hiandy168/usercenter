@@ -12,7 +12,7 @@
     <meta name="Keywords" content="<?php echo $Keywords ?>" />
     <meta name="description" content="<?php echo $Description ?>" />
     <title><?php echo $site_title ?></title>
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->_siteUrl;?>/assets/house/css/app.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->_siteUrl;?>/assets/house/css/app.css?vD45dsdu9sdaKmk"/>
 
 </head>
 
