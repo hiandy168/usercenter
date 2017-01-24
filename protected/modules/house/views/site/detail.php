@@ -30,7 +30,7 @@
 
         <div class="fs28 pos-r bb f-cpdetail-div3">
             <span>在线预存<i class="fcf74">￥<b><?php echo $houseinfo['figue']?></b></i></span>
-            <span class="fcbbb fr">11人参与</span>
+            <span class="fcbbb fr"><?php echo $count?>人参与</span>
         </div>
 
         <a href="<?php echo $this->createUrl('/house/money/index',array('id'=>$houseinfo['financingid'])) ?>">
@@ -129,22 +129,14 @@
                             <i>报名时间</i>
                             <i>金额</i>
                         </li>
+                        <?php foreach($orderinfo as $info){?>
                         <li>
-                            <i>李 (139****2422)</i>
-                            <i>2015-11-05 21:00:12</i>
-                            <i>￥10000</i>
+                            <i><?php echo mb_substr($info['realname'],0,1,'utf-8') ?> (<?php echo substr($info['phone'],0,3)?>****<?php
+echo substr($info['phone'],7,10)?>)</i>
+                            <i><?php echo date('Y-m-d H:i:s',$info['applytime'])?></i>
+                            <i>￥<?php echo $info['money'] ?></i>
                         </li>
-                        <li>
-                            <i>李 (139****2422)</i>
-                            <i>2015-11-05 21:00:12</i>
-                            <i>￥10000</i>
-                        </li>
-
-                        <li>
-                            <i>李 (139****2422)</i>
-                            <i>2015-11-05 21:00:12</i>
-                            <i>￥10000</i>
-                        </li>
+                        <?php } ?>
                     </ul>
                    <div class="f-index-list-loading fs28" style="display: none;">
                             加载中<i class="icon-loading"></i>

@@ -2,10 +2,10 @@
 
 <div class="div-main">
 
-  <div class="pos-r bb bgfff f-form-backnav">
-		   	  	<a href="javascript:history.go(-1)"><i class="icon-left"></i></a>
-		   	  	<h3 class="fs36">理财产品信息</h3>
-		   	  </div>
+ <!-- <div class="pos-r bb bgfff f-form-backnav">
+    <a href="javascript:history.go(-1)"><i class="icon-left"></i></a>
+    <h3 class="fs36">理财产品信息</h3>
+  </div>-->
 
 
     <div class="f-user-sy bgfff mgt4">
@@ -23,9 +23,9 @@
             <li class="br pos-r">
                 <i class="fs24 fcbbb">预存周期</i>
                 <?php if($moneyinfo['financingid']==1){?>
-                <p class="fs36 fcf74"><b class="fs32 pos-r"><?php echo $moneyinfo['cycle']?></b></p>
+                <p class="fs36 fcf74"><b class="fs32 pos-r">无限</b></p>
                 <?php }else{?>
-                <p class="fs36 fcf74"><?php echo $moneyinfo['cycle']?></p>
+                <p class="fs36 fcf74"><?php echo $moneyinfo['cycle']?><b class="fs32 pos-r">个月</b></p>
                 <?php }?>
             </li>
             <li>

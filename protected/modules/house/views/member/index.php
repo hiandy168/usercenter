@@ -5,7 +5,7 @@
 
     <div class="f-user-sy bgfff">
         <div class="f-user-sy1"><span><img src="<?php echo $this->_siteUrl;?>/assets/house/images/f-index-listtest.jpg"/></span>
-            <i class="fs36">15826262323</i>
+            <i class="fs36"><?php echo $this->member['phone'] ?></i>
         </div>
         <div class="f-user-sy2">
             <i class="fs24 fcbbb">昨日新增(元)</i>
@@ -68,7 +68,7 @@
                     <?php }elseif($order['paystatus']==2){ ?>
                         <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$order['actime'])[1])?>  23:59:59过期，请于案场使用</p></div>
                     <?php }elseif($order['paystatus']==3){ ?>
-                        <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d',$order['usetime'])?> 23:59:59取出存款</p></div>
+                        <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d h:i:s',$order['usetime'])?>取出存款</p></div>
                     <?php }elseif($order['paystatus']==4){ ?>
                         <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$order['actime'])[1])?> 23:59:59已结束</p></div>
                     <?php } ?>

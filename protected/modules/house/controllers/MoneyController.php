@@ -32,9 +32,9 @@ class MoneyController extends Controller{
         }
         $data = array(
             'config'=>array(
-                'site_title'=> '理财产品名称',
-                'Keywords'=>'理财产品名称',
-                'Description'=>'理财产品名称'
+                'site_title'=>$moneyinfo['title'],
+                'Keywords'=>$moneyinfo['title'],
+                'Description'=>$moneyinfo['title']
             ),
             'moneyinfo'=>$moneyinfo,
         );

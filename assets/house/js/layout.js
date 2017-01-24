@@ -110,6 +110,7 @@ var v1 = $("#username"),
   v2 = $("#usertel"),
   v3 = $("#usercodeid");
 var reg = /^1[3|5|7|8]\d{9}$/;
+var num=0;
 var checkform = function() {
     var money=$('#money').val();
   if (!v1.val()) {
@@ -131,38 +132,47 @@ var checkform = function() {
     return false;
   } else {
     $(".f-form-inp i").hide().removeClass("icon-error");
-    popshow("填写正确，提交中....");
-    $(".dial-closebtn").remove();
-      $.ajax({
-          type: "post",
-          data: {
-              realname: v1.val(),
-              realphone:v2.val(),
-              realid: v3.val(),
-              money: money,
-              id: $("#houseid").val()
-          },
-          url: "/house/stored/ajaxinfo",
-          dataType: "json",
-          beforeSend: function() {
+      num++
+      if(num==1){
+          $.ajax({
+              type: "post",
+              data: {
+                  realname: v1.val(),
+                  realphone:v2.val(),
+                  realid: v3.val(),
+                  money: money,
+                  id: $("#houseid").val()
+              },
+              url: "/house/stored/ajaxinfo",
+              dataType: "json",
+              beforeSend: function() {
+              },
+              success: function(data) {
+                  if(data.code==0){
+                      popshow("填写正确，提交中....");
+                      $(".dial-closebtn").remove();
+                      location.href = data.url;//location.href实现客户端页面的跳转
+                      num=0;
+                  }else if(data.code==1){
+                      popshow(data.message);
+                      num=0;
+                  }
 
-          },
-          success: function(data) {
-               if(data.code==0){
-                   location.href = data.url;//location.href实现客户端页面的跳转
-               }
-          },
-          error: function(XMLHttpRequest, textStatus, errorThrown) {
-              closepop()
-              alert("网络异常");
-          }
-      })
-
+              },
+              error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  closepop()
+                  alert("网络异常");
+                  num=0;
+              }
+          })
+      }
   }
 }
 
 //未支付订单支付
 var checkpay = function() {
+    popshow("提交中....");
+    $(".dial-closebtn").remove();
     var id=$('#id').val();
     $.ajax({
         type: "post",
@@ -183,6 +193,8 @@ var checkpay = function() {
 }
 //确认使用
 var confirmorder = function() {
+    popshow("提交中....");
+    $(".dial-closebtn").remove();
     var id=$('#id').val();
     $.ajax({
         type: "post",
@@ -204,6 +216,8 @@ var confirmorder = function() {
 
 //提现
 var withdraw = function() {
+    popshow("提交中....");
+    $(".dial-closebtn").remove();
     var id=$('#id').val();
     $.ajax({
         type: "post",

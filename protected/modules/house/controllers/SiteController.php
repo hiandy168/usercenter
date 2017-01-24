@@ -114,21 +114,6 @@ class SiteController extends HouseController{
 
     }
 
-
-
-    /**
-     * 接口测试
-     * author  Fancy
-     */
-
-    public function actionTt(){
-        $nonce = $this->string(32);
-        $ticket = Mod::app()->memcache->get('tickets');
-        $access_token=Mod::app()->memcache->get('access_token');
-        $timestamp=time();
-        $version="1.0.0";
-        var_dump($nonce,$ticket,$access_token,$timestamp,$version);
-    }
     /**
      * 活动详情页
      * author  Fancy
@@ -162,7 +147,14 @@ class SiteController extends HouseController{
             echo "error";
             die();
         }
-
+        $count="SELECT count(*) as count FROM {{house_order}} where status=1 and paystatus!=1 and houseid=".$id;
+        $ordercount=Mod::app()->db->createCommand($count)->queryRow();
+        $ordersql="SELECT o.applytime,o.money,m.phone,m.realname FROM {{house_order}} as o LEFT JOIN {{member}} as m on o.mid=m.id where o.status=1 and o.paystatus!=1 and o.houseid=".$id." LIMIT 0,3";
+        $orderinfo=Mod::app()->db->createCommand($ordersql)->queryAll();
+        if(!$ordercount){
+            echo "error";
+            die();
+        }
         $data = array(
             'config'=>array(
                 'site_title'=> $houseinfo['dtitle'],
@@ -170,6 +162,8 @@ class SiteController extends HouseController{
                 'Description'=>'产品详细'
             ),
             'houseinfo'=>$houseinfo,
+            'orderinfo'=>$orderinfo,
+            'count'=>$ordercount['count'],
         );
         $this->render("detail",$data);
     }

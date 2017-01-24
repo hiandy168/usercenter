@@ -67,18 +67,17 @@ class StoredController extends HouseController{
             $realphone=Tool::getValidParam('realphone','string');
             $realid=Tool::getValidParam('realid','string');
             $userid=$this->member['id'];
-            //var_dump($userid);die();
-            $sqls = "UPDATE  {{member}} SET realcard='".$realid."',realname='".$realname."' WHERE id= ".$userid;
-            $res=Mod::app()->db->createCommand($sqls)->execute();
+            $sqlo="SELECT wxstatus FROM {{member}} WHERE id=".$userid;
+            $memberinfo=Mod::app()->db->createCommand($sqlo)->queryRow();
+            if($memberinfo['wxstatus']==2){
+                $sqls = "UPDATE  {{member}} SET realcard='".$realid."',realname='".$realname."' WHERE id= ".$userid;
+                $res=Mod::app()->db->createCommand($sqls)->execute();
+            }
             $id=Tool::getValidParam('id','string');
             $money=Tool::getValidParam('money','int');
-            //var_dump($money);die();
             $app_Id=Wzbank::appid;
             $version=Wzbank::version;
             $orderid=date('md') . $this->random(8, 1);
-
-            //$userid="7776";
-            //$username=$this->member['username'];
             $username="fancy";
             $arr['mid']  =$userid;
             $arr['houseid']  =$id;
@@ -87,53 +86,61 @@ class StoredController extends HouseController{
             $arr['money']  =$money;
             $arr['applytime']  =time();
             $arr['createtime']  =time();
-            $query = Mod::app()->db->createCommand()->insert('dym_house_order',$arr);
-            //$orderid= Mod::app()->db->getLastInsertID();
-            if($query){
-                $nonce = Wzbank::strings(32);
-                $timestamp=time();
-                $data=array('userId' => $userid, 'userName' => $username,'idType' => '01','idNo' => $realid, 'name' => $realname, 'phoneNo' =>$realphone,);
-                $sign =Wzbank::housesign($nonce,strval($timestamp),$version,json_encode($data));
-                $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;//同步个人开户信息
-                $postData = array(
-                    'userId' => $userid,
-                    'userName' =>$username,
-                    'idType' => "01",
-                    'idNo' => $realid,
-                    'name' => $realname,
-                    'phoneNo' => $realphone,
-                );
-                $result= Wzbank::curl_post_ssl($postUrl,json_encode($postData));
-                //var_dump($result);die();
-                if($result['code']==0){
-                    $ticket =Wzbank::h5ticket($access_token,$userid);
-                    $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-                    $result=self::actionAjaxorder($nonce,$userid,$orderid,$money);
-                    if($result['code']==0){
-                        $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/transIn/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;//跳转开户链接
-                        // var_dump($Url);die();
-                        $results=array(
-                            'code'=>0,
-                            'url'=>$Url
-                        );
-                        echo json_encode($results);
-                    }
-                }elseif($result['code']==100013||$result['code']==100004){
-                    $result=self::actionAjaxorder($nonce,$userid,$orderid,$money);
+            $sqlo="SELECT id FROM {{house_order}} WHERE houseid=".$id." and status=1 and paystatus!=1 and mid=".$userid;
+            $orderinfo=Mod::app()->db->createCommand($sqlo)->queryRow();
+            if(!$orderinfo){
+                $query = Mod::app()->db->createCommand()->insert('dym_house_order',$arr);
+                if($query){
+                    $nonce = Wzbank::strings(32);
+                    $timestamp=time();
+                    $data=array('userId' => $userid, 'userName' => $username,'idType' => '01','idNo' => $realid, 'name' => $realname, 'phoneNo' =>$realphone,);
+                    $sign =Wzbank::housesign($nonce,strval($timestamp),$version,json_encode($data));
+                    $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;//同步个人开户信息
+                    $postData = array(
+                        'userId' => $userid,
+                        'userName' =>$username,
+                        'idType' => "01",
+                        'idNo' => $realid,
+                        'name' => $realname,
+                        'phoneNo' => $realphone,
+                    );
+                    $result= Wzbank::curl_post_ssl($postUrl,json_encode($postData));
                     //var_dump($result);die();
                     if($result['code']==0){
                         $ticket =Wzbank::h5ticket($access_token,$userid);
                         $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-                        $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/transIn/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
-                        //var_dump($Url);die();
-                        $results=array(
-                            'code'=>0,
-                            'url'=>$Url
-                        );
-                        echo json_encode($results);
+                        $result=self::actionAjaxorder($nonce,$userid,$orderid,$money);
+                        if($result['code']==0){
+                            $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/transIn/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;//跳转开户链接
+                            // var_dump($Url);die();
+                            $results=array(
+                                'code'=>0,
+                                'url'=>$Url
+                            );
+                            echo json_encode($results);
+                        }
+                    }elseif($result['code']==100013||$result['code']==100004){
+                        $result=self::actionAjaxorder($nonce,$userid,$orderid,$money);
+                        //var_dump($result);die();
+                        if($result['code']==0){
+                            $ticket =Wzbank::h5ticket($access_token,$userid);
+                            $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
+                            $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/transIn/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
+                            //var_dump($Url);die();
+                            $results=array(
+                                'code'=>0,
+                                'url'=>$Url
+                            );
+                            echo json_encode($results);
+                        }
                     }
                 }
-
+            }else{
+                $results=array(
+                    'code'=>1,
+                    'message'=>"您已参与活动"
+                );
+                echo json_encode($results);
             }
 
         }

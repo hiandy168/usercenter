@@ -40,7 +40,7 @@ class MemberController extends HouseController{
     public function actionOrderd(){
         $orderid=Tool::getValidParam('id','string');
         $userid=$this->member['id'];
-        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,o.usetime,a.title,a.img,a.actime,a.city,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
+        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,o.usetime,o.houseid,a.title,a.img,a.financingid,a.actime,a.city,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
         $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
         //var_dump($orderdetail);
         if(!$orderdetail){

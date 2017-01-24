@@ -19,8 +19,8 @@
             </i>
         </div>
         <div class="f-index-listdiv clearfix pos-r bb bt">
-            <a href="">
-                <div class="f-index-listdiv-img"><img src="<?php echo $this->_siteUrl;?>/assets/house/images/f-index-listtest.jpg"></div>
+            <a href="<?php echo $this->createUrl('/house/site/detail', array('id' => $orderdetail['houseid'])) ?>">
+                <div class="f-index-listdiv-img"><img src="<?php echo $this->_siteUrl . '/' . $orderdetail['img'] ?>"></div>
                 <div class="f-index-listdiv-txt">
                     <h3>[<?php echo $orderdetail['city']==1?"武汉":"郑州"?>] <?php echo $orderdetail['title']?></h3>
                     <p>在线预存：<i><?php echo $orderdetail['money']?></i></p>
@@ -32,16 +32,18 @@
         <?php }elseif($orderdetail['paystatus']==2){ ?>
             <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$orderdetail['actime'])[1])?>  23:59:59过期，请于案场使用</p></div>
         <?php }elseif($orderdetail['paystatus']==3){ ?>
-            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d',$orderdetail['usetime'])?> 23:59:59取出存款</p></div>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d h:i:s',$orderdetail['usetime'])?>取出存款</p></div>
         <?php }elseif($orderdetail['paystatus']==4){ ?>
             <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$orderdetail['actime'])[1])?> 23:59:59已结束</p></div>
         <?php } ?>
     </div>
     <div class="bgfff mgt4 f-order-info">
-        <div class="f-order-info1 pos-r">
-            <i class="fs28">微众银行预存款</i>
-            <i class="fr icon-right"></i>
-        </div>
+        <a href="<?php echo $this->createUrl('/house/money/index',array('id'=>$orderdetail['financingid'])) ?>">
+            <div class="f-order-info1 pos-r">
+                <i class="fs28 fc444">微众银行预存款</i>
+                <i class="fr icon-right"></i>
+            </div>
+        </a>
         <div class="f-order-info2 pos-r bb bt">
             <ul>
                 <li class="br pos-r">
@@ -114,5 +116,16 @@
 
 </div>
 
+<!--mask-->
+
+<div class="mask"></div>
+<div class="dial-pop">
+    <div class="dial-pop-txt">
+        <h3 class="fs32 fcf74">加载中....</h3>
+        <i class="dial-closebtn pos-r bt fs28 fc444" onclick="closepop()">确定</i>
+    </div>
+</div>
+
 </body>
+
 <?php echo $this->renderpartial('/layouts/foot'); ?>
