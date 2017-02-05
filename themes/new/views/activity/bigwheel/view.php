@@ -79,7 +79,7 @@
         <div class="dial-zp">
             <!--转盘图片-->
             <?php if ($images->rotaryfive) { ?>
-                <img src="<?php echo JkCms::show_img($images->rotaryfive); ?>" width="100%"/>
+                <img class="dial-zp1" id="lotteryBg"  src="<?php echo JkCms::show_img($images->rotaryfive); ?>" width="100%"/>
             <?php } else { ?>
 
                 <img class="dial-zp1" id="lotteryBg"
@@ -88,7 +88,7 @@
             <!--end 转盘图片-->
             <!--指针图片-->
             <?php if ($images->pointer) { ?>
-                <img src="<?php echo JkCms::show_img($images->pointer); ?>" width="100%"/>
+                <img class="dial-zp2" id="lotteryBtn" src="<?php echo JkCms::show_img($images->pointer); ?>" width="100%"/>
             <?php } else { ?>
                 <img class="dial-zp2" id="lotteryBtn"
                      src="<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-img2.png"/>
@@ -107,7 +107,7 @@
         <!--end 底部背景图片-->
         <!--中奖纪录按钮-->
         <?php if ($images->recordbutton) { ?>
-            <img src="<?php echo JkCms::show_img($images->recordbutton); ?>" width="100%"/>
+            <img class="dial-logbtn" src="<?php echo JkCms::show_img($images->recordbutton); ?>" width="100%"/>
         <?php } else { ?>
             <img class="dial-logbtn"
                  src="<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-logbtn.png"/>
@@ -126,7 +126,7 @@
         <a href="javascript:void(0)">
             <!--活动规则按钮-->
             <?php if ($images->rules) { ?>
-                <img src="<?php echo JkCms::show_img($images->rules); ?>" width="100%"/>
+                <img class="dial-rulebtn" src="<?php echo JkCms::show_img($images->rules); ?>" width="100%"/>
             <?php } else { ?>
                 <img class="dial-rulebtn"
                      src="<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-rulebtn.png"/>

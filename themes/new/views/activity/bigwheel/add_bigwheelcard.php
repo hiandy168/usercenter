@@ -1014,7 +1014,7 @@
             var img = $("input[name='background']").val();//背景图片
             var biaoyu = $("input[name='biaoyu']").val();//活动标语图片
             var bootmbackground = $("input[name='bootmbackground']").val();//底部背景图片
-            var rotary = $("input[name='rotary']").val();//转盘图片
+            var rotaryfive = $("input[name='rotaryfive']").val();//转盘图片
             var pointer = $("input[name='pointer']").val();//转盘指针图片
             var recordbutton = $("input[name='recordbutton']").val();//中奖记录按钮
             var rules = $("input[name='rules']").val();//活动规则按钮
@@ -1141,7 +1141,7 @@
             return false;
             }
 
-            if (jishu)
+
                 var data = {
                     id: id,
                     pid: pid,
@@ -1168,7 +1168,7 @@
 
                     biaoyu:biaoyu,
                     bootmbackground:bootmbackground,
-                    rotary:rotary,
+                    rotaryfive:rotaryfive,
                     pointer:pointer,
                     recordbutton:recordbutton,
                     rules:rules,

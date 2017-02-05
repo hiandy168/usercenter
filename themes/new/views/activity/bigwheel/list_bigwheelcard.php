@@ -59,27 +59,25 @@
                                 <li class="lw3"><?php echo date('Y-m-d H:i:s',$val->start_time);?></li>
                                 <li class="lw3"><?php echo date('Y-m-d H:i:s',$val->end_time);?></li>
                                 <li class="lw2" style='cursor:pointer;'><?php $result = Activity_bigwheel::activityStatus($val->start_time,$val->end_time,$val->id);?>
-   
                                    <?php if($result['status'] == 0 ){?>
-                                    <span  class="lspan l3_4" href="javascript:void(0)" 
+                                    <span  class="lspan l3_4" href="javascript:void(0)"
                                             onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)">
                                            活动已结束<i></i>
                                           </span>
                                     <?php } elseif( $result['status']==-1){ ?>
                                     <span  class="lspan l3_3" href="javascript:void(0)" onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)">活动未开始<i></i>
                                           </span>
-                                    
+
                                      <?php }elseif($result['status'] == 1){ ?>
                                      <span  class="lspan l3_2" href="javascript:void(0)" onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)">活动进行中<i></i>
                                           </span>
-                                       
+
                                     <?php }elseif($result['status'] == 2){ ?>
                                      <span  class="lspan l3_1" href="javascript:void(0)" onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)"><?php echo  $result['message'] ?><i></i>
                                           </span>
-                                  
-                                    <?php }?> 
 
-                                    
+                                    <?php }?>
+
                                 </li>
                             </ul>
                         </div>

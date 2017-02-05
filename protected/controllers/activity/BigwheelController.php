@@ -442,7 +442,7 @@ class BigwheelController extends FrontController
             $img['background'] = Tool::getValidParam('img', 'string');
             $img['biaoyu'] = Tool::getValidParam('biaoyu', 'string');
             $img['bootmbackground'] = Tool::getValidParam('bootmbackground', 'string');
-            $img['rotary'] = Tool::getValidParam('rotary', 'string');
+            $img['rotaryfive'] = Tool::getValidParam('rotaryfive', 'string');
             $img['pointer'] = Tool::getValidParam('pointer', 'string');
             $img['recordbutton'] = Tool::getValidParam('recordbutton', 'string');
             $img['rules'] = Tool::getValidParam('rules', 'string');
