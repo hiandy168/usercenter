@@ -27,6 +27,7 @@
                 <div class="form_list">
                        <form name="formview" id="formview" action="<?php echo $this->createUrl('/admin/usergroup/'.$fun);?>" method="post">
                         <input type="hidden" name="id" value="<?php echo isset($model->id)?$model->id:'';?>">
+                           <input type="hidden" name="permission" value="">
                         <table cellSpacing=0 width="100%" class="content_view">
                         <tr>
                             <td width='120' align="right">用户分组名称:</td>

@@ -7,7 +7,7 @@ $menu = array(
         )
     ),
 
-    'houseactivi' => array(
+    'houseactiviy' => array(
         'title' => '活动管理',
         'children' => array(
             array('title' => '活动列表', 'url' => 'hactivity/list'),

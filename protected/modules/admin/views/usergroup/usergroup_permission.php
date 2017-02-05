@@ -3,7 +3,7 @@
           
 <div class="center_top clearfix">
 <ul>
-    <li><a  class="btn btn-primary"  href="javascript:;">权限设置</a></span>  
+    <li><a  class="btn btn-primary"  href="javascript:;">权限设置</a></li>
 </ul>
 
 </div>
