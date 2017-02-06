@@ -434,7 +434,7 @@
                 "vid": <?php echo $id?>,
                 "pid":<?php echo $pid?>,
                 "id":vid,
-                "mid":mid
+                "mid":<?php echo $param['mid']?>
             },
             success: function(msg){
                 // alert(msg);
@@ -470,9 +470,22 @@
                     }
 
                 }else if(msg==4){
-                    if(voteid==voteids){
-                        $("#btnall").html('<div class="closebtn fs30" id="closeBtn">确定</div><a href="http://m.hb.qq.com/activity/bigwheel/view/id/2003/voteid/74"><div  class="closebtn fs30" >前往抽奖</div></a>');
-                        showpop('已经投过票了',2,imgsrc,vid);
+                    //是否参与抽奖
+                    if(<?php echo $info['is_lucky']?1:0;?>){
+                        //是否支持回调
+                        var callback="";
+                        <?php if($info['callback']){ ?>
+                        callback="/voteid/"+voteid;
+                        <?php } ?>
+                        //抽奖组件 等于2 是大转盘  等于1 是刮刮卡
+                        <?php if($info['activity_type']==2){ ?>
+                        var url="<?php echo $this->createUrl('/activity/bigwheel/view/id/'.$info['activity_id'])?>"+callback;
+                        <?php }else{ ?>
+                        var url="<?php echo $this->createUrl('/activity/scratchcard/view/id/'.$info['activity_id'])?>"+callback;
+                        <?php }?>
+
+                        $("#btnall").html('<div class="closebtn fs30" id="closeBtn">确定</div><a href="'+url+'"><div  class="closebtn fs30" >前往抽奖</div></a>');
+                        showpop('恭喜，您已成功投票，点击"前往抽奖"！',1,imgsrc,vid);
                         $("#closeBtn").html("关闭");
                     }else{ showpop('已经投过票了',2,imgsrc,vid);}
 

@@ -19,6 +19,7 @@ class HactivityController extends HaController{
         $criteria = new CDbCriteria();
         $criteria->condition = 'authorid=:authorid and status=:status';
         $criteria->params = array(':authorid'=>$member['id'],':status'=>1);
+        $criteria->order = 'id desc';   // 排序
         $count = $application_class->count($criteria);
         $pages = new CPagination($count);
         $pages->pageSize = 5;
@@ -73,8 +74,20 @@ class HactivityController extends HaController{
                 Tool::alert('操作成功','/houseadmin/hactivity/list');
             }
         }
+        $sql = "SELECT id,title FROM {{house_money}} WHERE status=1";
+        $moneyinfo=Mod::app()->db->createCommand($sql)->queryAll();
+
+        $sql = "SELECT id,site FROM {{house_tenant}} WHERE status=1 and wxstatus=1 and authorid=".$admininfo['id'];
+        $tenant=Mod::app()->db->createCommand($sql)->queryRow();
+        if($tenant){
+            $result=1;
+        }else{
+            $result=2;
+        }
+        $viewData['result'] = $result;
+        $viewData['tenant'] = $tenant;
         $viewData['houseinfo'] = $houseinfo;
-        //var_dump($viewData['houseinfo']);
+        $viewData['moneyinfo'] = $moneyinfo;
         $this->render("add",$viewData);
     }
 
@@ -85,7 +98,8 @@ class HactivityController extends HaController{
      */
     public function actionDel(){
         $id =Tool::getValidParam('id','integer');
-        $houseInfo = House_activity::model()->find('id=:id', array(':id'=>$id));
+        $admininfo  = Mod::app()->session['admin_user'];;
+        $houseInfo = House_activity::model()->find('id=:id,authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
         if(!empty($houseInfo)){
             $houseInfo->status = 2;
             if ($houseInfo->save()) {
@@ -93,6 +107,39 @@ class HactivityController extends HaController{
             }else{
                 $returnData = '200';
             }
+        }else{
+            echo "error";
+            die();
+        }
+        echo $returnData;
+    }
+
+    /**
+     * 发布状态
+     * author  Fancy
+     */
+    public function actionChangestatus(){
+        $id =Tool::getValidParam('id','integer');
+        $poststatus =Tool::getValidParam('poststatus','integer');
+        $admininfo  = Mod::app()->session['admin_user'];
+        $houseInfo = House_activity::model()->find('id=:id,authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
+        if(!empty($houseInfo)){
+            if($poststatus==1){
+                $houseInfo->poststatus = 1;
+            }elseif($poststatus==2){
+                $houseInfo->poststatus = 2;
+            }
+            else{
+                echo "error";
+            }
+            if ($houseInfo->save()) {
+                $returnData = '100';
+            }else{
+                $returnData = '200';
+            }
+        }else{
+            echo "error";
+            die();
         }
         echo $returnData;
     }

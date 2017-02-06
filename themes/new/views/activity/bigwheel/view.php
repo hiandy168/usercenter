@@ -79,7 +79,7 @@
         <div class="dial-zp">
             <!--转盘图片-->
             <?php if ($images->rotaryfive) { ?>
-                <img class="dial-zp1" id="lotteryBg"  src="<?php echo JkCms::show_img($images->rotaryfive); ?>" width="100%"/>
+                <img class="dial-zp1" id="lotteryBg"  src="<?php echo JkCms::show_img($images->rotaryfive); ?>" />
             <?php } else { ?>
 
                 <img class="dial-zp1" id="lotteryBg"
@@ -348,12 +348,13 @@
 
 // 按钮点击
 
+var winninglist_img = "<?php echo $images->winninglist?JkCms::show_img($images->winninglist):$this->_theme_url.'assets/subassembly/bigwheel/newassets/images/dial-img5.png'; ?>";
         $(".dial-logbtn").on("click", function () {
             <?php if(!$param['mid']){?>
             showloginssss();
             return false;
             <?php } ?>
-            showpop('<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-img5.png', "", "", "", "");
+            showpop(winninglist_img, "", "", "", "");
             myjiangp();
         })
         $(".dial-rulebtn").on("click", function () {

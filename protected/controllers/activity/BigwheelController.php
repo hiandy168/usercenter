@@ -537,16 +537,17 @@ class BigwheelController extends FrontController
                 $query = Mod::app()->db->createCommand()->update('{{activity_bigwheel}}', $arr, 'id=:id', $update_id);
                 $str = '编辑';
                 if($img){
+                    $has_edit_img = false;
                     $re=Activity_bigwheel_img::model()->find("bigwheel_id=:id",$update_id);
                     if($re){
+                        $img['updatetime']=time();
                         $imgre = Mod::app()->db->createCommand()->update('{{activity_bigwheel_img}}', $img, 'bigwheel_id=:id', $update_id);
-                        if(!$imgre){
-                            $res=0;
-                        }
+                        $has_edit_img = true;
                     }else{
                         $img['bigwheel_id']=$activity_id;
                         $img['createtime']=time();
                         $imgre = Mod::app()->db->createCommand()->insert('{{activity_bigwheel_img}}', $img);
+                        $has_edit_img = true;
                     }
 
                 }
@@ -569,7 +570,7 @@ class BigwheelController extends FrontController
                     $imgre = Mod::app()->db->createCommand()->insert('{{activity_bigwheel_img}}', $img);
                     if(!$imgre){
                         Activity_bigwheel::model()->updateByPk($id,array('status'=>-1));
-                        $res=0;
+                        $has_edit_img = true;
                     }else {
                         //新增加活动之后生成站内信息
                         $tablename = "bigwheel";
@@ -580,7 +581,7 @@ class BigwheelController extends FrontController
             }
 
 
-            if ($query && $res) {
+            if ( $query  || $has_edit_img) {
                 $res = array(
                     'state' => 1,
                     'aid' => $id,
@@ -871,7 +872,7 @@ class BigwheelController extends FrontController
         $openid = trim(Tool::getValidParam('openid', 'string'));
         $mid = $this->member['id'];
 
-        $sql = "select * from {{activity_bigwheel}} where id=$id  and status =1";
+        $sql = "select * from {{activity_bigwheel}} where id=$id  ";
         $info = Mod::app()->db->createCommand($sql)->queryRow();
         
         if(!$id || !$mid || !$info){
@@ -879,6 +880,14 @@ class BigwheelController extends FrontController
             exit;
         }
 
+        if($info['status']!=1){
+            $res_arr = array(
+                'msg' => "活动已暂停",
+                'code' => "-1"
+            );
+            echo json_encode($res_arr);
+            exit;
+        }
         
         //活动未开始
         if($info['start_time']>time()){

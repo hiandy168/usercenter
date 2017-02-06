@@ -21,7 +21,7 @@
         <ul>
             <?php foreach($houseinfo as $house) {
                 if ($house['type'] ==2) { ?>
-                    <li>`
+                    <li>
                         <div class="f-index-listdiv clearfix">
                             <a href="<?php echo $this->createUrl('/house/site/detail', array('id' => $house['id'])) ?>">
                                 <div class="f-index-listdiv-img"><img

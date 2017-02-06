@@ -1045,10 +1045,10 @@ class VoteController extends FrontController{
     /*ajax  投票*/
     public function actionajaxvote(){
         if(Mod::app()->request->isAjaxRequest){
-            if(!Tool::isMobile()){
+           /* if(!Tool::isMobile()){
                 echo -2;
                 exit;
-            }
+            }*/
             $id= trim(Tool::getValidParam('id', 'integer'));
             $vid= trim(Tool::getValidParam('vid', 'integer'));
             $mid=trim(Tool::getValidParam('mid', 'integer'));
@@ -1110,6 +1110,10 @@ class VoteController extends FrontController{
                     exit;
                 }
 
+            }else{
+                $num= $info['hold_vote'];
+                $num=$num>0?$num:0;
+                $msg=array('code'=>1,'num'=>$num);
             }
 
             $sql = "SELECT * FROM {{activity_vote_join}} WHERE id= ".$id." AND voteid=".$vid." AND status=1 ";

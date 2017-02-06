@@ -124,27 +124,40 @@
 
                                     <div class="t_title">是否参与抽奖<span></span></div>
                                     <div class="form-inp">
-                                        <select name="lucky" id="lucky" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
-                                            <option value="1">是</option>
-                                            <option value="0">否</option>
+                                        <select name="is_lucky" id="is_lucky" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                            <option value="1" <?php if($activity_info['is_lucky']==1){ ?>selected ="selected "<?php } ?>>是</option>
+                                            <option value="0" <?php if($activity_info['is_lucky']==0){ ?>selected ="selected "<?php } ?>>否</option>
                                         </select>
                                     </div>
 
-                                        <div class="t_title">抽奖组件<span></span></div>
-                                        <div class="form-inp">
-                                            <select name="activity" id="activity" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
-                                                <option value="1">刮刮卡</option>
-                                                <option value="2">大转盘</option>
-                                            </select>
-                                        </div>
+
+                                    <div class="t_title">抽奖组件<span></span></div>
+                                    <div class="form-inp">
+                                        <select name="activity_type" id="activity_type" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                            <option value="1" <?php if($activity_info['is_lucky']==1){ ?>selected ="selected "<?php } ?>>刮刮卡</option>
+                                            <option value="2" <?php if($activity_info['is_lucky']==2){ ?>selected ="selected "<?php } ?>>大转盘</option>
+                                        </select>
+                                    </div>
 
                                     <div class="t_title">抽奖活动列表<span></span></div>
                                     <div class="form-inp">
-                                        <select name="activity" id="activity" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
-                                            <option value="0">请选择</option>
+                                        <select name="activitylist" id="activitylist" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                            <?php if($activityscratch){foreach($activityscratch as $key=>$val){?>
+                                                <option value="<?php echo $val->id ?>" <?php if($activity_info['activity_id']==$val->id){ ?>selected ="selected "<?php } ?> ><?php echo $val->title ?></option>
+                                            <?php }}else{?>
+                                                <option value="0">该组件下没有活动</option>
+                                            <?php }?>
                                         </select>
                                     </div>
 
+
+                                    <div class="t_title">是否回调<span></span></div>
+                                    <div class="form-inp">
+                                        <select name="callback" id="callback" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                            <option value="1" <?php if($activity_info['callback']==1){ ?>selected ="selected "<?php } ?>>是</option>
+                                            <option value="0" <?php if($activity_info['callback']==0){ ?>selected ="selected "<?php } ?>>否</option>
+                                        </select>
+                                    </div>
 
                                 </div>
                                 <div class="add_bm_inp_fs" style="display: block">
@@ -169,7 +182,7 @@
                                     <div class="add_bm_inp_fs" style="display: none">
                                         <div class="t_title">是否参与抽奖<span></span></div>
                                         <div class="form-inp">
-                                            <select name="lucky" id="lucky" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                            <select name="is_lucky" id="is_lucky" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
                                                 <option value="1">是</option>
                                                 <option value="0">否</option>
                                             </select>
@@ -177,25 +190,49 @@
                                     </div>
 
 
-                                    <div class="add_bm_inp_fs" style="display: none">
+                                    <div class="add_bm_inp_fs" id="luck" style="display: none">
                                         <div class="t_title">抽奖组件<span></span></div>
                                         <div class="form-inp">
-                                            <select name="activity" id="activity" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                            <select name="activity_type" id="activity_type" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
                                                 <option value="1">刮刮卡</option>
                                                 <option value="2">大转盘</option>
                                             </select>
                                         </div>
+
+                                        <div class="t_title">抽奖活动列表<span></span></div>
+                                        <div class="form-inp">
+                                            <select name="activitylist" id="activitylist" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                                <?php if($activityscratch){foreach($activityscratch as $key=>$val){?>
+                                                    <option value="<?php echo $val->id ?>"><?php echo $val->title ?></option>
+                                                <?php }}else{?>
+                                                    <option value="0">该组件下没有活动</option>
+                                                <?php }?>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="t_title">是否回调<span></span></div>
+                                        <div class="form-inp">
+                                            <select name="callback" id="callback" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                                <option value="1">是</option>
+                                                <option value="0">否</option>
+                                            </select>
+                                        </div>
+
                                     </div>
 
-                                <div class="add_bm_inp_fs" style="display: none">
-                                    <div class="t_title">投票方式<span></span></div>
-                                    <div class="form-inp">
-                                        <select name="rule" id="rule" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
-                                            <option value="0">请选择</option>
 
-                                        </select>
+                                    <div class="add_bm_inp_fs" style="display: none">
+                                        <div class="t_title">投票方式<span></span></div>
+                                        <div class="form-inp">
+                                            <select name="rule" id="rule" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                                <option value="0">请选择</option>
+
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
+
+
                                 <div class="add_bm_inp_fs" style="display: none">
                                     <div class="t_title">自主报名<span></span></div>
                                     <div class="form-inp">
@@ -491,6 +528,42 @@
         </div>
     </div>
 
+
+    <script>
+        $("#is_lucky").change(function(){
+            var val=$(this).val();
+            if(val==0){
+                $("#luck").hide();
+            }
+        })
+    </script>
+    <script>
+        $("#activity_type").change(function(){
+            var activity_type=$(this).val();
+            if(activity_type==2){
+                <?php $activitylist=Activity_bigwheel::model()->findAll("pid=:pid",array(':pid'=>$pid)) ?>
+                <?php if($activitylist){ foreach($activitylist as $k=>$v){ ?>
+                $("#activitylist").html('<option value="<?php echo $v->id ?>"><?php echo $v->title ?></option>');
+                <?php }}else{?>
+                $("#activitylist").html('<option value="0">该组件下没有活动</option>');
+
+                <?php }?>
+            }else{
+
+                <?php if($activityscratch){ foreach($activityscratch as $k=>$v){ ?>
+                $("#activitylist").html('<option value="<?php echo $v->id ?>"><?php echo $v->title ?></option>');
+                <?php }}else{?>
+                $("#activitylist").html('<option value="0">该组件下没有活动</option>');
+                <?php }?>
+
+            }
+        })
+    </script>
+
+
+
+
+
     <script>
 
         $("#hold_votes").change(function(){
@@ -656,6 +729,7 @@
                                 }else{
                                     str += '<option '+''+ ' value="2">单选类型</option>';
                                 }
+
                                 if(forms==3){
                                     str += '<option '+''+ ' value="3" selected="selected" >多选类型</option>';
                                 }else{
@@ -1037,6 +1111,11 @@
             var img    = $("input[name='img']").val();
             var share_desc     = $("input[name='share_desc']").val();
             var hold_votes     = $("input[name='hold_votes']").val();
+            var is_lucky     = $("select[name='is_lucky']").find('option:selected').val();
+            var activity_type     =$("select[name='activity_type']").find('option:selected').val();
+            var activitylist     = $("select[name='activitylist']").find('option:selected').val();
+            var callback     = $("select[name='callback']").find('option:selected').val();
+
             var obj=document.getElementsByName('tag');
             var tag='';
             for(var i=0; i<obj.length; i++){
@@ -1091,6 +1170,10 @@
                 share_desc:share_desc,
                 rule:rule,
                 hold_vote:hold_votes?hold_votes:0,
+                is_lucky:is_lucky,
+                activity_type:activity_type,
+                activity_id:activitylist,
+                callback:callback,
             };
             $.post(url,data,function(res){
                 var res = JSON.parse(res);

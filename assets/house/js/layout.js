@@ -469,7 +469,7 @@ var number=0;
                         html += '<i class="icon-time" data-seconds=' + data[i].actime2 + '><span>--天</span><span>--时</span><span>--分</span><span>--秒</span></i>'
                         html += '<a href="' + data[i].url + '" class="bg1 fcfff">我要预存</a>'
                       }
-                      if (data[i].fflag == "bg2") {
+                      if (data[i].end == "bg2") {
                         html += '<i class="icon-time">该活动已结束</i>'
                         html += '<a href="javascript:void(0)" class="bg2 fcfff">活动结束</a>'
                       }
@@ -477,7 +477,6 @@ var number=0;
                       html += '</div>'
                       html += '</li>'
                     }
-
                   }
                   $(".f-index-list-loading").hide();
                   $(".f-index-list ul").append(html);

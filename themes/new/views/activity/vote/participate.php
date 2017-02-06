@@ -22,6 +22,9 @@
 </head>
 <script type="application/javascript">
     var site_url = "<?php echo Mod::app()->createAbsoluteUrl('/')?>";
+
+    var Siteurl = "<?php echo $this->_siteUrl; ?>";
+
     // 上传图片显示
     $(function(){
         $(".vote-form-inp .select select").change(function(){

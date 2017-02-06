@@ -21,14 +21,14 @@ $menu = array(
             array('title' => '新增理财', 'url' => 'hmoney/add'),
         )
     ),
-    'housetenant' => array(
+    'housemember' => array(
         'title' => '用户管理',
         'children' => array(
             array('title' => '用户列表', 'url' => 'hmember/list'),
             array('title' => '新增用户', 'url' => 'hmember/add'),
         )
     ),
-    'housemember' => array(
+    'housetenant' => array(
         'title' => '商户管理',
         'children' => array(
             array('title' => '商户列表', 'url' => 'htenant/list'),

@@ -18,7 +18,7 @@
 			openid = "<?php echo $param['openid']?>";
 			id = "<?php echo $param['id']?>";
 			pid = "<?php echo $param['id']?>";
-			//	backUrl = "<?php echo $param['backUrl']?>";
+			backUrl = "<?php echo $param['backUrl']?>";
 			mid = "<?php echo $param['mid'] ?>";
 			table = "scratch";
 		</script>
@@ -57,9 +57,13 @@
 		  		</div>
 		  	</div>
 		 
-		 <a href="javascript:history.go(0)" title=""><div class="confirmbtn">
+
+
+		 <a href="javascript:history.go(0)" title="" data-href="votelink">
+		 <div class="confirmbtn">
 		 	<img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img9.png" width="100%" />
-		 </div></a>
+		 </div>
+		 </a>
 	    		
 	    	</div>
 	    </div>
@@ -180,8 +184,13 @@
 		return false;
 		<?php } ?>
 		if (parseInt(count) < 1) {
-			showpop("", "今天次数用完了，明天再玩吧", "", "", 3);
-			return false
+			if(backUrl!=0){
+               showpop("", "没有刮奖机会了，点确定跳回投票页面", "", "", 5);
+			   return false   
+			}else{  
+		       showpop("", "今天次数用完了，明天再玩吧", "", "", 3);
+			   return false
+			}
 		}
 		var h = this.ctx;
 		h.lineTo(e.pageX, e.pageY);
@@ -299,6 +308,10 @@ function showpop(a, b, c, d, e) {
 	if (e == 4) {
 		$(".popbg").html('<img src="' + a + '" width="100%" />');
 		$(".dial-poptxt").html('<h3>中奖记录</h3>' + '<div class="pop-zjlist"></div>')
+	}
+	if (e == 5) {
+		$(".dial-poptxt").html('<h3>@__@</h3>' + '<p>' + b + '</p>');
+		$("[data-href='votelink']").removeAttr("href").attr('href', backUrl);
 	}
 }
 // $(".confirmbtn").on("click", function() {

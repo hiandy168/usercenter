@@ -29,7 +29,7 @@ class ActivityController extends FrontController
 
         //根据推荐活动
         $page = Tool::getValidParam("page", 'integer');
-        $num = Tool::getValidParam("num", 'integer', 2);
+        $num = Tool::getValidParam("num", 'integer', 10);
         $Activity_recommend = new Activity_recommend;
 
         $list = $Activity_recommend->apiActivityListPager();
@@ -63,15 +63,19 @@ class ActivityController extends FrontController
                         $msg['type'] = $this->type[$val->type][0];
                         $msg['linkDetail'] = $this->_siteUrl . "/activity/" . $this->type[$val->type][1] . "/view/id/$res->id";
                     }
+                    $img= $res->img?$res->img:$res->share_img;
                     $msg['id'] = $res->id;
-                    $msg['img'] = $this->_siteUrl . "/" . $res->img;
+                    $msg['img'] = $img?$this->_siteUrl . "/" . $img:"";
                     $msg['start_time'] = $res->start_time;
                     $msg['end_time'] = $res->end_time;
+                    $msg['address'] = "";
+                    $msg['desc'] = "";
+                    $msg['background'] ="";
 
                     $datas[] = $msg;
                 }
             }
-            $page = $page - 1;
+            $page=$page?$page-1:0;
             $page = $page * $num ? $page : 0;
             if ($datas) {
                 $datapage = array_slice($datas, $page, $num);

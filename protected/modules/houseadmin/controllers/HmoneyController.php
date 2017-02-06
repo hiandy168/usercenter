@@ -40,7 +40,7 @@ class HmoneyController extends HaController{
             $criteria->condition = 'authorid=:authorid and status=:status';
             $criteria->params = array(':authorid'=>$member['id'],':status'=>1);
         }
-
+        $criteria->order = 'id desc';   // 排序
         $count = $application_class->count($criteria);
         $pages = new CPagination($count);
         $pages->pageSize = 5;

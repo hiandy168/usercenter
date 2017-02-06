@@ -89,7 +89,7 @@ class ScratchcardController extends FrontController {
 //                "token"=>$token,
                 "id"=>$id,
                 "openid" => $mid,
-//                "backUrl" => $backUrl,
+               "backUrl" => $url?$url:0,
 //                "status" => $mid,
                 "mid" => $mid,
                 "pid" => $info['pid']
@@ -786,12 +786,21 @@ class ScratchcardController extends FrontController {
 
        
         //查询刮刮卡信息
-        $sql = "SELECT * FROM {{activity_scratch}} WHERE id=$id and status =1";
+        $sql = "SELECT * FROM {{activity_scratch}} WHERE id=$id ";
         $info=Mod::app()->db->createCommand($sql)->queryRow();
 
 
-         if(!$id || !$mid || !$info){
+        if(!$id || !$mid || !$info){
             echo "非法访问";
+            exit;
+        }
+        
+        if($info['status']!=1){
+            $res_arr = array(
+                'msg' => "活动已暂停",
+                'code' => "-1"
+            );
+            echo json_encode($res_arr);
             exit;
         }
 

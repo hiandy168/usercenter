@@ -8,6 +8,7 @@
 
 class HtenantController extends HaController{
 
+
     public function actionList(){
         $member=Mod::app()->session['admin_user'];
         $application_class = House_tenant::model();
@@ -15,6 +16,7 @@ class HtenantController extends HaController{
         $criteria->condition = 'authorid=:authorid and status=:status';
         $criteria->params = array(':authorid'=>$member['id'],':status'=>1);
         $count = $application_class->count($criteria);
+        $criteria->order = 'id desc';   // 排序
         $pages = new CPagination($count);
         $pages->pageSize = 10;
         $pages->applyLimit($criteria);

@@ -19,11 +19,11 @@
                     <th style="width: 100px;text-align: center">活动名称</th>
                     <th style="width: 80px;text-align: center">活动楼盘</th>
                     <th style="width: 100px;text-align: center">创建时间</th>
-                    <th style="width: 120px;text-align: center">活动时间</th>
-                    <th style="width: 120px;text-align: center">使用有效期</th>
+                    <th style="width: 100px;text-align: center">活动时间</th>
+                    <th style="width: 100px;text-align: center">使用有效期</th>
                     <th style="width: 50px;text-align: center">发布状态</th>
                     <th style="width: 50px;text-align: center">预览页</th>
-                    <th style="width: 100px;text-align: center">管理操作</th>
+                    <th style="width: 120px;text-align: center">管理操作</th>
                     <th style="width: 50px;text-align: center">推荐</th>
                 </tr>
                 </thead>
@@ -40,12 +40,24 @@
 
                                 <td style="text-align: center"><?php echo date('Y-m-d H:i:s',explode("|",$item['actime'])[0]); ?> 至 <?php echo date('Y-m-d H:i:s',explode("|",$item['actime'])[1]); ?></td>
                                 <td style="text-align: center"><?php echo date('Y-m-d H:i:s',explode("|",$item['validity'])[0]); ?> 至 <?php echo date('Y-m-d H:i:s',explode("|",$item['validity'])[1]); ?></td>
-                                <td style="text-align: center"><?php echo $item['poststatus']; ?></td>
+                                <td style="text-align: center">
+                                    <?php
+                                    if($item['poststatus']==1){
+                                        echo "已发布";
+                                    }elseif($item['poststatus']==2){
+                                        echo "未发布";
+                                    }
+                                    ?>
+                                </td>
                                 <td style="text-align: center"><?php echo $item['preview']; ?></td>
                                 <td style="text-align: center">
-                                    <a class='delete' href="javascript:;">详情</a>
+                                    <a class='delete' target="_blank" href="<?php echo $this->createUrl('/house/site/detail', array('id' => $item['id'])) ?>">详情</a>
                                     <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">编辑</a>
-                                    <a class='delete' href="javascript:;">发布</a>
+                                    <?php if($item['poststatus']==2){?>
+                                        <a class='delete' href="javascript:;" onclick="changepoststatus(<?php echo $item['id']?>,1)">发布</a>
+                                    <?php }elseif($item['poststatus']==1){ ?>
+                                        <a class='delete' href="javascript:;" onclick="changepoststatus(<?php echo $item['id']?>,2)">取消发布</a>
+                                    <?php } ?>
                                     <a class='delete' href="javascript:;" onclick="delActivity(<?php echo $item['id']?>)" >删除</a>
                                 </td>
                                 <td style="text-align: center"><a class="delete" href="javascript:;">推荐</a></td>
@@ -93,5 +105,56 @@
                 }
             });
         });return;
+    }
+    function changepoststatus(id,poststatus){
+       if(poststatus==1){
+           layer.confirm('确认发布吗', {
+               btn: ['确定','取消']
+           }, function(){
+               $.ajax({
+                   url:"<?php echo $this->createUrl('changestatus');?>",
+                   type: "POST",
+                   data:{id:id,poststatus:poststatus},
+                   dataType:"json",
+                   success:function(data){
+                       if(data==100){
+                           layer.msg('发布成功！', {icon: 1, time: 2000}, function () {
+                               location.reload()
+                           });
+                       }
+                       else{
+                           layer.msg('发布失败', {icon: 1,time:2000},function(){
+                               location.reload()
+                           });
+                       }
+                   }
+               });
+           });return;
+
+       }else if(poststatus==2){
+           layer.confirm('确认取消发布吗', {
+               btn: ['确定','取消']
+           }, function(){
+               $.ajax({
+                   url:"<?php echo $this->createUrl('changestatus');?>",
+                   type: "POST",
+                   data:{id:id,poststatus:poststatus},
+                   dataType:"json",
+                   success:function(data){
+                       if(data==100){
+                           layer.msg('取消成功！', {icon: 1, time: 2000}, function () {
+                               location.reload()
+                           });
+                       }
+                       else{
+                           layer.msg('取消失败', {icon: 1,time:2000},function(){
+                               location.reload()
+                           });
+                       }
+                   }
+               });
+           });return;
+
+       }
     }
 </script>

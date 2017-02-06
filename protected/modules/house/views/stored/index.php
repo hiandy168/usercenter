@@ -7,7 +7,7 @@
     <div class="f-order-info3 pos-r bb f-form-div1"><i>理财</i>[<?php echo $houseinfo['city']?>]  <?php echo $houseinfo['dtitle']?></div>
     <div class="f-order-info3  pos-r bb">专属优惠：<?php echo $houseinfo['coupon']?></div>
     <div class="f-order-info3  pos-r bb">预存产品：<?php echo $houseinfo['title']?></div>
-    <div class="f-order-info3  pos-r bb">购买期限：<?php echo $houseinfo['cycle']?></div>
+    <div class="f-order-info3  pos-r bb">购买期限：<?php echo $houseinfo['cycle']==0?"无限": $houseinfo['cycle']."个月"?></div>
     <div class="f-order-info3  pos-r bb">支付金额：<i class="fcf74"><?php echo $houseinfo['figue']?>元</i></div>
 </div>
 <input type="hidden" name="money" id="money" value="<?php echo $houseinfo['figue']?>"/>
@@ -37,19 +37,19 @@
         <div class="pos-r bb f-form-inp">
             <label>用户姓名：</label>
             <i class=""></i>
-            <span><input type="text" name="username" id="username" readonly="readonly" placeholder="请填写用户姓名" value="<?php echo $memberinfo['realname'] ?>" /></span>
+            <span><input type="text" name="username" id="username" disabled="disabled" placeholder="请填写用户姓名" value="<?php echo $memberinfo['realname'] ?>" /></span>
         </div>
 
         <div class="pos-r bb f-form-inp">
             <label>联系电话：</label>
             <i class=""></i>
-            <span><input type="tel" name="usertel" id="usertel" readonly="readonly" placeholder="请填写联系电话" value="<?php echo $memberinfo['phone'] ?>" /></span>
+            <span><input type="tel" name="usertel" id="usertel" disabled="disabled" placeholder="请填写联系电话" value="<?php echo $memberinfo['phone'] ?>" /></span>
         </div>
 
         <div class="pos-r bb f-form-inp">
             <label>身份证号：</label>
             <i class=""></i>
-            <span><input type="text" name="usercodeid" id="usercodeid" readonly="readonly" placeholder="请填写身份证号" value="<?php echo $memberinfo['realcard'] ?>"  /></span>
+            <span><input type="text" name="usercodeid" id="usercodeid" disabled="disabled" placeholder="请填写身份证号" value="<?php echo $memberinfo['realcard'] ?>"  /></span>
         </div>
     <?php } ?>
 </div>

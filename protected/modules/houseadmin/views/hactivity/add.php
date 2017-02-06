@@ -72,11 +72,15 @@
                     <td class='t'>结算账户:</td>
                     <td colspan="2">
                         <select name="accountid" data-val="requir" data-title="结算账户">
-                            <option value="">请选择</option>
-                            <option value="1" <?php if ($houseinfo['accountid']==1){ ?>selected<?php } ?>>结算账户1</option>
-                            <option value="2" <?php if ($houseinfo['accountid']==2){ ?>selected<?php } ?>>结算账户2</option>
-                            <option value="3" <?php if ($houseinfo['accountid']==3){ ?>selected<?php } ?>>结算账户3</option>
+                            <?php if($result==1){?>
+                                <option value="<?php echo $tenant['id'] ?>" <?php if ($houseinfo['accountid']==$tenant['id']){ ?>selected<?php } ?>><?php echo $tenant['site'] ?></option>
+                            <?php }else{ ?>
+                                <option value="">请选择</option>
+                            <?php } ?>
                         </select>
+                        <?php if($result==2){?>
+                            <a href="<?php echo $this->createUrl('/houseadmin/htenant/add') ?>">请创建</a>
+                        <?php } ?>
                         <span style="color: red">*</span>
                     </td>
                 </tr>
@@ -104,9 +108,9 @@
                     <td colspan="2">
                         <select name="financingid" data-val="requir" data-title="选择理财活动" >
                             <option value="">请选择</option>
-                            <option value="1" <?php if ($houseinfo['financingid']==1){ ?>selected<?php } ?>>理财活动1</option>
-                            <option value="2" <?php if ($houseinfo['financingid']==2){ ?>selected<?php } ?>>理财活动2</option>
-                            <option value="3" <?php if ($houseinfo['financingid']==3){ ?>selected<?php } ?>>理财活动3</option>
+                            <?php foreach($moneyinfo as $money) {?>
+                            <option value="<?php echo $money['id'] ?>" <?php if ($houseinfo['financingid']==$money['id']){ ?>selected<?php } ?>><?php echo $money['title'] ?></option>
+                            <?php } ?>
                         </select>
                     </td>
                 </tr>
@@ -314,6 +318,8 @@
     var radio_checked=$("[data-radio=checked]");
     var checkbox_checked=$("[data-checkbox=checked]");
     $(".save_button").on("click",function(){
+
+
         for(var i=0;i<requir.length;i++){
             if(!requir.eq(i).val()){
                 alert("请填写"+requir.eq(i).attr("data-title"))
