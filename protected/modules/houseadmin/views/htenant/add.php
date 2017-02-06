@@ -49,7 +49,7 @@
                     <td colspan="2">
                         <select name="idtype" data-val="requir" data-title="运营人证件类型" >
                             <option value="">请选择</option>
-                            <option value="01" <?php if ($tenantinfo['financingid']=="1"){ ?>selected<?php } ?>>身份证</option>
+                            <option value="01" <?php if ($tenantinfo['idtype']=="1"){ ?>selected<?php } ?>>身份证</option>
                         </select><span style="color: red">*</span>
                     </td>
                 </tr>
@@ -98,7 +98,7 @@
         }
         if(IdentityCodeValid(operatornum)){
             if(/^1[34578]\d{9}$/.test(operatorphone)){
-                alert("成功");
+                //alert("成功");
             }else{
                 alert("请正确填写手机号");
                 $("input[name='operatorphone']").focus();

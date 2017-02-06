@@ -45,9 +45,15 @@
 
         <div class="confirmbtnall">
             <div class="confirmbtn">
+                <?php if ($images->colse){ ?>
+                    <img
+                        src="<?php echo JkCms::show_img($images->colse);?>"
+                        width="100%"/>
+                <?php }else{ ?>
                 <img
                     src="<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png"
                     width="100%"/>
+                <?php } ?>
             </div>
         </div>
 
@@ -409,7 +415,7 @@ var winninglist_img = "<?php echo $images->winninglist?JkCms::show_img($images->
                     + '</p>'
                     + '<i>您的机会已经用完了</i>');
                 if ("<?php echo $param['backUrl'];?>" != 0) {
-                    $(".confirmbtnall").html('<div><a href="<?php echo $param['backUrl'];?>"><img src="<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png" width="100%" /></a></div>');
+                    $(".confirmbtnall").html('<div><a href="<?php echo $param['backUrl'];?>"><img src="<?php if ($images->colse){ echo JkCms::show_img($images->colse); } else { echo $this->_theme_url."assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png";} ?>" width="100%" /></a></div>');
                 }
             } else {
                 $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
@@ -426,7 +432,7 @@ var winninglist_img = "<?php echo $images->winninglist?JkCms::show_img($images->
                     + '</p>'
                     + '<i>您的机会已经用完了</i>');
                 if ("<?php echo $param['backUrl'];?>" != 0) {
-                    $(".confirmbtnall").html('<div class="confirmbtn"><a href="<?php echo $param['backUrl'];?>"><img src="<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png" width="100%" /></a></div>');
+                    $(".confirmbtnall").html('<div class="confirmbtn"><a href="<?php echo $param['backUrl'];?>"><img src="<?php if ($images->colse){ echo JkCms::show_img($images->colse); } else { echo $this->_theme_url."assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png";} ?>" width="100%" /></a></div>');
                 }
             } else {
                 $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
@@ -452,7 +458,7 @@ var winninglist_img = "<?php echo $images->winninglist?JkCms::show_img($images->
                 + '<em>今天次数用完了，明天在玩吧</em>'
                 + '</p>');
             if ("<?php echo $param['backUrl'];?>" != 0) {
-                $(".confirmbtnall").html('<div class=""><a href="<?php echo $param['backUrl'];?>"><img src="<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png" width="100%" /></a></div>');
+                $(".confirmbtnall").html('<div class=""><a href="<?php echo $param['backUrl'];?>"><img src="<?php if ($images->colse){ echo JkCms::show_img($images->colse); } else { echo $this->_theme_url."assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png";} ?>" width="100%" /></a></div>');
             }
         }
         if (kind == 6) {

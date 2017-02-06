@@ -98,8 +98,8 @@ class HactivityController extends HaController{
      */
     public function actionDel(){
         $id =Tool::getValidParam('id','integer');
-        $admininfo  = Mod::app()->session['admin_user'];;
-        $houseInfo = House_activity::model()->find('id=:id,authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
+        $admininfo  = Mod::app()->session['admin_user'];
+        $houseInfo = House_activity::model()->find('id=:id and authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
         if(!empty($houseInfo)){
             $houseInfo->status = 2;
             if ($houseInfo->save()) {
@@ -108,7 +108,7 @@ class HactivityController extends HaController{
                 $returnData = '200';
             }
         }else{
-            echo "error";
+            echo "200";
             die();
         }
         echo $returnData;
@@ -122,7 +122,7 @@ class HactivityController extends HaController{
         $id =Tool::getValidParam('id','integer');
         $poststatus =Tool::getValidParam('poststatus','integer');
         $admininfo  = Mod::app()->session['admin_user'];
-        $houseInfo = House_activity::model()->find('id=:id,authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
+        $houseInfo = House_activity::model()->find('id=:id and authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
         if(!empty($houseInfo)){
             if($poststatus==1){
                 $houseInfo->poststatus = 1;

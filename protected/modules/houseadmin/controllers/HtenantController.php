@@ -7,8 +7,10 @@
  */
 
 class HtenantController extends HaController{
-
-
+    /**
+     * 商户管理列表
+     * author  Fancy
+     */
     public function actionList(){
         $member=Mod::app()->session['admin_user'];
         $application_class = House_tenant::model();
@@ -16,15 +18,25 @@ class HtenantController extends HaController{
         $criteria->condition = 'authorid=:authorid and status=:status';
         $criteria->params = array(':authorid'=>$member['id'],':status'=>1);
         $count = $application_class->count($criteria);
-        $criteria->order = 'id desc';   // 排序
         $pages = new CPagination($count);
         $pages->pageSize = 10;
         $pages->applyLimit($criteria);
+        $sql = "SELECT id FROM  {{house_tenant}} WHERE status=1 and  authorid= ".$member['id'];
+        $res=Mod::app()->db->createCommand($sql)->execute();
+        if($res){
+            $result=0;
+        }else{
+            $result=1;
+        }
         $returnData['tenantlist']= $application_class->findAll($criteria);
         $returnData['pages'] = $pages;
+        $returnData['result'] = $result;
         $this->render('list',$returnData);
     }
-
+    /**
+     * 添加编辑商户信息
+     * author  Fancy
+     */
     public function actionAdd(){
         $admininfo  = Mod::app()->session['admin_user'];
         $id =Tool::getValidParam('id','integer');
@@ -32,7 +44,7 @@ class HtenantController extends HaController{
         $tenantinfo = null;
         if(!empty($id)){
             $tenantinfo = $house_model->findByPk($id);
-            if(empty($tenantinfo) || $tenantinfo['authorid'] != $tenantinfo['id']){
+            if(empty($tenantinfo) || $tenantinfo['authorid'] != $admininfo['id']){
                 echo "error";die();
             }
         }
@@ -53,7 +65,7 @@ class HtenantController extends HaController{
             $house_model -> author = $admininfo['name'];
             $newtenant=array();
             foreach($house_model->attributes as $k=>$v){
-                $newtenant['userId']=$house_model['authorid'];//平台id
+                $newtenant['userId']="b".$house_model['authorid'];//平台id
                 $newtenant['userName']=$house_model['author'];//平台用户名
                 $newtenant['corpName']=$house_model['companyname'];//公司名称
                 $newtenant['businessLicense']=$house_model['busnum'];//营业执照号
@@ -73,47 +85,53 @@ class HtenantController extends HaController{
             $nonce = Wzbank::strings(32);
             $access_token=Mod::app()->memcache->get('access_token');
             $timestamp=time();
-            $userid=$admininfo['id'];
+            $userid="b".$admininfo['id'];
             $sign =Wzbank::housesign($nonce,$version,strval($timestamp),json_encode($newtenant));
             $postUrl =Wzbank::bankurl."/h/api/wallet/server/corporation/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
             $postData = $newtenant;
             $result= Wzbank::curl_post_ssl($postUrl,json_encode($postData));//同步公司信息
             if($result['code']==0){
-                $ticket =Wzbank::h5ticket($access_token);
+                $ticket =Wzbank::h5ticket($access_token,$userid);
                 $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
                 $Url="https://test-open.webank.com/s/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
-                //$Url="https://test-open.webank.com/s/web-wallet-weixin/#/person/deposits/transIn/:orderId/:userId/".$nonce."/".$sign."/".$app_Id;
-                var_dump($Url);die();
-                /* $results=array(
-                     'code'=>0,
-                     'url'=>$Url
-                 );
-                echo json_encode($results);*/
             }elseif($result['code']==100013){
                 $ticket =Wzbank::h5ticket($access_token,$userid);
                 $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
                 $Url="https://test-open.webank.com/s/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
-                /*$posturl="https://callback_url?app_id=".$app_Id."&type='OPEN_ACCOUNT_NOTICE'&sign=".$sign."&nonce=".$nonce."&timestamp=".$timestamp;
-                $postData = array(
-                    'appId' => $app_Id,
-                    'userId' => $admininfo['id'],
-                    'result' => "1",
-                );
-                $result= Wzbank::curl_post_ssl($posturl,json_encode($postData));
-                var_dump($result);*/
-                var_dump($Url);die();
             }
-            die();
-            if($house_model->save()){
-                Tool::alert('操作成功','/houseadmin/htenant/list');
+            //var_dump($Url);die();
+            if($tenantinfo){
+                $this->redirect($Url);
+            }else{
+                if($house_model->save()){
+                    $this->redirect($Url);
+                }
             }
         }
         $viewData['tenantinfo'] = $tenantinfo;
         $this->render("add",$viewData);
     }
 
+    /**
+     * 未开户成功商户可删除
+     * author  Fancy
+     */
     public function actionDel(){
-
+        $id =Tool::getValidParam('id','integer');
+        $admininfo  = Mod::app()->session['admin_user'];
+        $tennatInfo = House_tenant::model()->find('id=:id and authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
+        if(!empty($tennatInfo)){
+            $tennatInfo->status = 2;
+            if ($tennatInfo->save()) {
+                $returnData = '100';
+            }else{
+                $returnData = '200';
+            }
+        }else{
+            echo "200";
+            die();
+        }
+        echo $returnData;
     }
 
 

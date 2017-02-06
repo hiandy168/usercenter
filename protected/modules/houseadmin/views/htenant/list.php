@@ -1,6 +1,7 @@
 <script src="<?php echo $this->theme_url; ?>/assets/public/js/layer/layer.js" type="text/javascript"></script>
 
 <div class='bgf clearfix'>
+    <?php if($result==1){ ?>
     <div class="center_top clearfix">
         <div class="center_top clearfix">
             <ul>
@@ -9,6 +10,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
+    <?php } ?>
     <div class="list">
         <form name="list_frm" id="ListFrm" action="" method="post">
             <table width="100%" cellspacing="0">
@@ -22,7 +24,6 @@
                     <th style="width: 120px;text-align: center">创建时间</th>
                     <th style="width: 120px;text-align: center">创建人</th>
                     <th style="width: 50px;text-align: center">操作管理</th>
-                    <th style="width: 50px;text-align: center">查看</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,13 +36,12 @@
                             <td style="text-align: center"><?php echo $item['site']; ?></td>
                             <td style="text-align: center"><?php echo $item['operatorname']; ?></td>
                             <td style="text-align: center"><?php echo $item['operatorphone']; ?></td>
-                            <td style="text-align: center"><?php echo $item['createtime']; ?></td>
+                            <td style="text-align: center"><?php echo date('Y-m-d H-m-s',$item['createtime']); ?></td>
                             <td style="text-align: center"><?php echo $item['author']; ?></td>
                             <td style="text-align: center">
-                                <a class='delete' href="javascript:;">详情</a>
-                                <a class='delete' href="javascript:;" onclick="delActivity(<?php echo $item['id']?>)" >删除</a>
+                                <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">编辑</a>
+                                <a class='delete' href="javascript:;" onclick="delTenant(<?php echo $item['id']?>)" >删除</a>
                             </td>
-                            <td style="text-align: center"><a class="delete" href="javascript:;">查看</a></td>
                         </tr>
                     <?php } }?>
                 </tbody>
@@ -63,7 +63,7 @@
     </div>
 </div>
 <script type="application/javascript">
-    function delActivity(id){
+    function delTenant(id){
         layer.confirm('确认删除吗', {
             btn: ['确定','取消']
         }, function(){

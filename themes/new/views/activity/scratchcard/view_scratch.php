@@ -172,12 +172,24 @@
 		var f = <?php echo $info['start_time'] ?>;
 		var g = <?php echo $info['end_time'] ?>;
 		if (d < f) {
-			showpop("", "活动未开始！", "", "", 3);
-			return false
+              if(backUrl!=0){
+               showpop("", "活动未开始！", "", "", 5);
+			   return false   
+			}else{  
+		      showpop("", "活动未开始！", "", "", 3);
+			  return false
+			}
+			
 		}
 		if (d > g) {
-			showpop("", "活动已结束！", "", "", 3);
+              if(backUrl!=0){
+               showpop("", "活动已结束！", "", "", 5);
+			   return false   
+			}else{  
+		      showpop("", "活动已结束！", "", "", 3);
 			return false
+			}
+
 		}
 		<?php if(!$info['status']){?>
 		showpop("", "活动暂停中！", "", "", 3);

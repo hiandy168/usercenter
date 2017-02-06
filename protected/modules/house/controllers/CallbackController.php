@@ -30,12 +30,27 @@ class CallbackController extends Controller{
         $info=json_decode($data,true);
         $signs =Wzbank::housesign($nonce,$timestamp,$type,$data);
         $paytime=intval(mb_substr($timestamp,0,10));
+        $myfile = fopen("notify.txt", "w") or die("Unable to open file!");
+        fwrite($myfile, $type.'|');
+        fwrite($myfile, $nonce.'|');
+        fwrite($myfile, $sign.'|');
+        fwrite($myfile, $timestamp.'|');
+        fwrite($myfile, $data.'|');
+        fwrite($myfile, $signs.'|');
+        fclose($myfile);
+
         //开户结果通知
         if($type=="OPEN_ACCOUNT_NOTICE"){
             if($sign==$signs){
                 if($info['result']==1){
-                    $sql = "UPDATE  {{member}} SET wxstatus=1 WHERE id= ".$info['userId'];
-                    $res=Mod::app()->db->createCommand($sql)->execute();
+                    if($info['usertype']==0){
+                        $sql = "UPDATE  {{member}} SET wxstatus=1 WHERE id= ".$info['userId'];
+                        $res=Mod::app()->db->createCommand($sql)->execute();
+                    }elseif($info['usertype']==1){
+                        $authorid=substr($info['userId'],1);
+                        $sql = "UPDATE  {{house_tenant}} SET wxstatus=1 WHERE authorid= ".$authorid;
+                        $res=Mod::app()->db->createCommand($sql)->execute();
+                    }
                     if($res){
                         $results=array(
                             'code'=>0,
