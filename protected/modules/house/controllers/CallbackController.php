@@ -43,11 +43,11 @@ class CallbackController extends Controller{
         if($type=="OPEN_ACCOUNT_NOTICE"){
             if($sign==$signs){
                 if($info['result']==1){
-                    if($info['usertype']==0){
+                    if($info['userType']=="0"){
                         $sql = "UPDATE  {{member}} SET wxstatus=1 WHERE id= ".$info['userId'];
                         $res=Mod::app()->db->createCommand($sql)->execute();
-                    }elseif($info['usertype']==1){
-                        $authorid=substr($info['userId'],1);
+                    }elseif($info['userType']=="1"){
+                        $authorid=intval(substr($info['userId'],1));
                         $sql = "UPDATE  {{house_tenant}} SET wxstatus=1 WHERE authorid= ".$authorid;
                         $res=Mod::app()->db->createCommand($sql)->execute();
                     }

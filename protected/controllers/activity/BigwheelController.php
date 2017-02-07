@@ -306,6 +306,13 @@ class BigwheelController extends FrontController
                                             echo json_encode(array(  'state' => 0,   'msg' => '中奖的数量加上+剩余的数量已经大于奖品的数量' )); exit;
 //                                           die('中奖的数量加上+剩余的数量已经大于奖品的数量');
                                      }
+                                     
+                                     if(($prize_data['remainder']+count($this_win_list)) !=$prize_data['count']){
+                                           $transaction->rollBack();
+                                           
+                                           //严重数据错误
+                                            echo json_encode(array(  'state' => 0,   'msg' => '中奖的数量加上+剩余的数量不等于奖品的数量，现在已中奖数为'.+count($this_win_list) )); exit;
+                                     }
                                     $res = Mod::app()->db->createCommand()->update('{{activity_bigwheel_prize}}', $prize_data, 'id=:id', $update_id);
                                     $new_prize_arr_id[] = $val;
                                 }

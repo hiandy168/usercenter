@@ -65,7 +65,7 @@ class HtenantController extends HaController{
             $house_model -> author = $admininfo['name'];
             $newtenant=array();
             foreach($house_model->attributes as $k=>$v){
-                $newtenant['userId']="b".$house_model['authorid'];//平台id
+                $newtenant['userId']="h".$house_model['authorid'];//平台id
                 $newtenant['userName']=$house_model['author'];//平台用户名
                 $newtenant['corpName']=$house_model['companyname'];//公司名称
                 $newtenant['businessLicense']=$house_model['busnum'];//营业执照号
@@ -85,7 +85,7 @@ class HtenantController extends HaController{
             $nonce = Wzbank::strings(32);
             $access_token=Mod::app()->memcache->get('access_token');
             $timestamp=time();
-            $userid="b".$admininfo['id'];
+            $userid="h".$admininfo['id'];
             $sign =Wzbank::housesign($nonce,$version,strval($timestamp),json_encode($newtenant));
             $postUrl =Wzbank::bankurl."/h/api/wallet/server/corporation/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
             $postData = $newtenant;
