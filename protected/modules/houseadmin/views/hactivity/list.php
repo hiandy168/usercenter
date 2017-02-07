@@ -24,7 +24,10 @@
                     <th style="width: 50px;text-align: center">发布状态</th>
                     <th style="width: 50px;text-align: center">预览页</th>
                     <th style="width: 120px;text-align: center">管理操作</th>
-                    <th style="width: 50px;text-align: center">推荐</th>
+                    <?php if($group_id==1){?>
+                        <th style="width: 50px;text-align: center">推荐</th>
+                    <?php } ?>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -60,7 +63,9 @@
                                     <?php } ?>
                                     <a class='delete' href="javascript:;" onclick="delActivity(<?php echo $item['id']?>)" >删除</a>
                                 </td>
-                                <td style="text-align: center"><a class="delete" href="javascript:;">推荐</a></td>
+                                <?php if($group_id==1){?>
+                                    <td style="text-align: center"><a class="delete" href="javascript:;">推荐</a></td>
+                                <?php } ?>
                             </tr>
                         <?php } }?>
                 </tbody>
@@ -83,6 +88,7 @@
 </div>
 <script type="application/javascript">
     function delActivity(id){
+        var that=$(this);
         layer.confirm('确认删除吗', {
             btn: ['确定','取消']
         }, function(){
@@ -94,7 +100,7 @@
                 success:function(data){
                     if(data==100){
                         layer.msg('删除成功！', {icon: 1,time:2000},function(){
-                            location.reload()
+                            that.parent().parent().remove();
                         });
                     }
                     else{
@@ -119,7 +125,9 @@
                    success:function(data){
                        if(data==100){
                            layer.msg('发布成功！', {icon: 1, time: 2000}, function () {
-                               location.reload()
+
+                             $(this).text("yifsa");
+
                            });
                        }
                        else{
@@ -143,7 +151,7 @@
                    success:function(data){
                        if(data==100){
                            layer.msg('取消成功！', {icon: 1, time: 2000}, function () {
-                               location.reload()
+                               $(this).text("yi");
                            });
                        }
                        else{

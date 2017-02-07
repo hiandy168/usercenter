@@ -50,7 +50,7 @@ class ProjectController extends FrontController {
         }else{
             $criteria->compare('t.mid', $this->member['id']);
         }
-       
+
         
         $criteria->compare('t.status',1);
         //$search_text=Mod::app()->request->getParam('search_text');

@@ -48,6 +48,18 @@ class HtenantController extends HaController{
                 echo "error";die();
             }
         }
+        $app_Id=Wzbank::appid;
+        $version=Wzbank::version;
+        $nonce = Wzbank::strings(32);
+        $access_token=Mod::app()->memcache->get('access_token');
+        $timestamp=time();
+        $userid="h".$admininfo['id'];
+        if($tenantinfo['wxstatus']==1){
+            $ticket =Wzbank::h5ticket($access_token,$userid);
+            $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
+            $Url="https://test-open.webank.com/s/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
+            $this->redirect($Url);
+        }else{
         if(Mod::app()->request->isPostRequest){
             if(empty($id)) {
                 $house_model = new House_tenant();
@@ -80,12 +92,7 @@ class HtenantController extends HaController{
                 $newtenant['respPerName']=$house_model['operatorname'];//责任人姓名
                 $newtenant['respPerTelephoneNo']=$house_model['operatorphone'];//责任人手机
             }
-            $app_Id=Wzbank::appid;
-            $version=Wzbank::version;
-            $nonce = Wzbank::strings(32);
-            $access_token=Mod::app()->memcache->get('access_token');
-            $timestamp=time();
-            $userid="h".$admininfo['id'];
+
             $sign =Wzbank::housesign($nonce,$version,strval($timestamp),json_encode($newtenant));
             $postUrl =Wzbank::bankurl."/h/api/wallet/server/corporation/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
             $postData = $newtenant;
@@ -99,7 +106,6 @@ class HtenantController extends HaController{
                 $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
                 $Url="https://test-open.webank.com/s/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
             }
-            //var_dump($Url);die();
             if($tenantinfo){
                 $this->redirect($Url);
             }else{
@@ -107,7 +113,7 @@ class HtenantController extends HaController{
                     $this->redirect($Url);
                 }
             }
-        }
+        }}
         $viewData['tenantinfo'] = $tenantinfo;
         $this->render("add",$viewData);
     }

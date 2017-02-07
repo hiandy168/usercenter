@@ -129,7 +129,7 @@ class FilesController extends CController {
                     Mod::app()->session->sessionID = $_POST['PHPSESSID'];
                     Mod::app()->session->open();
         }
-        $member = Mod::app()->session['admin_member'];
+        $member = Mod::app()->session['admin_user'];
         if(!$member['id']){
                 $result = array('error'=>1,'message'=>'没有权限');
                 echo json_encode($result);exit;

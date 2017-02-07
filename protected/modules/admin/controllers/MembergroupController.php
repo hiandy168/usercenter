@@ -83,7 +83,9 @@ class MembergroupController extends AController {
                 if($id_arr && !empty($id_arr)){ 
                      $res='';
                      $model = new Membergroup;
-                    $res = $model->deleteAll( 'id IN(' . $id_str . ') and id!=1');
+                     $member_admin = new Membergroup_admin();
+                     $res = $member_admin->deleteAll( 'group_id IN(' . $id_str . ')');
+                     $res = $model->deleteAll( 'id IN(' . $id_str . ') and id!=1');
                      if($res){
                          $mess = '删除成功！';
                          $state = 1;
@@ -134,7 +136,7 @@ class MembergroupController extends AController {
                     }
                     if(isset($result)){
                             if ($result['permission']) {
-                                $sql = "select a.id,a.phone,a.username,b.group_id,b.status from dym_member a left join dym_membergroup_admin b on a.id=b.mid where   a.id in (" . $result['permission'] . ") ";
+                                $sql = "select a.id,a.phone,a.username,b.group_id,b.status from dym_member a left join dym_membergroup_admin b on a.id=b.mid where   a.id in (" . $result['permission'] . ") and b.group_id= $id";
                                 $re = Mod::app()->db->createCommand($sql)->queryAll();
                                 $result['permission'] = $re;
                             }
@@ -209,9 +211,21 @@ class MembergroupController extends AController {
         }
 
         $arr=array_filter(explode(",",$result['permission']));
+        if(in_array($mid,$arr)){
+            echo json_encode(array("status"=>200,"msg"=>"请勿重复添加!"));
+            exit;
+        }
 
         array_push($arr,$mid);
         $result['permission']=implode(",",$arr);
+
+        $ma = new Membergroup_admin();
+        $ma->mid=$mid;
+        $ma->group_id=$id;
+        $ma->status=0;
+        $ma->createtime=time();
+        $ma->updatetime=time();
+        $ma->save();
 //        Member::model()->updateByPk($mid,array('group_id'=> $id));
         Membergroup::model()->updateByPk($id,array('permission'=> $result['permission'],'permission_id'=>$permission_id));
         echo json_encode(array("status"=>200,"msg"=>"添加成功"));
@@ -269,7 +283,7 @@ class MembergroupController extends AController {
         $reupdate = Membergroup::model()->updateByPk($id, array('permission' => $permission));
 
         if($reupdate) {
-            echo json_encode(array("status" => 200, "msg" => "添加成功"));
+            echo json_encode(array("status" => 200, "msg" => "删除成功"));
         }
         exit;
     }

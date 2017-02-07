@@ -196,7 +196,7 @@ class StoredController extends HouseController{
         $data=array(
             'orderNo'=>$orderid,//订单号
             'userId'=>$userid,//个人用户userId
-            'companyUserId'=>"1",//公司用户userId
+            'companyUserId'=>"h10",//公司用户userId
             'productId'=>"1",//产品ID
             'amount'=>$money.".10",//定期金额
             'companyProceeds'=>$money,//公司收款金额
@@ -207,7 +207,7 @@ class StoredController extends HouseController{
         $postData = array(
             'orderNo'=>$orderid,//订单号
             'userId'=>$userid,//个人用户userId
-            'companyUserId'=>"1",//公司用户userId
+            'companyUserId'=>"h10",//公司用户userId
             'productId'=>"1",//产品ID
             'amount'=>$money.".10",//定期金额
             'companyProceeds'=>$money,//公司收款金额

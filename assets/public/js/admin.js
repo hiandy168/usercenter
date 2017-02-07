@@ -319,6 +319,46 @@ function upload_pic(obj,name){
 	});
 }
 
+function upload_pic_save(obj,name,id){
+    var editor = KindEditor.editor({
+        fileManagerJson:admin_url+"/files/file_manager",
+        uploadJson:admin_url+'/files/upload',
+        allowFileManager : true,
+        formatUploadUrl :false
+    });
+    editor.loadPlugin('image', function() {
+        editor.plugin.imageDialog({
+            imageUrl : KindEditor('#'+obj).val(),
+            clickFn : function(url) {
+                $('#'+obj).attr('src',url);
+                url = url.substr(url.indexOf("data"));
+                $('#'+name).val(url);
+                editor.hideDialog();
+                $.ajax({
+                    type: "post",
+                    url: admin_url+'/activity/listimg',
+                    data: {
+                        "id":id,
+                        "image": url,
+            },
+                success: function (msg) {
+                    //  alert(msg);
+                    if (msg == 'ok') {
+                        alert("保存成功");
+                        return false;
+                    }  else {
+                        lert("保存失败");
+                        return false;
+                    }
+                }
+                });
+            }
+        });
+    });
+}
+
+
+
 function upload_pic_bat() {
     var editor = KindEditor.editor({
         fileManagerJson: admin_url + "/files/file_manager",

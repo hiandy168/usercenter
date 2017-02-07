@@ -65,7 +65,7 @@ class ActivityController extends FrontController
                     }
                     $img= $res->img?$res->img:$res->share_img;
                     $msg['id'] = $res->id;
-                    $msg['img'] = $img?$this->_siteUrl . "/" . $img:"";
+                    $msg['img'] = $val->listimg?$val->listimg:$this->_siteUrl . "/" . $img;
                     $msg['start_time'] = $res->start_time;
                     $msg['end_time'] = $res->end_time;
                     $msg['address'] = "";

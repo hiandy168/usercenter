@@ -39,8 +39,12 @@
                             <td style="text-align: center"><?php echo date('Y-m-d H-m-s',$item['createtime']); ?></td>
                             <td style="text-align: center"><?php echo $item['author']; ?></td>
                             <td style="text-align: center">
-                                <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">编辑</a>
-                                <a class='delete' href="javascript:;" onclick="delTenant(<?php echo $item['id']?>)" >删除</a>
+                                <?php if($item['wxstatus']==2){ ?>
+                                    <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">编辑</a>
+                                    <a class='delete' href="javascript:;" onclick="delTenant(<?php echo $item['id']?>)" >删除</a>
+                                <?php }elseif($item['wxstatus']==1){ ?>
+                                    <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">钱包首页</a>
+                                <?php } ?>
                             </td>
                         </tr>
                     <?php } }?>

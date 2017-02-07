@@ -126,7 +126,28 @@ class ActivityController extends AController
         $this->render('RecommendedList', $parameter);
 
     }
-
+    //添加接口列表展示图片
+    public function actionListimg(){
+        if (Mod::app()->request->isPostRequest) {
+            $image=Tool::getValidParam('image','string');
+            $id=Tool::getValidParam('id','integer');
+            if(!$image|| !$id ){
+                echo 0;
+                exit;
+            }
+            $res=Activity_recommend::model()->updateByPk($id,array("listimg"=>$image));
+            if($res){
+                echo "ok";
+                exit;
+            }else{
+                echo 0;
+                exit;
+            }
+        }else{
+            echo "非法请求";
+            exit;
+        }
+    }
 
     //活动推荐
     public function actionRecommende()

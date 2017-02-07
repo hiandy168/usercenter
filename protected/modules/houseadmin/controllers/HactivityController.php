@@ -15,10 +15,16 @@ class HactivityController extends HaController{
      */
     public function actionList(){
         $member=Mod::app()->session['admin_user'];
+        $group_id=$member['group_id'];
         $application_class = House_activity::model();
         $criteria = new CDbCriteria();
-        $criteria->condition = 'authorid=:authorid and status=:status';
-        $criteria->params = array(':authorid'=>$member['id'],':status'=>1);
+        if($group_id==1){
+            $criteria->condition = 'status=:status';
+            $criteria->params = array(':status'=>1);
+        }else{
+            $criteria->condition = 'authorid=:authorid and status=:status';
+            $criteria->params = array(':authorid'=>$member['id'],':status'=>1);
+        }
         $criteria->order = 'id desc';   // 排序
         $count = $application_class->count($criteria);
         $pages = new CPagination($count);
@@ -27,6 +33,7 @@ class HactivityController extends HaController{
         $returnData['houslist']= $application_class->findAll($criteria);
         $endtime=explode("|", $returnData['houslist']['validity'])[1];
         $returnData['pages'] = $pages;
+        $returnData['group_id'] = $group_id;
         $this->render('list',$returnData);
     }
     /**
@@ -35,13 +42,20 @@ class HactivityController extends HaController{
      */
     public function actionAdd(){
         $admininfo  = Mod::app()->session['admin_user'];
+        $group_id=$admininfo['group_id'];
         $id =Tool::getValidParam('id','integer');
         $house_model = House_activity::model();
         $houseinfo = null;
         if(!empty($id)){
             $houseinfo = $house_model->findByPk($id);
-            if(empty($houseinfo) || $houseinfo['authorid'] != $admininfo['id']){
-                echo "error";die();
+            if($group_id==1){
+                if(empty($houseinfo)){
+                    echo "error";die();
+                }
+            }else{
+                if(empty($houseinfo) || $houseinfo['authorid'] != $admininfo['id']){
+                    echo "error";die();
+                }
             }
         }
         if(Mod::app()->request->isPostRequest){
@@ -66,7 +80,9 @@ class HactivityController extends HaController{
             $validitys=strtotime($validity1).'|'.strtotime($validity2);
             $house_model -> preview = "h5";
             $house_model -> updatetime = time();
-            $house_model -> authorid = $admininfo['id'];
+            if($group_id!=1){
+                $house_model -> authorid = $admininfo['id'];
+            }
             $house_model -> author = $admininfo['name'];
             $house_model -> actime = $actimes;
             $house_model -> validity = $validitys;
@@ -99,7 +115,12 @@ class HactivityController extends HaController{
     public function actionDel(){
         $id =Tool::getValidParam('id','integer');
         $admininfo  = Mod::app()->session['admin_user'];
-        $houseInfo = House_activity::model()->find('id=:id and authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
+        $group_id=$admininfo['group_id'];
+        if($group_id==1){
+            $houseInfo = House_activity::model()->find('id=:id', array(':id'=>$id));
+        }else{
+            $houseInfo = House_activity::model()->find('id=:id and authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
+        }
         if(!empty($houseInfo)){
             $houseInfo->status = 2;
             if ($houseInfo->save()) {
@@ -122,7 +143,13 @@ class HactivityController extends HaController{
         $id =Tool::getValidParam('id','integer');
         $poststatus =Tool::getValidParam('poststatus','integer');
         $admininfo  = Mod::app()->session['admin_user'];
-        $houseInfo = House_activity::model()->find('id=:id and authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
+        $group_id=$admininfo['group_id'];
+        if($group_id==1){
+            $houseInfo = House_activity::model()->find('id=:id', array(':id'=>$id));
+        }else{
+            $houseInfo = House_activity::model()->find('id=:id and authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
+        }
+
         if(!empty($houseInfo)){
             if($poststatus==1){
                 $houseInfo->poststatus = 1;

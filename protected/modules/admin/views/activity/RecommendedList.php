@@ -1,3 +1,47 @@
+<style>
+    .dail-upimgl {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        background: #fff;
+        border-radius: 5px;
+        border: 1px solid #dedede;
+    }
+    .dail-upimgl:before {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 0px;
+        position: absolute;
+        border: 2px solid #ddd;
+        top: 50%;
+        left: 50%;
+        margin-top: -1px;
+        margin-left: -20px;
+    }
+    .dail-upimgl:after {
+        content: "";
+        display: block;
+        width: 0px;
+        height: 40px;
+        position: absolute;
+        border: 2px solid #ddd;
+        top: 50%;
+        left: 50%;
+        margin-top: -20px;
+        margin-left: -1px;
+    }
+
+</style>
+<script src="<?php echo $this->_siteUrl?>/themes/new/assets/js/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="<?php echo $this->_siteUrl?>/themes/new/assets/js/layer/layer.js" type="text/javascript"></script>
+<script src="<?php echo $this->_siteUrl?>/themes/new/assets/js/validate.js" type="text/javascript" charset="utf-8"></script>
+<script src="<?php echo $this->_siteUrl?>/themes/new/assets/js/jqueryform.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    var site_url = "<?php echo Mod::app()->createAbsoluteUrl('/')?>";
+    var Siteurl = "<?php echo $this->_siteUrl; ?>";
+</script>
+
 <div class='bgf clearfix'>
 
         <div class="center_top clearfix">
@@ -46,7 +90,7 @@
 
         <div class="clearfix"></div>
         <div class="list">
-            <form name="list_frm" id="ListFrm" action="" method="post">
+            <form name="list_frm" id="form_shareimg" action=""method="POST" enctype="multipart/form-data">
                 <table width="100%" cellspacing="0">
                     <thead>
                     <tr>
@@ -56,6 +100,7 @@
                         <th>项目</th>
                         <th>描述</th>
                         <th>活动图片</th>
+                        <th>列表图片</th>
                         <th>开始时间</th>
                         <th>结束时间</th>
                         <th>状态</th>
@@ -78,6 +123,14 @@
                             <td><?php echo $item['describe'] ?></td>
                             <td><img width="80px" height="80px" src="<?php echo JkCms::show_img($item['image']) ?>"
                                      alt="活动图片"/></td>
+                            <td class="thumb" width="80" >
+                                <img  style="max-height:123px;width:176px;padding:2px;border:1px solid #e6e6e6;" onclick="upload_pic_save('img_thumb<?php echo $item['id'] ?>','picture<?php echo $item['id'] ?>',<?php echo $item['id'] ?>)"  src="<?php  echo isset($view['picture'])?(Tool::show_img($view['picture'])):(Tool::show_img(''))?>" width="80" height='80' width="80" id="img_thumb<?php echo $item['id'] ?>">
+                                <input type="hidden" name="picture"  id="picture<?php echo $item['id'] ?>"  value="<?php echo  isset($view['picture']) ? $view['picture'] : ''; ?>">
+                                <p style="margin:5px 0 10px 0;width:176px;height:28px;text-align:center">
+                                    <span  class="btn btn-danger" onclick="upload_pic_save('img_thumb<?php echo $item['id'] ?>','picture<?php echo $item['id'] ?>',<?php echo $item['id'] ?>)"><?php echo Mod::t('admin','upload_pic')?></span>
+                                </p>
+                            </td>
+
                             <td><?php
                                 if (!empty($item['start_time'])) {
                                     echo date('Y-m-d H:i:s', $item['start_time']);
@@ -120,7 +173,11 @@
 
 
 </div>
-
+<script type="text/javascript">
+    function save(){
+        console.log(123);
+    }
+</script>
 <script>
     function chooes() {
             window.location.href = '<?php echo $this->createUrl('activity/recommendedlist')?>';

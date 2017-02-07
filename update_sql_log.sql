@@ -204,3 +204,10 @@ MODIFY COLUMN `update_time`  int(10) NOT NULL DEFAULT 0 AFTER `create_time`
 ALTER TABLE `dym_activity_poster`
 CHANGE COLUMN `starttime` `start_time`  int(11) NULL DEFAULT 0 COMMENT '开始时间' AFTER `share_img`,
 CHANGE COLUMN `endtime` `end_time`  int(11) NULL DEFAULT 0 COMMENT '结束时间' AFTER `start_time`
+
+
+
+
+/*推荐图片*/
+ALTER TABLE `dym_activity_recommend`
+ADD COLUMN `listimg`  varchar(200) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '接口列表图片' AFTER `describe`;
