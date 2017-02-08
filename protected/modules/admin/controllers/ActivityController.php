@@ -34,25 +34,24 @@ class ActivityController extends AController
         if ($title) {
             $where .= ' and title like "%' . $title . '%"';
         }
-
         switch ($id) {
             case 1:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_pccheckin')->where($where)->queryAll();
+                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_pccheckin')->where($where)->order("id desc")->queryAll();
                 break;
 //            case 3:
 //                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_signup')->where($where)->queryAll();
 //                break;
             case 4:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_vote')->where($where)->queryAll();
+                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_vote')->where($where)->order("id desc")->queryAll();
                 break;
             case 5:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_bigwheel')->where($where)->queryAll();
+                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_bigwheel')->where($where)->order("id desc")->queryAll();
                 break;
             case 6:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_poster')->where($where)->queryAll();
+                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_poster')->where($where)->order("id desc")->queryAll();
                 break;
             default:
-                $res = Mod::app()->db->createCommand()->select('id,pid,prize_id,title,start_time,end_time,win_num,day_count,share_num,share_add_num,win_msg,rule,lingjiang,end_num_msg,end_msg,jishu,share_img as img,banner_img,bg_img,scratch_img,desc_img,status,add_time')->from('dym_activity_scratch')->where($where)->queryAll();
+                $res = Mod::app()->db->createCommand()->select('id,pid,prize_id,title,start_time,end_time,win_num,day_count,share_num,share_add_num,win_msg,rule,lingjiang,end_num_msg,end_msg,jishu,share_img as img,banner_img,bg_img,scratch_img,desc_img,status,add_time')->from('dym_activity_scratch')->where($where)->order("id desc")->queryAll();
                 break;
         }
 
@@ -104,7 +103,7 @@ class ActivityController extends AController
             $where.=' and type=' . $activityid;
         }
 
-        $list = Mod::app()->db->createCommand()->select('*')->from('dym_activity_recommend')->where($where)->queryAll();
+        $list = Mod::app()->db->createCommand()->select('*')->from('dym_activity_recommend')->where($where)->order("id desc")->queryAll();
 
         foreach ($list as $k => $v) {
             $list[$k]['type'] = $type[$v['type']];

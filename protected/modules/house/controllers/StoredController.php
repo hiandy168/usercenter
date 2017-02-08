@@ -193,11 +193,13 @@ class StoredController extends HouseController{
         $app_Id=Wzbank::appid;
         $version=Wzbank::version;
         $timestamp=time();
+        $sql = "SELECT a.authorid,o.houseid  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid";
+        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
         $data=array(
             'orderNo'=>$orderid,//订单号
             'userId'=>$userid,//个人用户userId
-            'companyUserId'=>"h10",//公司用户userId
-            'productId'=>"1",//产品ID
+            'companyUserId'=>"h".$orderdetail['authorid'],//公司用户userId
+            'productId'=>$orderdetail['houseid'],//产品ID
             'amount'=>$money.".10",//定期金额
             'companyProceeds'=>$money,//公司收款金额
             'expireTime'=>"2017-01-16",//定期到期日期
@@ -207,8 +209,8 @@ class StoredController extends HouseController{
         $postData = array(
             'orderNo'=>$orderid,//订单号
             'userId'=>$userid,//个人用户userId
-            'companyUserId'=>"h10",//公司用户userId
-            'productId'=>"1",//产品ID
+            'companyUserId'=>"h".$orderdetail['authorid'],//公司用户userId
+            'productId'=>$orderdetail['houseid'],//产品ID
             'amount'=>$money.".10",//定期金额
             'companyProceeds'=>$money,//公司收款金额
             'expireTime'=>"2017-01-16",//定期到期日期

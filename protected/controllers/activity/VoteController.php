@@ -1045,10 +1045,10 @@ class VoteController extends FrontController{
     /*ajax  投票*/
     public function actionajaxvote(){
         if(Mod::app()->request->isAjaxRequest){
-           /* if(!Tool::isMobile()){
+            if(!Tool::isMobile()){
                 echo -2;
                 exit;
-            }*/
+            }
             $id= trim(Tool::getValidParam('id', 'integer'));
             $vid= trim(Tool::getValidParam('vid', 'integer'));
             $mid=trim(Tool::getValidParam('mid', 'integer'));

@@ -403,114 +403,114 @@ $(function() {
 
 var page=2;
 var number=0;  
-  function scrollF(){
-  //获取滚动条当前的位置
-  function getScrollTop() {
-    var scrollTop = 0;
-    if (document.documentElement && document.documentElement.scrollTop) {
-      scrollTop = document.documentElement.scrollTop;
-    } else if (document.body) {
-      scrollTop = document.body.scrollTop;
-    }
-    return scrollTop;
-  }
 
-  //获取当前可视范围的高度
-  function getClientHeight() {
-    var clientHeight = 0;
-    if (document.body.clientHeight && document.documentElement.clientHeight) {
-      clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
-    } else {
-      clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
-    }
-    return clientHeight;
-  }
+if($("#indexlist").length){
 
-  //获取文档完整的高度
-  function getScrollHeight() {
-    return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-  }
+ $(window).scroll(function(){
+      //获取滚动条当前的位置
+      function getScrollTop() {
+        var scrollTop = 0;
+        if (document.documentElement && document.documentElement.scrollTop) {
+          scrollTop = document.documentElement.scrollTop;
+        } else if (document.body) {
+          scrollTop = document.body.scrollTop;
+        }
+        return scrollTop;
+      }
 
-    if (getScrollTop() + getClientHeight() === getScrollHeight()) {
-     $(".f-index-list-loading").show();
-     // console.log(page);
-     // console.log(getScrollTop());
-     // console.log(getClientHeight());
-     // console.log(getScrollHeight());
-     
-     number++;
-     if(number==1){
-         $.ajax({
-          url:"/house/site/gethouse",
-          data:{"page":page},
-          dataType:'json',
-          type:'GET',
-          success:function(data){
-                 page++;
-                 if(data.fcode==0){
-                  $(".f-index-list-loading").html("没有数据了");
-                 }else{
-                  var html = "";
-                  for (var i = 0; i < data.length; i++) {
-                    if (data[i].ftype == "2") {
-                      html += '<li>'
-                      html += '<div class="f-index-listdiv clearfix">'
-                      html += '<a href="' + data[i].url + '">'
-                      html += '<div class="f-index-listdiv-img"><img src="' + data[i].img + '"/></div>'
-                      html += '<div class="f-index-listdiv-txt">'
-                      html += '<h3>['+ data[i].city +']'+ data[i].ftitle + '</h3>'
-                      html += '<p>在线预存<i><b>￥</b>' + data[i].figue + '</i></p>'
-                      html += '<em>' + data[i].coupon + '</em>'
-                      html += '</div>'
-                      html += '</a>'
-                      html += '</div>'
-                      html += '<div class="f-index-listdiv-time pos-r bb bt">'
-                      if (data[i].end == "bg1") {
-                        html += '<i class="icon-time" data-seconds=' + data[i].actime2 + '><span>--天</span><span>--时</span><span>--分</span><span>--秒</span></i>'
-                        html += '<a href="' + data[i].url + '" class="bg1 fcfff">我要预存</a>'
+      //获取当前可视范围的高度
+      function getClientHeight() {
+        var clientHeight = 0;
+        if (document.body.clientHeight && document.documentElement.clientHeight) {
+          clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
+        } else {
+          clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
+        }
+        return clientHeight;
+      }
+
+      //获取文档完整的高度
+      function getScrollHeight() {
+        return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+      }
+
+      if (getScrollTop() + getClientHeight() === getScrollHeight()) {
+         $(".f-index-list-loading").show();
+         // console.log(page);
+         // console.log(getScrollTop());
+         // console.log(getClientHeight());
+         // console.log(getScrollHeight());
+         
+         number++;
+         if(number==1){
+             $.ajax({
+              url:"/house/site/gethouse",
+              data:{"page":page},
+              dataType:'json',
+              type:'GET',
+              success:function(data){
+                     page++;
+                     if(data.fcode==0){
+                      $(".f-index-list-loading").html("没有数据了");
+                     }else{
+                      var html = "";
+                      for (var i = 0; i < data.length; i++) {
+                        if (data[i].ftype == "2") {
+                          html += '<li>'
+                          html += '<div class="f-index-listdiv clearfix">'
+                          html += '<a href="' + data[i].url + '">'
+                          html += '<div class="f-index-listdiv-img"><img src="' + data[i].img + '"/></div>'
+                          html += '<div class="f-index-listdiv-txt">'
+                          html += '<h3>['+ data[i].city +']'+ data[i].ftitle + '</h3>'
+                          html += '<p>在线预存<i><b>￥</b>' + data[i].figue + '</i></p>'
+                          html += '<em>' + data[i].coupon + '</em>'
+                          html += '</div>'
+                          html += '</a>'
+                          html += '</div>'
+                          html += '<div class="f-index-listdiv-time pos-r bb bt">'
+                          if (data[i].end == "bg1") {
+                            html += '<i class="icon-time" data-seconds=' + data[i].actime2 + '><span>--天</span><span>--时</span><span>--分</span><span>--秒</span></i>'
+                            html += '<a href="' + data[i].url + '" class="bg1 fcfff">我要预存</a>'
+                          }
+                          if (data[i].end == "bg2") {
+                            html += '<i class="icon-time">该活动已结束</i>'
+                            html += '<a href="javascript:void(0)" class="bg2 fcfff">活动结束</a>'
+                          }
+
+                          html += '</div>'
+                          html += '</li>'
+                        }
                       }
-                      if (data[i].end == "bg2") {
-                        html += '<i class="icon-time">该活动已结束</i>'
-                        html += '<a href="javascript:void(0)" class="bg2 fcfff">活动结束</a>'
-                      }
-
-                      html += '</div>'
-                      html += '</li>'
-                    }
-                  }
-                  $(".f-index-list-loading").hide();
-                  $(".f-index-list ul").append(html);
-                  number=0;
-                  $(function() {
-                          $('.icon-time').countdown(function(s, d) {
-                            var items = $(this).find("span");
-                            items.eq(0).text("距结束" + d.day + "天")
-                            items.eq(1).text(d.hour + "时")
-                            items.eq(2).text(d.minute + "分")
-                            items.eq(3).text(d.second + "秒")
-                          });
-                        })
-                 }
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    $(".f-index-list-loading").html("网络超时");
-                    setTimeout(function(){
                       $(".f-index-list-loading").hide();
-                      $(".f-index-list-loading").html("加载中<i class='icon-loading'></i>");
-                    },3000)
-                }
+                      $(".f-index-list ul").append(html);
+                      number=0;
+                      $(function() {
+                              $('.icon-time').countdown(function(s, d) {
+                                var items = $(this).find("span");
+                                items.eq(0).text("距结束" + d.day + "天")
+                                items.eq(1).text(d.hour + "时")
+                                items.eq(2).text(d.minute + "分")
+                                items.eq(3).text(d.second + "秒")
+                              });
+                            })
+                     }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        $(".f-index-list-loading").html("网络超时");
+                        setTimeout(function(){
+                          $(".f-index-list-loading").hide();
+                          $(".f-index-list-loading").html("加载中<i class='icon-loading'></i>");
+                        },3000)
+                    }
 
-          })
-     }
-   
+              })
+         }
+        
+      } 
+      
+  })
 
-   
-   } 
-
-
-
-} 
-
+}
 
 
 // loading

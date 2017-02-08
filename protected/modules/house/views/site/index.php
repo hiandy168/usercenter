@@ -17,7 +17,7 @@
 
     <!--banner end-->
 
-    <div class="f-index-list">
+    <div class="f-index-list" id="indexlist">
         <ul>
             <?php foreach($houseinfo as $house) {
                 if ($house['type'] ==2) { ?>
@@ -75,11 +75,3 @@
 <?php echo $this->renderpartial('/layouts/foot'); ?>
 
 
-<script type="text/javascript" charset="utf-8">
-$(function(){
-$(window).scroll(function(){
-                  scrollF();
-                 })
-})
-
-</script>

@@ -1874,11 +1874,15 @@ class MemberController extends FrontController
         //根据aid 查找pid
         //如果没有aid 表示是pc 或者h5 首页 注册登录的！ 默认是1
         if ($member['aid'] > 1) {
+            $member['model']= str_replace("Activity_","",$member['model']);
             $model = "Activity_" . $member['model'];
             $model =  ucfirst($model);
-            $res = $model::model()->find($member['aid']);
+            $res = $model::model()->findByPk($member['aid']);
+
             if ($res) {
-                $pid = $res->pid ? $res->pid : 1;
+                $pid = $res->pid;
+            }else{
+                $pid = 1;
             }
 
         }
@@ -2233,7 +2237,9 @@ class MemberController extends FrontController
                 $model =  ucfirst($model);
                 $res = $model::model()->findByPk($aid);
                 if ($res) {
-                    $projectid = $res->pid ? $res->pid : 1;
+                    $projectid = $res->pid;
+                }else{
+                    $projectid = 1;
                 }
             } else {
                 $projectid = 1;

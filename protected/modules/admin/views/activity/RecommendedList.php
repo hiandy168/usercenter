@@ -124,8 +124,8 @@
                             <td><img width="80px" height="80px" src="<?php echo JkCms::show_img($item['image']) ?>"
                                      alt="活动图片"/></td>
                             <td class="thumb" width="80" >
-                                <img  style="max-height:123px;width:176px;padding:2px;border:1px solid #e6e6e6;" onclick="upload_pic_save('img_thumb<?php echo $item['id'] ?>','picture<?php echo $item['id'] ?>',<?php echo $item['id'] ?>)"  src="<?php  echo isset($view['picture'])?(Tool::show_img($view['picture'])):(Tool::show_img(''))?>" width="80" height='80' width="80" id="img_thumb<?php echo $item['id'] ?>">
-                                <input type="hidden" name="picture"  id="picture<?php echo $item['id'] ?>"  value="<?php echo  isset($view['picture']) ? $view['picture'] : ''; ?>">
+                                <img  style="max-height:123px;width:176px;padding:2px;border:1px solid #e6e6e6;" onclick="upload_pic_save('img_thumb<?php echo $item['id'] ?>','picture<?php echo $item['id'] ?>',<?php echo $item['id'] ?>)"  src="<?php  echo isset($item['listimg'])?(Tool::show_img($item['listimg'])):(Tool::show_img(''))?>" width="80" height='80' width="80" id="img_thumb<?php echo $item['id'] ?>">
+                                <input type="hidden" name="picture"  id="picture<?php echo $item['id'] ?>"  value="<?php echo  isset($item['listimg']) ? $item['listimg'] : ''; ?>">
                                 <p style="margin:5px 0 10px 0;width:176px;height:28px;text-align:center">
                                     <span  class="btn btn-danger" onclick="upload_pic_save('img_thumb<?php echo $item['id'] ?>','picture<?php echo $item['id'] ?>',<?php echo $item['id'] ?>)"><?php echo Mod::t('admin','upload_pic')?></span>
                                 </p>

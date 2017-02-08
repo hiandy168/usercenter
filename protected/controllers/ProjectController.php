@@ -482,40 +482,6 @@ class ProjectController extends FrontController {
                         $visit['pv_num']=0;
                     }
                 $visit['count_visit']=$temp;
-//                echo "<pre>";
-//                print_r($arr_con);
-//
-//                print_r($visit);
-//                echo $count_all_uv;
-//                echo $count_all_pv;
-//
-//                exit;
-//                $visit =  $visit = array ( 'count_visit' => array (
-//
-//                    '2016-04' => array ( 'count_pv' => '1', 'count_uv' => '1',),
-//                    '2016-05' => array ( 'count_pv' => 1, 'count_uv' => '1',),
-//                    '2016-06' => array ( 'count_pv' => 4565,'count_uv' => '1', ),
-//                    '2016-07' => array ( 'count_pv' => 1,'count_uv' => '99', ),
-//                    '2016-08' => array ( 'count_pv' => 13600, 'count_uv' => '1',),
-//                    '2016-09' => array ( 'count_pv' => '3600','count_uv' => '1', ),
-//                    '2016-10' => array ( 'count_pv' => '210','count_uv' => '20', ),
-//                    '2016-11' => array ( 'count_pv' => '119','count_uv' => '1', ),
-//                ) );
-//                print_r($visit);
-//                exit;
-//                if($pid==1){
-//                    $visit = array ( 'count_visit' => array (
-//
-//                        '2016-04' => array ( 'count_pv' => '3215', 'count_uv' => '10576',),
-//                        '2016-05' => array ( 'count_pv' => 2567, 'count_uv' => '8432',),
-//                        '2016-06' => array ( 'count_pv' => 1870,'count_uv' => '6546', ),
-//                        '2016-07' => array ( 'count_pv' => 3600,'count_uv' => '9706', ),
-//                        '2016-08' => array ( 'count_pv' => 4568, 'count_uv' => '12976',),
-//                        '2016-09' => array ( 'count_pv' => '3450','count_uv' => '7543', ),
-//                        '2016-10' => array ( 'count_pv' => '2466','count_uv' => '7543', ),
-//                        '2016-11' => array ( 'count_pv' => '4565','count_uv' => '13347', ),
-//                    ) );
-//                }
  
                 break;
         }

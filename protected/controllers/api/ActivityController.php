@@ -64,8 +64,9 @@ class ActivityController extends FrontController
                         $msg['linkDetail'] = $this->_siteUrl . "/activity/" . $this->type[$val->type][1] . "/view/id/$res->id";
                     }
                     $img= $res->img?$res->img:$res->share_img;
+                    $images=$val->listimg?$val->listimg:$img;
                     $msg['id'] = $res->id;
-                    $msg['img'] = $val->listimg?$val->listimg:$this->_siteUrl . "/" . $img;
+                    $msg['img'] =$this->_siteUrl . "/" .$images;
                     $msg['start_time'] = $res->start_time;
                     $msg['end_time'] = $res->end_time;
                     $msg['address'] = "";

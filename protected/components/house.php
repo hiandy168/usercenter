@@ -25,14 +25,14 @@ $menu = array(
         'title' => '用户管理',
         'children' => array(
             array('title' => '用户列表', 'url' => 'hmember/list'),
-            array('title' => '新增用户', 'url' => 'hmember/add'),
+          /*  array('title' => '新增用户', 'url' => 'hmember/add'),*/
         )
     ),
     'housetenant' => array(
         'title' => '商户管理',
         'children' => array(
             array('title' => '商户列表', 'url' => 'htenant/list'),
-            array('title' => '新增商户', 'url' => 'htenant/add'),
+          /*  array('title' => '新增商户', 'url' => 'htenant/add'),*/
         )
     ),
     'houseorder' => array(
