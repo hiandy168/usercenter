@@ -1517,6 +1517,16 @@ try {
             $this->render('example', $parame);
 
     }
+    
+    /*
+     *  活动PVUV统计图表
+     */
+    public function actionActivitylist(){
+        $config['fid'] = trim(Tool::getValidParam('id', 'integer'));//活动ID 开发写的不一致
+        $config['tag'] = trim(Tool::getValidParam('tag', 'string'));//活动ID 开发写的不一致
+
+        $this->render('activitylist',$config);
+    }
 }
 
 

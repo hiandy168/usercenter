@@ -32,7 +32,7 @@
         <?php if($users){ ?>
         <a class="btn <?php echo $active=='active_win' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/scratchcard/WinList/fid/'.$id.'/datatype/1')?>" role="button">中奖用户</a>
         <a class="btn <?php echo $active=='active_no' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/scratchcard/WinList/fid/'.$id.'/datatype/2')?>" role="button">未中奖用户</a>
-        <a class="btn btn-success" href="<?php echo $this->createUrl('/activity/scratchcard/ExportCsv',array('fid'=>$id,'type'=>$type))?>" role="button">导出列表</a>
+        <a class="btn btn-success" href="<?php echo $this->createUrl('/activity/scratchcard/ExportCsv',array('fid'=>$id,'type'=>1))?>" role="button">导出中奖列表</a>
         <?php } ?>
     </div>
     <table class="table table-striped">
