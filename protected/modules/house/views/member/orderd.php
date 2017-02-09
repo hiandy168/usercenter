@@ -84,7 +84,7 @@
     <div class="bgfff pos-r bb f-order-buyinfo fs26 fc777">
 
 
-        <p>用户姓名：<?php echo $this->member['username']?></p>
+        <p>用户姓名：<?php echo $this->member['realname']?></p>
         <p>联系电话：<?php echo $this->member['phone']?></p>
         <p>下单时间：<?php echo date('Y-m-d H:i:s',$orderdetail['applytime'])?></p>
         <p>活动有效期：<?php echo date('Y-m-d H:i:s',explode('|',$orderdetail['actime'])[0])?> 至 <?php echo date('Y-m-d H:i:s',explode('|',$orderdetail['actime'])[1])?></p>

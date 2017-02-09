@@ -519,7 +519,12 @@ var winninglist_img = "<?php echo $images->winninglist?JkCms::show_img($images->
 <?php
 if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') == true) {
     if ($info['share_switch'] == 1) {
-        echo $this->renderpartial('/common/wxshare', array('signPackage' => $signPackage, 'info' => $info, 'url' => $this->createUrl('/activity/bigwheel/view', array('id' => $param['id']))));
+        if(isset($info['share_url'])){
+            $url=$info['share_url'];
+        }else {
+            $url = $this->createUrl('/activity/bigwheel/view', array('id' => $param['id']));
+        }
+        echo $this->renderpartial('/common/wxshare', array('signPackage' => $signPackage, 'info' => $info, 'url' =>$url));
     } else { ?>
         <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
         <script>

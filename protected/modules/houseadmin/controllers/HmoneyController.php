@@ -43,7 +43,7 @@ class HmoneyController extends HaController{
         $criteria->order = 'id desc';   // 排序
         $count = $application_class->count($criteria);
         $pages = new CPagination($count);
-        $pages->pageSize = 5;
+        $pages->pageSize = 10;
         $pages->applyLimit($criteria);
         $returnData['moneylist']= $application_class->findAll($criteria);
         $returnData['pages'] = $pages;

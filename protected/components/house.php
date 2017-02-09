@@ -38,7 +38,7 @@ $menu = array(
     'houseorder' => array(
         'title' => '订单管理',
         'children' => array(
-            array('title' => '订单列表', 'url' => 'hmember/list'),
+            array('title' => '订单列表', 'url' => 'horder/list'),
         )
     ),
 

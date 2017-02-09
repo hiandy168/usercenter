@@ -19,7 +19,7 @@
         <div class="f-order-info3  pos-r bb">订单号：<?php echo $orderdetail['ordernum']?></div>
         <div class="f-order-info3 pos-r bb f-form-div1"><i>理财</i>[<?php echo $orderdetail['city']==1?"武汉":"郑州"?>] <?php echo $orderdetail['title']?></div>
         <div class="f-order-info3  pos-r bb">专属优惠：<?php echo $orderdetail['coupon']?></div>
-        <div class="f-order-info3  pos-r bb f-form-confirmdiv1"><span>用户信息：</span><i><?php echo $this->member['username']?><b></b> <?php echo $this->member['phone']?><br />
+        <div class="f-order-info3  pos-r bb f-form-confirmdiv1"><span>用户信息：</span><i><?php echo $this->member['realname'] ?><b></b> <?php echo $this->member['phone']?><br />
                 <?php echo $this->member['realcard']?></i></div>
         <div class="f-order-info3  pos-r bb">预定金额：<i class="fcf74"><?php echo $orderdetail['money']?>元</i></div>
         <div class="f-form-confirmdivtxt fs24 fcbbb">支付成功，可享受腾讯房产独家优</div>
@@ -45,7 +45,7 @@
         <div class="f-order-info3  pos-r bb">订单号：<?php echo $orderdetail['ordernum']?></div>
         <div class="f-order-info3 pos-r bb f-form-div1"><i>理财</i>[<?php echo $orderdetail['city']==1?"武汉":"郑州"?>] <?php echo $orderdetail['title']?></div>
         <div class="f-order-info3  pos-r bb">专属优惠：<?php echo $orderdetail['coupon']?></div>
-        <div class="f-order-info3  pos-r bb f-form-confirmdiv1"><span>用户信息：</span><i><?php echo $this->member['username']?><b></b> <?php echo $this->member['phone']?><br />
+        <div class="f-order-info3  pos-r bb f-form-confirmdiv1"><span>用户信息：</span><i> <?php echo $this->member['realname'] ?><b></b> <?php echo $this->member['phone']?><br />
                 <?php echo $this->member['realcard']?></i></div>
         <div class="f-order-info3  pos-r bb">退款金额：<i class="fcf74"><?php echo $orderdetail['money']?>元</i></div>
         <div class="f-form-confirmdivtxt fs24 fcbbb">退款成功</div>
@@ -69,7 +69,7 @@
         <div class="f-order-info3  pos-r bb">订单号：<?php echo $orderdetail['ordernum']?></div>
         <div class="f-order-info3 pos-r bb f-form-div1"><i>理财</i>[<?php echo $orderdetail['city']==1?"武汉":"郑州"?>] <?php echo $orderdetail['title']?></div>
         <div class="f-order-info3  pos-r bb">专属优惠：<?php echo $orderdetail['coupon']?></div>
-        <div class="f-order-info3  pos-r bb f-form-confirmdiv1"><span>用户信息：</span><i><?php echo $this->member['username']?><b></b> <?php echo $this->member['phone']?><br />
+        <div class="f-order-info3  pos-r bb f-form-confirmdiv1"><span>用户信息：</span><i><?php echo $this->member['realname'] ?><b></b> <?php echo $this->member['phone']?><br />
                 <?php echo $this->member['realcard']?></i></div>
         <div class="f-order-info3  pos-r bb">使用金额：<i class="fcf74"><?php echo $orderdetail['money']?>元</i></div>
         <div class="f-form-confirmdivtxt fs24 fcbbb">使用成功</div>

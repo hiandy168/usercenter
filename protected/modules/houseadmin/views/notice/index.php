@@ -20,7 +20,7 @@ body{color:#444444}
 <div class="box" >
 <div class="title">登录信息</div>
 <p></p>
-<p>当前登录用户：<?php echo $member_info['name'];?> 用户角色：<?php  echo $member_info['group_name'];?>&nbsp;&nbsp;</p>
+<p>当前登录用户：<?php echo $member_info['name'];?> <?php /*?>用户角色：<?php  echo $member_info['group_name'];?>&nbsp;&nbsp;</p><?php */?>
 <p></p>
 </div>
     

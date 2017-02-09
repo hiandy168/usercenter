@@ -614,7 +614,7 @@
                         </div>
 
 
-                        <div class="t_title">微信分享描述文件<span>（1-10个字符）</span></div>
+                        <div class="t_title">微信分享描述<span>（1-10个字符）</span></div>
 
                         <div class="form-inp">
 	                          <span>
@@ -623,6 +623,17 @@
                                    name='share_desc' placeholder="分享描述" class="form-control" maxlength="10"/>
                         </span>
                         </div>
+
+                        <div class="t_title">微信分享地址<span>（不填为活动页面地址）</span></div>
+
+                        <div class="form-inp">
+	                          <span>
+                            <input type="text"
+                                   value="<?php echo isset($activity_info['share_url']) ? $activity_info['share_url'] : ''; ?>"
+                                   name='share_url' placeholder="分享地址,请加上,http://" class="form-control" />
+                        </span>
+                        </div>
+
 
                         <div class="t_title">微信分享开启关闭<span>（用于活动是否可以分享到朋友圈等）</span></div>
                     <div class="add-tags">
@@ -1024,6 +1035,7 @@
             var winninglist = $("input[name='winninglist']").val();//中奖记录弹窗背景图
 
             var share_desc = $("input[name='share_desc']").val();//分享描述
+            var share_url = $("input[name='share_url']").val();//分享地址
             //var share_switch     = $("input[name='share_switch']").val();
             var obj_share_switch=document.getElementsByName('share_switch');
             var share_switch='';
@@ -1158,6 +1170,7 @@
                     share_img: share_img,
                     img: img,
                     share_desc: share_desc,
+                    share_url: share_url,
                     tag: tag,
                     p_title: p_title,
                     p_name: p_name,

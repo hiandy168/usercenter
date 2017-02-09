@@ -211,3 +211,13 @@ CHANGE COLUMN `endtime` `end_time`  int(11) NULL DEFAULT 0 COMMENT '结束时间
 /*推荐图片*/
 ALTER TABLE `dym_activity_recommend`
 ADD COLUMN `listimg`  varchar(200) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '接口列表图片' AFTER `describe`;
+
+
+
+/*
+
+大转盘 分享地址
+*/
+
+ALTER TABLE `dym_activity_bigwheel`
+ADD COLUMN `share_url`  varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '分享地址' AFTER `add_time`;

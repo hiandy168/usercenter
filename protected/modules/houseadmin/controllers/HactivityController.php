@@ -28,7 +28,7 @@ class HactivityController extends HaController{
         $criteria->order = 'id desc';   // 排序
         $count = $application_class->count($criteria);
         $pages = new CPagination($count);
-        $pages->pageSize = 5;
+        $pages->pageSize = 6;
         $pages->applyLimit($criteria);
         $returnData['houslist']= $application_class->findAll($criteria);
         $endtime=explode("|", $returnData['houslist']['validity'])[1];
@@ -82,8 +82,8 @@ class HactivityController extends HaController{
             $house_model -> updatetime = time();
             if($group_id!=1){
                 $house_model -> authorid = $admininfo['id'];
+                $house_model -> author = $admininfo['name'];
             }
-            $house_model -> author = $admininfo['name'];
             $house_model -> actime = $actimes;
             $house_model -> validity = $validitys;
             if($house_model->save()){
