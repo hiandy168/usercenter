@@ -45,6 +45,7 @@ class BigwheelController extends FrontController
 
         Browse::add_usernum($info['pid']);  //计算独立访客数量
         Browse::add_browsenum($info['pid']); //计算浏览量
+        Browse::add_activity_browse($info['pid'],$id,"bigwheel");
         if (!$info || empty($info)) {
             die('非法请求');
         }
@@ -1522,9 +1523,24 @@ try {
      *  活动PVUV统计图表
      */
     public function actionActivitylist(){
-        $config['fid'] = trim(Tool::getValidParam('id', 'integer'));//活动ID 开发写的不一致
+        $config['aid'] = trim(Tool::getValidParam('fid', 'integer'));//活动ID 开发写的不一致
         $config['tag'] = trim(Tool::getValidParam('tag', 'string'));//活动ID 开发写的不一致
+        $day = 7 ; //查询当前开始前7天的数据
+        $now = date('Y-m-d',time());
+        for($i=0;$i<$day;$i++){
+            $day_date=date('Ymd',strtotime($now."-".$i." day"));
+            $day_arr[$i]['day_date']=$day_date;
+        }
+        foreach($day_arr as $k=>$v) {
+            $pv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid='.$config['aid'].' and type=1 and model = "'.bigwheel.'" and create_time='.$v['day_date'])->queryRow();
+            $uv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid='.$config['aid'].' and type=2 and model = "'.bigwheel.'" and create_time='.$v['day_date'])->queryRow();
+            $pvuv[$v['day_date']]['pv']=$pv['count(0)'];
+            $pvuv[$v['day_date']]['uv']=$uv['count(0)'];
 
+        }
+
+        $config ['pvuv']= $pvuv;
+        
         $this->render('activitylist',$config);
     }
 }

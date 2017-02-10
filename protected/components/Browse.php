@@ -13,7 +13,7 @@ class Browse
     {
 
         if(empty($pid)){
-            $pid=0;
+            return false;
         }
         $time=time();
         $now = date('Ym',$time);
@@ -32,7 +32,7 @@ class Browse
     public static  function add_usernum($pid='0')
     {
         if(empty($pid)){
-            $pid=0;
+            return false;
         }
         $ip=$_SERVER["REMOTE_ADDR"];
         $time=time();
@@ -85,4 +85,25 @@ class Browse
         return false;
     }
 
+
+    /*
+     *  增加活动浏览量独立访问量
+     */
+
+    public static function  add_activity_browse($pid=0,$aid=0,$model=''){
+            if(empty($pid) && empty($mid)){
+                return false;
+            }
+            $time=time();
+            $ip=$_SERVER["REMOTE_ADDR"];
+
+            $now = date('Ymd',$time);
+            $sql="select * from dym_activity_browse where model='".$model."'and pid=".$pid." and ip='".$mid."' and aid=".$aid." and create_time=".$now;
+            $arr = Mod::app()->db->createCommand($sql)->queryRow();
+            $sql="INSERT INTO dym_activity_browse (type, pid , aid  , model ,create_time) VALUES (1, $pid , $aid  ,'$model',$now);";
+            if(!$arr){
+                $sql.= "INSERT INTO dym_activity_browse (type, pid , aid ,ip ,model,create_time) VALUES (2, $pid , $aid , '$ip' ,'$model',$now)";
+            }
+            $res = Mod::app()->db->createCommand($sql)->execute();
+    }
 }

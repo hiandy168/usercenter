@@ -251,7 +251,7 @@
                 title:'用户参与注册数据统计图',
                 area: ['700px', '500px'],
                 skin: 'layui-layer-rim', //加上边框
-                content: ["<?php echo $this->createUrl('/activity/bigwheel/WinList')?>/fid/"+param+"/tag/user"]
+                content: ["<?php echo $this->createUrl('/activity/bigwheel/Activitylist')?>/fid/"+param+"/tag/user"]
             });
         });
         //var index = layer.load(2,{shade: [0.3, '#393D49']});

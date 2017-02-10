@@ -8,19 +8,29 @@
     <script src="<?php echo $this->_theme_url; ?>assets/js/src/vintage.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="main" style="width: 600px;height:400px;"></div>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var chart = echarts.init(document.getElementById('main'), 'vintage');
+    var day = [],
+        pv = [],
+        uv = [];
 
+    <?php foreach($pvuv as $key=>$val){?>
+    pv.push(<?php echo $val['pv'];?>);
+    uv.push(<?php echo $val['uv'];?>);
+    day.push(<?php echo "'".$key."'"?>);
 
+    <?php }?>
 
     // 指定图表的配置项和数据
     var  option = {
         tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            axisPointer :{
+                type: 'none'
+            }
         },
         toolbox: {
             feature: {
@@ -33,17 +43,23 @@
         legend: {
             data:['PV浏览量','UV独立访问量']
         },
+
         xAxis: [
             {
                 type: 'category',
-                data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                data: day,
+                splitLine:{
+                    show:false,
+                },
             }
         ],
         yAxis: [
             {
                 type: 'value',
+                splitNumber :5,
+                minInterval: 1,
                 name: '访问数据',
-                splitNumber : 6,
+                axisLine:{show:false,},
                 axisLabel: {
                     formatter: '{value} 次'
                 }
@@ -53,12 +69,12 @@
             {
                 name:'PV',
                 type:'bar',
-                data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                data:pv
             },
             {
                 name:'UV',
                 type:'bar',
-                data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                data:uv
             },
 //            {
 //                name:'平均温度',

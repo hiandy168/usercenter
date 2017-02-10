@@ -192,15 +192,15 @@
                     }
                 },
 
-                grid:{
-                    x: 50,
-                    y:80,
-                    x2: 0,
-
-                    width: '660px',
-                    height: '240px',
-                    borderWidth:0,
-                },
+//                grid:{
+//                    x: 50,
+//                    y:80,
+//                    x2: 0,
+//
+//                    width: '660px',
+//                    height: '240px',
+//                    borderWidth:0,
+//                },
 
 
                 //x轴坐标显示
