@@ -30,21 +30,21 @@ return array(
 // 					//'categories'=>'vardump',
 // 					//'allowedIPs'=>array('127.0.0.1','192.168.1.54','192\.168\.1[0-5]\.[0-9]{3}'),
 // 			),
-		)
+		),
 
 
 
 
-//    'class' => 'CLogRouter',
-//    'routes' => array(
-//        array(
-//            'class' => 'CFileLogRoute',
-//            'levels' => 'error,warning',
-//        ),
-//        array(
-//            'class' => 'CWebLogRoute',
-//            'levels' => 'trace, info, error, warning, xdebug',
-//            'categories' => 'system.db.*'
-//        ),
-//    ),
+  /* 'class' => 'CLogRouter',
+    'routes' => array(
+        array(
+            'class' => 'CFileLogRoute',
+            'levels' => 'error,warning',
+        ),
+        array(
+            'class' => 'CWebLogRoute',
+            'levels' => 'trace, info, error, warning, xdebug',
+            'categories' => 'system.db.*'
+        ),
+    ),*/
 );

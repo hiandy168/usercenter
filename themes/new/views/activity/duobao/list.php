@@ -34,7 +34,7 @@
 
                 <img src="<?php echo $this->_theme_url; ?>assets/images/ad-nodata-bg.png"/>
                 <p>噢噢，还没有记录！！！</p>
-                <a href="<?php echo $this->createUrl('/activity/vote/add', array('pid' => $config['pid'])) ?>" class="linear adbtn">创建活动</a>
+                <a href="<?php echo $this->createUrl('/activity/duobao/add', array('pid' => $config['pid'])) ?>" class="linear adbtn">创建活动</a>
             </div>
         <?php } ?>
         <!--没有记录的情况-->

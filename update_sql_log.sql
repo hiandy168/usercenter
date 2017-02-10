@@ -221,3 +221,27 @@ ADD COLUMN `listimg`  varchar(200) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMEN
 
 ALTER TABLE `dym_activity_bigwheel`
 ADD COLUMN `share_url`  varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '分享地址' AFTER `add_time`;
+
+/*
+刮刮卡  分享地址
+*/
+ALTER TABLE `dym_activity_scratch`
+ADD COLUMN `share_url`  varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '分享地址' AFTER `share_desc`;
+
+/*
+投票&报名  分享地址
+*/
+ALTER TABLE `dym_activity_vote`
+ADD COLUMN `share_url`  varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '分享地址' AFTER `share_desc`;
+
+
+/*
+签到  分享地址
+*/
+ALTER TABLE `dym_activity_pccheckin`
+ADD COLUMN `share_url`  varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '分享地址' AFTER `share_desc`;
+/*
+刮刮卡修改字段名称
+*/
+ALTER TABLE `dym_activity_scratch`
+CHANGE COLUMN `desc_img` `myprize_img`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '我的奖品图片' AFTER `scratch_img`;

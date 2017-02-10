@@ -22,12 +22,12 @@ class CallbackController extends Controller{
         $signs =Wzbank::housesign($nonce,$timestamp,$type,$data);
         $paytime=intval(mb_substr($timestamp,0,10));
         $myfile = fopen("notify.txt", "a+") or die("Unable to open file!");
-        fwrite($myfile, $type.'|');
-        fwrite($myfile, $nonce.'|');
-        fwrite($myfile, $sign.'|');
-        fwrite($myfile, $timestamp.'|');
-        fwrite($myfile, $data.'|');
-        fwrite($myfile, $signs.'|');
+        fwrite($myfile, $type.',');
+        fwrite($myfile, $nonce.',');
+        fwrite($myfile, $sign.',');
+        fwrite($myfile, $timestamp.',');
+        fwrite($myfile, $data.',');
+        fwrite($myfile, $signs.'*******');
         fclose($myfile);
         //开户结果通知
         if($type=="OPEN_ACCOUNT_NOTICE"){

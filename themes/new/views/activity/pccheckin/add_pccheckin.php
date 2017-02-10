@@ -102,6 +102,13 @@
                                     <input type="text" value="<?php echo isset($activity_info['share_desc']) ? $activity_info['share_desc'] : ''; ?>" name='share_desc' placeholder="分享描述" class="form-control" />
                                   </span>
                                 </div>
+                                <div class="t_title">分享地址<span>(如果不填为当前活动地址)</span></div>
+                                <div class="form-inp">
+                                      <span>
+                                    <input type="text" value="<?php echo isset($activity_info['share_url']) ? $activity_info['share_url'] : ''; ?>" name='share_url' placeholder="填写分享地址请加上 http://" class="form-control" />
+                                  </span>
+                                </div>
+
                                 <div class="t_title">+添加标签</div>
                                 <?php if(!$tag[0]['id']==null){?>
                                     <div class="add-tags">
@@ -216,6 +223,7 @@ $('.save_button').click(function(){
 	var share_img    = $("input[name='share_img']").val();
 	var img    = $("input[name='img']").val();
     var share_desc     = $("input[name='share_desc']").val();
+    var share_url     = $("input[name='share_url']").val();
     var obj=document.getElementsByName('tag');
     var tag='';
     for(var i=0; i<obj.length; i++){
@@ -239,7 +247,8 @@ $('.save_button').click(function(){
             share_img:share_img,
             tag:tag,
             img:img,
-            share_desc:share_desc
+            share_desc:share_desc,
+            share_url:share_url
     };
 	$.post(url,data,function(res){
 		var res = JSON.parse(res);

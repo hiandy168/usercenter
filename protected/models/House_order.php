@@ -27,7 +27,8 @@ class House_order extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'member'=>array(self::BELONGS_TO, 'Member', '', 'on'=>'t.mid=member.id')
+            'member'=>array(self::BELONGS_TO, 'Member', '', 'on'=>'t.mid=member.id'),
+            'activity'=>array(self::BELONGS_TO, 'House_activity', '', 'on'=>'t.houseid=activity.id'),
         );
     }
 

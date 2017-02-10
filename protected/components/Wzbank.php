@@ -37,7 +37,7 @@ class Wzbank {
             Mod::app()->memcache->delete('tickets');
             $url=self::bankurl."/h/api/oauth2/access_token?app_id=".$appid."&secret=".$secret."&grant_type=client_credential&version=".$version;
             $result=self::curl_get_ssl($url);
-            Mod::app()->memcache->set('access_token', $result['access_token'], $result['expire_in']);
+            Mod::app()->memcache->set('access_token', $result['access_token'], 3000);
             return $result['access_token'];
         }
     }
@@ -57,7 +57,7 @@ class Wzbank {
         }else{
             $url=self::bankurl."/h/api/oauth2/api_ticket?app_id=".$appid."&access_token=".$access_token."&type=SIGN&version=".$version."&user_id=1";
             $result=self::curl_get_ssl($url);
-            Mod::app()->memcache->set('tickets', $result['tickets'][0]['value'], $result['tickets'][0]['expire_in']);
+            Mod::app()->memcache->set('tickets', $result['tickets'][0]['value'], 3000);
             return $result['tickets'][0]['value'];
         }
     }

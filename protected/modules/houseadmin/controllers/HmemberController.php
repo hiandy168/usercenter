@@ -58,24 +58,44 @@ class HmemberController extends HaController{
         $houseid =Tool::getValidParam('id','integer');
         $member=Mod::app()->session['admin_user'];
         $group_id=$member['group_id'];
-        $application_class = House_order::model();
-        $criteria = new CDbCriteria();
-        if($group_id==1){
+        if($group_id==1) {
+            $application_class = House_order::model();
+            $criteria = new CDbCriteria();
             $criteria->condition = 't.status=:status and t.houseid=:houseid';
             $criteria->params = array(':status'=>1,':houseid'=>$houseid);
+            $criteria->order = 't.id desc';   // 排序
+            $count = $application_class->count($criteria);
+            $pages = new CPagination($count);
+            $pages->pageSize = 6;
+            $pages->applyLimit($criteria);
+            $returnData['houslist']= $application_class->with('member')->findAll($criteria);
+            $returnData['pages'] = $pages;
+            $returnData['group_id'] = $group_id;
+            $this->render('usermanage',$returnData);
         }else{
-            $criteria->condition = 't.authorid=:authorid and t.status=:status and t.houseid=:houseid';
-            $criteria->params = array(':authorid'=>$member['id'],':status'=>1,':houseid'=>$houseid);
+            $sql = "SELECT authorid FROM {{house_activity}} WHERE status=1 and id=" . $houseid . " and authorid=" . $member['id'];
+            $result = Mod::app()->db->createCommand($sql)->queryRow();
+            if($result){
+                $application_class = House_order::model();
+                $criteria = new CDbCriteria();
+                $criteria->condition = 't.status=:status and t.houseid=:houseid';
+                $criteria->params = array(':status'=>1,':houseid'=>$houseid);
+                $criteria->order = 't.id desc';   // 排序
+                $count = $application_class->count($criteria);
+                $pages = new CPagination($count);
+                $pages->pageSize = 6;
+                $pages->applyLimit($criteria);
+                $returnData['houslist']= $application_class->with('member')->findAll($criteria);
+                $returnData['pages'] = $pages;
+                $returnData['group_id'] = $group_id;
+                $this->render('usermanage',$returnData);
+            }
+            else{
+                echo "erron";
+            }
         }
-        $criteria->order = 't.id desc';   // 排序
-        $count = $application_class->count($criteria);
-        $pages = new CPagination($count);
-        $pages->pageSize = 6;
-        $pages->applyLimit($criteria);
-        $returnData['houslist']= $application_class->with('member')->findAll($criteria);
-        $returnData['pages'] = $pages;
-        $returnData['group_id'] = $group_id;
-        $this->render('usermanage',$returnData);
+
+
     }
 
     public function actionDel(){

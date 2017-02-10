@@ -192,18 +192,45 @@
                                   </span>
                             </div>
                             <!-- 上传图片1 start -->
-                            <div class="t_title"><i style="color: red">*</i>刮刮乐背景图片(图片大小：640*280)</div>
+                            <div class="t_title"><i style="color: red">*</i>刮刮乐banner图片(图片大小：640*280)</div>
                             <div class="form-inp">
                                 <form id="img_scratch" method="POST" enctype="multipart/form-data" >
-                                    <img id="imgPreview_vote" onclick="upload()" src="<?php if($activity_info['img']) {echo JkCms::show_img($activity_info['img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
+                                    <img id="imgPreview_vote" onclick="upload('upimg1')" src="<?php if($activity_info['banner_img']) {echo JkCms::show_img($activity_info['banner_img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
                                     <input class="fileinput" style="display: none" type="file" onchange="uploadImg(this,'img','imgPreview_vote','img_scratch')"  name="imgFile" id="upimg1" value="" />
                                 </form>
-                                <input type="hidden" name="share_img" id="img" value="<?php echo $activity_info['img']?>">
+                                <input type="hidden" name="banner_img" id="img" value="<?php echo $activity_info['banner_img']?>">
                             </div>
+
+                            <!-- 上传图片1 start -->
+                            <div class="t_title"><i style="color: red">*</i>刮刮乐背景图片(最佳尺寸：750*740)</div>
+                            <div class="form-inp">
+                                <form id="from_bg_img" method="POST" enctype="multipart/form-data" >
+                                    <img id="img_bg_img" onclick="upload('up_bg_img')" src="<?php if($activity_info['bg_img']) {echo JkCms::show_img($activity_info['bg_img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
+                                    <input class="fileinput" style="display: none" type="file" onchange="uploadImg(this,'bg_img','img_bg_img','from_bg_img')"  name="imgFile" id="up_bg_img" value="" />
+                                </form>
+                                <input type="hidden" name="bg_img" id="bg_img" value="<?php echo $activity_info['bg_img']?>">
+                            </div>
+
+                            <!-- 上传图片1 start -->
+                            <div class="t_title"><i style="color: red">*</i>中奖纪录(最佳尺寸：656*672)</div>
+                            <div class="form-inp">
+                                <form id="from_myprize_img" method="POST" enctype="multipart/form-data" >
+                                    <img id="img_myprize_img" onclick="upload('up_myprize_img')" src="<?php if($activity_info['myprize_img']) {echo JkCms::show_img($activity_info['myprize_img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
+                                    <input class="fileinput" style="display: none" type="file" onchange="uploadImg(this,'myprize_img','img_myprize_img','from_myprize_img')"  name="imgFile" id="up_myprize_img" value="" />
+                                </form>
+                                <input type="hidden" name="myprize_img" id="myprize_img" value="<?php echo $activity_info['myprize_img']?>">
+                            </div>
+
                             <div class="t_title">分享描述</div>
                             <div class="form-inp">
                                       <span>
                                     <input type="text" value="<?php echo isset($activity_info['share_desc']) ? $activity_info['share_desc'] : ''; ?>" name='share_desc' placeholder="分享描述" class="form-control" />
+                                  </span>
+                            </div>
+                            <div class="t_title">分享地址<span>（如果不填默认为当前活动地址）</span></div>
+                            <div class="form-inp">
+                                      <span>
+                                    <input type="text" value="<?php echo isset($activity_info['share_url']) ? $activity_info['share_url'] : ''; ?>" name='share_url' placeholder="分享地址，请加上 http://" class="form-control" />
                                   </span>
                             </div>
                             <div class="t_title">微信分享开启关闭<span>（用于活动是否可以分享到朋友圈等）</span></div>
@@ -259,8 +286,8 @@
 </div>
 
 <script>
-    function upload() {
-        document.getElementById("upimg1").click();
+    function upload(id) {
+        document.getElementById(id).click();
     }
 
 </script>
@@ -416,10 +443,11 @@
         var banner_img   = $("input[name='banner_img']").val();
         var bg_img       = $("input[name='bg_img']").val();
         var scratch_img  = $("input[name='scratch_img']").val();
-        var desc_img     = $("input[name='desc_img']").val();
+        var myprize_img     = $("input[name='myprize_img']").val();
         var obj_p_title      = $("input[name='p_title[]']");
         var share_desc     = $("input[name='share_desc']").val();
-        //var share_switch     = $("input[name='share_switch']").val();
+        var share_url     = $("input[name='share_url']").val();
+
         var obj=document.getElementsByName('share_switch');
         var share_switch='';
         for(var i=0; i<obj.length; i++){
@@ -528,11 +556,12 @@
             share_img:share_img,
             img:img,
             share_desc:share_desc,
+            share_url:share_url,
             banner_img:banner_img,
             bg_img:bg_img,
             scratch_img:scratch_img,
             share_switch:share_switch,
-            desc_img:desc_img,
+            myprize_img:myprize_img,
             p_title:p_title,
             p_name:p_name,
             tag:tag,

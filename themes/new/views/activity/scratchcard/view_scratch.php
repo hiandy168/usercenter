@@ -46,8 +46,10 @@
 	    	<div class="dial-pop">
 	    		
 	       <div class="popbg">
-		  	<img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img8.png" width="100%" />
-		  </div>
+
+			   <img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img8.png" width="100%" />
+
+		   </div>
 	    	
 	        <div class="poptxt">
 		  		<div class="dial-poptxt">
@@ -74,12 +76,26 @@
 	    
 		<div class="div-main">
 		  
-		  <div class=""><img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img1.jpg" width="100%"/></div>
+		  <div class="">
+			  <?php if($info['banner_img']){?>
+
+				  <img src="<?php echo JkCms::show_img($info['banner_img'])?>" width="100%" />
+
+			  <?php }else{?>
+				  <img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img1.jpg" width="100%"/>
+			  <?php } ?>
+		  </div>
 		  
 		  <!--top end-->
 		  
 		  <div class="gg-div1 pos-r">
-		  	<div class="gg-div1-bg1"><img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img2.jpg" width="100%"/></div>
+		  	<div class="gg-div1-bg1">
+				<?php if($info['bg_img']){?>
+					<img src="<?php echo JkCms::show_img($info['bg_img'])?>" width="100%"/>
+				<?php }else{ ?>
+				<img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img2.jpg" width="100%"/>
+				<?php }?>
+				</div>
 		  	
 		  	<div class="gg-div1-info">
 		  		<span>
@@ -302,7 +318,12 @@ $(".dial-logbtn").on("click", function() {
 	showloginssss();
 	return false;
 	<?php } ?>
+	<?php
+	if($info['myprize_img']){ ?>
+	showpop('<?php echo JkCms::show_img($info['myprize_img'])?>', "", "", "", "4");
+<?php }else{?>
 	showpop('<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img8-1.png', "", "", "", "4");
+	<?php }?>
 	myjiangp()
 })
 function showpop(a, b, c, d, e) {
@@ -341,7 +362,12 @@ function showpop(a, b, c, d, e) {
 
 		if(strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') == true){
 			if($info['share_switch']==1){
-			echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info,'url'=>$this->createUrl('/activity/scratchcard/view',array('id'=>$param['id']) )));
+				if(isset($info['share_url'])){
+					$url=$info['share_url'];
+				}else {
+					$url = $this->createUrl('/activity/scratchcard/view',array('id'=>$param['id']) );
+				}
+				echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info,'url'=>$url));
 			}else { ?>
 			<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 			<script>

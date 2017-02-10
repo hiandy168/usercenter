@@ -524,7 +524,13 @@
 <script src="<?php echo $this->_theme_url; ?>assets/vote/js/layout.js?v=dasd" type="text/javascript" charset="utf-8"></script>
 <?php
 		if(strpos($user_agent, 'MicroMessenger') === true){
-                echo $this->renderpartial('/common/wxshare', array('signPackage' => $signPackage, 'info' => $info, 'url' => $this->createUrl('/activity/vote/view', array('id' => $id))));
+            if($info['share_url']){
+                $url=$info['share_url'];
+            }else{
+                $url=$this->createUrl('/activity/vote/view', array('id' => $id));
+            }
+
+                echo $this->renderpartial('/common/wxshare', array('signPackage' => $signPackage, 'info' => $info, 'url' => $url));
             }?>
 
 </body>
