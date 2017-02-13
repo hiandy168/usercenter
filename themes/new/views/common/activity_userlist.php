@@ -13,13 +13,15 @@
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var chart = echarts.init(document.getElementById('main'), 'vintage');
+    var data = [{value:<?php echo $userdata['signup'];?>,name:"用户参与"},{value:<?php echo $userdata['join'];?>, name:'新增用户量'}];
+
 
 
     // 指定图表的配置项和数据
     option = {
         title : {
             text: '活动用户参与和新增数据',
-            subtext: '纯属虚构',
+            subtext: '默认显示当前7天内的数据',
             x:'center'
         },
         tooltip : {
@@ -37,10 +39,7 @@
                 type: 'pie',
                 radius : '55%',
                 center: ['50%', '60%'],
-                data:[
-                    {value:335, name:'用户参与'},
-                    {value:310, name:'新增用户量'}
-                ],
+                data:data,
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
