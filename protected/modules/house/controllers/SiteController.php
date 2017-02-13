@@ -27,8 +27,19 @@ class SiteController extends HouseController{
             }elseif($houselist[$k]['city']==2){
                 $houselist[$k]['city']="郑州";
             }
-            $houselist[$k]['actime1']= explode("|",$houselist[$k]['actime'])[0];
-            $houselist[$k]['actime2']= explode("|",$houselist[$k]['actime'])[1];
+            $actime=explode("|",$houselist[$k]['actime']);
+            if(!empty($actime[0])&&$actime[0]){
+                $houselist[$k]['actime1']=$actime[0];
+            }else{
+                echo "error";
+                die();
+            }
+            if(!empty($actime[1])&&$actime[1]){
+                $houselist[$k]['actime2']= $actime[1];
+            }else{
+                echo "error";
+                die();
+            }
             if($houselist[$k]['actime1']>time()){
                 $houselist[$k]['type']= "1";
             }else{
@@ -43,7 +54,6 @@ class SiteController extends HouseController{
                 $houselist[$k]['end']= "bg1";
             }
         }
-        //var_dump($houselist);
         $data = array(
             'config'=>array(
                 'site_title'=> '腾讯●楼盘商城',
@@ -85,8 +95,19 @@ class SiteController extends HouseController{
             }
             $houselist[$k]['url'] = $this->_siteUrl . '/house/site/detail/id/' . $houselist[$k]['id'];
             $houselist[$k]['img'] = $this->_siteUrl . '/' . $houselist[$k]['img'];
-            $houselist[$k]['actime1']= explode("|",$houselist[$k]['actime'])[0];
-            $houselist[$k]['actime2']= explode("|",$houselist[$k]['actime'])[1];
+            $actime=explode("|",$houselist[$k]['actime']);
+            if(empty($actime[0])&&$actime[0]){
+                $houselist[$k]['actime1']= $actime[0];
+            }else{
+                echo "error";
+                die();
+            }
+            if(empty($actime[1])&&$actime[1]){
+                $houselist[$k]['actime2']= $actime[1];
+            }else{
+                echo "error";
+                die();
+            }
             if($houselist[$k]['actime1']>time()){
                 $houselist[$k]['ftype']= "1";
             }else{
@@ -130,7 +151,10 @@ class SiteController extends HouseController{
                 }elseif($houseinfo['city']==2){
                     $houseinfo['city']="郑州";
                 }
-                $houseinfo['actime']=explode("|",$houseinfo['actime'])[1];
+                $actime=explode("|",$houseinfo['actime']);
+                if(!empty($actime[1])&&$actime[1]){
+                    $houseinfo['actime']=$actime[1];
+                }
                 if($houseinfo['actime']<time()){
                     $houseinfo['end']= "bg2";
                 }else{

@@ -71,12 +71,34 @@ class HactivityController extends HaController{
                 $house_model -> $_k = $_v;
             }
             $actime=$house_model['actime'];
-            $actime1=explode("|",$actime)[0];
-            $actime2=explode("|",$actime)[1];
+            $tmp=explode("|",$actime);
+            if(!empty($tmp[0])&&$tmp[0]){
+                $actime1=$tmp[0];
+            }else{
+                echo "error";
+                die();
+            }
+            if(!empty($tmp[1])&&$tmp[1]){
+                $actime2=$tmp[1];
+            }else{
+                echo "error";
+                die();
+            }
             $actimes=strtotime($actime1).'|'.strtotime($actime2);
             $validity=$house_model['validity'];
-            $validity1=explode("|",$validity)[0];
-            $validity2=explode("|",$validity)[1];
+            $tmps=explode("|",$validity);
+            if(!empty($tmps[0])&&$tmps[0]){
+                $validity1=$tmps[0];
+            }else{
+                echo "error";
+                die();
+            }
+            if(!empty($tmps[1])&&$tmps[1]){
+                $validity2=$tmps[1];
+            }else{
+                echo "error";
+                die();
+            }
             $validitys=strtotime($validity1).'|'.strtotime($validity2);
             $house_model -> preview = "h5";
             $house_model -> updatetime = time();

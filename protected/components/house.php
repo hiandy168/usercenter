@@ -22,7 +22,7 @@ $menu = array(
         )
     ),
     'housemember' => array(
-        'title' => '用户管理',
+        'title' => '用户订单管理',
         'children' => array(
             array('title' => '用户列表', 'url' => 'hmember/list'),
           /*  array('title' => '新增用户', 'url' => 'hmember/add'),*/
@@ -35,12 +35,12 @@ $menu = array(
           /*  array('title' => '新增商户', 'url' => 'htenant/add'),*/
         )
     ),
-    'houseorder' => array(
+  /*  'houseorder' => array(
         'title' => '订单管理',
         'children' => array(
             array('title' => '订单列表', 'url' => 'horder/list'),
         )
-    ),
+    ),*/
 
    /* 'activity' => array(
         'title' => '活动组件',

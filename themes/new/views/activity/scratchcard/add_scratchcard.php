@@ -195,7 +195,7 @@
                             <div class="t_title"><i style="color: red">*</i>刮刮乐banner图片(图片大小：640*280)</div>
                             <div class="form-inp">
                                 <form id="img_scratch" method="POST" enctype="multipart/form-data" >
-                                    <img id="imgPreview_vote" onclick="upload('upimg1')" src="<?php if($activity_info['banner_img']) {echo JkCms::show_img($activity_info['banner_img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
+                                    <img id="imgPreview_vote" width="120px" height="100px"  onclick="upload('upimg1')" src="<?php if($activity_info['banner_img']) {echo JkCms::show_img($activity_info['banner_img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
                                     <input class="fileinput" style="display: none" type="file" onchange="uploadImg(this,'img','imgPreview_vote','img_scratch')"  name="imgFile" id="upimg1" value="" />
                                 </form>
                                 <input type="hidden" name="banner_img" id="img" value="<?php echo $activity_info['banner_img']?>">
@@ -205,7 +205,7 @@
                             <div class="t_title"><i style="color: red">*</i>刮刮乐背景图片(最佳尺寸：750*740)</div>
                             <div class="form-inp">
                                 <form id="from_bg_img" method="POST" enctype="multipart/form-data" >
-                                    <img id="img_bg_img" onclick="upload('up_bg_img')" src="<?php if($activity_info['bg_img']) {echo JkCms::show_img($activity_info['bg_img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
+                                    <img id="img_bg_img" width="120px" height="100px" onclick="upload('up_bg_img')" src="<?php if($activity_info['bg_img']) {echo JkCms::show_img($activity_info['bg_img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
                                     <input class="fileinput" style="display: none" type="file" onchange="uploadImg(this,'bg_img','img_bg_img','from_bg_img')"  name="imgFile" id="up_bg_img" value="" />
                                 </form>
                                 <input type="hidden" name="bg_img" id="bg_img" value="<?php echo $activity_info['bg_img']?>">
@@ -215,7 +215,7 @@
                             <div class="t_title"><i style="color: red">*</i>中奖纪录(最佳尺寸：656*672)</div>
                             <div class="form-inp">
                                 <form id="from_myprize_img" method="POST" enctype="multipart/form-data" >
-                                    <img id="img_myprize_img" onclick="upload('up_myprize_img')" src="<?php if($activity_info['myprize_img']) {echo JkCms::show_img($activity_info['myprize_img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
+                                    <img id="img_myprize_img" width="120px" height="100px" onclick="upload('up_myprize_img')" src="<?php if($activity_info['myprize_img']) {echo JkCms::show_img($activity_info['myprize_img']); }else{ echo $this->_theme_url."assets/images/1556c138f70cd73.png";} ?> "/>
                                     <input class="fileinput" style="display: none" type="file" onchange="uploadImg(this,'myprize_img','img_myprize_img','from_myprize_img')"  name="imgFile" id="up_myprize_img" value="" />
                                 </form>
                                 <input type="hidden" name="myprize_img" id="myprize_img" value="<?php echo $activity_info['myprize_img']?>">

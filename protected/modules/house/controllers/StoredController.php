@@ -24,7 +24,14 @@ class StoredController extends HouseController{
                 }elseif($houseinfo['city']==2){
                     $houseinfo['city']="郑州";
                 }
-                $houseinfo['actime']=explode("|",$houseinfo['actime'])[1];
+                $actime=explode("|",$houseinfo['actime']);
+                if(!empty($actime)&&$actime){
+                    $houseinfo['actime']=$actime[1];
+                }else{
+                    echo "error";
+                    die();
+                }
+
                 if($houseinfo['actime']<time()){
                     echo "error";
                     die();
