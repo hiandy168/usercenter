@@ -113,7 +113,7 @@ class StoredController extends HouseController{
                     $timestamp=time();
                     $data=array('userId' => $userid, 'userName' => $username,'idType' => '01','idNo' => $realid, 'name' => $realname, 'phoneNo' =>$realphone,);
                     $sign =Wzbank::housesign($nonce,strval($timestamp),$version,json_encode($data));
-                    $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;//同步个人开户信息
+                    $postUrl =Wzbank::bankurl."/wallet/server/person/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;//同步个人开户信息
                     $postData = array(
                         'userId' => $userid,
                         'userName' =>$username,
@@ -212,7 +212,7 @@ class StoredController extends HouseController{
             'expireTime'=>"2017-01-16",//定期到期日期
         );
         $sign =Wzbank::housesign($nonce,strval($timestamp),$version,json_encode($data));
-        $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/term/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
+        $postUrl =Wzbank::bankurl."/wallet/server/person/term/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
         $postData = array(
             'orderNo'=>$orderid,//订单号
             'userId'=>$userid,//个人用户userId
@@ -267,7 +267,7 @@ class StoredController extends HouseController{
             'userId'=>"2",//平台用户号
         );
         $sign =Wzbank::housesign($nonce,strval($timestamp),$version,json_encode($data));
-        $postUrl =Wzbank::bankurl."/h/api/wallet/server/account_manage/unlock?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
+        $postUrl =Wzbank::bankurl."/wallet/server/account_manage/unlock?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
         $postData = array(
             'userId'=>"2",//平台用户号
         );

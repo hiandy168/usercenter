@@ -75,7 +75,10 @@ class CallbackController extends Controller{
                         $sql = "UPDATE  {{house_order}} SET paystatus=3,usetime=".$paytime." WHERE ordernum= '".$info['orderNo']."'and mid=".$info['userId'];
                         $res=Mod::app()->db->createCommand($sql)->execute();
                         if($res){
-                            return "确认使用支付成功";die();
+                            $results=array(
+                                'code'=>1,
+                                'message'=>"确认使用支付成功"
+                            );
                         }
                     }
                 }elseif($info['type']==2&&$info['advanceWithdrawFlg']=="Y"){
@@ -84,7 +87,10 @@ class CallbackController extends Controller{
                         $sql = "UPDATE  {{house_order}} SET paystatus=4,usetime=".$paytime." WHERE ordernum= ".$info['orderNo']." and mid=".$info['userId'];
                         $res=Mod::app()->db->createCommand($sql)->execute();
                         if($res){
-                            return "提现成功";die();
+                            $results=array(
+                                'code'=>1,
+                                'message'=>"提现成功"
+                            );
                         }
                     }
                 }

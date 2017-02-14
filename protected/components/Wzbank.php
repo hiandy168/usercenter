@@ -8,7 +8,7 @@
 
 class Wzbank {
 
-    const  bankurl="https://test-svrapi.webank.com";
+    const  bankurl="https://test-svrapi.webank.com/h/api";
     const  appid="W0000020";
     const  secret="AaE7mchalDQygkuA2uxVo3BEv6qaCT4kTidraGLuvUEbCCp4xuKZM7apHoQtkTQH";
     const  version="1.0.0";
@@ -35,7 +35,7 @@ class Wzbank {
             return $access_token;
         }else{
             Mod::app()->memcache->delete('tickets');
-            $url=self::bankurl."/h/api/oauth2/access_token?app_id=".$appid."&secret=".$secret."&grant_type=client_credential&version=".$version;
+            $url=self::bankurl."/oauth2/access_token?app_id=".$appid."&secret=".$secret."&grant_type=client_credential&version=".$version;
             $result=self::curl_get_ssl($url);
             Mod::app()->memcache->set('access_token', $result['access_token'], 3000);
             return $result['access_token'];
@@ -55,7 +55,7 @@ class Wzbank {
         if($tickets){
             return $tickets;
         }else{
-            $url=self::bankurl."/h/api/oauth2/api_ticket?app_id=".$appid."&access_token=".$access_token."&type=SIGN&version=".$version."&user_id=1";
+            $url=self::bankurl."/oauth2/api_ticket?app_id=".$appid."&access_token=".$access_token."&type=SIGN&version=".$version."&user_id=1";
             $result=self::curl_get_ssl($url);
             Mod::app()->memcache->set('tickets', $result['tickets'][0]['value'], 3000);
             return $result['tickets'][0]['value'];
@@ -83,7 +83,7 @@ class Wzbank {
         //如果 ticket memcache 如果为真,表示没有过期
         $appid=self::appid;
         $version = self::version;
-        $url=self::bankurl."/h/api/oauth2/api_ticket?app_id=".$appid."&access_token=".$access_token."&type=NONCE&version=".$version."&user_id=".$userid;
+        $url=self::bankurl."/oauth2/api_ticket?app_id=".$appid."&access_token=".$access_token."&type=NONCE&version=".$version."&user_id=".$userid;
         $result=self::curl_get_ssl($url);
         Mod::app()->memcache->set('h5tickets', $result['tickets'][0]['value'], $result['tickets'][0]['expire_in']);
         return $result['tickets'][0]['value'];

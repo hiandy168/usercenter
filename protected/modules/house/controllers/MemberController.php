@@ -165,7 +165,7 @@ class MemberController extends HouseController{
             'type'=>"1",//1 存入 2 支取
         );
         $sign =Wzbank::housesign($nonce,$version,strval($timestamp),json_encode($data));
-        $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/term/result?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
+        $postUrl =Wzbank::bankurl."/wallet/server/person/term/result?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
         $postData = array(
             'userId'=>$userid,//个人用户userId
             'appId'=>$app_Id,//平台号(webank分配appId)
@@ -197,7 +197,7 @@ class MemberController extends HouseController{
             'type'=>"2",//1 存入 2 支取
         );
         $sign =Wzbank::housesign($nonce,$version,strval($timestamp),json_encode($data));
-        $postUrl =Wzbank::bankurl."/h/api/wallet/server/person/term/result?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
+        $postUrl =Wzbank::bankurl."/wallet/server/person/term/result?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;
         $postData = array(
             'userId'=>$userid,//个人用户userId
             'appId'=>$app_Id,//平台号(webank分配appId)
