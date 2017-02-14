@@ -1525,14 +1525,24 @@ try {
     public function actionActivitylist(){
         $config['aid'] = trim(Tool::getValidParam('fid', 'integer'));//活动ID 开发写的不一致
         $config['tag'] = trim(Tool::getValidParam('tag', 'string'));//活动ID 开发写的不一致
+        if (Mod::app()->request->isPostRequest) {
+            $startdate = Tool::getValidParam('startdate', 'integer');
+            $enddate = Tool::getValidParam('enddate', 'integer');
+            $day = intval(($enddate - $startdate) / 86400) + 1;
+        }
         switch ($config['tag']) {
             case "pvuv";
-                $day = 7; //查询当前开始前7天的数据
-                $now = date('Y-m-d', time());
-                for ($i = 0;$i < $day; $i++) {
-                    $day_date = date('Ymd', strtotime($now . "-" . $i . " day"));
-                    $day_arr[$i]['day_date'] = $day_date;
+                if (empty($startdate) && empty($enddate)) {
+                    $day = 7; //查询当前开始前7天的数据
+                    $now = date('Y-m-d', time());
+                } else {
+                    $now = date('Y-m-d', $enddate);
                 }
+                    for ($i = 0; $i < $day; $i++) {
+                        $day_date = date('Ymd', strtotime($now . "-" . $i . " day"));
+                        $last = date('Y-m-d', strtotime($now . "-" . $i . " day"));
+                        $day_arr[$i]['day_date'] = $day_date;
+                    }
                 foreach ($day_arr as $k => $v) {
                     $pv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=1 and model = "' . bigwheel . '" and create_time=' . $v['day_date'])->queryRow();
                     $uv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=2 and model = "' . bigwheel . '" and create_time=' . $v['day_date'])->queryRow();
@@ -1541,21 +1551,31 @@ try {
 
                 }
                 $config ['pvuv'] = $pvuv;
+                $config ['time']['start_time'] = $last;
+                $config ['time']['end_time'] = $now;
                 break;
             case "user":
-                $now = time(); //查询当前开始前7天的数据
-                $last= date('Y-m-d', strtotime(date('Y-m-d', $now) . "- 6 day"));
+                if (empty($startdate) && empty($enddate)) {
+                    $now = time(); //查询当前开始前7天的数据
+                    $last= date('Y-m-d', strtotime(date('Y-m-d', $now) . "- 6 day"));
+                } else {
+                    $now = strtotime(date('Y-m-d', $enddate) . "+ 1 day")-1;
+                    $last = date('Y-m-d',$startdate);
+                }
                 $table_user = "dym_activity_".bigwheel."_user";
                 $data['signup'] = Mod::app()->db->createCommand()->select('count(0)')->from('dym_member_activity')->where('aid=' . $config['aid'] . ' and model = "' . bigwheel . '" and (createtime between '.strtotime($last).' and '.$now.')')->queryRow();
                 $data['join'] = Mod::app()->db->createCommand()->select('count(0)')->from($table_user)->where('bigwheel_id=' . $config['aid'] . '  and (time between '.strtotime($last).' and '.$now.')')->queryRow();
                 $config['userdata']['signup'] = $data['signup']['count(0)'];
                 $config['userdata']['join'] = $data['join']['count(0)'];
+                $config ['time']['start_time'] = $last;
+                $config ['time']['end_time'] = date('Y-m-d',$now);
                 break;
         }
 
 
         $this->render('activitylist',$config);
     }
+
 }
 
 
