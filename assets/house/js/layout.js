@@ -49,45 +49,47 @@ cptabLi.on("click", function() {
 
 // cpdetail loadingmore
 var cploadmoreBtn = $(".cpdetail-loadmore-btn");
+var page=2;
+var num=0;
 cploadmoreBtn.on("click", function() {
-  //  $(this).attr("disabled","true")
-  var data1 = [{
-    "uName": "夏",
-    "uPhone": "168****2525",
-    "uTime": "2015-11-05 21:00:12",
-    "uMeony": "1000"
-  }, {
-    "uName": "夏",
-    "uPhone": "168****2525",
-    "uTime": "2015-11-05 21:00:12",
-    "uMeony": "1000"
-  }, {
-    "uName": "夏",
-    "uPhone": "168****2525",
-    "uTime": "2015-11-05 21:00:12",
-    "uMeony": "1000"
-  }, {
-    "uName": "夏",
-    "uPhone": "168****2525",
-    "uTime": "2015-11-05 21:00:12",
-    "uMeony": "1000"
-  }, {
-    "uName": "夏",
-    "uPhone": "168****2525",
-    "uTime": "2015-11-05 21:00:12",
-    "uMeony": "1000"
-  }];
-  var data = eval(data1);
-  var html = "";
-  for (var i = 0; i < data.length; i++) {
-    html += '<li>';
-    html += '<i>' + data[i].uName;
-    html += ' (' + data[i].uPhone + ')</i>';
-    html += '<i>' + data[i].uTime + '</i>';
-    html += '<i>￥' + data[i].uMeony + '</i>';
-    html += '</li>';
-  }
-  $(".f-cpdetail-tab-cyjl ul").append(html);
+    num++
+    if(num==1){
+
+        $.ajax({
+            type: "post",
+            data: {
+                page: page,
+                id: $("#houseid").val()
+            },
+            url: "/house/site/getorderinfo",
+            dataType: "json",
+            success: function(data) {
+                page++;
+                if(data.code==0){
+                    var html = "";
+                    for (var i = 0,n=data.message.length; i <n; i++) {
+                        html += '<li>';
+                        html += '<i>' + data.message[i].realname;
+                        html += ' (' + data.message[i].phone + ')</i>';
+                        html += '<i>' + data.message[i].applytime + '</i>';
+                        html += '<i>￥' + data.message[i].money + '</i>';
+                        html += '</li>';
+                    }
+                    $(".f-cpdetail-tab-cyjl ul").append(html);
+                    num=0;
+                }else if(data.message==""){
+                    alert("没有数据了");
+                    num=0;
+                }
+
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                closepop()
+                alert("网络异常");
+                num=0;
+            }
+        })
+    }
 })
 
 //form

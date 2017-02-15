@@ -96,16 +96,16 @@ class SiteController extends HouseController{
             $houselist[$k]['url'] = $this->_siteUrl . '/house/site/detail/id/' . $houselist[$k]['id'];
             $houselist[$k]['img'] = $this->_siteUrl . '/' . $houselist[$k]['img'];
             $actime=explode("|",$houselist[$k]['actime']);
-            if(empty($actime[0])&&$actime[0]){
+            if(!empty($actime[0])&&$actime[0]){
                 $houselist[$k]['actime1']= $actime[0];
             }else{
-                echo "error";
+                echo "error1";
                 die();
             }
-            if(empty($actime[1])&&$actime[1]){
+            if(!empty($actime[1])&&$actime[1]){
                 $houselist[$k]['actime2']= $actime[1];
             }else{
-                echo "error";
+                echo "error2";
                 die();
             }
             if($houselist[$k]['actime1']>time()){
@@ -131,8 +131,21 @@ class SiteController extends HouseController{
      * author  Fancy
      */
     public function actionGetorderinfo(){
-
-
+        $id=Tool::getValidParam('id','integer');
+        $page = trim(Tool::getValidParam('page','integer',1));
+        $pagesize = trim(Tool::getValidParam('pagesize','integer',3));
+        if($page<=2){$page=2;}
+        $start = ($page-1)*$pagesize;
+        $count="SELECT count(*) as count FROM {{house_order}} where status=1 and paystatus!=1 and houseid=".$id;
+        $ordercount=Mod::app()->db->createCommand($count)->queryRow();
+        $ordersql="SELECT o.applytime,o.money,m.phone,m.realname FROM {{house_order}} as o LEFT JOIN {{member}} as m on o.mid=m.id where o.status=1 and o.paystatus!=1 and o.houseid=".$id." LIMIT $start,$pagesize";
+        $orderinfo=Mod::app()->db->createCommand($ordersql)->queryAll();
+        $results=array(
+            'code'=>0,
+            'message'=>$orderinfo,
+            'count'=>$ordercount,
+        );
+        echo json_encode($results);
     }
 
     /**

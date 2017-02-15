@@ -245,3 +245,28 @@ ADD COLUMN `share_url`  varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMM
 */
 ALTER TABLE `dym_activity_scratch`
 CHANGE COLUMN `desc_img` `myprize_img`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '我的奖品图片' AFTER `scratch_img`;
+
+
+/*
+用户表新增新字段
+*/
+ALTER TABLE `dym_member`
+ADD COLUMN  `realname` varchar(200) NOT NULL DEFAULT '' COMMENT '用户真实姓名',
+ADD COLUMN  `realcard` varchar(200) NOT NULL DEFAULT '' COMMENT '身份证号码',
+ADD COLUMN  `wxstatus` tinyint(1) NOT NULL DEFAULT '2' COMMENT '1表示已同步，2表示未同步',
+
+
+/*
+增加活动组件数据统计表
+*/
+DROP TABLE IF EXISTS `dym_activity_browse`;
+CREATE TABLE `dym_activity_browse` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `aid` int(11) NOT NULL DEFAULT '0' COMMENT '活动id',
+  `pid` int(11) NOT NULL DEFAULT '0' COMMENT '项目应用id',
+  `model` varchar(255) NOT NULL DEFAULT '' COMMENT '活动模块名称',
+  `createtime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `type` int(2) NOT NULL DEFAULT '0' COMMENT '1-浏览 2-独立浏览',
+  `ip` varchar(255) NOT NULL DEFAULT '' COMMENT '用户IP地址',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

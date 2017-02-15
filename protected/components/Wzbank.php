@@ -7,10 +7,16 @@
  */
 
 class Wzbank {
-
+    //测试
     const  bankurl="https://test-svrapi.webank.com/h/api";
+    const  abankurl="https://test-open.webank.com/s";
     const  appid="W0000020";
     const  secret="AaE7mchalDQygkuA2uxVo3BEv6qaCT4kTidraGLuvUEbCCp4xuKZM7apHoQtkTQH";
+    //正式
+   /* const  bankurl="https://svrapi.webank.com/api";
+    const  abankurl="https://open.webank.com/s";
+    const  appid="W0000020";
+    const  secret="CpGjNFl3Bo2HU48gAG8GBPRt66pWyTv3YYalAZydtqVj6wA6FxhDpUL6GRkEIHwV";*/
     const  version="1.0.0";
     /**
      * 检测是否有证书
@@ -127,7 +133,7 @@ class Wzbank {
      * @param string $url 接收数据的api
      * @return string or boolean 成功且对方有返回值则返回
      */
-    public static function curl_get_ssl($url)
+    public static function curl_get_ssl($url='')
     {
         $curl = curl_init();
         if(stripos($url,"https://")!==FALSE){
@@ -136,6 +142,9 @@ class Wzbank {
             curl_setopt($curl, CURLOPT_SSLCERT, Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'W0000020'.DIRECTORY_SEPARATOR.'W0000020.crt');
             curl_setopt($curl, CURLOPT_SSLCERTPASSWD, 'App1234.'); //client证书密码
             curl_setopt($curl, CURLOPT_SSLKEY, Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'W0000020'.DIRECTORY_SEPARATOR.'W0000020.key');
+            /*   curl_setopt($oCurl, CURLOPT_SSLCERT, Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'gflc'.DIRECTORY_SEPARATOR.'gflc.crt');
+            curl_setopt($oCurl, CURLOPT_SSLCERTPASSWD, 'App1234.'); //client证书密码
+            curl_setopt($oCurl, CURLOPT_SSLKEY, Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'gflc'.DIRECTORY_SEPARATOR.'gflc.key');*/
         }
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, 0);
@@ -158,7 +167,7 @@ class Wzbank {
      * @param array $param
      * @return string content
      */
-    public static function curl_post_ssl($url,$param,$referer=''){
+    public static function curl_post_ssl($url='',$param='',$referer=''){
         $oCurl = curl_init();
         $header = array(
             'Content-Type: application/json',
@@ -170,6 +179,10 @@ class Wzbank {
             curl_setopt($oCurl, CURLOPT_SSLCERT, Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'W0000020'.DIRECTORY_SEPARATOR.'W0000020.crt');
             curl_setopt($oCurl, CURLOPT_SSLCERTPASSWD, 'App1234.'); //client证书密码
             curl_setopt($oCurl, CURLOPT_SSLKEY, Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'W0000020'.DIRECTORY_SEPARATOR.'W0000020.key');
+            //正式
+         /*   curl_setopt($oCurl, CURLOPT_SSLCERT, Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'gflc'.DIRECTORY_SEPARATOR.'gflc.crt');
+            curl_setopt($oCurl, CURLOPT_SSLCERTPASSWD, 'App1234.'); //client证书密码
+            curl_setopt($oCurl, CURLOPT_SSLKEY, Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'gflc'.DIRECTORY_SEPARATOR.'gflc.key');*/
         }
         if (is_string($param)) {
             $strPOST = $param;

@@ -109,7 +109,7 @@
                                     ?>
                                 </li>-->
                                 <li class="l4" onclick="delActivity(<?php echo $val->id?>)"><i></i>删除活动</li>
-                                <li class="l4" onclick="getActivityList(<?php echo $val->id?>)"><i></i>数据统计</li>
+                                <li class="l1" onclick="getActivityList(<?php echo $val->id?>)"><i></i>数据统计</li>
 
                             </ul>
                         </div>

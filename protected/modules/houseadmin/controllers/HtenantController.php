@@ -57,7 +57,7 @@ class HtenantController extends HaController{
         if($tenantinfo['wxstatus']==1){
             $ticket =Wzbank::h5ticket($access_token,$userid);
             $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-            $Url="https://test-open.webank.com/s/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
+            $Url=Wzbank::abankurl."/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
             $this->redirect($Url);
         }else{
         if(Mod::app()->request->isPostRequest){
@@ -100,11 +100,11 @@ class HtenantController extends HaController{
             if($result['code']==0){
                 $ticket =Wzbank::h5ticket($access_token,$userid);
                 $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-                $Url="https://test-open.webank.com/s/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
+                $Url=Wzbank::abankurl."/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
             }elseif($result['code']==100013){
                 $ticket =Wzbank::h5ticket($access_token,$userid);
                 $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-                $Url="https://test-open.webank.com/s/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
+                $Url=Wzbank::abankurl."/web-wallet/#!/company/main/".$userid."/".$nonce."/".$sign."/".$app_Id;
             }
             if($tenantinfo){
                 $this->redirect($Url);

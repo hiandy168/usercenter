@@ -1523,6 +1523,10 @@ try {
      *  活动PVUV统计图表
      */
     public function actionActivitylist(){
+        if(!$this->member  ||  !$this->member['id'] || !$this->member['pstatus']){
+            $this->redirect(Mod::app()->request->getHostInfo());
+            exit;
+        }
         $config['aid'] = trim(Tool::getValidParam('fid', 'integer'));//活动ID 开发写的不一致
         $config['tag'] = trim(Tool::getValidParam('tag', 'string'));//活动ID 开发写的不一致
         if (Mod::app()->request->isPostRequest) {
@@ -1544,8 +1548,8 @@ try {
                         $day_arr[$i]['day_date'] = $day_date;
                     }
                 foreach ($day_arr as $k => $v) {
-                    $pv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=1 and model = "' . bigwheel . '" and create_time=' . $v['day_date'])->queryRow();
-                    $uv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=2 and model = "' . bigwheel . '" and create_time=' . $v['day_date'])->queryRow();
+                    $pv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=1 and model = "' . bigwheel . '" and createtime=' . $v['day_date'])->queryRow();
+                    $uv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=2 and model = "' . bigwheel . '" and createtime=' . $v['day_date'])->queryRow();
                     $pvuv[$v['day_date']]['pv'] = $pv['count(0)'];
                     $pvuv[$v['day_date']]['uv'] = $uv['count(0)'];
 

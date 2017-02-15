@@ -73,7 +73,7 @@ class MemberController extends HouseController{
             $nonce = Wzbank::strings(32);
             $ticket =Wzbank::h5ticket($access_token,$userid);
             $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-            $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/confirm/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
+            $Url=Wzbank::abankurl."/web-wallet-wx/#/person/deposits/confirm/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
             $results=array(
                 'code'=>0,
                 'url'=>$Url
@@ -102,7 +102,7 @@ class MemberController extends HouseController{
             $nonce = Wzbank::strings(32);
             $ticket =Wzbank::h5ticket($access_token,$userid);
             $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-            $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/transOut/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
+            $Url=Wzbank::abankurl."/web-wallet-wx/#/person/deposits/transOut/".$orderid."/".$userid."/".$nonce."/".$sign."/".$app_Id;
             $results=array(
                 'code'=>0,
                 'url'=>$Url
@@ -130,7 +130,7 @@ class MemberController extends HouseController{
             $nonce = Wzbank::strings(32);
             $ticket =Wzbank::h5ticket($access_token,$userid);
             $sign =Wzbank::h5housesign($nonce,$ticket,$userid);
-            $Url="https://test-open.webank.com/s/web-wallet-wx/#/person/deposits/transIn/".$ordernum."/".$userid."/".$nonce."/".$sign."/".$app_Id;
+            $Url=Wzbank::abankurl."/web-wallet-wx/#/person/deposits/transIn/".$ordernum."/".$userid."/".$nonce."/".$sign."/".$app_Id;
             $results=array(
                 'code'=>0,
                 'url'=>$Url

@@ -24,6 +24,7 @@
     <div class="bgfff fs28 f-cpdetail-div2">
         <h3>[<?php echo $houseinfo['city']?>] <?php echo $houseinfo['dtitle']?></h3>
         <p class="fcbbb fs26"><?php echo $houseinfo['coupon']?></p>
+        <input type="hidden" id="houseid" value="<?php echo $houseinfo['id']?>">
     </div>
 
     <div class="mgt4 bgfff">
@@ -138,10 +139,12 @@ echo substr($info['phone'],7,10)?>)</i>
                         </li>
                         <?php } ?>
                     </ul>
+                    <?php if($count>3){ ?>
                    <div class="f-index-list-loading fs28" style="display: none;">
                             加载中<i class="icon-loading"></i>
-                            </div>
-                            <input  class="more fs28 fc444 boru5 cpdetail-loadmore-btn" value="点击加载更多" readonly="readonly"/>
+                   </div>
+                    <input  class="more fs28 fc444 boru5 cpdetail-loadmore-btn" value="点击加载更多" readonly="readonly"/>
+                    <?php } ?>
                 </div>
             </div>
 

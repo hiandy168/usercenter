@@ -98,11 +98,11 @@ class Browse
             $ip=$_SERVER["REMOTE_ADDR"];
 
             $now = date('Ymd',$time);
-            $sql="select * from dym_activity_browse where model='".$model."'and pid=".$pid." and ip='".$mid."' and aid=".$aid." and create_time=".$now;
+            $sql="select * from dym_activity_browse where model='".$model."'and pid=".$pid." and ip='".$mid."' and aid=".$aid." and createtime=".$now;
             $arr = Mod::app()->db->createCommand($sql)->queryRow();
-            $sql="INSERT INTO dym_activity_browse (type, pid , aid  , model ,create_time) VALUES (1, $pid , $aid  ,'$model',$now);";
+            $sql="INSERT INTO dym_activity_browse (type, pid , aid  , model ,createtime) VALUES (1, $pid , $aid  ,'$model',$now);";
             if(!$arr){
-                $sql.= "INSERT INTO dym_activity_browse (type, pid , aid ,ip ,model,create_time) VALUES (2, $pid , $aid , '$ip' ,'$model',$now)";
+                $sql.= "INSERT INTO dym_activity_browse (type, pid , aid ,ip ,model,createtime) VALUES (2, $pid , $aid , '$ip' ,'$model',$now)";
             }
             $res = Mod::app()->db->createCommand($sql)->execute();
     }
