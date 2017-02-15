@@ -140,6 +140,13 @@ class SiteController extends HouseController{
         $ordercount=Mod::app()->db->createCommand($count)->queryRow();
         $ordersql="SELECT o.applytime,o.money,m.phone,m.realname FROM {{house_order}} as o LEFT JOIN {{member}} as m on o.mid=m.id where o.status=1 and o.paystatus!=1 and o.houseid=".$id." LIMIT $start,$pagesize";
         $orderinfo=Mod::app()->db->createCommand($ordersql)->queryAll();
+        foreach($orderinfo as $k=>$v) {
+            $orderinfo[$k]['applytime']=date('Y-m-d H:m:s',$orderinfo[$k]['applytime']);
+            $phone3=substr($orderinfo[$k]['phone'],0,3);
+            $phone7=substr($orderinfo[$k]['phone'],7,10);
+            $orderinfo[$k]['phone']=$phone3."****".$phone7;
+            $orderinfo[$k]['realname']= mb_substr( $orderinfo[$k]['realname'],0,1,'utf-8');
+        }
         $results=array(
             'code'=>0,
             'message'=>$orderinfo,

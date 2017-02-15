@@ -1,3 +1,8 @@
+<?php
+
+$this->_siteUrl = Mod::app()->request->hostInfo.Mod::app()->request->baseUrl;
+?>
+
 <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
 <script>
@@ -20,10 +25,17 @@
     wx.ready(function () {
         console.log(location.host);
         // 在这里调用 API
+            var  thisurl="<?php echo $url;?>";
+        if(thisurl.indexOf('http://')<0 || thisurl.indexOf('https://')<0){
+            var links = '<?php echo $this->_siteUrl.$url; ?>';
+        }else{
+            var links = "<?php echo $url; ?>";
+        }
+        console.log(links);
         wx.onMenuShareTimeline({
             title: '<?php echo $info["title"];?>', // 分享标题
-            link: 'http://'+location.host+'<?php echo $url; ?>', // 分享链接
-            imgUrl: 'http://'+location.host+'<?php echo JkCms::show_img(isset($info["share_img"])?$info["share_img"]:$info["img"]);?>', // 分享图标
+            link:links,// 分享链接
+            imgUrl: '<?php echo $this->_siteUrl?>'+'<?php echo JkCms::show_img(isset($info["share_img"])?$info["share_img"]:$info["img"]);?>', // 分享图标
             desc: '<?php echo  isset($info["share_desc"])?$info["share_desc"]:$info["remark"];?>', // 分享描述
             success: function () {
                 // 用户确认分享后执行的回调函数

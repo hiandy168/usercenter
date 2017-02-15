@@ -66,22 +66,23 @@ cploadmoreBtn.on("click", function() {
             success: function(data) {
                 page++;
                 if(data.code==0){
-                    var html = "";
-                    for (var i = 0,n=data.message.length; i <n; i++) {
-                        html += '<li>';
-                        html += '<i>' + data.message[i].realname;
-                        html += ' (' + data.message[i].phone + ')</i>';
-                        html += '<i>' + data.message[i].applytime + '</i>';
-                        html += '<i>￥' + data.message[i].money + '</i>';
-                        html += '</li>';
+                    if(data.message.length==0){
+                       $(".cpdetail-loadmore-btn").val("没有更多了");
+                        num=2;
+                    }else{
+                        var html = "";
+                        for (var i = 0,n=data.message.length; i <n; i++) {
+                            html += '<li>';
+                            html += '<i>' + data.message[i].realname;
+                            html += ' (' + data.message[i].phone + ')</i>';
+                            html += '<i>' + data.message[i].applytime + '</i>';
+                            html += '<i>￥' + data.message[i].money + '</i>';
+                            html += '</li>';
+                        }
+                        $(".f-cpdetail-tab-cyjl ul").append(html);
+                        num=0;
                     }
-                    $(".f-cpdetail-tab-cyjl ul").append(html);
-                    num=0;
-                }else if(data.message==""){
-                    alert("没有数据了");
-                    num=0;
                 }
-
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 closepop()

@@ -51,7 +51,7 @@ class ActivityController extends AController
                 $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_poster')->where($where)->order("id desc")->queryAll();
                 break;
             default:
-                $res = Mod::app()->db->createCommand()->select('id,pid,prize_id,title,start_time,end_time,win_num,day_count,share_num,share_add_num,win_msg,rule,lingjiang,end_num_msg,end_msg,jishu,share_img as img,banner_img,bg_img,scratch_img,desc_img,status,add_time')->from('dym_activity_scratch')->where($where)->order("id desc")->queryAll();
+                $res = Mod::app()->db->createCommand()->select('id,pid,prize_id,title,start_time,end_time,win_num,day_count,share_num,share_add_num,win_msg,rule,lingjiang,end_num_msg,end_msg,jishu,share_img as img,banner_img,bg_img,scratch_img,myprize_img,status,add_time')->from('dym_activity_scratch')->where($where)->order("id desc")->queryAll();
                 break;
         }
 

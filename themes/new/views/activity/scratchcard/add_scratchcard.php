@@ -212,7 +212,7 @@
                             </div>
 
                             <!-- 上传图片1 start -->
-                            <div class="t_title">中奖纪录(最佳尺寸：656*672)<i style="color:red">不传则使用系统默认图片</i></div>
+                            <div class="t_title">中奖纪录/中奖提示/未中奖提示/弹窗(最佳尺寸：656*672)<i style="color:red">不传则使用系统默认图片</i></div>
                             <div class="form-inp">
                                 <form id="from_myprize_img" method="POST" enctype="multipart/form-data" >
                                     <img id="img_myprize_img" width="120px" height="100px" onclick="upload('up_myprize_img')" src="<?php if($activity_info['myprize_img']) {echo JkCms::show_img($activity_info['myprize_img']); }else{ echo $this->_theme_url."assets/subassembly/scrtch_files/new/images/gg-img8-1.png";} ?> "/>

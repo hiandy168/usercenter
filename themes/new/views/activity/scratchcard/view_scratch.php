@@ -46,8 +46,13 @@
 	    	<div class="dial-pop">
 	    		
 	       <div class="popbg">
+			   <?php if($info['myprize_img']){?>
 
-			   <img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img8.png" width="100%" />
+				   <img src="<?php echo JkCms::show_img($info['myprize_img'])?>" width="100%" />
+
+			   <?php }else{?>
+				   <img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img8.png" width="100%" />
+			   <?php } ?>
 
 		   </div>
 	    	
@@ -165,8 +170,6 @@
 
 
 		<script type="text/javascript">
-
-
 		  <?php if(!$param['mid']){?>
 			showlogin();
 			$("#winlogin").hide();

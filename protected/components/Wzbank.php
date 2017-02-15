@@ -133,7 +133,7 @@ class Wzbank {
      * @param string $url 接收数据的api
      * @return string or boolean 成功且对方有返回值则返回
      */
-    public static function curl_get_ssl($url='')
+    public static function curl_get_ssl($url)
     {
         $curl = curl_init();
         if(stripos($url,"https://")!==FALSE){
@@ -167,7 +167,7 @@ class Wzbank {
      * @param array $param
      * @return string content
      */
-    public static function curl_post_ssl($url='',$param='',$referer=''){
+    public static function curl_post_ssl($url,$param,$referer=''){
         $oCurl = curl_init();
         $header = array(
             'Content-Type: application/json',

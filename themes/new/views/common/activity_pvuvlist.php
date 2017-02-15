@@ -12,11 +12,11 @@
     <script type="text/javascript" src="<?php echo $this->_theme_url; ?>assets/datetime-components/dateRange.js"></script>
 </head>
 <body>
-<form action="<?php echo $this->createUrl('/activity/bigwheel/Activitylist/fid/'.$aid.'/tag/pvuv')?>" method="post">
+<form action="<?php echo $this->createUrl('/activity/'.$model.'/Activitylist/fid/'.$aid.'/tag/pvuv')?>" method="post">
 <!-- <div id="datePicker">
     <input type="text" name="date" id="date" value="" class="gri_date" style="float:left"/>
 </div -->
-<button type="submit" class="btn btn-primary">按时间对比</button>
+<button type="submit" class="btn btn-primary" style="height:30px;">按时间对比</button>
 <div class="ta_date" id="div_date1">
     <span class="date_title" id="date1"></span>
     <a class="opt_sel" id="input_trigger1" href="#">

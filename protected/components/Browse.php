@@ -98,10 +98,19 @@ class Browse
             $ip=$_SERVER["REMOTE_ADDR"];
 
             $now = date('Ymd',$time);
-            $sql="select * from dym_activity_browse where model='".$model."'and pid=".$pid." and ip='".$mid."' and aid=".$aid." and createtime=".$now;
-            $arr = Mod::app()->db->createCommand($sql)->queryRow();
-            $sql="INSERT INTO dym_activity_browse (type, pid , aid  , model ,createtime) VALUES (1, $pid , $aid  ,'$model',$now);";
-            if(!$arr){
+            $tmp = array();
+            $sql_uv="select * from dym_activity_browse where model='".$model."'and pid=".$pid." and ip='".$mid."' and aid=".$aid." and createtime=".$now;
+            $arr_uv = Mod::app()->db->createCommand($sql_uv)->queryRow();
+
+            $sql_pv="select * from dym_activity_browse where type=1 and aid= ".$aid." and pid=".$pid." and createtime=".$now;
+            $arr_pv = Mod::app()->db->createCommand($sql_pv)->queryRow();
+
+            if($arr_pv){
+                $sql = "UPDATE dym_activity_browse SET count_num = count_num+1 WHERE id=".$arr_pv['id'].";";
+            }else{
+                $sql = "INSERT INTO dym_activity_browse (type, pid , aid  , model ,count_num,createtime) VALUES (1, $pid , $aid  ,'$model',1,$now);";
+            }
+            if(!$arr_uv){
                 $sql.= "INSERT INTO dym_activity_browse (type, pid , aid ,ip ,model,createtime) VALUES (2, $pid , $aid , '$ip' ,'$model',$now)";
             }
             $res = Mod::app()->db->createCommand($sql)->execute();

@@ -325,8 +325,8 @@
             return false;
             }
             
-            if ($(".s_num").length < 3) {
-                layer.msg("请至少添加3个奖品噢！");
+            if ($(".s_num").length < 1) {
+                layer.msg("请至少添加1个奖品噢！");
                 $('.save_button').removeAttr('disabled');
             $('.save_button').text("保存");
             return false;

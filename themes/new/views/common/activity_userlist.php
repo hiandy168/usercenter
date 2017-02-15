@@ -12,11 +12,11 @@
     <script type="text/javascript" src="<?php echo $this->_theme_url; ?>assets/datetime-components/dateRange.js"></script>
 </head>
 <body>
-<form action="<?php echo $this->createUrl('/activity/bigwheel/Activitylist/fid/'.$aid.'/tag/user')?>" method="post">
+<form action="<?php echo $this->createUrl('/activity/'.$model.'/Activitylist/fid/'.$aid.'/tag/user')?>" method="post">
 <!-- <div id="datePicker">
     <input type="text" name="date" id="date" value="" class="gri_date" style="float:left"/>
 </div -->
-<button type="submit" class="btn btn-primary">按时间对比</button>
+<button type="submit" class="btn btn-primary" style="height:30px;">按时间对比</button>
 <div class="ta_date" id="div_date1">
     <span class="date_title" id="date1"></span>
     <a class="opt_sel" id="input_trigger1" href="#">
@@ -32,7 +32,7 @@
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var chart = echarts.init(document.getElementById('main'), 'vintage');
-    var data = [{value:<?php echo $userdata['signup'];?>,name:"用户参与"},{value:<?php echo $userdata['join'];?>, name:'新增用户量'}];
+    var data = [{value:<?php echo $userdata['join'];?>,name:"用户参与"},{value:<?php echo $userdata['signup'];?>, name:'新增用户量'}];
 
 
 

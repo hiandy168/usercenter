@@ -1529,6 +1529,7 @@ try {
         }
         $config['aid'] = trim(Tool::getValidParam('fid', 'integer'));//活动ID 开发写的不一致
         $config['tag'] = trim(Tool::getValidParam('tag', 'string'));//活动ID 开发写的不一致
+        $config['model'] = "bigwheel";
         if (Mod::app()->request->isPostRequest) {
             $startdate = Tool::getValidParam('startdate', 'integer');
             $enddate = Tool::getValidParam('enddate', 'integer');
@@ -1548,9 +1549,9 @@ try {
                         $day_arr[$i]['day_date'] = $day_date;
                     }
                 foreach ($day_arr as $k => $v) {
-                    $pv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=1 and model = "' . bigwheel . '" and createtime=' . $v['day_date'])->queryRow();
+                    $pv = Mod::app()->db->createCommand()->select('count_num')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=1 and model = "' . bigwheel . '" and createtime=' . $v['day_date'])->queryRow();
                     $uv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=2 and model = "' . bigwheel . '" and createtime=' . $v['day_date'])->queryRow();
-                    $pvuv[$v['day_date']]['pv'] = $pv['count(0)'];
+                    $pvuv[$v['day_date']]['pv'] = $pv['count_num'];
                     $pvuv[$v['day_date']]['uv'] = $uv['count(0)'];
 
                 }
