@@ -31,8 +31,8 @@ class ActivityController extends FrontController
         $page = Tool::getValidParam("page", 'integer');
         $num = Tool::getValidParam("num", 'integer', 10);
         $Activity_recommend = new Activity_recommend;
-
-        $list = $Activity_recommend->apiActivityListPager();
+        $page=$page?$page-1:0;
+        $list = $Activity_recommend->apiActivityListPager($page,$num);
         /*        $list=Activity_recommend::model()->findAll("type=:type and status=:status",array(":type"=>4,':status'=>1)); */
         $data = array();
         if ($list['criteria']) {
@@ -76,16 +76,17 @@ class ActivityController extends FrontController
                     $datas[] = $msg;
                 }
             }
-            $page=$page?$page-1:0;
-            $page = $page * $num ? $page : 0;
+
+           // $page = $page * $num ? $page : 0;
+
             if ($datas) {
-                $datapage = array_slice($datas, $page, $num);
-                $data = array('code' => 1, 'data' => $datapage);
+              //  $datapage = array_slice($datas, $page, $num);
+                $data = array('code' => 1, 'data' => $datas);
             } else {
-                $data = array("code" => 0, 'data' => "There is no data");
+                $data = array("code" => 1, 'data' => "There is no data");
             }
         } else {
-            $data = array("code" => 0, 'data' => "There is no data");
+            $data = array("code" => 1, 'data' => "There is no data");
         }
 
         $result = json_encode($data);

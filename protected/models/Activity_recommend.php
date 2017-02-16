@@ -49,7 +49,7 @@ class Activity_recommend extends CActiveRecord
     }
 
     //活动列表带分页
-    public function apiActivityListPager(){
+    public function apiActivityListPager($page,$num){
         $as_list = array();
         $list = null;
         $asModel = new Activity_recommend;
@@ -58,6 +58,10 @@ class Activity_recommend extends CActiveRecord
         $criteria->condition ='status=:status';
         $criteria->params =array(':status'=>1);
         $count = $asModel->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageSize = $num;
+        $criteria->limit = $pages->pageSize;
+        $criteria->offset =  $page * $pages->pageSize;//$pages->currentPage * $pages->pageSize;
         $as_list['count'] = $count;
         $as_list['criteria'] = $asModel->findAll($criteria);
         return $as_list;

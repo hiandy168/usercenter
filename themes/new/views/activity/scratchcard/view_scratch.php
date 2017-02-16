@@ -66,11 +66,12 @@
 		 
 
 
-		 <a href="javascript:history.go(0)" title="" data-href="votelink">
-		 <div class="confirmbtn">
+                 
+	
+		 <div class="confirmbtn" onclick="window.location.href='<?php  echo $this->createAbsoluteUrl('/activity/scratchcard/view', array('id' => $info['id']));?>'">
 		 	<img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img9.png" width="100%" />
 		 </div>
-		 </a>
+	
 	    		
 	    	</div>
 	    </div>
@@ -361,34 +362,8 @@ function showpop(a, b, c, d, e) {
 		<script src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/js/layout.js" type="text/javascript" charset="utf-8"></script>
 		<!--微信分享-->
 
-		<?php
-
-		if(strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') == true){
-			if($info['share_switch']==1){
-				if(isset($info['share_url'])){
-					$url=$info['share_url'];
-				}else {
-					$url = $this->createUrl('/activity/scratchcard/view',array('id'=>$param['id']) );
-				}
-				echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info,'url'=>$url));
-			}else { ?>
-			<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-			<script>
-				wx.config({
-					debug: false,
-					appId: '<?php echo $signPackage["appId"];?>',
-					timestamp: <?php echo $signPackage["timestamp"];?>,
-					nonceStr: '<?php echo $signPackage["nonceStr"];?>',
-					signature: '<?php echo $signPackage["signature"];?>',
-				});
-
-				wx.ready(function () {
-					wx.hideOptionMenu();
-
-				})
-
-			</script>
-		<?php }}?>
+    <?php  echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info)); ?>
+                
 		<!--微信分享-->
 	</body>
 </html>

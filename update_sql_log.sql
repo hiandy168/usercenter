@@ -268,5 +268,6 @@ CREATE TABLE `dym_activity_browse` (
   `createtime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `type` int(2) NOT NULL DEFAULT '0' COMMENT '1-浏览 2-独立浏览',
   `ip` varchar(255) NOT NULL DEFAULT '' COMMENT '用户IP地址',
+  `count_num` int(11) NOT NULL DEFAULT '0' COMMENT '总数量',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -470,7 +470,6 @@ var winninglist_img = "<?php echo $images->winninglist?JkCms::show_img($images->
 
     }
 
-
 </script>
 
 
@@ -482,65 +481,13 @@ var winninglist_img = "<?php echo $images->winninglist?JkCms::show_img($images->
     $("#winlogin").hide();
     <?php } ?>
 
+</script>
 
-
-
-    var url_user = "/Components/f/ID/117/do/bigwheelWinner";
-    var openId = '617954';
-    var FID = 72;
-    var flag = 1;
-    var win = 0;
-    var form_flag = '1';
-    var userId = "148394";
-    var shareUrl = "/Components/f/ID/117/do/ajaxBigwheelShare";//分享后触发的连接地址
-    var getPriceUrl = "/Components/f/ID/117/do/bigwheelGetMyPrice";//获取我的奖品列表
-    var getUserUrl = "/Components/f/ID/117/do/AjaxBigwheelGetUserInfo";//收集用户信息连接
-    var time = '1470363197';
-    var startTime = '1470208864';
-    var endTime = '1472628064';
-
-
-    var wxData = {
-        "appId": "", // 服务号可以填写appId
-        "imgUrl": '',
-        "link": '1',
-        "desc": '1',
-        "title": '1'
-    };
-    var numMax = "1";
-    var FEndNumMess = '1';
-
+<script type="text/javascript" src="<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/assets/globe.js">
 
 </script>
 
-<script type="text/javascript"
-        src="<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/assets/globe.js"></script>
+<!--微信分享-->
+<?php  echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info)); ?>
 
-<?php
-if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') == true) {
-    if ($info['share_switch'] == 1) {
-        if(isset($info['share_url'])){
-            $url=$info['share_url'];
-        }else {
-            $url = $this->createUrl('/activity/bigwheel/view', array('id' => $param['id']));
-        }
-        echo $this->renderpartial('/common/wxshare', array('signPackage' => $signPackage, 'info' => $info, 'url' =>$url));
-    } else { ?>
-        <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-        <script>
-            wx.config({
-                debug: false,
-                appId: '<?php echo $signPackage["appId"];?>',
-                timestamp: <?php echo $signPackage["timestamp"];?>,
-                nonceStr: '<?php echo $signPackage["nonceStr"];?>',
-                signature: '<?php echo $signPackage["signature"];?>',
-            });
-
-            wx.ready(function () {
-                wx.hideOptionMenu();
-
-            })
-
-        </script>
-    <?php }
-} ?>
+<!--微信分享-->

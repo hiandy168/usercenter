@@ -7,6 +7,7 @@
         <h3 class="fs36">确认订单</h3>
     </div>-->
 <?php if($type==1&&$status==1){?>
+
     <div class="pos-r bb"></div>
     <div class="f-refund1-txt">
         <span><img src="<?php echo $this->_siteUrl;?>/assets/house/images/f-refund-icon2.png"/></span>
@@ -32,7 +33,9 @@
     <div class="f-form-btn">
         <a style=" border: 1px solid #f7463c;box-sizing: border-box;color: #f7463c;" class=" fcfff fs28 boru5 fbtn" href="<?php echo $this->createUrl('/house/member/orderd',array('id'=>$orderdetail['id'])) ?>">查看订单详细</a>
     </div>
+
 <?php }elseif($type==2&&$status==1){ ?>
+
     <div class="pos-r bb"></div>
     <div class="f-refund1-txt">
         <span><img src="<?php echo $this->_siteUrl;?>/assets/house/images/f-refund-icon2.png"/></span>
@@ -56,7 +59,9 @@
         <a class="bg1 fcfff fs28 boru5 fbtn" href="<?php echo $this->createUrl('/house/member/index',array('id'=>$orderdetail['mid'])) ?>">进入个人中心</a>
     </div>
     </div>
+
 <?php }elseif($type==3&&$status==1){ ?>
+
     <div class="pos-r bb"></div>
     <div class="f-refund1-txt">
         <span><img src="<?php echo $this->_siteUrl;?>/assets/house/images/f-refund-icon2.png"/></span>
@@ -83,6 +88,7 @@
         <a style=" border: 1px solid #f7463c;box-sizing: border-box;color: #f7463c;" class=" fcfff fs28 boru5 fbtn" href="<?php echo $this->createUrl('/house/member/orderd',array('id'=>$orderdetail['id'])) ?>">查看订单详细</a>
     </div>
     </div>
+
 <?php } ?>
 </body>
 <?php echo $this->renderpartial('/layouts/foot'); ?>
