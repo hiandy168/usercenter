@@ -25,7 +25,7 @@
         <div class="pos-r bb f-form-inp">
             <label>联系电话：</label>
             <i class=""></i>
-            <span><input type="tel" name="usertel" id="usertel" placeholder="请填写联系电话" value="" /></span>
+            <span><input type="tel" name="usertel" id="usertel" placeholder="请填写联系电话" value="<?php echo $this->member['phone'] ?>" /></span>
         </div>
 
         <div class="pos-r bb f-form-inp">

@@ -125,11 +125,14 @@
             <div class="f-cpdetail-div6-tabcon">
                 <div class="f-cpdetail-tab-cyjl">
                     <ul>
+                        <?php if($orderinfo){ ?>
                         <li>
                             <i>报名用户</i>
                             <i>报名时间</i>
                             <i>金额</i>
                         </li>
+                        <?php } ?>
+                        <?php if($orderinfo){ ?>
                         <?php foreach($orderinfo as $info){?>
                         <li>
                             <i><?php echo mb_substr($info['realname'],0,1,'utf-8') ?> (<?php echo substr($info['phone'],0,3)?>****<?php
@@ -137,6 +140,8 @@ echo substr($info['phone'],7,10)?>)</i>
                             <i><?php echo date('Y-m-d H:i:s',$info['applytime'])?></i>
                             <i>￥<?php echo $info['money'] ?></i>
                         </li>
+                        <?php }}else{ ?>
+                                <div style="text-align: center"><b class="fs30" style="">暂无数据</b></div>
                         <?php } ?>
                     </ul>
                     <?php if($count>3){ ?>

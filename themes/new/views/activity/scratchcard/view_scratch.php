@@ -68,7 +68,7 @@
 
                  
 	
-		 <div class="confirmbtn" onclick="window.location.href='<?php  echo $this->createAbsoluteUrl('/activity/scratchcard/view', array('id' => $info['id']));?>'">
+		 <div class="confirmbtn" onclick="window.location.href='<?php  echo $this->createAbsoluteUrl('/activity/scratchcard/view', array('id' => $info['id'],'random'=>time().mt_rand()));?>'">
 		 	<img src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/images/gg-img9.png" width="100%" />
 		 </div>
 	

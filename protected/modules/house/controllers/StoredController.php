@@ -112,6 +112,7 @@ class StoredController extends HouseController{
                     $nonce = Wzbank::strings(32);
                     $timestamp=time();
                     if($memberinfo['wxstatus']==2){
+                        echo 111;
                         $data=array('userId' => $userid, 'userName' => $username,'idType' => '01','idNo' => $realid, 'name' => $realname, 'phoneNo' =>$realphone,);
                         $sign =Wzbank::housesign($nonce,strval($timestamp),$version,json_encode($data));
                         $postUrl =Wzbank::bankurl."/wallet/server/person/sync?appId=".$app_Id."&sign=".$sign."&nonce=".$nonce."&version=".$version."&timestamp=".$timestamp;//同步个人开户信息
