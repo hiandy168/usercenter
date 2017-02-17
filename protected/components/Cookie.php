@@ -3,7 +3,7 @@
 final class Cookie
 {
     /**     * 设置 Cookie     * @param string $name 名称     * @param string $value 值     * @param int $expire 时间，单位：秒     * @param array $options 选项，具体请参考 CHttpCookie     * @return boolean     */
-    static public function set($name, $value = '', $expire = 0, $options = [])
+    static public function set($name, $value = '', $expire = 0, $options = array())
     {
         if (!is_string($name) || !is_int($expire) || !is_array($options)) {
             return false;

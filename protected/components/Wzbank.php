@@ -23,9 +23,14 @@ class Wzbank {
      * author  Fancy
      */
     public static function check_lce() {
+        //测试
         if(!is_file(Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'W0000020'.DIRECTORY_SEPARATOR.'W0000020.p12')) {
             echo "非法请求";
         }
+        //正式
+       /* if(!is_file(Mod::app()->basePath . DIRECTORY_SEPARATOR .'vendor'.DIRECTORY_SEPARATOR.'gflc'.DIRECTORY_SEPARATOR.'gflc.p12')) {
+            echo "非法请求";
+        }*/
     }
     /**
      * 获取访问令牌（access token）

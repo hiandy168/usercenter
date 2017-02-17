@@ -230,9 +230,18 @@
                 success: function (data) {
                     if (data.code == -1) {
                         <?php if($images->alertno){ ?>
-                        showpop('<?php echo JkCms::show_img($images->alertno);?>', '', '', '', 3)
+                                if(data.msg && data.msg !='undefind'){
+                                    showpop('<?php echo JkCms::show_img($images->alertno);?>', '', '', '', 3,data.msg);
+                                }else{
+                                    showpop('<?php echo JkCms::show_img($images->alertno);?>', '', '', '', 3)
+                                }
+                        
                         <?php }else{ ?>
-                        showpop('<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-img4.png', '', '', '', 3)
+                                 if(data.msg && data.msg !='undefind'){
+                                    showpop('<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-img4.png', '', '', '', 3,data.msg);
+                                }else{
+                                    showpop('<?php echo $this->_theme_url; ?>assets/subassembly/bigwheel/newassets/images/dial-img4.png', '', '', '', 3)
+                                }
                         <?php } ?>
                         return false;
                     }
@@ -403,68 +412,74 @@ var winninglist_img = "<?php echo $images->winninglist?JkCms::show_img($images->
 
     // 弹窗方法
 
-    function showpop(bg, zjtxt, jdname, daycount, kind) {
+    function showpop(bg, zjtxt, jdname, daycount, kind,msg) {
         $(".mask").show();
         $(".dial-pop").show().addClass("pop-active");
         $(".popbg").html('<img src="' + bg + '" width="100%" />');
         $(".popbg").next().hide();
-        if (kind == 1) {
-            if (daycount == 1) {
-                $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
-                    + '<em>中得"' + jdname + '"</em>'
-                    + '</p>'
-                    + '<i>您的机会已经用完了</i>');
-                if ("<?php echo $param['backUrl'];?>" != 0) {
-                    $(".confirmbtnall").html('<div><a href="<?php echo $param['backUrl'];?>"><img src="<?php if ($images->colse){ echo JkCms::show_img($images->colse); } else { echo $this->_theme_url."assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png";} ?>" width="100%" /></a></div>');
+        if(msg && msg !='undefind'){
+               $(".dial-poptxt").html('<p><br />'
+                + '<em>'+msg+'</em>'
+                + '</p>');
+        }else{
+                if (kind == 1) {
+                    if (daycount == 1) {
+                        $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
+                            + '<em>中得"' + jdname + '"</em>'
+                            + '</p>'
+                            + '<i>您的机会已经用完了</i>');
+                        if ("<?php echo $param['backUrl'];?>" != 0) {
+                            $(".confirmbtnall").html('<div><a href="<?php echo $param['backUrl'];?>"><img src="<?php if ($images->colse){ echo JkCms::show_img($images->colse); } else { echo $this->_theme_url."assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png";} ?>" width="100%" /></a></div>');
+                        }
+                    } else {
+                        $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
+                            + '<em>中得"' + jdname + '"</em>'
+                            + '</p>'
+                            + '<i>你还有<b>' + (daycount - 1) + '</b>次机会</i>');
+                    }
+
                 }
-            } else {
-                $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
-                    + '<em>中得"' + jdname + '"</em>'
-                    + '</p>'
-                    + '<i>你还有<b>' + (daycount - 1) + '</b>次机会</i>');
-            }
+                if (kind == 2) {
+                    if (daycount == 1) {
+                        $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
+                            + '<em>' + jdname + '</em>'
+                            + '</p>'
+                            + '<i>您的机会已经用完了</i>');
+                        if ("<?php echo $param['backUrl'];?>" != 0) {
+                            $(".confirmbtnall").html('<div class="confirmbtn"><a href="<?php echo $param['backUrl'];?>"><img src="<?php if ($images->colse){ echo JkCms::show_img($images->colse); } else { echo $this->_theme_url."assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png";} ?>" width="100%" /></a></div>');
+                        }
+                    } else {
+                        $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
+                            + '<em>' + jdname + '</em>'
+                            + '</p>'
+                            + '<i>你还有<b>' + (daycount - 1) + '</b>次机会</i>');
+                    }
 
-        }
-        if (kind == 2) {
-            if (daycount == 1) {
-                $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
-                    + '<em>' + jdname + '</em>'
-                    + '</p>'
-                    + '<i>您的机会已经用完了</i>');
-                if ("<?php echo $param['backUrl'];?>" != 0) {
-                    $(".confirmbtnall").html('<div class="confirmbtn"><a href="<?php echo $param['backUrl'];?>"><img src="<?php if ($images->colse){ echo JkCms::show_img($images->colse); } else { echo $this->_theme_url."assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png";} ?>" width="100%" /></a></div>');
+
                 }
-            } else {
-                $(".dial-poptxt").html('<p><span>' + zjtxt + '</span><br />'
-                    + '<em>' + jdname + '</em>'
-                    + '</p>'
-                    + '<i>你还有<b>' + (daycount - 1) + '</b>次机会</i>');
-            }
-
-
-        }
-        if (kind == 3) {
-            $(".dial-poptxt").html('<p><br />'
-                + '<em>活动未开始</em>'
-                + '</p>');
-        }
-        if (kind == 4) {
-            $(".dial-poptxt").html('<p><br />'
-                + '<em>活动已结束</em>'
-                + '</p>');
-        }
-        if (kind == 5) {
-            $(".dial-poptxt").html('<p><br />'
-                + '<em>今天次数用完了，明天在玩吧</em>'
-                + '</p>');
-            if ("<?php echo $param['backUrl'];?>" != 0) {
-                $(".confirmbtnall").html('<div class=""><a href="<?php echo $param['backUrl'];?>"><img src="<?php if ($images->colse){ echo JkCms::show_img($images->colse); } else { echo $this->_theme_url."assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png";} ?>" width="100%" /></a></div>');
-            }
-        }
-        if (kind == 6) {
-            $(".dial-poptxt").html('<p><br />'
-                + '<em>活动已暂停</em>'
-                + '</p>');
+                if (kind == 3) {
+                    $(".dial-poptxt").html('<p><br />'
+                        + '<em>活动未开始</em>'
+                        + '</p>');
+                }
+                if (kind == 4) {
+                    $(".dial-poptxt").html('<p><br />'
+                        + '<em>活动已结束</em>'
+                        + '</p>');
+                }
+                if (kind == 5) {
+                    $(".dial-poptxt").html('<p><br />'
+                        + '<em>今天次数用完了，明天在玩吧</em>'
+                        + '</p>');
+                    if ("<?php echo $param['backUrl'];?>" != 0) {
+                        $(".confirmbtnall").html('<div class=""><a href="<?php echo $param['backUrl'];?>"><img src="<?php if ($images->colse){ echo JkCms::show_img($images->colse); } else { echo $this->_theme_url."assets/subassembly/bigwheel/newassets/images/dial-confirmbtn.png";} ?>" width="100%" /></a></div>');
+                    }
+                }
+                if (kind == 6) {
+                    $(".dial-poptxt").html('<p><br />'
+                        + '<em>活动已暂停</em>'
+                        + '</p>');
+                }
         }
 
 
