@@ -22,6 +22,11 @@ class MemberController extends HouseController{
             $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,o.usetime,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid order by o.createtime desc";
             $orderlist=Mod::app()->db->createCommand($sql)->queryAll();
             //var_dump($orderlist);
+            foreach($orderlist as $k=>$v) {
+                $actime=explode("|",$orderlist[$k]['actime']);
+                $activityinfo[$k]['actime']=$actime[0];
+                $activityinfo[$k]['createtime']=$actime[1];
+            }
         }
         $data = array(
             'config'=>array(
@@ -40,8 +45,21 @@ class MemberController extends HouseController{
     public function actionOrderd(){
         $orderid=Tool::getValidParam('id','string');
         $userid=$this->member['id'];
-        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,o.usetime,o.houseid,a.title,a.img,a.financingid,a.actime,a.city,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
-        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        if(!empty($orderid)){
+            $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,o.usetime,o.houseid,a.title,a.img,a.financingid,a.actime,a.city,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
+            $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+            $actime=explode("|",$orderdetail['actime']);
+            $validitys=explode("|",$orderdetail['validity']);
+            $orderdetail['actime']=$actime[0];
+            $orderdetail['createtime']=$actime[1];
+            $orderdetail['validity']=$validitys['0'];
+            $orderdetail['updatetime']=$validitys['1'];
+
+        }else{
+            echo "error";die();
+        }
+
+
         //var_dump($orderdetail);
         if(!$orderdetail){
             echo "error";
@@ -150,8 +168,8 @@ class MemberController extends HouseController{
      * author  Fancy
      */
     public function actionChecksave(){
-      /*  $orderid="011911665728";
-        $userid="7776";*/
+        /*  $orderid="011911665728";
+          $userid="7776";*/
         $orderid=Tool::getValidParam('orderid','string');
         $userid=$this->member['id'];
         $app_Id=Wzbank::appid;
@@ -182,8 +200,8 @@ class MemberController extends HouseController{
      */
 
     public function actionCheckget(){
-       /* $orderid="011911665728";
-        $userid="7776";*/
+        /* $orderid="011911665728";
+         $userid="7776";*/
         $orderid=Tool::getValidParam('orderid','string');
         $userid=$this->member['id'];
         $app_Id=Wzbank::appid;

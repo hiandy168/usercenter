@@ -109,7 +109,7 @@
                         <select name="financingid" data-val="requir" data-title="选择理财活动" >
                             <option value="">请选择</option>
                             <?php foreach($moneyinfo as $money) {?>
-                            <option value="<?php echo $money['id'] ?>" <?php if ($houseinfo['financingid']==$money['id']){ ?>selected<?php } ?>><?php echo $money['title'] ?></option>
+                                <option value="<?php echo $money['id'] ?>" <?php if ($houseinfo['financingid']==$money['id']){ ?>selected<?php } ?>><?php echo $money['title'] ?></option>
                             <?php } ?>
                         </select>
                     </td>
@@ -127,13 +127,13 @@
                     <td colspan="2"><input data-val="requir" data-title="支付成功后H5跳转地址" type="text" name="payurl"  id="payurl"  size="35" value="<?php echo  isset($houseinfo['payurl']) ? $houseinfo['payurl'] : ''; ?>"><span style="color: red">*</span></td>
                 </tr>
                 <tr>
-                  <td class='t'>活动详情:</td>
+                    <td class='t'>活动详情:</td>
                     <td colspan="4" id="desc">
                         <textarea data-val="requir" data-title="活动详情"  name="desc" class="editor">
                      <?php echo  isset($houseinfo['desc']) ? htmlspecialchars($houseinfo['desc']) : ''; ?>
                      </textarea>
-                     </td>
-                    </tr>
+                    </td>
+                </tr>
                 <tr>
                 <tr>
                     <td class='t'>分享说明:</td>
@@ -156,8 +156,8 @@
         isTodayValid : true,
         <?php if($houseinfo){
         ?>
-        startDate: '<?php echo date('Y-m-d',explode("|",$houseinfo['actime'])[0]); ?>',
-        endDate: '<?php echo date('Y-m-d',explode("|",$houseinfo['actime'])[1]); ?>',
+        startDate: '<?php echo date('Y-m-d',$houseinfo['actime']); ?>',
+        endDate: '<?php echo date('Y-m-d',$houseinfo['createtime']); ?>',
         <?php
         }else{
         ?>
@@ -178,8 +178,8 @@
         isTodayValid : true,
         <?php if($houseinfo){
        ?>
-        startDate: '<?php echo date('Y-m-d',explode("|",$houseinfo['validity'])[0]); ?>',
-        endDate: '<?php echo date('Y-m-d',explode("|",$houseinfo['validity'])[1]); ?>',
+        startDate: '<?php echo date('Y-m-d',$houseinfo['validity']); ?>',
+        endDate: '<?php echo date('Y-m-d',$houseinfo['updatetime']); ?>',
         <?php
         }else{
         ?>
@@ -194,27 +194,27 @@
         inputTrigger : 'input_trigger1',
         theme : 'ta'
     });
-    
-        <?php $member = Mod::app()->session['admin_member'];?>
-        var site_url = "<?php echo $this->_siteUrl; ?>";
-        var admin_url = "<?php echo $this->_adminUrl;?>";
-        var id = "<?php echo $user['id']?>";
-        var token = "<?php echo $user['token']?>";
-        var lang = "<?php echo $this->lang?>";
-         editor1 = KindEditor.create('.editor', {
-            fileManagerJson:admin_url+"/files/file_manager",
-            uploadJson:admin_url+'/files/upload?id='+id+'&token='+token+'&lang='+lang,
-            allowFileManager : true,
-            formatUploadUrl :false,
-            filterMode : false,//关闭 要不然会过滤一些代码
-            urlType:'',
-            afterBlur: function(){this.sync();},
-            extraFileUploadParams : {
-                PHPSESSID : '<?php echo session_id(); ?>'
-            }
-        });
 
-        function gethouseinfo(){
+    <?php $member = Mod::app()->session['admin_member'];?>
+    var site_url = "<?php echo $this->_siteUrl; ?>";
+    var admin_url = "<?php echo $this->_adminUrl;?>";
+    var id = "<?php echo $user['id']?>";
+    var token = "<?php echo $user['token']?>";
+    var lang = "<?php echo $this->lang?>";
+    editor1 = KindEditor.create('.editor', {
+        fileManagerJson:admin_url+"/files/file_manager",
+        uploadJson:admin_url+'/files/upload?id='+id+'&token='+token+'&lang='+lang,
+        allowFileManager : true,
+        formatUploadUrl :false,
+        filterMode : false,//关闭 要不然会过滤一些代码
+        urlType:'',
+        afterBlur: function(){this.sync();},
+        extraFileUploadParams : {
+            PHPSESSID : '<?php echo session_id(); ?>'
+        }
+    });
+
+    function gethouseinfo(){
         var houseid = $("input[name='houseid']").val();
         if (!houseid) {
             layer.msg("请输入楼盘id");
@@ -228,7 +228,7 @@
             success:function(result){
                 if(result['ret']==0){
                     $("#title").val(result['data']['FName']);
-                    $("#phone").val(result['data']['FSellPhone']);  
+                    $("#phone").val(result['data']['FSellPhone']);
                     editor1.html(result['data']['FSummary']);
                 }
                 else{
@@ -242,77 +242,77 @@
 
 
 
-   /* var url = "<?php echo $this->createUrl('/houseadmin/Hactivity/add'); ?>";
-    $('.save_button').click(function () {
-        var city      = $("select[name='city']").find('option:selected').val();
-        var type      = $('input[name="type"]:checked').val();
-        var validity      = $('input[name="validity"]:checked').val();
-        var share_title      = $("input[name='share_title']").val();
-        var img      = $("input[name='img']").val();
-        var share_img      = $("input[name='share_img']").val();
-        var share_desc         = $("textarea[name='share_desc']").val();
-        var houseid      = $("input[name='houseid']").val();
-        var accountid      = $("select[name='accountid']").find('option:selected').val();
-        var title      = $("input[name='title']").val();
-        var coupon      = $("input[name='coupon']").val();
-        var actime = $("input[name='actime']").val();
-        var validity = $("input[name='validity']").val();
-        var figue = $("input[name='figue']").val();
-        var financingid       = $("select[name='financingid']").find('option:selected').val();
-        var phone = $("input[name='phone']").val();
-        var dtitle = $("input[name='dtitle']").val();
-        var endtimeurl = $("input[name='endtimeurl']").val();
-        var payurl = $("input[name='payurl']").val();
-        var desc = $("textarea[name='desc']").val();
-        if(city==0){
-            layer.msg("请选择活动城市");
-            return false;
-        }
-        if(accountid==0){
-            layer.msg("请选择结算账户");
-            return false;
-        }
-        if(financingid==0){
-            layer.msg("请选择理财活动");
-            return false;
-        }
-        if(!city || !type || !validity || !share_title || !img|| ! share_img ||! share_desc || !accountid || !title || !coupon || !actime || !validity || !figue || !financingid || !dtitle || !endtimeurl || !actime){
-            layer.msg("所有参数为必填");
-            return false;
-        } */
+    /* var url = "<?php echo $this->createUrl('/houseadmin/Hactivity/add'); ?>";
+     $('.save_button').click(function () {
+     var city      = $("select[name='city']").find('option:selected').val();
+     var type      = $('input[name="type"]:checked').val();
+     var validity      = $('input[name="validity"]:checked').val();
+     var share_title      = $("input[name='share_title']").val();
+     var img      = $("input[name='img']").val();
+     var share_img      = $("input[name='share_img']").val();
+     var share_desc         = $("textarea[name='share_desc']").val();
+     var houseid      = $("input[name='houseid']").val();
+     var accountid      = $("select[name='accountid']").find('option:selected').val();
+     var title      = $("input[name='title']").val();
+     var coupon      = $("input[name='coupon']").val();
+     var actime = $("input[name='actime']").val();
+     var validity = $("input[name='validity']").val();
+     var figue = $("input[name='figue']").val();
+     var financingid       = $("select[name='financingid']").find('option:selected').val();
+     var phone = $("input[name='phone']").val();
+     var dtitle = $("input[name='dtitle']").val();
+     var endtimeurl = $("input[name='endtimeurl']").val();
+     var payurl = $("input[name='payurl']").val();
+     var desc = $("textarea[name='desc']").val();
+     if(city==0){
+     layer.msg("请选择活动城市");
+     return false;
+     }
+     if(accountid==0){
+     layer.msg("请选择结算账户");
+     return false;
+     }
+     if(financingid==0){
+     layer.msg("请选择理财活动");
+     return false;
+     }
+     if(!city || !type || !validity || !share_title || !img|| ! share_img ||! share_desc || !accountid || !title || !coupon || !actime || !validity || !figue || !financingid || !dtitle || !endtimeurl || !actime){
+     layer.msg("所有参数为必填");
+     return false;
+     } */
 
-       /* var data = {
-            city:city,
-            type:type,
-            share_title:share_title,
-            img:img,
-            share_img:share_img,
-            share_desc:share_desc,
-            houseid:houseid,
-            accountid:accountid,
-            title:title,
-            coupon:coupon,
-            actime:actime,
-            validity:validity,
-            figue:figue,
-            financingid:financingid,
-            phone:phone,
-            dtitle:dtitle,
-            endtimeurl:endtimeurl,
-            payurl:payurl,
-            desc:desc
-        };
-        $.post(url,data,function(res){
-            var res = JSON.parse(res);
-            if(res.statue==1){
-                layer.msg(res.msg,{time:2000},function(){
-                    window.location.href="<?php echo $this->createUrl('/house/Hactivity/list')?>";
-                })
-            }else{
-                layer.msg(res.msg)
-            }
-        })
-  })*/
+    /* var data = {
+     city:city,
+     type:type,
+     share_title:share_title,
+     img:img,
+     share_img:share_img,
+     share_desc:share_desc,
+     houseid:houseid,
+     accountid:accountid,
+     title:title,
+     coupon:coupon,
+     actime:actime,
+     validity:validity,
+     figue:figue,
+     financingid:financingid,
+     phone:phone,
+     dtitle:dtitle,
+     endtimeurl:endtimeurl,
+     payurl:payurl,
+     desc:desc
+     };
+     $.post(url,data,function(res){
+     var res = JSON.parse(res);
+     if(res.statue==1){
+     layer.msg(res.msg,{time:2000},function(){
+     window.location.href="<?php echo $this->createUrl('/house/Hactivity/list')?>";
+     })
+     }else{
+     layer.msg(res.msg)
+     }
+     })
+     })*/
 
     var requir=$("[data-val=requir]");
     var radio_checked=$("[data-radio=checked]");

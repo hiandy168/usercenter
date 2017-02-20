@@ -30,8 +30,18 @@ class HactivityController extends HaController{
         $pages = new CPagination($count);
         $pages->pageSize = 6;
         $pages->applyLimit($criteria);
-        $returnData['houslist']= $application_class->findAll($criteria);
-        $endtime=explode("|", $returnData['houslist']['validity'])[1];
+        $activityinfo= $application_class->findAll($criteria);
+        foreach($activityinfo as $k=>$v) {
+            $actime=explode("|",$activityinfo[$k]['actime']);
+            $validitys=explode("|",$activityinfo[$k]['validity']);
+            $activityinfo[$k]['actime']=$actime[0];
+            $activityinfo[$k]['createtime']=$actime[1];
+            $activityinfo[$k]['validity']=$validitys[0];
+            $activityinfo[$k]['updatetime']=$validitys[1];
+        }
+        $returnData['houslist']=$activityinfo;
+        /*$endtime_temp=explode("|", $returnData['houslist']['validity']);
+        $endtime=$endtime_temp[1];*/
         $returnData['pages'] = $pages;
         $returnData['group_id'] = $group_id;
         $this->render('list',$returnData);
@@ -48,6 +58,12 @@ class HactivityController extends HaController{
         $houseinfo = null;
         if(!empty($id)){
             $houseinfo = $house_model->findByPk($id);
+            $actime=explode("|",$houseinfo['actime']);
+            $validitys=explode("|",$houseinfo['validity']);
+            $houseinfo['actime']=$actime[0];
+            $houseinfo['createtime']=$actime[1];
+            $houseinfo['validity']=$validitys['0'];
+            $houseinfo['updatetime']=$validitys['1'];
             if($group_id==1){
                 if(empty($houseinfo)){
                     echo "error";die();

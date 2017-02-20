@@ -59,6 +59,9 @@ em, i { font-style: normal; }
     word-break: break-word;
     text-align: center;
     margin-top: .35rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .dial-poptxt p i{
     color: #fff;

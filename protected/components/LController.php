@@ -37,7 +37,9 @@ class LController extends CController {
     protected $user = array();
 
     public function init() {
-              if(!in_array(Mod::app()->request->userHostAddress,array('127.0.0.1','111.47.243.43','14.17.22.54','27.17.15.94','183.61.38.182','61.135.172.68'))){die('非法的IP访问地址');}
+       if(!in_array(Mod::app()->request->userHostAddress,array('127.0.0.1','111.47.243.43','14.17.22.54','27.17.15.94',
+        '183.61.38.182','10.68.51.192','14.17.22.35','61.135.172.68'//微众
+        ))){die('非法的IP访问地址');}
          header("Content-type: text/html; charset=utf-8");
 
     }

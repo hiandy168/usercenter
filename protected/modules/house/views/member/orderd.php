@@ -28,13 +28,13 @@
             </a>
         </div>
         <?php if($orderdetail['paystatus']==1){?>
-            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d',explode('|',$orderdetail['actime'])[1])?> 23:59:59前完成存款</p></div>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d',$orderdetail['createtime'])?> 23:59:59前完成存款</p></div>
         <?php }elseif($orderdetail['paystatus']==2){ ?>
-            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$orderdetail['actime'])[1])?>  23:59:59过期，请于案场使用</p></div>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',$orderdetail['createtime'])?>  23:59:59过期，请于案场使用</p></div>
         <?php }elseif($orderdetail['paystatus']==3){ ?>
             <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d h:i:s',$orderdetail['usetime'])?>取出存款</p></div>
         <?php }elseif($orderdetail['paystatus']==4){ ?>
-            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',explode('|',$orderdetail['actime'])[1])?> 23:59:59已结束</p></div>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',$orderdetail['createtime'])?> 23:59:59已结束</p></div>
         <?php } ?>
     </div>
     <div class="bgfff mgt4 f-order-info">
@@ -66,7 +66,7 @@
                     <li><a onclick="checkpay()" href="javascript:void(0)" class="bg1 fcfff">立即预存</a></li>
                 <?php }elseif($orderdetail['paystatus']==2){ ?>
                     <li><a onclick="confirmorder()" href="javascript:void(0)" class="bgfff fcf74 b1px boru5">确认使用</a></li>
-                    <?php if(explode('|',$orderdetail['actime'])[1]<time()){?>
+                    <?php if($orderdetail['createtime']<time()){?>
                         <li><a onclick="withdraw()" href="javascript:void(0)" class="bg1 fcfff">申请提现</a></li>
                     <?php }else{ ?>
                         <li><a href="" class="bg2 fcfff">申请提现</a></li>
@@ -87,7 +87,7 @@
         <p>用户姓名：<?php echo $this->member['realname']?></p>
         <p>联系电话：<?php echo $this->member['phone']?></p>
         <p>下单时间：<?php echo date('Y-m-d H:i:s',$orderdetail['applytime'])?></p>
-        <p>活动有效期：<?php echo date('Y-m-d H:i:s',explode('|',$orderdetail['actime'])[0])?> 至 <?php echo date('Y-m-d H:i:s',explode('|',$orderdetail['actime'])[1])?></p>
+        <p>活动有效期：<?php echo date('Y-m-d H:i:s',$orderdetail['actime'])?> 至 <?php echo date('Y-m-d H:i:s',$orderdetail['createtime'])?></p>
         <?php if($orderdetail['paystatus']==1){?>
         <?php }else{ ?>
             <p>预存状态：

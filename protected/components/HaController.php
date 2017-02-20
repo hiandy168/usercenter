@@ -4,7 +4,8 @@
  * Controller is the customized base controller class.
  * All controller classes for this application should extend from this base class.
  */
-class HaController extends CController {
+class 
+HaController extends CController {
 
     /**
      * @var string the def ault layout for the controller view. Defaults to '//layouts/column1',
@@ -38,7 +39,9 @@ class HaController extends CController {
     protected $user = array();
     static public $treeList = array();
     public function init() {
-//     if(!in_array(Mod::app()->request->userHostAddress,array('127.0.0.1','111.47.243.43','14.17.22.54','27.17.15.94','183.61.38.182'))){die('非法的IP访问地址');}
+           if(!in_array(Mod::app()->request->userHostAddress,array('127.0.0.1','111.47.243.43','14.17.22.54','27.17.15.94',
+        '183.61.38.182','10.68.51.192','14.17.22.35','61.135.172.68'//微众
+        ))){die('非法的IP访问地址');}
 //        echo DIRECTORY_SEPARATOR;
          $this->_module_id = $this->getModule()->id;
         $this->lang = Lang::getLang();

@@ -199,6 +199,9 @@ class SiteController extends HouseController{
             echo "error";
             die();
         }
+        $phone= explode('|',$houseinfo['phone']);
+        $houseinfo['createtime']=$phone[0];
+        $houseinfo['updatetime']=$phone[1];
         $data = array(
             'config'=>array(
                 'site_title'=> $houseinfo['dtitle'],
