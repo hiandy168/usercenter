@@ -125,7 +125,7 @@ class HactivityController extends HaController{
             $house_model -> actime = $actimes;
             $house_model -> validity = $validitys;
             if($house_model->save()){
-                Tool::alert('操作成功','/houseadmin/hactivity/list');
+                Tool::alertpop('操作成功','/houseadmin/hactivity/list');
             }
         }
         $sql = "SELECT id,title FROM {{house_money}} WHERE status=1";
@@ -210,9 +210,45 @@ class HactivityController extends HaController{
     }
 
     /**
-     * 根据house_id  查询房产信息
+     * 推荐状态
      * author  Fancy
      */
+    public function actionRecommend(){
+        $id =Tool::getValidParam('id','integer');
+        $poststatus =Tool::getValidParam('poststatus','integer');
+        $admininfo  = Mod::app()->session['admin_user'];
+        $group_id=$admininfo['group_id'];
+        if($group_id==1){
+            $houseInfo = House_activity::model()->find('id=:id', array(':id'=>$id));
+        }else{
+            $houseInfo = House_activity::model()->find('id=:id and authorid=:authorid', array(':id'=>$id,':authorid'=>$admininfo['id']));
+        }
+
+        if(!empty($houseInfo)){
+            if($poststatus==1){
+                $houseInfo->recommend = 1;
+            }elseif($poststatus==2){
+                $houseInfo->recommend = 2;
+            }
+            else{
+                echo "error";
+            }
+            if ($houseInfo->save()) {
+                $returnData = '100';
+            }else{
+                $returnData = '200';
+            }
+        }else{
+            echo "error";
+            die();
+        }
+        echo $returnData;
+    }
+
+    /**
+ * 根据house_id  查询房产信息
+ * author  Fancy
+ */
 
     public function actionHoseinfo(){
         //$houseid=172631;
@@ -233,6 +269,20 @@ class HactivityController extends HaController{
             echo $house;
         }else{
             echo $info;
+        }
+    }
+
+    /**
+     * 获取已经推荐数量
+     * author  Fancy
+     */
+    public function actionCount(){
+        $sql = "SELECT count(id) as count FROM {{house_activity}} WHERE recommend=1;";
+        $tenant=Mod::app()->db->createCommand($sql)->queryRow();
+        if($tenant){
+            echo $tenant['count'];
+        }else{
+            echo "error";
         }
     }
     /**

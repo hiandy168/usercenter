@@ -679,6 +679,27 @@ class Tool
         exit;
     }
 
+
+
+    /**
+     * @abstract 后台提示消息弹框
+     * @param string $msg 消息内容
+     * @param string $redirect 跳转地址 -1为跳转到上一个页面 默认为-1
+     */
+    public static function alertpop($msg = '', $redirect = '-1')
+    {
+        $strInfo  = '<body>';
+        $strInfo .= '<script language="JavaScript" type="text/javascript">';
+        $location = empty($redirect) || $redirect == '-1' ? 'window.history.back(-1)' : 'window.location.href="' . $redirect . '?status#";';
+        $strInfo .= '</script>';
+        $strInfo .= '<div style="display: block;width: 300px;margin: 0 auto;margin-top: 100px;text-align: center;padding: 20px;box-shadow: 0px 0px 30px 1px #ccc;border-radius: 5px;"><p>' . $msg . '</p><div style="display: inline-block;background: #3A6EA5;color: #fff;padding: 8px 30px;border-radius: 5px;cursor: pointer;margin-top: 10px;" onclick=' . $location . ' >确定</div>';
+        $strInfo .= '</body></html>';
+        echo $strInfo;
+        exit;
+    }
+
+
+
     static function is_weixin()
     {
         if (strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false) {

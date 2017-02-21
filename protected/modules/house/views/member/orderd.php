@@ -65,12 +65,13 @@
                 <?php if($orderdetail['paystatus']==1){?>
                     <li><a onclick="checkpay()" href="javascript:void(0)" class="bg1 fcfff">立即预存</a></li>
                 <?php }elseif($orderdetail['paystatus']==2){ ?>
-                    <li><a onclick="confirmorder()" href="javascript:void(0)" class="bgfff fcf74 b1px boru5">确认使用</a></li>
+
                     <?php if($orderdetail['createtime']<time()){?>
-                        <li><a onclick="withdraw()" href="javascript:void(0)" class="bg1 fcfff">申请提现</a></li>
+                        <li><a onclick="confirmorder()" href="javascript:void(0)" class="bgfff fcf74 b1px boru5">确认使用</a></li>
                     <?php }else{ ?>
-                        <li><a href="" class="bg2 fcfff">申请提现</a></li>
+                        <li><a href="javascript:void(0)" class="bg2 fcfff">确认使用</a></li>
                     <?php } ?>
+                    <li><a onclick="withdraw()" href="javascript:void(0)" class="bg1 fcfff">申请提现</a></li>
                 <?php }elseif($orderdetail['paystatus']==3){ ?>
                     <li><a href="javascript:void(0)" class="bg2 fcfff">已使用</a></li>
                 <?php }elseif($orderdetail['paystatus']==4){ ?>

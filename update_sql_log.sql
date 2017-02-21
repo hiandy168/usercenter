@@ -271,3 +271,6 @@ CREATE TABLE `dym_activity_browse` (
   `count_num` int(11) NOT NULL DEFAULT '0' COMMENT '总数量',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*
+	最后一次操作记录
+*/

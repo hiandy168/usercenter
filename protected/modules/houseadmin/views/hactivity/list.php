@@ -55,7 +55,9 @@
                             <td style="text-align: center"><?php echo $item['preview']; ?></td>
                             <td style="text-align: center">
                                 <a class='delete' target="_blank" href="<?php echo $this->createUrl('/house/site/detail', array('id' => $item['id'])) ?>">详情</a>
-                                <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">编辑</a>
+                                <?php if($group_id!=1){?>
+                                    <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">编辑</a>
+                                <?php } ?>
                                 <?php if($item['poststatus']==2){?>
                                     <a class='delete' data-fb-id="<?php echo $item['id']?>" href="javascript:;" onclick="changepoststatus(<?php echo $item['id']?>,1)">发布</a>
                                 <?php }elseif($item['poststatus']==1){ ?>
@@ -64,7 +66,11 @@
                                 <a class='delete' data-del-id="<?php echo $item['id']?>"  href="javascript:;" onclick="delActivity(<?php echo $item['id']?>)" >删除</a>
                             </td>
                             <?php if($group_id==1){?>
-                                <td style="text-align: center"><a class="delete" href="javascript:;">推荐</a></td>
+                                <?php if($item['recommend']==2){?>
+                                    <td style="text-align: center"><a class="delete"  data-reco-id="<?php echo $item['id']?>" onclick="recommend(<?php echo $item['id']?>,1)" href="javascript:;">推荐</a></td>
+                                <?php }elseif($item['recommend']==1){ ?>
+                                    <td style="text-align: center"><a class="delete"  data-reco-id="<?php echo $item['id']?>" onclick="recommend(<?php echo $item['id']?>,2)" href="javascript:;">取消推荐</a></td>
+                                <?php } ?>
                             <?php } ?>
                         </tr>
                     <?php } }?>
@@ -105,13 +111,88 @@
 
                     }
                     else{
-                        layer.msg('删除失败', {icon: 1,time:2000},function(){
+                        layer.msg('删除失败', {icon: 2,time:2000},function(){
                             location.reload()
                         });
                     }
                 }
             });
         });return;
+    }
+
+
+    function recommend(id,poststatus){
+        if(poststatus==1){
+            $.get('<?php echo $this->createUrl('count');?>', function(result){
+                if(result<3&&result>=0){
+                    var nu=0;
+                    if(poststatus==1){
+                        layer.confirm('确认推荐吗', {
+                            btn: ['确定','取消']
+                        }, function(){
+                            nu++;
+                            if(nu==1){
+                                $.ajax({
+                                    url:"<?php echo $this->createUrl('recommend');?>",
+                                    type: "POST",
+                                    data:{id:id,poststatus:poststatus},
+                                    dataType:"json",
+                                    success:function(data){
+                                        if(data==100){
+                                            layer.msg('推荐成功！', {icon: 1, time: 2000}, function () {
+                                                $("[data-reco-id="+id+"]").text("取消推荐");
+                                                $("[data-reco-id="+id+"]").removeAttr("onclick").attr("onclick","recommend("+id+",2)");
+                                                nu=0;
+                                            });
+                                        }
+                                        else{
+                                            layer.msg('推荐失败', {icon: 2,time:2000},function(){
+                                                location.reload()
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+
+                        });
+
+                    }
+                }else{
+                    layer.msg('推荐数量最大值为3', {icon: 2,time:2000},function(){
+                        return;
+                    });
+                }
+            });
+        }else if(poststatus==2) {
+            var nu=0;
+            layer.confirm('确认取消推荐吗', {
+                btn: ['确定', '取消']
+            }, function () {
+                nu++;
+                if (nu == 1) {
+                    $.ajax({
+                        url: "<?php echo $this->createUrl('recommend');?>",
+                        type: "POST",
+                        data: {id: id, poststatus: poststatus},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 100) {
+                                layer.msg('取消成功！', {icon: 1, time: 2000}, function () {
+                                    $("[data-reco-id=" + id + "]").text("推荐");
+                                    $("[data-reco-id=" + id + "]").removeAttr("onclick").attr("onclick", "recommend(" + id + ",1)");
+                                    nu = 0;
+                                });
+                            }
+                            else {
+                                layer.msg('取消失败', {icon: 2, time: 2000}, function () {
+                                    location.reload()
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
     }
 
     function changepoststatus(id,poststatus){
@@ -136,7 +217,7 @@
                                 });
                             }
                             else{
-                                layer.msg('发布失败', {icon: 1,time:2000},function(){
+                                layer.msg('发布失败', {icon: 2,time:2000},function(){
                                     location.reload()
                                 });
                             }
@@ -166,7 +247,7 @@
                                 });
                             }
                             else{
-                                layer.msg('取消失败', {icon: 1,time:2000},function(){
+                                layer.msg('取消失败', {icon: 2,time:2000},function(){
                                     location.reload()
                                 });
                             }
