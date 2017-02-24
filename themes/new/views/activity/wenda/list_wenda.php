@@ -58,7 +58,7 @@
                                     <li class="lw2"><?php echo $val->title;?></li>
                                     <li class="lw3"><?php echo date('Y-m-d H:i:s',$val->start_time);?></li>
                                     <li class="lw3"><?php echo date('Y-m-d H:i:s',$val->end_time);?></li>
-                                    <li class="lw2" style='cursor:pointer;'><?php $result = Activity_bigwheel::activityStatus($val->start_time,$val->end_time,$val->id);?>
+                                    <li class="lw2" style='cursor:pointer;'><?php $result = Activity_wenda::activityStatus($val->start_time,$val->end_time,$val->id);?>
                                         <?php if($result['status'] == 0 ){?>
                                             <span  class="lspan l3_4" href="javascript:void(0)"
                                                    onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)">
@@ -87,13 +87,13 @@
                                     <!-- <li class="l6"><i></i>活动链接
                     <div class="ad-act-list-wlink">
                       <h4>活动链接</h4>
-                      <span><textarea name="" rows="" cols=""><?php echo $this->createUrl('/activity/bigwheel/view',array('id'=>$val->id))?></textarea></span>
+                      <span><textarea name="" rows="" cols=""><?php echo $this->createUrl('/activity/wenda/view',array('id'=>$val->id))?></textarea></span>
                       <em onclick="Copy(this)">点击复制</em>
                     </div>
                     </li> -->
-                                    <li class="l5"><a href="<?php echo $this->createUrl('/activity/bigwheel/prize',array('id'=>$val->id,'pid'=>$config['pid']))?>"><i></i>奖品/概率</a></li>
-                                    <li class="l5"><a href="<?php echo $this->createUrl('/activity/bigwheel/add',array('id'=>$val->id,'pid'=>$config['pid']))?>"><i></i>编辑</a></li>
-                                    <li class="l1"><a href="<?php echo $this->createUrl('/activity/bigwheel/pcview',array('id'=>$val->id))?>" target="_blank"><i></i>预览</a></li>
+                                    <li class="l5"><a href="<?php echo $this->createUrl('/activity/wenda/prize',array('id'=>$val->id,'pid'=>$config['pid']))?>"><i></i>奖品/概率</a></li>
+                                    <li class="l5"><a href="<?php echo $this->createUrl('/activity/wenda/add',array('id'=>$val->id,'pid'=>$config['pid']))?>"><i></i>编辑</a></li>
+                                    <li class="l1"><a href="<?php echo $this->createUrl('/activity/wenda/pcview',array('id'=>$val->id))?>" target="_blank"><i></i>预览</a></li>
                                     <li class="l2" onclick="getWinList(<?php echo $val->id?>)"><i></i>用户数据</li>
                                     <!--                                <li <?php if($result['status'] == 1){echo 'class="l3_1" ';}else{echo 'class="l3" '; }?>  href="javascript:void(0)" onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)">
                                     <?php

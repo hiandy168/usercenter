@@ -23,43 +23,35 @@ class WendaController extends FrontController
     {
 
         //关联投票组件
-        $voteid=Tool::getValidParam('voteid',"integer");
         $start=strtotime(date('Y-m-d'));//今天
         $end=strtotime(date('Y-m-d',strtotime('+1 day')));//明天
         $id = trim(Tool::getValidParam('id', 'integer'));
-        if($voteid && $voteid>0){
-            //抽奖完成之后跳到投票
-            $url=$this->createUrl('/activity/vote/view/id/'.$voteid);
-            $res=Activity_vote_user::model()->find("mid=:mid AND voteid=:voteid AND create_time>:start AND create_time<:end",array(':mid'=>$this->member['id'],':voteid'=>$voteid,':start'=>$start,':end'=>$end));
-            if(!$res){
-                //如果找不到，说明没有投票
-                //Tool::alert("请先去投票，才能抽奖额","http://m.hb.qq.com/activity/vote/view/id/74");
-                header("location:$url");
-                exit;
-            }
 
-        }
         //查询活动信息
-        $sql = "SELECT * FROM {{activity_bigwheel}} WHERE id=$id";
+        $sql = "SELECT * FROM {{activity_wenda}} WHERE id=$id";
         $info = Mod::app()->db->createCommand($sql)->queryRow();
 
-        Browse::add_usernum($info['pid']);  //计算独立访客数量
-        Browse::add_browsenum($info['pid']); //计算浏览量
-        Browse::add_activity_browse($info['pid'],$id,"bigwheel");
+//        Browse::add_usernum($info['pid']);  //计算独立访客数量
+//        Browse::add_browsenum($info['pid']); //计算浏览量
+//        Browse::add_activity_browse($info['pid'],$id,"wenda");
         if (!$info || empty($info)) {
             die('非法请求');
         }
 
-//        if($openid){
-//            //检查pid和openid的绑定关系,是否有手机号
-//            $res = $this->checkUserbypidopenid($info['pid'],$openid);
-//            if($res['status'] && $res['mid']){
-//                $mid  = $res['mid'];//用户的ID
-//            }else{
-//                $mid  = 0;
-//            }
-//        }
+        //查询问答活动对应的题目
+        $quetion_tmp_arr = array();
+        $sql_que_count = "SELECT count(0) as count_t FROM {{activity_wenda_question}} WHERE wendaid=$id and status=1 ";
+        $question_count = Mod::app()->db->createCommand($sql_que_count)->queryRow();
+        $sql = "SELECT * FROM {{activity_wenda_question}} WHERE wendaid=$id and status=1 order by sort asc";
+        $question_arr = Mod::app()->db->createCommand($sql)->queryAll();
+        foreach ($question_arr as $k=>$v){
+            $sql = "SELECT * FROM {{activity_wenda_answer}} WHERE questionid=".$v['id'];
+            $answer_arr = Mod::app()->db->createCommand($sql)->queryAll();
+            $question_arr[$k]['count'] = $question_count['count_t'];
+            $question_arr[$k]['answer_arr']=$answer_arr;
+        }
 
+      
         if ($this->member['id']) {//登录状态
             $mid = $this->member['id'];
         }
@@ -77,14 +69,16 @@ class WendaController extends FrontController
         $prize_id = explode(',', rtrim($info['prize_id'], ','));
         foreach ($prize_id as $key => $val) {
             //查询奖品信息
-            $sql = "SELECT * FROM {{activity_bigwheel_prize}} WHERE id=$val";
+            $sql = "SELECT * FROM {{activity_wenda_prize}} WHERE id=$val";
             $prize[$key] = Mod::app()->db->createCommand($sql)->queryRow();
         }
-        $images= Activity_bigwheel_img::model()->find("bigwheel_id=:id",array(':id'=>$id));
+
+
+//        $images= Activity_wenda_img::model()->find("bigwheel_id=:id",array(':id'=>$id));
         $parame = array(
             'info' => $info,
             'prize' => $prize,
-            'images' => $images,
+//            'images' => $images,
             'countprize' => count($prize),
             'param' => array(
                 "appid" => $project_info['appid'],
@@ -97,18 +91,19 @@ class WendaController extends FrontController
                 "mid" => $mid,
                 "pid" => $info['pid'],
             ),
+            'question_arr'=> $question_arr,
             'signPackage' => $signPackage,
             'time' => time(),
             'config'=>array(
                 'site_title'=> $info['title'].'-大转盘抽奖',
-                'Keywords'=>$info['title'].',大转盘,抽奖,一等奖',
-                'Description'=>$info['title'].',大转盘,抽奖,一等奖',
+                'Keywords'=>$info['title'].',问答,抽奖,一等奖',
+                'Description'=>$info['title'].',问答,抽奖,一等奖',
             ),
 
         );
 
 //        echo "<pre>";
-//        print_r($parame);
+//        print_r($question_arr);
 //        exit;
         $this->render('view', $parame);
     }
@@ -126,7 +121,7 @@ class WendaController extends FrontController
         if (Mod::app()->request->isPostRequest) {
             $id=Tool::getValidParam('id','integer');
             if($id){
-                $res=Activity_bigwheel::model()->findByPk($id);
+                $res=Activity_wenda::model()->findByPk($id);
                 if($res){
                     if($res->status==1 && $res->end_time>time() && $res->start_time<time()){
                         echo 2;//等于1的时候表示活动进行中 不能编辑
@@ -219,7 +214,7 @@ class WendaController extends FrontController
         //start所属权限
         if($activity_id){//编辑
             //判断是不是自己的所属项目 不是没有权限
-            $sql = "select * from {{activity_bigwheel}} where id=$activity_id";
+            $sql = "select * from {{activity_wenda}} where id=$activity_id";
             $activity_info = Mod::app()->db->createCommand($sql)->queryRow();
             if(!$activity_info['pid']){die('数据非法');}
             //防止ID遍历
@@ -255,7 +250,7 @@ class WendaController extends FrontController
 
             //步骤1：查找之前的奖品
             $prize_arr_id = array();
-            $sql = "select * from {{activity_bigwheel_prize}} where aid=".$activity_info['id']." and status =1";
+            $sql = "select * from {{activity_wenda_prize}} where aid=".$activity_info['id']." and status =1";
             $prize = Mod::app()->db->createCommand($sql)->queryAll();
             foreach($prize as $val){
                 $prize_arr_id[] = $val['id'];
@@ -276,8 +271,6 @@ class WendaController extends FrontController
             //开启事务
             $transaction = Mod::app()->db->beginTransaction();
             try {
-
-
                 $new_prize_arr_id = array();
                 //                    步骤2：对比现在的奖品  更新之前编辑的奖品
 
@@ -298,7 +291,7 @@ class WendaController extends FrontController
                         $update_id = array(':id' => $val);
 
                         //查询历史中数量
-                        $sql = "select * from {{activity_bigwheel_user}} where bigwheel_id =".$activity_info['id']." and prize_id = ".$val." and is_win =1 ";
+                        $sql = "select * from {{activity_wenda_user}} where wenda_id =".$activity_info['id']." and prize_id = ".$val." and is_win =1 ";
                         $this_win_list = Mod::app()->db->createCommand($sql)->queryAll();
                         if(($prize_data['remainder']+count($this_win_list)) >$prize_data['count']){
                             $transaction->rollBack();
@@ -314,7 +307,7 @@ class WendaController extends FrontController
                             //严重数据错误
                             echo json_encode(array(  'state' => 0,   'msg' => '中奖的数量加上+剩余的数量不等于奖品的数量，现在已中奖数为'.+count($this_win_list) )); exit;
                         }
-                        $res = Mod::app()->db->createCommand()->update('{{activity_bigwheel_prize}}', $prize_data, 'id=:id', $update_id);
+                        $res = Mod::app()->db->createCommand()->update('{{activity_wenda_prize}}', $prize_data, 'id=:id', $update_id);
                         $new_prize_arr_id[] = $val;
                     }
                 }
@@ -323,7 +316,7 @@ class WendaController extends FrontController
                 foreach ($prize_id_diff as $key => $val) {
                     //删除的
                     if(in_array($val,$prize_arr_id)){
-                        Mod::app()->db->createCommand()->update('{{activity_bigwheel_prize}}', array('aid'=>$activity_info['id'],'status'=>0,'updatetime'=>time()), 'id='.$val);
+                        Mod::app()->db->createCommand()->update('{{activity_wenda_prize}}', array('aid'=>$activity_info['id'],'status'=>0,'updatetime'=>time()), 'id='.$val);
                     }
                 }
 
@@ -355,7 +348,7 @@ class WendaController extends FrontController
                     echo json_encode(array(  'state' => 0,   'msg' => '大转盘的奖品种类只能为3-5个' )); exit;
                 }
 
-                Activity_bigwheel::model()->updateByPk($activity_id, array('prize_id'=> implode(',',$new_prize_arr_id),'jishu'=>Tool::getValidParam('jishu')));//更新基数 ，更新奖品字段冗余吧 之前开发写的 我也更新下吧
+                Activity_wenda::model()->updateByPk($activity_id, array('prize_id'=> implode(',',$new_prize_arr_id),'jishu'=>Tool::getValidParam('jishu')));//更新基数 ，更新奖品字段冗余吧 之前开发写的 我也更新下吧
 
                 $transaction->commit();
                 echo json_encode(array(  'state' => 1,   'msg' => '修改成功' )); exit;
@@ -368,28 +361,28 @@ class WendaController extends FrontController
 
 
 
-            $activity_bigwheel_info = $activity_info;
+            $activity_wenda_info = $activity_info;
 
-            $sql = "select * from {{activity_bigwheel_prize}} where aid=".$activity_info['id']."  and status =1";
+            $sql = "select * from {{activity_wenda_prize}} where aid=".$activity_info['id']."  and status =1";
             $prize = Mod::app()->db->createCommand($sql)->queryAll();
 
 
             //head_app中的 应用首页（1）、基础配置（2）、应用组件（3）三个按钮选中加背景
             $config['active_1'] = '3';
             //组件assembly中的选中高亮背景图片 刮刮卡(1)、签到(2)、报名(3)
-            $config['active'] = 6;
-            $config['site_title']='奖品设置-编辑大转盘活动-大楚网用户开放平台';
-            $config['Keywords']='大楚网用户开放平台,大转盘，抽奖，一等奖';
-            $config['Description']='添加大转盘活动_编辑大转盘活动';
+            $config['active'] = 10;
+            $config['site_title']='奖品设置-编辑问答活动-大楚网用户开放平台';
+            $config['Keywords']='大楚网用户开放平台,问答，抽奖，一等奖';
+            $config['Description']='添加问答活动_编辑问答活动';
 
             $parame = array(
                 'config' => $config,
-                'activity_info' =>$activity_bigwheel_info,
+                'activity_info' =>$activity_wenda_info,
                 'prize' => $prize,
-                'status' => $this->activity_status('bigwheel'),
+                'status' => $this->activity_status('wenda'),
             );
 
-            $this->render('prize_bigwheelcard', $parame);
+            $this->render('prize_wenda', $parame);
         }
 
 
@@ -397,7 +390,7 @@ class WendaController extends FrontController
 
     /**
      * @author yuwanqiao
-     * 后台添加大转盘活动和编辑在一起
+     * 后台添加问答活动和编辑在一起
      */
     public function actionAdd()
     {
@@ -414,7 +407,7 @@ class WendaController extends FrontController
             $pid = trim(Tool::getValidParam('pid', 'integer'));
             if($activity_id){//编辑
                 //判断是不是自己的所属项目 不是没有权限
-                $sql = "select * from {{activity_bigwheel}} where id=$activity_id";
+                $sql = "select * from {{activity_wenda}} where id=$activity_id";
                 $activity_info = Mod::app()->db->createCommand($sql)->queryRow();
                 if(!$activity_info['pid']){die('数据非法');}
                 //防止ID遍历
@@ -466,6 +459,179 @@ class WendaController extends FrontController
                 }
             }
 
+
+            $question_id_arr =array();
+            $question_arr = Tool::getValidParam('question_arr');
+            $qanda_id = Tool::getValidParam('qanda_id');
+            $question_query = true ; //编辑成功判断
+
+            if ($activity_id) {
+//                var_dump($question_arr);
+//                var_dump($qanda_id);exit;
+                //步骤1：查找之前的题目
+                $wenda_question_arr_id = array();
+                $sql = "select * from {{activity_wenda_question}} where wendaid=".$activity_info['id']." and status =1";
+                $wenda_question = Mod::app()->db->createCommand($sql)->queryAll();
+                foreach($wenda_question as $val){
+                    $wenda_question_arr_id[] = $val['id'];
+                }
+
+                //取交集
+                $qanda_id_intersect = array_intersect($wenda_question_arr_id,$qanda_id);
+                //取差集
+                $qanda_id_diff = array_diff($wenda_question_arr_id,$qanda_id);
+
+
+                //开启事务
+                $transaction = Mod::app()->db->beginTransaction();
+                try {
+                    if($question_arr) {
+                        foreach ($question_arr as $key => $val) {
+                            $question = json_decode($val, true);
+                            //步骤1  更新的 对比现在的题目  更新之前编辑的题目
+                            if ($question['id']) {
+                                $quest_update_data['body'] = $val;
+                                $quest_update_data['sort'] = $question['no'];
+                                $quest_update_data['question'] = $question['question'];
+                                $quest_update_data['mid'] = $this->member['id'];
+                                $quest_update_data['updatetime'] = time();
+
+                                $res = Activity_wenda_question::model()->updateByPk($question['id'], array('body' => $quest_update_data['body'], 'sort' => $quest_update_data['sort'], 'question' => $quest_update_data['question'], 'mid' => $quest_update_data['mid'], 'updatetime' => $quest_update_data['updatetime']));
+
+//                            $res = Mod::app()->db->createCommand()->update('{{activity_wenda_question}}', $quest_update_data, 'id=:id', $question['id']);
+                                if ($res) {
+                                    $sql = "select * from dym_activity_wenda_answer where questionid=" . $question['id'] . "  order by createtime asc limit 1";
+                                    $answer_arr = Mod::app()->db->createCommand($sql)->queryRow();
+                                    if ($answer_arr) {
+//                                  var_dump($answer_arr);exit;
+                                        $answer_checked_id = $question['answer'];
+                                        $answer['updatetime'] = time();
+                                        for ($i = 1; $i <= 4; $i++) {
+                                            $answer['id'] = $answer_arr['id'] + $i - 1;
+                                            $answername = "option" . $i;
+                                            $answer['answer'] = $question[$answername];
+                                            if ($i == $answer_checked_id) {
+                                                $answer['status'] = 1;
+                                            } else {
+                                                $answer['status'] = 0;
+                                            }
+                                            $res = Activity_wenda_answer::model()->updateByPk($answer['id'], array('answer' => $answer['answer'], 'status' => $answer['status'], 'updatetime' => $answer['updatetime']));
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        }
+                    }
+
+                    if($qanda_id_diff) {
+                        //   步骤2：对比现在的题库  有删除的就删除掉
+                        foreach ($qanda_id_diff as $key => $val) {
+                            //删除的
+                            if (in_array($val, $wenda_question_arr_id)) {
+                                Mod::app()->db->createCommand()->update('{{activity_wenda_question}}', array('wendaid' => $activity_info['id'], 'status' => 0, 'updatetime' => time()), 'id=' . $val); // 删除题目
+                                Mod::app()->db->createCommand()->delete('{{activity_wenda_answer}}', 'questionid=' . $val); // 删除题目对应的答案
+                            }
+                        }
+                    }
+
+
+                 if($question_arr) {
+                     //   步骤3：对比现在的题目  写入新增的题目
+                     foreach ($question_arr as $key => $val) {
+                         $question = json_decode($val, true);
+                         //新增的
+                         if (!$question['id']) {
+
+                             $quest_insert_data['body'] = $val;
+                             $quest_insert_data['sort'] = $question['no'];
+                             $quest_insert_data['question'] = $question['question'];
+                             $quest_insert_data['mid'] = $this->member['id'];
+                             $quest_insert_data['createtime'] = time();
+                             $quest_insert_data['updatetime'] = time();
+                             $query = Mod::app()->db->createCommand()->insert('dym_activity_wenda_question', $quest_insert_data);
+                             if ($query) {
+                                 $id = Mod::app()->db->getLastInsertID();
+                                 $question['id'] = $id;
+                                 $body = json_encode($question, true);
+                                 Activity_wenda_question::model()->updateByPk($id, array('body' => $body));
+                                 $question_id_arr[] = $id;
+                                 $answer_checked_id = $question['answer'];
+                                 $answer_insert['questionid'] = $id;
+                                 $answer_insert['createtime'] = time();
+                                 $answer_insert['updatetime'] = time();
+                                 for ($i = 1; $i <= 4; $i++) {
+                                     $answername = "option" . $i;
+                                     $answer_insert['answer'] = $question[$answername];
+                                     if ($i == $answer_checked_id) {
+                                         $answer_insert['status'] = 1;
+                                     } else {
+                                         $answer_insert['status'] = 0;
+                                     }
+                                     $querys = Mod::app()->db->createCommand()->insert('dym_activity_wenda_answer', $answer_insert);
+                                 }
+                             }
+
+                         }
+
+                     }
+                 }
+
+
+                    //这里是 添加的题目数限制
+//                    if(count($new_prize_arr_id)<3 || count($new_prize_arr_id)>5){
+//                        $transaction->rollBack();
+//                        echo json_encode(array(  'state' => 0,   'msg' => '大转盘的奖品种类只能为3-5个' )); exit;
+//                    }
+
+                    $transaction->commit();
+                    $question_query = true;
+                } catch (Exception $e) { //如果有一条查询失败，则会抛出异常
+                    $transaction->rollBack();
+                    $question_query = false;
+                }
+
+
+            } else { //新增题库
+                foreach ($question_arr as $key => $val) {
+                    $question = json_decode($val, true);
+                    $data_question['body'] = $val;
+                    $data_question['sort'] = $question['no'];
+                    $data_question['question'] = $question['question'];
+                    $data_question['mid'] = $this->member['id'];
+                    $data_question['createtime'] = time();
+                    $data_question['updatetime'] = time();
+                    $query = Mod::app()->db->createCommand()->insert('dym_activity_wenda_question', $data_question);
+                    if ($query) {
+                        $id = Mod::app()->db->getLastInsertID();
+                        $question['id'] = $id;
+                        $body = json_encode($question,true);
+                        Activity_wenda_question::model()->updateByPk($id,array('body'=>$body));
+                        $question_id_arr[] = $id;
+                        $answer_checked_id = $question['answer'];
+                        $answer['questionid'] = $id;
+                        $answer['createtime'] = time();
+                        $answer['updatetime'] = time();
+                        for ($i = 1; $i <= 4; $i++) {
+                            $answername = "option" . $i;
+                            $answer['answer'] = $question[$answername];
+                            if ($i == $answer_checked_id) {
+                                $answer['status'] = 1;
+                            } else {
+                                $answer['status'] = 0;
+                            }
+                            $querys = Mod::app()->db->createCommand()->insert('dym_activity_wenda_answer', $answer);
+                        }
+                    }
+                }
+            }
+//            exit;
+
+            $question_id = implode(',', $question_id_arr);//奖品id，用逗号链接
+
+
+
             /*先将奖品信息插入数据库*/
             $p_title = Tool::getValidParam('p_title');
             // $p_title= Mod::app()->request->getParam('p_title');
@@ -474,7 +640,6 @@ class WendaController extends FrontController
             $p_snum = Tool::getValidParam('p_snum');//剩余奖品数量
             $p_v = Tool::getValidParam('p_v');
             $p_id = Tool::getValidParam('p_id');
-
             $prize_id_arr = array();
             $prize_id = '';
 
@@ -499,7 +664,7 @@ class WendaController extends FrontController
                     $prize_data['remainder'] = $p_snum[$key]<=$p_num[$key]?$p_snum[$key]:$p_num[$key];
                     $prize_data['createtime'] = time();
                     $prize_data['status'] = 1;
-                    $prize_model = new Activity_bigwheel_prize();
+                    $prize_model = new Activity_wenda_prize();
                     $prize_model->attributes = $prize_data;
                     $prize_model->save();
                     $id = $prize_model->primaryKey;
@@ -542,27 +707,32 @@ class WendaController extends FrontController
 //                }
                 $update_id = array(':id' => $activity_id);
                 unset($arr['prize_id']);//强制修改不让修改奖品
-                $query = Mod::app()->db->createCommand()->update('{{activity_bigwheel}}', $arr, 'id=:id', $update_id);
-                $str = '编辑';
-                if($img){
-                    $has_edit_img = false;
-                    $re=Activity_bigwheel_img::model()->find("bigwheel_id=:id",$update_id);
-                    if($re){
-                        $img['updatetime']=time();
-                        $imgre = Mod::app()->db->createCommand()->update('{{activity_bigwheel_img}}', $img, 'bigwheel_id=:id', $update_id);
-                        $has_edit_img = true;
-                    }else{
-                        $img['bigwheel_id']=$activity_id;
-                        $img['createtime']=time();
-                        $imgre = Mod::app()->db->createCommand()->insert('{{activity_bigwheel_img}}', $img);
-                        $has_edit_img = true;
-                    }
+                $query = Mod::app()->db->createCommand()->update('{{activity_wenda}}', $arr, 'id=:id', $update_id);
 
+                //更新问答题目的wendaid字段
+                if($question_id && $id){
+                    $query = Activity_wenda_question::model()->updateAll(array('wendaid' => $activity_id), 'id  in ('.$question_id.')');
                 }
+                $str = '编辑';
+//                if($img){
+//                    $has_edit_img = false;
+//                    $re=Activity_bigwheel_img::model()->find("bigwheel_id=:id",$update_id);
+//                    if($re){
+//                        $img['updatetime']=time();
+//                        $imgre = Mod::app()->db->createCommand()->update('{{activity_bigwheel_img}}', $img, 'bigwheel_id=:id', $update_id);
+//                        $has_edit_img = true;
+//                    }else{
+//                        $img['bigwheel_id']=$activity_id;
+//                        $img['createtime']=time();
+//                        $imgre = Mod::app()->db->createCommand()->insert('{{activity_bigwheel_img}}', $img);
+//                        $has_edit_img = true;
+//                    }
+//
+//                }
 
             } else {
                 $arr['add_time'] = time();
-                $query = Mod::app()->db->createCommand()->insert('{{activity_bigwheel}}', $arr);
+                $query = Mod::app()->db->createCommand()->insert('{{activity_wenda}}', $arr);
                 $str = '添加';
                 if ($query) {
                     //插入成功把对应的图片文件插入
@@ -570,35 +740,39 @@ class WendaController extends FrontController
                     //更新奖品的aid字段
 
                     if($arr['prize_id'] && $id){
-                        Activity_bigwheel_prize::model()->updateAll(array('aid' => $id), 'id  in ('.$arr['prize_id'].')');
+                        Activity_wenda_prize::model()->updateAll(array('aid' => $id), 'id  in ('.$arr['prize_id'].')');
                     }
-
-                    $img['bigwheel_id']=$id;
+                    //更新问答题目的wendaid字段
+                    if($question_id && $id){
+                        Activity_wenda_question::model()->updateAll(array('wendaid' => $id), 'id  in ('.$question_id.')');
+                    }
+                    $img['wenda_id']=$id;
                     $img['createtime']=time();
-                    $imgre = Mod::app()->db->createCommand()->insert('{{activity_bigwheel_img}}', $img);
+//                    $imgre = Mod::app()->db->createCommand()->insert('{{activity_bigwheel_img}}', $img);
+                    $imgre=true;
                     if(!$imgre){
                         Activity_bigwheel::model()->updateByPk($id,array('status'=>-1));
                         $has_edit_img = true;
                     }else {
                         //新增加活动之后生成站内信息
-                        $tablename = "bigwheel";
-                        $url = $this->_siteUrl . "/activity/bigwheel/view/id/" . $id;
-                        $this->my_message("大转盘活动[" . $prize_data['title'] . "]", time(), "新增", $arr['pid'], $url, $tablename);
+                        $tablename = "wenda";
+                        $url = $this->_siteUrl . "/activity/wenda/view/id/" . $id;
+                        $this->my_message("问答活动[" . $prize_data['title'] . "]", time(), "新增", $arr['pid'], $url, $tablename);
                     }
                 }
             }
 
 
-            if ( $query  || $has_edit_img) {
+            if ( $query  || $has_edit_img || $question_query) {
                 $res = array(
                     'state' => 1,
-                    'aid' => $id,
-                    'msg' => $str . '大转盘成功'
+                    'aid' => $activity_id,
+                    'msg' => $str . '问答活动成功'
                 );
             } else {
                 $res = array(
                     'state' => 0,
-                    'msg' => $str . '大转盘失败'
+                    'msg' => $str . '问答失败'
                 );
             }
             echo json_encode($res);
@@ -611,7 +785,7 @@ class WendaController extends FrontController
 
             if ($fid) {
                 //start所属权限开始
-                $sql = "select * from {{activity_bigwheel}} where id=$fid";
+                $sql = "select * from {{activity_wenda}} where id=$fid";
                 $activity_info = Mod::app()->db->createCommand($sql)->queryRow();
                 if(!$activity_info['pid']){die('数据非法');}
                 //防止ID遍历
@@ -623,20 +797,24 @@ class WendaController extends FrontController
                 //end权限
 
                 //查询活动数据
-                $sql = "select * from {{activity_bigwheel}} where id=$fid";
+                $sql = "select * from {{activity_wenda}} where id=$fid";
                 $result = Mod::app()->db->createCommand($sql);
                 $query = $result->queryAll();
                 //查询对应的奖项
 
                 //获取奖品
-                $sql = "select * from {{activity_bigwheel_prize}} where aid=".$activity_info['id']." and status =1";
+                $sql = "select * from {{activity_wenda_prize}} where aid=".$activity_info['id']." and status =1";
                 $prize = Mod::app()->db->createCommand($sql)->queryAll();
 
-
+                //获取奖品
+                $sql = "select * from {{activity_wenda_question}} where wendaid=".$activity_info['id']." and status=1";
+                $question_all = Mod::app()->db->createCommand($sql)->queryAll();
+                
                 //获取各种图片
                 $images=Activity_bigwheel_img::model()->find("bigwheel_id=:bigwheel_id",array(':bigwheel_id'=>$fid));
 
             } else {
+                $question_all=array();
                 $prize = array();
                 $query = array();
 
@@ -649,11 +827,11 @@ class WendaController extends FrontController
             //head_app中的 应用首页（1）、基础配置（2）、应用组件（3）三个按钮选中加背景
             $config['active_1'] = '3';
             //组件assembly中的选中高亮背景图片 刮刮卡(1)、签到(2)、报名(3)
-            $config['active'] = 6;
+            $config['active'] = 10;
             $config['pid'] = $pid;
-            $config['site_title']='添加大转盘活动-编辑大转盘活动-大楚网用户开放平台';
-            $config['Keywords']='大楚网用户开放平台,大转盘，抽奖，一等奖';
-            $config['Description']='添加大转盘活动_编辑大转盘活动';
+            $config['site_title']='添加问答活动-编辑问答活动-大楚网用户开放平台';
+            $config['Keywords']='大楚网用户开放平台,问答，抽奖，一等奖';
+            $config['Description']='添加问答活动_编辑问答活动';
 
 
             $psql = "SELECT p.type,a.id,a.name from {{project}} as p LEFT JOIN {{application_tag}} as a on p.type=a.classid WHERE p.id=$pid  order by a.updatetime desc";
@@ -671,10 +849,11 @@ class WendaController extends FrontController
                 'config' => $config,
                 'activity_info' => $query[0],
                 'prize' => $prize,
+                'question_all' =>$question_all,//问题题库
                 'ptag' => $ptag,
                 'tag' => $tag,
                 'images'=>$images,
-                'status' => $this->activity_status('bigwheel'),
+                'status' => $this->activity_status('wenda'),
 
             );
 
@@ -771,7 +950,7 @@ class WendaController extends FrontController
 
         if($activity_id){//编辑
             //判断是不是自己的所属项目 不是没有权限
-            $sql = "select * from {{activity_bigwheel}} where id=$activity_id";
+            $sql = "select * from {{activity_wenda}} where id=$activity_id";
             $activity_info = Mod::app()->db->createCommand($sql)->queryRow();
             if(!$activity_info['pid']){
                 $res = array( 'state' => 0,   'msg' => '非法访问1' );
@@ -802,7 +981,7 @@ class WendaController extends FrontController
         }
 
         $update_id = array(':id' => $id);
-        $query = Mod::app()->db->createCommand()->update('{{activity_bigwheel}}', $arr, 'id=:id', $update_id);
+        $query = Mod::app()->db->createCommand()->update('{{activity_wenda}}', $arr, 'id=:id', $update_id);
         if ($query) {
             $res = array(
                 'state' => 1,
@@ -1192,7 +1371,7 @@ class WendaController extends FrontController
         $activity_id =   $fid;
         if($activity_id){//编辑
             //判断是不是自己的所属项目 不是没有权限
-            $sql = "select * from {{activity_bigwheel}} where id=$activity_id";
+            $sql = "select * from {{activity_wenda}} where id=$activity_id";
             $activity_info = Mod::app()->db->createCommand($sql)->queryRow();
             if(!$activity_info['pid']){die('数据非法');}
             //防止ID遍历
@@ -1223,7 +1402,7 @@ class WendaController extends FrontController
             $is_win = '';
             $active = 'active_all';
         }
-        $as_list = Activity_bigwheel_user::model()->getUserListPager($fid, $is_win, $search, $username);
+        $as_list = Activity_wenda_user::model()->getUserListPager($fid, $is_win, $search, $username);
         if ($as_list['count']) {
             foreach ($as_list['criteria'] as $key => $val) {
                 //根据用户id查询用户信息
@@ -1233,13 +1412,13 @@ class WendaController extends FrontController
                 //根据奖品id查询奖品信息
                 $prizeid = $val['prize_id'];
                 if ($prizeid) {
-                    $sql = "select * from {{activity_bigwheel_prize}} where id = $prizeid";
+                    $sql = "select * from {{activity_wenda_prize}} where id = $prizeid";
                     $prize = Mod::app()->db->createCommand($sql)->queryRow();
                 } else {
                     $prize = array();
                 }
                 $as_list['users'][$key]['id'] = $val['id'];
-                $as_list['users'][$key]['bigwheel_id'] = $val['bigwheel_id'];
+                $as_list['users'][$key]['wenda_id'] = $val['wenda_id'];
                 $as_list['users'][$key]['mid'] = $val['mid'];
                 $as_list['users'][$key]['phone'] = $user['phone'];
                 $as_list['users'][$key]['username'] = $user['username'];
@@ -1258,9 +1437,9 @@ class WendaController extends FrontController
         $as_list['username'] = $username;
         $as_list['type'] = $datatype;
         $as_list['config']=array(
-            'site_title'=> '添加大转盘活动-编辑大转盘活动-大楚网用户开放平台',
-            'Keywords'=>'大楚网用户开放平台,大转盘，抽奖，一等奖',
-            'Description'=>'添加大转盘活动_编辑大转盘活动'
+            'site_title'=> '添加问答活动-编辑大转盘活动-大楚网用户开放平台',
+            'Keywords'=>'大楚网用户开放平台,问答，抽奖，一等奖',
+            'Description'=>'添加问答活动_编辑大转盘活动'
         );
         $this->render('winlist', $as_list);
     }
@@ -1440,7 +1619,7 @@ class WendaController extends FrontController
         //start所属权限开始
         if($id){//编辑
             //判断是不是自己的所属项目 不是没有权限
-            $sql = "select * from {{activity_bigwheel}} where id=$id";
+            $sql = "select * from {{activity_wenda}} where id=$id";
             $activity_info = Mod::app()->db->createCommand($sql)->queryRow();
             if(!$activity_info['pid']){die('数据非法');}
             //防止ID遍历
@@ -1459,9 +1638,9 @@ class WendaController extends FrontController
         $parame = array(
             'id' => $id,
             'config'=>array(
-                'site_title'=> '大转盘活动页面-pc版活动页面-大楚网用户开放平台',
-                'Keywords'=>'大楚网用户开放平台,大转盘，抽奖，一等奖',
-                'Description'=>'大楚网用户开放平台_大转盘活动页面_pc版活动页面'
+                'site_title'=> '问答活动页面-pc版活动页面-大楚网用户开放平台',
+                'Keywords'=>'大楚网用户开放平台,问答，抽奖，一等奖',
+                'Description'=>'大楚网用户开放平台_问答活动页面_pc版活动页面'
             ),
         );
 
@@ -1580,6 +1759,53 @@ class WendaController extends FrontController
 
         $this->render('activitylist',$config);
     }
+    
+    /*
+     *   处理用户答题
+     */
+    public function actionGetuseranswer(){
+        if(!$this->member  ||  !$this->member['id'] || !$this->member['pstatus']){
+            $this->redirect(Mod::app()->request->getHostInfo());
+            exit;
+        }
+        $wendaid = trim(Tool::getValidParam('wendaid', 'integer'));//活动ID
+        $answer_arr_id = Tool::getValidParam('answer_arr_id',"array");//用户回答的答案ID组
+
+        //查询活动数据
+        $sql = "select * from {{activity_wenda}} where id=$wendaid";
+        $info = Mod::app()->db->createCommand($sql)->queryRow();
+
+        $bingo_num = 0 ; //答对题数
+        $answer_bingo_arr = array(); //答对题数id组
+        foreach ($answer_arr_id as $v){
+            //查询答案是否正确
+            $sql = "select * from {{activity_wenda_answer}} where id=$v";
+            $answer_info = Mod::app()->db->createCommand($sql)->queryRow();
+            if($answer_info['status']==1){
+                $bingo_num++;
+                $answer_bingo_arr[]=$answer_info['questionid'];
+            }
+        }
+
+        $answer_bingo_id = implode(",",$answer_bingo_arr);
+        $datajoin['mid'] = $this->member['id'];
+        $datajoin['answer_bingo_num'] = $bingo_num;
+        $datajoin['answer_bingo_id'] = $answer_bingo_id;
+        $datajoin['wendaid'] = $wendaid;
+        $datajoin['createtime'] = time();
+        $datajoin['updatetime'] = time();
+
+        $resjifen = Mod::app()->db->createCommand()->insert('{{activity_wenda_answerjoin}}', $datajoin);
+
+        //如果大于活动所设置的获奖资格数量 即可抽奖
+        if($bingo_num > $info['win_prize_num']){
+
+        }else{
+
+        }
+    }
+    
+
 
 }
 

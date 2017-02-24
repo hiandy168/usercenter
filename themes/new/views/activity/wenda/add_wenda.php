@@ -139,6 +139,14 @@
                                            placeholder="用户可中奖次数" class="form-control" name="win_num"/>
                                     </span>
                             </div>
+                            <div class="t_title">获奖资格--用户答对多少题即可有抽奖机会<span>（请填写整数）</span></div>
+                            <div class="form-inp">
+                                      <span>
+                                    <input type="number"
+                                           value="<?php echo isset($activity_info['wenda_prize_num']) ? $activity_info['wenda_prize_num'] : ''; ?>"
+                                           placeholder="用户可中奖次数" class="form-control" name="win_num"/>
+                                    </span>
+                            </div>
                         </div>
 
 
@@ -171,6 +179,55 @@
                         </div>
 
                     </div>
+
+
+                    <!--问答活动题目设置-->
+                    <div class="dail-formdiv1 dail-formdiv2">
+                        <h3>题目设置</h3>
+                        <div class="tips">
+                            <em>*Tips：</em>
+                            <p>
+                                添加此次活动的题库，最少配置1道题，最多可以配置20道题。
+                            </p>
+                        </div>
+
+                        <table width="800" border="0" cellspacing="0" cellpadding="0" id="timu_table">
+                            <tr>
+                                <td width="200">排序</td>
+                                <td width="200">题目</td>
+                                <td >类型</td>
+                                <td width="200">操作</td>
+                            </tr>
+                            <tr id="nothing" <?php if($question_all){echo 'hidden="hidden"';}?> >
+                                <td colspan="4" style="text-align: center;padding-left: 0px">还没有配置题目</td>
+                            </tr>
+                            <?php if($question_all){
+                                foreach ($question_all as $val){
+                                    ?>
+                                    <input type="hidden" value="<?php echo $val['id']?>" data-inphide-value="<?php echo $val['id']?>" name="qanda_id[]">
+                             <?php  }} ?>
+                            <?php if($question_all){
+                            foreach ($question_all as $val){
+                                ?>
+                                <tr class="lee">
+                                    <td><?php echo isset($val['sort'])?$val['sort']:""; ?></td>
+                                    <td><?php echo isset($val['question'])?$val['question']:""; ?></td>
+                                    <td><span data-span="span"   data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=edit_question(this)>编辑</span></td>
+                                    <td><span data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=del_question(this,"<?php echo $val['id']?>")>删除</span></td>
+                                </tr>
+                            <?php  }} ?>
+
+                        </table>
+
+                        <div class="input upload_pic clearfix" style="margin-bottom: 20px;">
+                            <div class="adbtn linear"
+                                 style=" width: 23%;line-height: 36px;text-align: center;margin-top: 20px;"
+                                 id="continue_adtimu_20160422">添加题目
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--问答活动题目设置-->
 
                     <!--1 end-->
 
@@ -255,7 +312,7 @@
 
                     <!--2end-->
 
-                    <div class="dail-formdiv1 dail-formdiv2">
+                    <div class="dail-formdiv1 dail-formdiv2" style="display: none;">
                         <h3>主题图片上传</h3>
                         <div class="tips">
                             <em>*Tips：</em>
@@ -808,6 +865,146 @@
         };
         laydate(start);
         laydate(end);
+
+        $("#continue_adtimu_20160422").on('click', function () {
+            var len = $(".lee").length + 1;
+            if (len > 20) {
+                alert("问答题目最多只能添加20个噢！");
+                return false;
+            }
+
+            edit_question();
+
+//            var parent = $(this).parents(".upload_pic");
+//            $(temp_html).insertBefore(parent);
+        });
+
+        function sub_form(type="",num=""){
+            var len = $(".lee").length + 1;
+            var timu = new Object();
+                timu.question = $("input[name='question']").val(), //题目文案
+                timu.option1 = $("input[name='option1']").val(), //选项1
+                timu.option2 = $("input[name='option2']").val(), //选项2
+                timu.option3 = $("input[name='option3']").val(), //选项3
+                timu.option4 = $("input[name='option4']").val(), //选项4
+                timu.answer = $("input[name='rightAnswer']:checked").val(); //正确答案选项值
+                timu.id = $("input[name='question_id']").val(); //主键id
+            $("#nothing").attr("hidden", "");
+            layer.closeAll();
+            if (type == "add") {
+                timu.no = len;
+                var data = JSON.stringify(timu);
+                var html = '<tr class="lee"><td>' + len + '</td><td>' + timu.question + '</td><td><span data-span="span"   data-data='+data+' onclick=edit_question(this)>编辑</span></td><td><span  data-data='+data+' onclick=del_question(this)>删除</span></td></tr>';
+                $("#timu_table").append(html);
+            }else{
+                timu.no = num;
+                var data = JSON.stringify(timu);
+                var num_id = num+1;
+                var edit_html='<td>' + num + '</td><td>' + timu.question + '</td><td><span data-span="span"   data-data='+data+' onclick=edit_question(this)>编辑</span></td><td><span   data-data='+data+' onclick=del_question(this,"'+timu.id+'")>删除</span></td>';
+                $("tr:eq("+num_id+")").html(edit_html);
+            }
+
+
+        }
+
+        function del_question(obj,hideid){
+//            var obj_timu = $(obj).attr("data-data");
+//            var timu = JSON.parse(obj_timu);
+
+//             if( $(obj).parent().parent().prev().has("input[type=hidden]")){
+//                 $(obj).parent().parent().prev().remove();
+//             }
+             $(obj).parent().parent().remove();
+             if($('[data-inphide-value="'+hideid+'"]').length){
+                $('[data-inphide-value="'+hideid+'"]').remove();
+             }
+              var len=$("[data-span='span']").length;
+              var arr1=[];
+              for(var i=0;i<len;i++){
+                  arr1[i]=JSON.parse($("[data-span='span']").eq(i).attr("data-data"));
+              }
+
+            var html="";
+            for (var i=0; i<arr1.length;i++){
+                arr1[i].no = i+1;
+                console.log(arr1[i]);
+                console.log(JSON.stringify(arr1[i]));
+                var jsonarr =JSON.stringify(arr1[i]);
+                html += '<tr class="lee">';
+                html += '<td>'+(i+1)+'</td>';
+                html += '<td>'+arr1[i].question+'</td>';
+                html += '<td><span data-span="span" data-data='+jsonarr+' onclick="edit_question(this)">编辑</span></td>';
+                html+='<td><span data-data='+jsonarr+' onclick="del_question(this,\''+arr1[i].id+'\')">删除</span></td>';
+                html+='</tr>';
+//              console.log(html);
+
+            }
+            $(".lee").remove();
+            $("#nothing").after(html);
+
+
+
+
+
+
+
+        }
+
+
+        function edit_question(obj){
+            var timu = $(obj).attr("data-data");
+            if( typeof(timu)=="string" ){
+                var timu = JSON.parse(timu);
+                var temp_html = '<div class="wenda_num"><div>题目文案<input type="hidden" name="question_id" value="'+timu.id+'">' +
+                    '<input type="text"  name="question"  value="'+timu.question+'" placeholder="题目的文案，不超过20个字符"  class="form-control"  />' +
+                    '</div>' +'<div><p>设置选项后，勾选唯一正确答案！</p> </div>'+
+                    '<div>选项A<input type="radio" name="rightAnswer" value="1"  checked="checked"  />' +
+                    '<input type="text" name="option1" value="'+timu.option1+'" placeholder="选项答案，不超过20个字符" class="form-control" />' +
+                    '</div>' +
+                    '<div>选项B<input type="radio" name="rightAnswer" value="2" />' +
+                    '<input type="text" name="option2" value="'+timu.option2+'" placeholder="选项答案，不超过20个字符" class="form-control" />' +
+                    '</div>' +
+                    '<div>选项C<input type="radio" name="rightAnswer" value="3" />' +
+                    '<input type="text" name="option3" value="'+timu.option3+'" placeholder="选项答案，不超过20个字符" class="form-control" />' +
+                    '</div>' +
+                    '<div>选项D<input type="radio" name="rightAnswer" value="4" />' +
+                    '<input type="text" name="option4" value="'+timu.option4+'" placeholder="选项答案，不超过20个字符" class="form-control" />' +
+                    '</div></div><input type="button" onclick=sub_form("edit",'+timu.no+') value="修改">';
+            }else {
+                var temp_html = '<div class="wenda_num"><div>题目文案<input type="hidden" name="question_id" value="0">' +
+                    '<input type="text"  name="question"  value="" placeholder="题目的文案，不超过20个字符"  class="form-control"  />' +
+                    '</div>' + '<div><p>设置选项后，勾选唯一正确答案！</p> </div>' +
+                    '<div>选项A<input type="radio" name="rightAnswer" value="1" checked="checked"  />' +
+                    '<input type="text" name="option1" value="" placeholder="选项答案，不超过20个字符" class="form-control" />' +
+                    '</div>' +
+                    '<div>选项B<input type="radio" name="rightAnswer" value="2" />' +
+                    '<input type="text" name="option2" value="" placeholder="选项答案，不超过20个字符" class="form-control" />' +
+                    '</div>' +
+                    '<div>选项C<input type="radio" name="rightAnswer" value="3" />' +
+                    '<input type="text" name="option3" value="" placeholder="选项答案，不超过20个字符" class="form-control" />' +
+                    '</div>' +
+                    '<div>选项D<input type="radio" name="rightAnswer" value="4" />' +
+                    '<input type="text" name="option4" value="" placeholder="选项答案，不超过20个字符" class="form-control" />' +
+                    '</div></div><input type="button" onclick=sub_form("add") value="确认">';
+            }
+
+
+            layer.open({
+                title: "题目设置",
+                type: 1,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['800px', '600px'], //宽高
+                content: temp_html
+            });
+            if( typeof(timu)=="object" ) {
+                var checked_id = timu.answer-1;
+                $("input[name='rightAnswer']:eq(" + checked_id + ")").attr("checked","checked");
+            }
+
+        }
+
+
+
         $("#continue_ad_20160422").on('click', function () {
             var len = $(".s_num").length + 1;
             if (len > 5) {
@@ -904,7 +1101,6 @@
 
 
         $('.save_button').click(function () {
-
             var id = $("input[name='id']").val();
             //为真表示编辑，活动进行的时候不能编辑
             if(id){
@@ -1021,18 +1217,18 @@
                 $('.save_button').text("保存");
                 return false;
             }
-            var share_img = $("input[name='share_img']").val();//分享图片
-            var img = $("input[name='background']").val();//背景图片
-            var biaoyu = $("input[name='biaoyu']").val();//活动标语图片
-            var bootmbackground = $("input[name='bootmbackground']").val();//底部背景图片
-            var rotaryfive = $("input[name='rotaryfive']").val();//转盘图片
-            var pointer = $("input[name='pointer']").val();//转盘指针图片
-            var recordbutton = $("input[name='recordbutton']").val();//中奖记录按钮
-            var rules = $("input[name='rules']").val();//活动规则按钮
-            var colse = $("input[name='colse']").val();//弹窗关闭按钮
-            var alertyes = $("input[name='alertyes']").val();//恭喜弹窗背景图
-            var alertno = $("input[name='alertno']").val();//遗憾（未能中奖或是其他）弹窗背景图
-            var winninglist = $("input[name='winninglist']").val();//中奖记录弹窗背景图
+//            var share_img = $("input[name='share_img']").val();//分享图片
+//            var img = $("input[name='background']").val();//背景图片
+//            var biaoyu = $("input[name='biaoyu']").val();//活动标语图片
+//            var bootmbackground = $("input[name='bootmbackground']").val();//底部背景图片
+//            var rotaryfive = $("input[name='rotaryfive']").val();//转盘图片
+//            var pointer = $("input[name='pointer']").val();//转盘指针图片
+//            var recordbutton = $("input[name='recordbutton']").val();//中奖记录按钮
+//            var rules = $("input[name='rules']").val();//活动规则按钮
+//            var colse = $("input[name='colse']").val();//弹窗关闭按钮
+//            var alertyes = $("input[name='alertyes']").val();//恭喜弹窗背景图
+//            var alertno = $("input[name='alertno']").val();//遗憾（未能中奖或是其他）弹窗背景图
+//            var winninglist = $("input[name='winninglist']").val();//中奖记录弹窗背景图
 
             var share_desc = $("input[name='share_desc']").val();//分享描述
             var share_url = $("input[name='share_url']").val();//分享地址
@@ -1070,13 +1266,35 @@
                 if (obj[i].checked) tag += obj[i].value + '_';
             }
 
-
             if (!tag) {
                 layer.msg("请选择标签");
                 $('.save_button').removeAttr('disabled');
                 $('.save_button').text("保存");
                 return false;
             }
+
+            <!-- 题目设置取值-->
+
+            var len=$("[data-span='span']").length;
+            var obj_question = $("[data-span='span']").attr("data-data");
+            var question_arr=[];
+            for(var i=0;i<len;i++){
+                question_arr[i]=$("[data-span='span']").eq(i).attr("data-data");
+            }
+
+            var obj_qanda_id = $("input[name='qanda_id[]']");
+            var qanda_id = new Array();
+            obj_qanda_id.each(function (index, item) {
+                if (!$(this).val()) {
+                    checkes = true;
+                }
+                qanda_id[index] = $(this).val();
+            });
+            console.log(question_arr);
+            console.log(qanda_id);
+
+            <!-- 题目设置取值-->
+
             var checkes = false;
             var p_title = new Array();
             if ($(".s_num").length < 3) {
@@ -1167,8 +1385,8 @@
                 rule: rule,
                 lingjiang: lingjiang,
                 jishu: jishu,
-                share_img: share_img,
-                img: img,
+//                share_img: share_img,
+//                img: img,
                 share_desc: share_desc,
                 share_url: share_url,
                 tag: tag,
@@ -1179,18 +1397,20 @@
                 p_v: p_v,
                 p_id: p_id,
 
-                biaoyu:biaoyu,
-                bootmbackground:bootmbackground,
-                rotaryfive:rotaryfive,
-                pointer:pointer,
-                recordbutton:recordbutton,
-                rules:rules,
-                colse:colse,
-                alertyes:alertyes,
-                alertno:alertno,
-                winninglist:winninglist,
+//                biaoyu:biaoyu,
+//                bootmbackground:bootmbackground,
+//                rotaryfive:rotaryfive,
+//                pointer:pointer,
+//                recordbutton:recordbutton,
+//                rules:rules,
+//                colse:colse,
+//                alertyes:alertyes,
+//                alertno:alertno,
+//                winninglist:winninglist,
                 share_switch:share_switch,
                 prize_number:prize_number,
+                question_arr:question_arr,
+                qanda_id:qanda_id,
             };
             $.post(url, data, function (res) {
                 var res = JSON.parse(res);
