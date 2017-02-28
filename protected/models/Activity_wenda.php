@@ -21,9 +21,7 @@ class Activity_wenda extends CActiveRecord {
     public function rules() {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
-        return array(
-
-        );
+        return array();
     }
 
     //活动列表带分页

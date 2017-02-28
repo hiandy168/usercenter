@@ -91,7 +91,7 @@
                       <em onclick="Copy(this)">点击复制</em>
                     </div>
                     </li> -->
-                                    <li class="l5"><a href="<?php echo $this->createUrl('/activity/wenda/prize',array('id'=>$val->id,'pid'=>$config['pid']))?>"><i></i>奖品/概率</a></li>
+<!--                                    <li class="l5"><a href="--><?php //echo $this->createUrl('/activity/wenda/prize',array('id'=>$val->id,'pid'=>$config['pid']))?><!--"><i></i>奖品/概率</a></li>-->
                                     <li class="l5"><a href="<?php echo $this->createUrl('/activity/wenda/add',array('id'=>$val->id,'pid'=>$config['pid']))?>"><i></i>编辑</a></li>
                                     <li class="l1"><a href="<?php echo $this->createUrl('/activity/wenda/pcview',array('id'=>$val->id))?>" target="_blank"><i></i>预览</a></li>
                                     <li class="l2" onclick="getWinList(<?php echo $val->id?>)"><i></i>用户数据</li>

@@ -65,21 +65,21 @@ class WendaController extends FrontController
         // if(!$checkToken || empty($checkToken)){die('token is error');}
 
 //        $backUrl = "?id=".$id."&accesstoken=".$token."&openid=".$openid;
-
-        $prize_id = explode(',', rtrim($info['prize_id'], ','));
-        foreach ($prize_id as $key => $val) {
-            //查询奖品信息
-            $sql = "SELECT * FROM {{activity_wenda_prize}} WHERE id=$val";
-            $prize[$key] = Mod::app()->db->createCommand($sql)->queryRow();
-        }
+//
+//        $prize_id = explode(',', rtrim($info['prize_id'], ','));
+//        foreach ($prize_id as $key => $val) {
+//            //查询奖品信息
+//            $sql = "SELECT * FROM {{activity_wenda_prize}} WHERE id=$val";
+//            $prize[$key] = Mod::app()->db->createCommand($sql)->queryRow();
+//        }
 
 
 //        $images= Activity_wenda_img::model()->find("bigwheel_id=:id",array(':id'=>$id));
         $parame = array(
             'info' => $info,
-            'prize' => $prize,
+//            'prize' => $prize,
 //            'images' => $images,
-            'countprize' => count($prize),
+//            'countprize' => count($prize),
             'param' => array(
                 "appid" => $project_info['appid'],
                 "appsecret" => $project_info['appsecret'],
@@ -632,51 +632,51 @@ class WendaController extends FrontController
 
 
 
-            /*先将奖品信息插入数据库*/
-            $p_title = Tool::getValidParam('p_title');
-            // $p_title= Mod::app()->request->getParam('p_title');
-            $p_name = Tool::getValidParam('p_name');
-            $p_num = Tool::getValidParam('p_num');
-            $p_snum = Tool::getValidParam('p_snum');//剩余奖品数量
-            $p_v = Tool::getValidParam('p_v');
-            $p_id = Tool::getValidParam('p_id');
-            $prize_id_arr = array();
-            $prize_id = '';
-
-//            $redis = new Redis();
-//            $redis->connect('111.47.243.43',6379);
-//            $redis->select(3);
-            $p_num_all = 0;
-
-            if ($activity_id && $p_id) {
-                unset($data['jishu']);//不让修改基数 要修改在actionprize里面修改
-                //之前的编辑逻辑
-                //是否更新奖品信息
-                $update_prize = false;//编辑的不更新 没有用哈哈
-            } else {
-                $update_prize = true;//新增的更新 没有用哈哈
-                foreach ($p_title as $key => $val) {
-                    $prize_data['title'] = $val;
-                    $prize_data['mid'] = $this->member['id'];
-                    $prize_data['name'] = $p_name[$key];
-                    $prize_data['count'] = $p_num[$key];
-                    $prize_data['probability'] = $p_v[$key];
-                    $prize_data['remainder'] = $p_snum[$key]<=$p_num[$key]?$p_snum[$key]:$p_num[$key];
-                    $prize_data['createtime'] = time();
-                    $prize_data['status'] = 1;
-                    $prize_model = new Activity_wenda_prize();
-                    $prize_model->attributes = $prize_data;
-                    $prize_model->save();
-                    $id = $prize_model->primaryKey;
-                    $prize_id_arr[] = $id;
-                    $p_num_all += $p_num[$key];  //奖品总数
-                    $tmp[$key]['prize_id'] = $id;
-                    $tmp[$key]['num'] = $p_num[$key];
-                }
-            }
-            /*  echo "<pre>";
-              print_r($tmp);exit;*/
-            $prize_id = implode(',', $prize_id_arr);//奖品id，用逗号链接
+//            /*先将奖品信息插入数据库*/
+//            $p_title = Tool::getValidParam('p_title');
+//            // $p_title= Mod::app()->request->getParam('p_title');
+//            $p_name = Tool::getValidParam('p_name');
+//            $p_num = Tool::getValidParam('p_num');
+//            $p_snum = Tool::getValidParam('p_snum');//剩余奖品数量
+//            $p_v = Tool::getValidParam('p_v');
+//            $p_id = Tool::getValidParam('p_id');
+//            $prize_id_arr = array();
+//            $prize_id = '';
+//
+////            $redis = new Redis();
+////            $redis->connect('111.47.243.43',6379);
+////            $redis->select(3);
+//            $p_num_all = 0;
+//
+//            if ($activity_id && $p_id) {
+//                unset($data['jishu']);//不让修改基数 要修改在actionprize里面修改
+//                //之前的编辑逻辑
+//                //是否更新奖品信息
+//                $update_prize = false;//编辑的不更新 没有用哈哈
+//            } else {
+//                $update_prize = true;//新增的更新 没有用哈哈
+//                foreach ($p_title as $key => $val) {
+//                    $prize_data['title'] = $val;
+//                    $prize_data['mid'] = $this->member['id'];
+//                    $prize_data['name'] = $p_name[$key];
+//                    $prize_data['count'] = $p_num[$key];
+//                    $prize_data['probability'] = $p_v[$key];
+//                    $prize_data['remainder'] = $p_snum[$key]<=$p_num[$key]?$p_snum[$key]:$p_num[$key];
+//                    $prize_data['createtime'] = time();
+//                    $prize_data['status'] = 1;
+//                    $prize_model = new Activity_wenda_prize();
+//                    $prize_model->attributes = $prize_data;
+//                    $prize_model->save();
+//                    $id = $prize_model->primaryKey;
+//                    $prize_id_arr[] = $id;
+//                    $p_num_all += $p_num[$key];  //奖品总数
+//                    $tmp[$key]['prize_id'] = $id;
+//                    $tmp[$key]['num'] = $p_num[$key];
+//                }
+//            }
+//            /*  echo "<pre>";
+//              print_r($tmp);exit;*/
+//            $prize_id = implode(',', $prize_id_arr);//奖品id，用逗号链接
 
 
             /*奖品写入数据库后拿到奖品的id 用逗号链接*/
@@ -690,7 +690,7 @@ class WendaController extends FrontController
                     }
                 }
             }
-            $arr['prize_id'] = $prize_id;
+//            $arr['prize_id'] = $prize_id;
             $arr['mid'] = $this->member['id'];
             //处理换行
             $arr['rule'] = str_replace('\n',"<br>",$arr['rule']);
@@ -706,7 +706,7 @@ class WendaController extends FrontController
 //                    }
 //                }
                 $update_id = array(':id' => $activity_id);
-                unset($arr['prize_id']);//强制修改不让修改奖品
+//                unset($arr['prize_id']);//强制修改不让修改奖品
                 $query = Mod::app()->db->createCommand()->update('{{activity_wenda}}', $arr, 'id=:id', $update_id);
 
                 //更新问答题目的wendaid字段
@@ -737,11 +737,11 @@ class WendaController extends FrontController
                 if ($query) {
                     //插入成功把对应的图片文件插入
                     $id = Mod::app()->db->getLastInsertID();
-                    //更新奖品的aid字段
-
-                    if($arr['prize_id'] && $id){
-                        Activity_wenda_prize::model()->updateAll(array('aid' => $id), 'id  in ('.$arr['prize_id'].')');
-                    }
+//                    //更新奖品的aid字段
+//
+//                    if($arr['prize_id'] && $id){
+//                        Activity_wenda_prize::model()->updateAll(array('aid' => $id), 'id  in ('.$arr['prize_id'].')');
+//                    }
                     //更新问答题目的wendaid字段
                     if($question_id && $id){
                         Activity_wenda_question::model()->updateAll(array('wendaid' => $id), 'id  in ('.$question_id.')');
@@ -751,13 +751,13 @@ class WendaController extends FrontController
 //                    $imgre = Mod::app()->db->createCommand()->insert('{{activity_bigwheel_img}}', $img);
                     $imgre=true;
                     if(!$imgre){
-                        Activity_bigwheel::model()->updateByPk($id,array('status'=>-1));
+                        Activity_wenda::model()->updateByPk($id,array('status'=>-1));
                         $has_edit_img = true;
                     }else {
                         //新增加活动之后生成站内信息
                         $tablename = "wenda";
                         $url = $this->_siteUrl . "/activity/wenda/view/id/" . $id;
-                        $this->my_message("问答活动[" . $prize_data['title'] . "]", time(), "新增", $arr['pid'], $url, $tablename);
+//                        $this->my_message("问答活动[" . $prize_data['title'] . "]", time(), "新增", $arr['pid'], $url, $tablename);
                     }
                 }
             }
@@ -803,8 +803,8 @@ class WendaController extends FrontController
                 //查询对应的奖项
 
                 //获取奖品
-                $sql = "select * from {{activity_wenda_prize}} where aid=".$activity_info['id']." and status =1";
-                $prize = Mod::app()->db->createCommand($sql)->queryAll();
+//                $sql = "select * from {{activity_wenda_prize}} where aid=".$activity_info['id']." and status =1";
+//                $prize = Mod::app()->db->createCommand($sql)->queryAll();
 
                 //获取奖品
                 $sql = "select * from {{activity_wenda_question}} where wendaid=".$activity_info['id']." and status=1";
@@ -815,7 +815,7 @@ class WendaController extends FrontController
 
             } else {
                 $question_all=array();
-                $prize = array();
+//                $prize = array();
                 $query = array();
 
             }
@@ -844,11 +844,11 @@ class WendaController extends FrontController
             //处理换行
             $query[0]['rule'] = str_replace("<br>","\n",$query[0]['rule']);
 
-
+         
             $parame = array(
                 'config' => $config,
                 'activity_info' => $query[0],
-                'prize' => $prize,
+//                'prize' => $prize,
                 'question_all' =>$question_all,//问题题库
                 'ptag' => $ptag,
                 'tag' => $tag,

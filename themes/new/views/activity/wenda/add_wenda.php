@@ -61,16 +61,9 @@
                 <ul>
                     <li  class="selected" >
                         <?php if($activity_info['id']){ ?>
-                            <a href="<?php echo $this->createUrl('/activity/wenda/add',array('id'=>$activity_info['id']))?>">编辑大转盘</a>
+                            <a href="<?php echo $this->createUrl('/activity/wenda/add',array('id'=>$activity_info['id']))?>">编辑问答</a>
                         <?php }else if($config['pid']){ ?>
-                            <a href="<?php echo $this->createUrl('/activity/wenda/add',array('pid'=>$config['pid']))?>">添加大转盘</a>
-                        <?php } ?>
-                    </li>
-                    <li>
-                        <?php if($activity_info['id']){ ?>
-                            <a href="<?php echo $this->createUrl('/activity/wenda/prize',array('id'=>$activity_info['id']))?>">奖品/概率</a>
-                        <?php }else{ ?>
-                            <a href="javascript:void(0)">奖品/概率</a>
+                            <a href="<?php echo $this->createUrl('/activity/wenda/add',array('pid'=>$config['pid']))?>">添加问答</a>
                         <?php } ?>
                     </li>
                     <li class="">
@@ -95,7 +88,7 @@
 
                         <div class="tips" style="margin-bottom: 0;">
                             <em>*Tips：</em>
-                            <p>本模块为大转盘活动基本信息，为了保证活动顺利创建，除活动规则和领奖方式选填外其余的为必填。</p>
+                            <p>本模块为问答活动基本信息，为了保证活动顺利创建，除活动规则和领奖方式选填外其余的为必填。</p>
                         </div>
                         <input type="hidden" value="<?php echo $config['pid'] ?>" name="pid">
                         <?php
@@ -131,27 +124,19 @@
                                             placeholder="请填写活动结束时间" class="form-control" name="end_time"
                                             id="end"/></span>
                             </div>
-                            <div class="t_title">用户可中奖次数<span>（请填写整数）</span></div>
-                            <div class="form-inp">
-                                      <span>
-                                    <input type="number"
-                                           value="<?php echo isset($activity_info['win_num']) ? $activity_info['win_num'] : ''; ?>"
-                                           placeholder="用户可中奖次数" class="form-control" name="win_num"/>
-                                    </span>
-                            </div>
                             <div class="t_title">获奖资格--用户答对多少题即可有抽奖机会<span>（请填写整数）</span></div>
                             <div class="form-inp">
                                       <span>
                                     <input type="number"
                                            value="<?php echo isset($activity_info['wenda_prize_num']) ? $activity_info['wenda_prize_num'] : ''; ?>"
-                                           placeholder="用户可中奖次数" class="form-control" name="win_num"/>
+                                           placeholder="用户可中奖次数" class="form-control" name="wenda_prize_num"/>
                                     </span>
                             </div>
                         </div>
 
 
                         <div class="fl" style="width: 45%;">
-                            <div class="t_title">每人每天抽奖次数</div>
+                            <div class="t_title">每人每天可玩次数</div>
                             <div class="form-inp">
                                       <span>
                                    <input type="number"
@@ -168,14 +153,55 @@
 
                                   </span>
                             </div>
-                            <div class="t_title">领奖方式</div>
+                            <div class="t_title">是否参与抽奖<span></span></div>
                             <div class="form-inp">
-                                      <span>
-                                    <input type="text"
-                                           value="<?php echo isset($activity_info['lingjiang']) ? $activity_info['lingjiang'] : ''; ?>"
-                                           name='lingjiang' placeholder="领奖方式" class="form-control"/>                                  </span>
+                                <select name="is_prize" id="is_prize" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                    <option value="1" <?php if($activity_info['is_prize']==1){ ?>selected ="selected "<?php } ?>>是</option>
+                                    <option value="0" <?php if($activity_info['is_prize']==0){ ?>selected ="selected "<?php } ?>>否</option>
+                                </select>
                             </div>
 
+                        </div>
+                        <div class="fl" style="width: 45%; <?php if($activity_info['is_prize']==0){ echo "display:none";}?>" id="prize">
+                            <div class="t_title">抽奖组件<span></span></div>
+                            <div class="form-inp">
+                                <select name="activity_type" id="activity_type" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                    <option value="1" <?php if($activity_info['activity_type']==1){ ?>selected ="selected "<?php } ?>>刮刮卡</option>
+                                    <option value="2" <?php if($activity_info['activity_type']==2){ ?>selected ="selected "<?php } ?>>大转盘</option>
+                                </select>
+                            </div>
+
+                            <div class="t_title">抽奖活动列表<span></span></div>
+                            <div class="form-inp">
+                                <select name="activitylist" id="activitylist" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
+                                    <?php if ($activity_info['activity_type'] == 2) {
+                                        $activitylist = Activity_bigwheel::model()->findAll("pid=:pid", array(':pid' => $config['pid']));
+                                        if ($activitylist) {
+                                            foreach ($activitylist as $key => $val) {
+                                                ?>
+                                                <option value="<?php echo $val->id ?>"
+                                                        <?php if ($activity_info['activity_id'] == $val->id){ ?>selected="selected "<?php } ?> ><?php echo $val->title ?></option>
+                                                <?
+                                            }
+                                        } else {
+                                            ?>
+                                            <option value="0">该组件下没有活动</option>
+                                        <?php }
+                                    } else { ?>
+                                        <?php $activityscratch = Activity_scratch::model()->findAll("pid=:pid", array(':pid' => $config['pid']));
+                                        if ($activityscratch) {
+                                            foreach ($activityscratch as $key => $val) {
+                                                ?>
+                                                <option value="<?php echo $val->id ?>"
+                                                        <?php if ($activity_info['activity_id'] == $val->id){ ?>selected="selected "<?php } ?> ><?php echo $val->title ?></option>
+                                            <?php }
+                                        } else {
+                                            ?>
+                                            <option value="0">该组件下没有活动</option>
+                                        <?php }
+                                    } ?>
+                                </select>
+                            </div>
                         </div>
 
                     </div>
@@ -229,88 +255,7 @@
                     </div>
                     <!--问答活动题目设置-->
 
-                    <!--1 end-->
-
-
-                    <div class="dail-formdiv1 dail-formdiv2">
-                        <h3>奖品设置</h3>
-                        <div class="tips">
-                            <em>*Tips：</em>
-                            <p>
-                                奖品设置是大转盘核心必填模块，我们支持三到五种奖品，其中活动创建最少添加三个活动奖品最多五个，超过或者少于均会创建失败。添加的奖品默认的第一个就是一等奖奖品，以此类推到五等奖奖品，添加的奖项里面的项目都是必填。<br/>
-                                奖品概率和数量请在活动开始前预算规划好设置好请不要随意修改，若不知道如何填写，请联系开发人员。
-                            </p>
-                        </div>
-
-
-                        <?php
-                        if($prize){
-                            foreach ($prize as $val){
-                                ?>
-                                <div class="s_num">
-                                    <input type="hidden" value="<?php echo $val['id']?>" name="p_id[]">
-                                    <div class="t_title">自定义名称</div>
-                                    <div class="form-inp">
-                                        <input type="text" readonly="readonly" value="<?php echo $val['title']?>" placeholder="" class="form-control" name="p_title[]" />
-                                        <div class="del"></div>
-                                    </div>
-                                    <div class="t_title">奖品名称</div>
-                                    <div class="form-inp">
-                                        <input type="text" readonly="readonly" value="<?php echo $val['name']?>" placeholder="" class="form-control"  name="p_name[]" />
-                                        <div class="del"></div>
-                                    </div>
-                                    <div class="t_title">奖品数量</div>
-                                    <div class="form-inp">
-                                        <input type="text" readonly="readonly" value="<?php echo $val['count']?>" placeholder="" class="form-control" name="p_num[]"/>
-                                        <div class="del"></div>
-                                    </div>
-                                    <div class="t_title">奖品剩余数量</div>
-                                    <div class="form-inp">
-                                        <input type="text" readonly="readonly" value="<?php echo $val['remainder']?>" placeholder="" class="form-control" name="p_snum[]"/>
-                                        <div class="del"></div>
-                                    </div>
-                                    <div class="t_title">奖品概率<span>(填入整数)</span></div>
-                                    <div class="form-inp">
-                                        <input type="text" readonly="readonly" value="<?php echo $val['probability']?>" placeholder="" class="form-control" name="p_v[]"/>
-                                        <div class="del"></div>
-                                    </div>
-                                </div>
-                                <?php
-                            }
-                        }else{
-                            ?>
-
-                            <div class="input upload_pic clearfix" style="margin-bottom: 20px;">
-                                <div class="adbtn linear"
-                                     style=" width: 23%;line-height: 36px;text-align: center;margin-top: 20px;"
-                                     id="continue_ad_20160422">添加奖项
-                                </div>
-                                <div class="adbtn linear"
-                                     style=" width: 23%;line-height: 36px;text-align: center;margin-top: 20px;"
-                                     id="continue_del_20160422">删除最后一个奖项
-                                </div>
-                            </div>
-                        <?php }?>
-
-                        <div class="t_title">概率基数<span style="color: #999;font-size: 12px;margin-left: 10px;">(奖品概率5,概率基数100000,则中奖概率十万分之五)</span>
-                        </div>
-                        <div class="form-inp">
-                                      <span>
-                                     <?php if($activity_info['id'] && $activity_info['id']){ ?>
-                                         <input type="number"
-                                                value="<?php echo isset($activity_info['jishu']) ? $activity_info['jishu'] : '100000'; ?>"
-                                                name='jishu' placeholder="概率基数(填入整数)" class="form-control" disabled="disabled"/>
-                                     <?php }else{ ?>
-                                         <input type="number"
-                                                value="<?php echo isset($activity_info['jishu']) ? $activity_info['jishu'] : '100000'; ?>"
-                                                name='jishu' placeholder="概率基数(填入整数)" class="form-control" />
-                                     <?php } ?>
-                                  </span>
-                        </div>
-
-                    </div>
-
-                    <!--2end-->
+                    
 
                     <div class="dail-formdiv1 dail-formdiv2" style="display: none;">
                         <h3>主题图片上传</h3>
@@ -866,6 +811,39 @@
         laydate(start);
         laydate(end);
 
+        <!---->
+        $("#is_prize").change(function(){
+            var val=$(this).val();
+            if(val==0){
+                $("#prize").hide();
+            }else{
+                $("#prize").show();
+            }
+        });
+        $("#activity_type").change(function(){
+            var activity_type=$(this).val();
+            var html = "";
+            if(activity_type==2){
+                <?php $activitylist=Activity_bigwheel::model()->findAll("pid=:pid",array(':pid'=>$config['pid'])); ?>
+                <?php if($activitylist){ foreach($activitylist as $k=>$v){ ?>
+                html+= '<option value="<?php echo $v->id ?>"><?php echo $v->title ?></option>';
+                <?php }}else{?>
+                html+= '<option value="0">该组件下没有活动</option>';
+                <?php }?>
+                $("#activitylist").html(html);
+            }else{
+                <?php $activityscratch = Activity_scratch::model()->findAll("pid=:pid",array(':pid'=>$config['pid'])) ?>
+                <?php if($activityscratch){ foreach($activityscratch as $k=>$v){ ?>
+                html+= '<option value="<?php echo $v->id ?>"><?php echo $v->title ?></option>';
+                <?php }}else{?>
+                html+= '<option value="0">该组件下没有活动</option>';
+                <?php }?>
+                $("#activitylist").html(html);
+
+            }
+        });
+        <!---->
+
         $("#continue_adtimu_20160422").on('click', function () {
             var len = $(".lee").length + 1;
             if (len > 20) {
@@ -1005,66 +983,7 @@
 
 
 
-        $("#continue_ad_20160422").on('click', function () {
-            var len = $(".s_num").length + 1;
-            if (len > 5) {
-                alert("大转盘奖品最多只能添加5个噢！");
-                return false;
-            }
-            var tit = '';
-            if (len == 1) {
-                tit = '一等奖';
-            } else if (len == 2) {
-                tit = '二等奖';
-            } else if (len == 3) {
-                tit = '三等奖';
-            } else if (len == 4) {
-                tit = '四等奖';
-            } else if (len == 5) {
-                tit = '五等奖';
-            }
-            var temp_html = '<div class="s_num"><div class="t_title">自定义名称</div>' +
-                '<div class="form-inp">' +
-                '<input type="text" value=' + tit + '  value="" placeholder="" disabled="true "  class="form-control" name="p_title[]" />' +
-
-                '</div>' +
-                '<div class="t_title">奖品名称</div>' +
-                '<div class="form-inp">' +
-                '<input type="text" value="" placeholder="" class="form-control"  name="p_name[]" />' +
-
-                '</div>' +
-                '<div class="t_title">奖品数量</div>' +
-                '<div class="form-inp">' +
-                '<input type="text" value="" placeholder="" class="form-control" name="p_num[]"/>' +
-
-                '</div>' +
-                '<div class="t_title">奖品剩余数量(用户每中奖一次数量就会随之减少，请不要随意修改)</div>' +
-                '<div class="form-inp">' +
-                '<input type="text" value="" placeholder="" class="form-control" name="p_snum[]"/>' +
-
-                '</div>' +
-                '<div class="t_title">奖品概率<span>(请填入整数，例如5，概率是以下面的概率基数为分母，填入数值为分子，默认概率基数为100000，中奖概率为10万分之5)</span></div>' +
-                '<div class="form-inp">' +
-                '<input type="text" value="" placeholder="" class="form-control" name="p_v[]"/>' +
-
-                '</div></div>';
-
-            var parent = $(this).parents(".upload_pic");
-            $(temp_html).insertBefore(parent);
-        });
-
-
-        $("#continue_del_20160422").on('click', function () {
-            var len=$(".s_num").length-1;
-            $('.s_num').each(function(index,element){
-                if(len==index){
-                    $(this).remove();
-                }else{
-
-                    console.log(index)
-                }
-            })
-        });
+       
 
         var url = "<?php echo $this->createUrl('/activity/wenda/add'); ?>";
 
@@ -1166,14 +1085,14 @@
                 $('.save_button').text("保存");
                 return false;
             }
-            var win_num = $("input[name='win_num']").val();//用户可中奖次数
-            if (win_num <= 0) {
-                layer.msg("用户可中奖次数必须大于零");
+            var wenda_prize_num = $("input[name='wenda_prize_num']").val();//用户抽奖资格数
+            if (wenda_prize_num <= 0) {
+                layer.msg("用户抽奖资格数必须大于零");
                 $('.save_button').removeAttr('disabled');
                 $('.save_button').text("保存");
                 return false;
             }
-            var day_count = $("input[name='day_count']").val();//每天可以抽奖的次数
+            var day_count = $("input[name='day_count']").val();//每天可以玩的次数
             if (day_count <= 0) {
                 layer.msg("每天可以抽奖的次数必须大于0");
                 $('.save_button').removeAttr('disabled');
@@ -1203,20 +1122,8 @@
                 $('.save_button').text("保存");
                 return false;
             }
-            var lingjiang = $("input[name='lingjiang']").val();//领奖方式
-            if (!lingjiang) {
-                layer.msg("请填写领奖方式");
-                $('.save_button').removeAttr('disabled');
-                $('.save_button').text("保存");
-                return false;
-            }
-            var jishu = $("input[name='jishu']").val();//概率基数
-            if (jishu <= 0) {
-                layer.msg("请填写概率基数");
-                $('.save_button').removeAttr('disabled');
-                $('.save_button').text("保存");
-                return false;
-            }
+
+
 //            var share_img = $("input[name='share_img']").val();//分享图片
 //            var img = $("input[name='background']").val();//背景图片
 //            var biaoyu = $("input[name='biaoyu']").val();//活动标语图片
@@ -1234,6 +1141,10 @@
             var share_url = $("input[name='share_url']").val();//分享地址
             //var share_switch     = $("input[name='share_switch']").val();
             var obj_share_switch=document.getElementsByName('share_switch');
+            var is_prize     = $("select[name='is_prize']").find('option:selected').val();
+            var activity_type     =$("select[name='activity_type']").find('option:selected').val();
+            var activity_id  = $("select[name='activitylist']").find('option:selected').val();
+
             var share_switch='';
             for(var i=0; i<obj_share_switch.length; i++){
                 if(obj_share_switch[i].checked) share_switch+=obj_share_switch[i].value;
@@ -1274,14 +1185,12 @@
             }
 
             <!-- 题目设置取值-->
-
             var len=$("[data-span='span']").length;
             var obj_question = $("[data-span='span']").attr("data-data");
             var question_arr=[];
             for(var i=0;i<len;i++){
                 question_arr[i]=$("[data-span='span']").eq(i).attr("data-data");
             }
-
             var obj_qanda_id = $("input[name='qanda_id[]']");
             var qanda_id = new Array();
             obj_qanda_id.each(function (index, item) {
@@ -1292,85 +1201,7 @@
             });
             console.log(question_arr);
             console.log(qanda_id);
-
             <!-- 题目设置取值-->
-
-            var checkes = false;
-            var p_title = new Array();
-            if ($(".s_num").length < 3) {
-                layer.msg("请至少添加3个奖品噢！");
-                $('.save_button').removeAttr('disabled');
-                $('.save_button').text("保存");
-                return false;
-            }
-            obj_p_title.each(function (index, item) {
-                if (!$(this).val()) {
-                    checkes = true;
-                }
-                p_title[index] = $(this).val();
-            });
-            var obj_p_name = $("input[name='p_name[]']");
-            var p_name = new Array();
-            obj_p_name.each(function (index, item) {
-                if (!$(this).val()) {
-                    checkes = true;
-                }
-                p_name[index] = $(this).val();
-            });
-            var obj_p_num = $("input[name='p_num[]']");
-            var p_num = new Array();
-            obj_p_num.each(function (index, item) {
-                if (!$(this).val()) {
-                    checkes = true;
-                }
-                p_num[index] = $(this).val();
-            });
-
-            /*奖品剩余数量*/
-            var obj_p_snum = $("input[name='p_snum[]']");
-            var num = $("input[name='p_snum[]']");
-            var p_snum = new Array();
-            obj_p_snum.each(function (index, item) {
-                var snumber=$(num[index]).val();//剩余奖品数据
-                var number=$(this).val();//奖品数据量
-                if (!number || number<=snumber && snumber<0) {
-                    checkes = true;
-                }
-                p_snum[index] = $(this).val();
-            });
-            var obj_p_v = $("input[name='p_v[]']");
-            var p_v = new Array();
-            var p_v_all = 0;
-            obj_p_v.each(function (index, item) {
-                if (!$(this).val()) {
-                    checkes = true;
-                }
-                p_v_all += parseInt($(this).val());
-                p_v[index] = $(this).val();
-            });
-            var obj_p_id = $("input[name='p_id[]']");
-            var p_id = new Array();
-            obj_p_id.each(function (index, item) {
-                if (!$(this).val()) {
-                    checkes = true;
-                }
-                p_id[index] = $(this).val();
-            });
-
-            if (p_v_all > jishu) {
-                layer.msg("请注意,概率基数应大于或等于奖品概率总和");
-                $('.save_button').removeAttr('disabled');
-                $('.save_button').text("保存");
-                return false;
-            }
-
-            if (checkes) {
-                layer.msg("请添加奖项信息");
-                $('.save_button').removeAttr('disabled');
-                $('.save_button').text("保存");
-                return false;
-            }
-
 
             var data = {
                 id: id,
@@ -1378,24 +1209,16 @@
                 title: title,
                 start_time: start_time,
                 end_time: end_time,
-                win_num: win_num,
+                wenda_prize_num: wenda_prize_num,
                 day_count: day_count,
                 win_msg: win_msg,
                 lose_msg: lose_msg,
                 rule: rule,
-                lingjiang: lingjiang,
-                jishu: jishu,
 //                share_img: share_img,
 //                img: img,
                 share_desc: share_desc,
                 share_url: share_url,
                 tag: tag,
-                p_title: p_title,
-                p_name: p_name,
-                p_num: p_num,
-                p_snum: p_snum,
-                p_v: p_v,
-                p_id: p_id,
 
 //                biaoyu:biaoyu,
 //                bootmbackground:bootmbackground,
@@ -1411,6 +1234,9 @@
                 prize_number:prize_number,
                 question_arr:question_arr,
                 qanda_id:qanda_id,
+                is_prize:is_prize,
+                activity_type:activity_type,
+                activity_id:activity_id
             };
             $.post(url, data, function (res) {
                 var res = JSON.parse(res);
