@@ -216,41 +216,68 @@
                                 添加此次活动的题库，最少配置1道题，最多可以配置20道题。
                             </p>
                         </div>
+                        <style>
+                            #timu_table{ width: 100%}
+                            #timu_table tr{}
+                            #timu_table tr.t1{}
+                            #timu_table tr td{}
 
-                        <table width="800" border="0" cellspacing="0" cellpadding="0" id="timu_table">
-                            <tr>
-                                <td width="200">排序</td>
-                                <td width="200">题目</td>
-                                <td >类型</td>
-                                <td width="200">操作</td>
-                            </tr>
-                            <tr id="nothing" <?php if($question_all){echo 'hidden="hidden"';}?> >
-                                <td colspan="4" style="text-align: center;padding-left: 0px">还没有配置题目</td>
-                            </tr>
-                            <?php if($question_all){
-                                foreach ($question_all as $val){
-                                    ?>
-                                    <input type="hidden" value="<?php echo $val['id']?>" data-inphide-value="<?php echo $val['id']?>" name="qanda_id[]">
-                             <?php  }} ?>
-                            <?php if($question_all){
-                            foreach ($question_all as $val){
-                                ?>
-                                <tr class="lee">
-                                    <td><?php echo isset($val['sort'])?$val['sort']:""; ?></td>
-                                    <td><?php echo isset($val['question'])?$val['question']:""; ?></td>
-                                    <td><span data-span="span"   data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=edit_question(this)>编辑</span></td>
-                                    <td><span data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=del_question(this,"<?php echo $val['id']?>")>删除</span></td>
+
+                        </style>
+
+
+                        <div style="    padding: 10px 20px;
+    background: #eaf8ff;
+    color: #7f7f7f;
+    border: 1px solid #55c9ff;
+    border-radius: 5px;
+    margin: 20px 66px 20px 0px;
+    background-color: white;">
+
+                            <table  border="0" cellspacing="0" cellpadding="0" id="timu_table">
+                                <tr>
+                                    <td >排序</td>
+                                    <td >题目</td>
+                                    <td >类型</td>
+                                    <td >操作</td>
                                 </tr>
-                            <?php  }} ?>
+                                <tr id="nothing" <?php if($question_all){echo 'hidden="hidden"';}?> >
+                                    <td colspan="4" style="text-align: center;padding-left: 0px">还没有配置题目</td>
+                                </tr>
+                                <?php if($question_all){
+                                    foreach ($question_all as $val){
+                                        ?>
+                                        <input type="hidden" value="<?php echo $val['id']?>" data-inphide-value="<?php echo $val['id']?>" name="qanda_id[]">
+                                    <?php  }} ?>
+                                <?php if($question_all){
+                                    foreach ($question_all as $val){
+                                        ?>
+                                        <tr class="lee">
+                                            <td><?php echo isset($val['sort'])?$val['sort']:""; ?></td>
+                                            <td><?php echo isset($val['question'])?$val['question']:""; ?></td>
+                                            <td><span data-span="span"   data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=edit_question(this)>编辑</span></td>
+                                            <td><span data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=del_question(this,"<?php echo $val['id']?>")>删除</span></td>
+                                        </tr>
+                                    <?php  }} ?>
 
-                        </table>
+                            </table>
 
-                        <div class="input upload_pic clearfix" style="margin-bottom: 20px;">
-                            <div class="adbtn linear"
-                                 style=" width: 23%;line-height: 36px;text-align: center;margin-top: 20px;"
-                                 id="continue_adtimu_20160422">添加题目
+
+                            <div class="input upload_pic clearfix" style="    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+    text-align: center;">
+                                <div style="    width: 20%;
+    line-height: 36px;
+    display: inline-block;" class="adbtn linear" id="continue_adtimu_20160422">添加题目
+                                </div>
                             </div>
+
+
                         </div>
+
+
+
 
                     </div>
                     <!--问答活动题目设置-->
@@ -649,17 +676,6 @@
                             </label>
                         </div>
 
-                        <div class="t_title">奖品数量开启关闭<span>（用于前台是否显示奖品数量）</span></div>
-                        <div class="add-tags">
-                            <label for="ss">
-                                <input type="radio" id="ss" name="prize_number" value="1" <?php echo $activity_info['prize_number']==1?'checked="checked"':""; ?>>
-                                <i>开启</i>
-                            </label>
-                            <label for="sss">
-                                <input type="radio" id="sss" name="prize_number" value="0" <?php echo $activity_info['prize_number']==0?'checked="checked"':""; ?>>
-                                <i>关闭</i>
-                            </label>
-                        </div>
 
 
                         <div class="t_title">+添加标签</div>
@@ -1153,11 +1169,7 @@
                 layer.msg("请选择是否分享");
                 return false;
             }
-            var obj_prize_number=document.getElementsByName('prize_number');
-            var prize_number='';
-            for(var i=0; i<obj_prize_number.length; i++){
-                if(obj_prize_number[i].checked) prize_number+=obj_prize_number[i].value;
-            }
+
             if(!share_switch){
                 layer.msg("请选择是否开启数量显示");
                 return false;
@@ -1231,7 +1243,6 @@
 //                alertno:alertno,
 //                winninglist:winninglist,
                 share_switch:share_switch,
-                prize_number:prize_number,
                 question_arr:question_arr,
                 qanda_id:qanda_id,
                 is_prize:is_prize,
@@ -1244,12 +1255,8 @@
                 $('.save_button').text("提交中....");
                 if (res.state == 1) {
                     layer.msg(res.msg, {time: 2000}, function () {
+                        window.location.href = "<?php echo $this->createUrl('/activity/wenda/list') . '/pid/' . $config['pid'] . '/active/1'; ?>";
 
-                        if(res.aid &&  res.aid!='undefined'){
-                            window.location.href = "<?php echo $this->createUrl('/activity/wenda/prize')?>"+'?id='+res.aid;
-                        }else{
-                            window.location.href = "<?php echo $this->createUrl('/activity/wenda/list') . '/pid/' . $config['pid'] . '/active/1'; ?>";
-                        }
                     });
 
 

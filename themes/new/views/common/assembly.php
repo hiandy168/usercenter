@@ -53,6 +53,8 @@ function   status($activity_name,$pid){
                             $active_arr[] = 9;
                         }else if ($res_check['activity_name'] == '问答') {
                             $active_arr[] = 10;
+                        }else if ($res_check['activity_name'] == '集卡') {
+                            $active_arr[] = 11;
                         }
                         $temp[] = $res_check;
                     }
@@ -118,13 +120,17 @@ function   status($activity_name,$pid){
                     }else if($res_check['activity_name']=='投票&报名'){
                         $active_arr[]=5;
                         $res_check['active']=5;
-                    }else if($res_check['activity_name']=='一元购'){
+                    }
+                    else if($res_check['activity_name']=='一元购'){
                         $active_arr[]=8;
                         $res_check['active']=8;
                     } else if($res_check['activity_name']=='砸金蛋'){
                         $active_arr[]=9;
                         $res_check['active']=9;
-                    } else if($res_check['activity_name']=='问答'){
+                } else if($res_check['activity_name']=='集卡'){
+                    $active_arr[]=11;
+                    $res_check['active']=11;
+                }else if($res_check['activity_name']=='问答'){
                         $active_arr[]=10;
                         $res_check['active']=10;
                     }
@@ -196,12 +202,14 @@ function   status($activity_name,$pid){
                                      <a href="#">
                                      <?php }else if($val['activity_name']=='砸金蛋'){?>
                                      <a href="<?php echo $this->createUrl('/activity/playegg/list', array('pid' => $pid, 'active' => 9)); ?>">
+                                         <?php }else if($val['activity_name']=='集卡'){?>
+                                         <a href="<?php echo $this->createUrl('/activity/collectcard/list', array('pid' => $pid, 'active' => 11)); ?>">
                                      <?php }else if($val['activity_name']=='一元购'){?>
                                      <a href="<?php echo $this->createUrl('/activity/duobao/list',array('pid'=>$pid,'active'=>8));?>">
                                      <?php }else if($val['activity_name']=='零元购'){?>
                                      <a href="#">
-                                     <?php }else if($val['activity_name']=='问答'){?>
-                                     <a href="<?php echo $this->createUrl('/activity/wenda/list', array('pid' => $pid, 'active' => 10)); ?>">
+                                      <?php }else if($val['activity_name']=='问答'){?>
+                                      <a href="<?php echo $this->createUrl('/activity/wenda/list', array('pid' => $pid, 'active' => 10)); ?>">
                                      <?php }
                                      }else{?>
                                      <a href="#">

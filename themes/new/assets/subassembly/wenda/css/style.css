@@ -59,3 +59,21 @@ ul.select li { line-height: 1.5; padding: 10px 0px; }
 .deggs-rule { margin: 0px 15px; margin-bottom: 30px; padding: 10px; border-radius: 5px; background: rgba(244, 247, 248, 0.33); text-align: center; position: relative; }
 .deggs-rule h3 { display: inline-block; background: #da2b5a; color: #fff; padding: 5px 20px; position: relative; top: -20px; border-radius: 22px; box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.15); }
 .deggs-rule span { color: #f9e277; font-size: 14px; display: block; padding-bottom: 10px; line-height: 24px; text-align: left; }
+/*mask*/
+.mask { position: fixed; z-index: 999; background: rgba(0, 0, 0, .4); width: 100%; height: 100%; left: 0; right: 0; bottom: 0; top: 0; display: none; }
+.dial-pop { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); text-align: center; z-index: 1000; width: 100%; max-width: 13rem; min-width: 300px; display: none; background: #ffdc87; border-radius: 10px; box-shadow: 0px 0px 20px 1px rgba(255, 255, 255, .3); }
+.dial-poptxt h3 { font-size: 18px; color: #be7d01; font-weight: bold; margin: 20px 0px; }
+.dial-poptxt p { line-height: 24px; margin: 0px 20px; color: #997d3c; }
+.dial-confirmbtn { height: 44px; margin: 20px 20px; text-align: center; }
+.dial-confirmbtn a { display: inline-block; height: 100%; background: #ff6866; font-size: 16px; color: #fff; width: 50%; border-radius: 5px; line-height: 44px; }
+.dial-poptxt p i { color: #ff6866; }
+.dial-poptxt p b { color: #ff6866; font-weight: bold; font-size: 16px; padding: 0px 5px; }
+.active { animation: scale .8s ease both; -webkit-animation: scale .8s ease both; }
+@keyframes scale {
+    from { opacity: 0; top: -50%; }
+    to { opacity: 1; top: 50%; }
+}
+@-webkit-keyframes scale {
+    from { opacity: 0; top: -50%; }
+    to { opacity: 1; top: 50%; }
+}

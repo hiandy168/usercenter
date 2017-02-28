@@ -215,7 +215,7 @@
         layer.confirm('确认要删除活动吗？', {
             btn: ['确定','取消']
         }, function(){
-            $.post('<?php echo $this->createUrl('/activity/bigwheel/Delete')?>', { fid: fid }, function (data,status) {
+            $.post('<?php echo $this->createUrl('/activity/wenda/Delete')?>', { fid: fid }, function (data,status) {
                 if(data.errorcode == 1){
                     layer.msg('活动已删除！', {icon: 1});
                     setTimeout(function(){ window.location.reload();},300);
@@ -243,7 +243,7 @@
                 title:'PVUV数据统计图',
                 area: ['700px', '500px'],
                 skin: 'layui-layer-rim', //加上边框
-                content: ["<?php echo $this->createUrl('/activity/bigwheel/Activitylist')?>/fid/"+param+"/tag/pvuv"]
+                content: ["<?php echo $this->createUrl('/activity/wenda/Activitylist')?>/fid/"+param+"/tag/pvuv"]
             });
         }, function(){
             layer.open({
@@ -251,7 +251,7 @@
                 title:'用户参与注册数据统计图',
                 area: ['700px', '500px'],
                 skin: 'layui-layer-rim', //加上边框
-                content: ["<?php echo $this->createUrl('/activity/bigwheel/Activitylist')?>/fid/"+param+"/tag/user"]
+                content: ["<?php echo $this->createUrl('/activity/wenda/Activitylist')?>/fid/"+param+"/tag/user"]
             });
         });
         //var index = layer.load(2,{shade: [0.3, '#393D49']});

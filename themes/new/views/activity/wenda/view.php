@@ -9,12 +9,26 @@
     <title>答题</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->_theme_url;?>assets/h5/login/css/login1.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $this->_theme_url; ?>assets/subassembly/wenda/css/style.css"/>
+    <script src="<?php echo $this->_theme_url; ?>assets/subassembly/scrtch_files/new/js/jquery-1.12.0.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="<?php echo $this->_theme_url; ?>assets/h5/login/js/login.js" type="text/javascript" charset="utf-8"></script>
 
 
 </head>
-
+<script type="text/javascript">
+    openid = "<?php echo $param['openid']?>";
+    id = "<?php echo $param['id']?>";
+    pid = "<?php echo $param['id']?>";
+    backUrl = "<?php echo $param['backUrl']?>";
+    mid = "<?php echo $param['mid'] ?>";
+    table = "wenda";
+    start_time="<?php echo$info['start_time'];?>"
+    end_time="<?php echo$info['end_time'];?>"
+</script>
 <body>
+
+
 
 <div id="loaddiv" class="loading-div">
 		<span>
@@ -22,6 +36,22 @@
 			<i>努力加载中...</i>
 		</span>
 </div>
+
+
+<div class="mask"></div>
+<div class="dial-pop" >
+
+    <div class="dial-poptxt">
+        <h3>恭喜！你中奖了</h3>
+        <p>中得<i>“一等奖”</i>领奖码 <i>123456</i><br>
+            你还有<b>8</b>次刮奖机会</p>
+    </div>
+
+    <div class="dial-confirmbtn">
+        <a data-a-link="a" href="">确定</a>
+    </div>
+</div>
+
 <div class="div-main">
 
 
@@ -43,68 +73,14 @@
                                     <label for="q<?php echo $q_val['sort'];?>_<?php echo $a_key+1;?>"><?php echo $a_val['answer'];?></label>
                                 </li>
                                 <?php } ?>
-<!--                                <li>-->
-<!--                                    <input id="q1_2" type="radio" name="r-group-1">-->
-<!--                                    <label for="q1_2">坑定是</label>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <input id="q1_3" type="radio" name="r-group-1">-->
-<!--                                    <label for="q1_3">绝对是</label>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <input id="q1_4" type="radio" name="r-group-1">-->
-<!--                                    <label for="q1_4">就是</label>-->
-<!--                                </li>-->
+
 
                             </ul>
                             <div class="card_bottom"><?php if ($q_val['sort']>1){ ?><a class="prev">上一题</a><?php } ?><span><b><?php echo $q_val['sort'];?></b>/<?php echo $q_val['count'];?></span></div>
                         </div>
                     </div>
                     <?php }}?>
-                    <!--Q2-->
-<!--                    <div class="card_cont card2" >-->
-<!--                        <div class="card">-->
-<!--                            <p class="question"><span>Q2、</span>主管是SB么？</p>-->
-<!--                            <ul class="select" data-select="select">-->
-<!--                                <li>-->
-<!--                                    <input id="q2_1" type="radio" name="r-group-2" >-->
-<!--                                    <label for="q2_1">是智障</label>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <input id="q2_2" type="radio" name="r-group-2">-->
-<!--                                    <label for="q2_2">是大SB</label>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <input id="q2_3" type="radio" name="r-group-2">-->
-<!--                                    <label for="q2_3">脑子进水了</label>-->
-<!--                                </li>-->
-<!---->
-<!--                            </ul>-->
-<!--                            <div class="card_bottom"><a class="prev">上一题</a><span><b>2</b>/3</span></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-                   <!--Q3-->
-<!--                    <div class="card_cont card3">-->
-<!--                        <div class="card">-->
-<!--                            <p class="question"><span>Q3、</span>主管是SB么？</p>-->
-<!--                            <ul class="select" data-select="select">-->
-<!--                                <li>-->
-<!--                                    <input id="q3_1" type="radio" name="r-group-3" >-->
-<!--                                    <label for="q3_1">是智障</label>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <input id="q3_2" type="radio" name="r-group-3">-->
-<!--                                    <label for="q3_2">是大SB</label>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <input id="q3_3" type="radio" name="r-group-3">-->
-<!--                                    <label for="q3_3">脑子进水了</label>-->
-<!--                                </li>-->
-<!---->
-<!--                            </ul>-->
-<!--                            <div class="card_bottom"><a class="prev">上一题</a><span><b>3</b>/3</span></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+
 
 
 
@@ -122,24 +98,19 @@
         <div class="deggs-rule" style=" margin-top: -40px;">
             <h3>活动规则</h3>
 	    		<span>
-	    			2015.07.02 - 2015.07.30
+	    			<?php echo $info['rule'];?>
 	    		</span>
         </div>
 
-        <div class="deggs-rule">
-            <h3>参与对象</h3>
-	    		<span>
-	    			仅限上海、北京、武汉、广州地区的用户参与。
-	    		</span>
-        </div>
 
+        <?php if($info['is_prize']==1){?>
         <div class="deggs-rule">
-            <h3>参与方法</h3>
+            <h3>获奖资格</h3>
 	    		<span>
-	    			活动期间，同一用户每天可参与一次抽
-奖的机会，过时作废。
+	    			活动期间，同一用户答对<?php echo $info['wenda_prize_num'];?>题，即可有机会参与抽奖。
 	    		</span>
         </div>
+        <?php } ?>
 
 
     </div>
@@ -151,8 +122,12 @@
 <script src="<?php echo $this->_theme_url; ?>assets/subassembly/wenda/js/touch.js" type="text/javascript" charset="utf-8"></script>
 <script src="<?php echo $this->_theme_url; ?>assets/subassembly/wenda/js/layout.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    Zepto(function(){
-        Zepto("#answer").answerSheet({});
+    var d = <?php echo $time;?>;
+    var f = <?php echo $info['start_time'] ?>;
+    var g = <?php echo $info['end_time'] ?>;
+
+    $(function(){
+        $("#answer").answerSheet({});
     })
 
     var answer_arr_id=[];
@@ -168,7 +143,29 @@
             }
         }
 //        console.log(answer_arr_id);
+        <?php if(!$this->member['id']){?>
+            showlogin();
+        $("#winlogin").hide();
+        <?php } ?>
 
+        var _this=$(this);
+
+        if (d < f) {
+
+            showpop("", "活动未开始！", "", 5);
+            return false
+
+        }
+        if (d > g) {
+
+            showpop("", "活动已结束！", "", 5);
+            return false
+
+        }
+        <?php if(!$info['status']){?>
+        showpop("", "活动暂停中！", "",  5);
+        return false;
+        <?php } ?>
 //
         $.ajax({
             type: "post",
@@ -181,6 +178,29 @@
                 "answer_arr_id":answer_arr_id,
             },
             success: function (data) {
+                var url = "<?php echo $this->createUrl('activity/wenda/view',array('id'=>$info['id']))?>";
+                if(data.status==200){
+                    //是否参与抽奖
+                    if(<?php echo $info['is_prize']?1:0;?>){
+                        //抽奖组件 等于2 是大转盘  等于1 是刮刮卡
+                        <?php if($info['activity_type']==2){ ?>
+                        var url="<?php echo $this->createUrl('/activity/bigwheel/view/id/'.$info['activity_id'])?>";
+                        <?php }else{ ?>
+                        var url="<?php echo $this->createUrl('/activity/scratchcard/view/id/'.$info['activity_id'])?>";
+                        <?php }?>
+                        showpop(data.data['bingo_num'],url,data.data['chance_count'],1);
+
+                    }else{
+                        showpop(data.data['bingo_num'],url,data.data['chance_count'],3);
+                    }
+
+                }else if(data.status == 201){
+                    showpop(data.data['bingo_num'],url,data.data['chance_count'],2);
+
+                }else{
+                    showpop(0,url,0,4);
+
+                }
 
             }
         })
@@ -189,10 +209,35 @@
     })
 
 
-
+    function showpop(a,b,c,e) {
+        $(".mask").show();
+        $(".dial-pop").show().addClass("active");
+        if (e == 1) {
+            $(".dial-poptxt").html('<h3>恭喜，棒棒棒哒</h3>' + '<p>答对了<i>“' + a + '”</i>道题目 <br />' + '点击下方按钮参与抽奖</p>');
+            $("[data-a-link='a']").removeAttr("href").attr("href",b)
+        }
+        if (e == 2) {
+            $(".dial-poptxt").html('<h3>很遗憾！答对的题数不够</h3>' + '<p>你还有<i>“' + c + '”</i>次机会！</p>');
+            $("[data-a-link='a']").removeAttr("href").attr("href",b)
+        }
+        if (e == 3) {
+            $(".dial-poptxt").html('<h3>恭喜，棒棒棒哒</h3>' + '<p>答对了<i>“' + a + '”</i>道题目 <br />' + '你还有<i>“' + c + '”</i>次机会！</p>');
+            $("[data-a-link='a']").removeAttr("href").attr("href",b)
+        }
+        if (e == 4) {
+            $(".dial-poptxt").html('<h3>很遗憾！你没有机会了</h3>' + '<p>明天再来答题吧</p>');
+            $("[data-a-link='a']").removeAttr("href").attr("href",b)
+        }
+        if (e == 5) {
+            $(".dial-poptxt").html('<h3>@__@</h3>' + '<p>' + b + '</p>')
+        }
+    }
 </script>
 
-</div>
+<!--微信分享-->
+<?php  echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info)); ?>
+
+<!--微信分享-->
 
 </body>
 </html>

@@ -47,30 +47,26 @@ class Activity_wenda_user extends CActiveRecord {
 
 
     //活动列表带分页
-    public function getUserListPager($id,$is_win,$search,$username){
+    public function getUserListPager($id,$search,$username){
         $as_list = array();
         $list = null;
         $asModel = new activity_wenda_user;
         $criteria = new CDbCriteria();
         $criteria->order = 'time DESC';
-        if($is_win==2){
-            $criteria->condition ='is_win=0 and bigwheel_id='.$id;
-        }elseif($is_win==1){
-            $criteria->condition ='is_win=1 and bigwheel_id='.$id;
-        }else{
-            if(!empty($search)&&!empty($username)){
-                $criteria->condition = 't.wenda_id =:wenda_id and t.code like :code and member.username like :username';
-                $criteria->params = array(':wenda_id'=>$id,':code'=> '%'.$search.'%',':username'=>'%'.$username.'%');
-            }elseif(!empty($search)&&empty($username)){
-                $criteria->condition = 't.wenda_id =:wenda_id and t.code like :code';
-                $criteria->params = array(':wenda_id'=>$id,':code'=> '%'.$search.'%');
-            }elseif(!empty($username)&&empty($search)){
-                $criteria->condition = 't.wenda_id =:bigwheel_id and member.username like :username';
-                $criteria->params = array(':wenda_id'=>$id,':username'=>'%'.$username.'%');
-            }else{
-                $criteria->condition ='wenda_id='.$id;
-            }
+
+        if (!empty($search) && !empty($username)) {
+            $criteria->condition = 't.wendaid =:wendaid and t.code like :code and member.username like :username';
+            $criteria->params = array(':wendaid' => $id, ':code' => '%' . $search . '%', ':username' => '%' . $username . '%');
+        } elseif (!empty($search) && empty($username)) {
+            $criteria->condition = 't.wendaid =:wendaid and t.code like :code';
+            $criteria->params = array(':wendaid' => $id, ':code' => '%' . $search . '%');
+        } elseif (!empty($username) && empty($search)) {
+            $criteria->condition = 't.wendaid =:wendaid and member.username like :username';
+            $criteria->params = array(':wendaid' => $id, ':username' => '%' . $username . '%');
+        } else {
+            $criteria->condition = 'wendaid=' . $id;
         }
+        
         $count = $asModel->with('member')->count($criteria);
         $pages = new CPagination($count);
         $pages->pageSize = 10;

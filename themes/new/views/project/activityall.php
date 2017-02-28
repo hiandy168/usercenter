@@ -68,14 +68,16 @@ function   status($activity_name,$pid){
                                         <a href="<?php echo $this->createUrl('/activity/poster/list',array('pid'=>$pid,'active'=>4));?>">
                                             <?php }else if($val['activity_name']=='投票&报名'){?>
                                             <a href="<?php echo $this->createUrl('/activity/vote/list',array('pid'=>$pid,'active'=>5));?>">
+                                                <?php }else if($val['activity_name']=='砸金蛋'){?>
+                                                <a href="<?php echo $this->createUrl('/activity/playegg/list',array('pid'=>$pid,'active'=>9));?>">
                                                 <?php }else if($val['activity_name']=='众筹'){?>
                                                 <a href="#">
-                                                    <?php }else if($val['activity_name']=='问答'){?>
-                                                    <a href="<?php echo $this->createUrl('/activity/wenda/list',array('pid'=>$pid,'active'=>10));?>">
                                                     <?php }else if($val['activity_name']=='一元购'){?>
                                                     <a href="<?php echo $this->createUrl('/activity/duobao/list',array('pid'=>$pid,'active'=>8));?>">
                                                         <?php }else if($val['activity_name']=='零元购'){?>
                                                         <a href="#">
+                                                            <?php }else if($val['activity_name']=='问答'){?>
+                                                            <a href="<?php echo $this->createUrl('/activity/wenda/list',array('pid'=>$pid,'active'=>10));?>">
                                                             <?php }
                                                             }else{?>
                                                             <a href="#">

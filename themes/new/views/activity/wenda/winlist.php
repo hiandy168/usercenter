@@ -26,44 +26,33 @@
 <body>
 <form action="<?php echo $this->createUrl('/activity/wenda/WinList/fid/'.$id)?>" method="post">
     <div style="margin: 10px;">
-        <input type="text" value="<?php echo $search ?>" name='search' placeholder="请输入兑奖码" class="btn" style="margin-right: 10px; border: 1px solid #ccc" />
+<!--        <input type="text" value="--><?php //echo $search ?><!--" name='search' placeholder="体术" class="btn" style="margin-right: 10px; border: 1px solid #ccc" />-->
         <input type="text" value="<?php echo $username ?>" name='username' placeholder="请输入用户名" class="btn" style="margin-right: 10px; border: 1px solid #ccc" />
         <button type="submit" class="btn btn-primary">搜索</button>
     </div>
     <div style="margin: 10px;">
         <a class="btn <?php echo $active=='active_all' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/wenda/WinList/fid/'.$id)?>" role="button">所有用户</a>
-        <a class="btn <?php echo $active=='active_win' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/wenda/WinList/fid/'.$id.'/datatype/1')?>" role="button">中奖用户</a>
-        <a class="btn <?php echo $active=='active_no' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/wenda/WinList/fid/'.$id.'/datatype/2')?>" role="button">未中奖用户</a>
-        <a class="btn btn-success" href="<?php echo $this->createUrl('/activity/wenda/ExportCsv',array('fid'=>$id,'type'=>1))?>" role="button">导出中奖列表</a>
+<!--        <a class="btn --><?php //echo $active=='active_win' ? 'btn-primary' : 'btn-default'?><!--" href="--><?php //echo $this->createUrl('/activity/wenda/WinList/fid/'.$id.'/datatype/1')?><!--" role="button">中奖用户</a>-->
+<!--        <a class="btn --><?php //echo $active=='active_no' ? 'btn-primary' : 'btn-default'?><!--" href="--><?php //echo $this->createUrl('/activity/wenda/WinList/fid/'.$id.'/datatype/2')?><!--" role="button">未中奖用户</a>-->
+        <a class="btn btn-success" href="<?php echo $this->createUrl('/activity/wenda/ExportCsv',array('fid'=>$id,'type'=>1))?>" role="button">导出参与列表</a>
     </div>
     <table class="table table-striped">
         <thead>
         <th>活动ID</th>
         <th>用户手机</th>
         <th>用户名</th>
-        <th>兑奖码</th>
-        <th>奖品等级</th>
-        <th>中奖时间</th>
-        <th>领奖状态</th>
+        <th>答对题数</th>
+        <th>参与时间</th>
         </thead>
         <?php
         if($users){
             foreach ($users as $val){?>
                 <tr>
-                    <td><?php echo $val['wenda_id']?></td>
+                    <td><?php echo $val['wendaid']?></td>
                     <td><?php echo $val['phone']?></td>
                     <td><?php echo $val['username']?></td>
-                    <td><?php echo $val['code'] ? $val['code'] :""?></td>
-                    <td><?php echo $val['level'] ? $val['level'] : ""?></td>
+                    <td><?php echo $val['answer_bingo_num']?></td>
                     <td><?php echo date('Y-m-d H:i',$val['time'])?></td>
-                    <td>
-                        <?php
-                        if($val['code']){
-                            echo $val['accept']==1 ? '<font color="green">已领</font>' : '<font color="red" onclick="set_lingjiang('.$val[id].')">未领</font>';
-                        }else{
-                            echo '<font color="Gray">未中奖</font>';
-                        }
-                        ?></td>
                 </tr>
                 <?php
             }
@@ -89,21 +78,6 @@
         </div>
     </div>
 </form>
-<script>
-    function set_lingjiang(parame){
-        layer.confirm('确定用户已经领奖了吗？', {
-            btn: ['确定','取消'] //按钮
-        }, function(){
-            var url = '<?php echo $this->createUrl('/activity/wenda/lingjiang')?>'
-            var data = {id:parame}
-            $.post(url,data,function(res){
-                var res = JSON.parse(res);
-                layer.msg(res.msg,{time:2000},function(){
-                    location.reload();
-                })
-            })
-        });
-    }
-</script>
+
 </body>
 </html>
