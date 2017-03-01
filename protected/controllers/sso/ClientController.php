@@ -169,41 +169,43 @@ class ClientController extends FrontController
 //        Mod::app()->request->cookies["zxcv"] = $cookie;
         // '15997567510', '888888'
         //进行登录请求
+        if($this->user && $this->pass && Mod::app()->request->isPostRequest) {
+            $backurl = urldecode(Tool::getValidParam("backurl", "string"));
+            $re = $this->login($this->user, $this->pass);
 
-        $backurl =urldecode(Tool::getValidParam("backurl","string"));
-        $re = $this->login($this->user,$this->pass);
+            //d登录成功，写入cookie  跨域
+            if ($re['ret'] == 200 && is_array(json_decode($re['body'], true))) {
+                //header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
+                $this->member = json_decode($re['body'], true);
+                $phpsessid = session_id();//phpsessionid
+                $session_token = Mod::app()->request->cookies['session_token']; //token  还没有想好怎么用
+                $ticket = $this->getTicket($this->member['id']); //票据，用户可以更具这个来换取用户信息
+                //把票据加密 然后分发给其他域名
+                $secretstring = $this->string_secret($ticket);
 
-        //d登录成功，写入cookie  跨域
-        if ($re['ret'] == 200 && is_array(json_decode($re['body'], true))) {
-            header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
-            $this->member = json_decode($re['body'], true);
-            $phpsessid = session_id();//phpsessionid
-            $session_token = Mod::app()->request->cookies['session_token']; //token  还没有想好怎么用
-            $ticket = $this->getTicket($this->member['id']); //票据，用户可以更具这个来换取用户信息
-            //把票据加密 然后分发给其他域名
-            $secretstring = $this->string_secret($ticket);
+                //广播通知白名单上的域名
+                $agentids = Sso_broker::model()->findAll();
 
-            //广播通知白名单上的域名
-            $agentids = Sso_broker::model()->findAll();
+                $res = '';
+                foreach ($agentids as $k => $v) {
+                    if (trim($v['url']) != '') {
+                        $tmp_s = strstr($v['url'], '?') ? '&' : '?';
+                        $url = $v['url'] . $tmp_s;
+                        echo '<script type="text/javascript" src="' . $v['url'] . $tmp_s . 'ticket=' . $secretstring . '&sid=' . $phpsessid . '&token=' . $session_token . '" reload="1"></script>';
+                    }
 
-            $res = '';
-            foreach ($agentids as $k => $v) {
-                if (trim($v['url']) != '') {
-                    $tmp_s = strstr($v['url'], '?') ? '&' : '?';
-                    $url=$v['url'] . $tmp_s;
-                   echo  '<script type="text/javascript" src="' . $v['url'] . $tmp_s . 'ticket=' . $secretstring . '&sid=' . $phpsessid . '&token=' . $session_token . '" reload="1"></script>';
                 }
-
+                //header("Location: $backurl", true, 307);
+                echo $phpsessid;
+                exit;
+            } else if ($re['body'] == 2) {
+                echo "账号密码错误";
+            } else {
+                echo $re['body'];
             }
-            //header("Location: $backurl", true, 307);
-            echo $phpsessid;
-            exit;
-        }else if($re['body']==2){
-            echo "账号密码错误";
         }else{
-            echo $re['body'];
+            $this->render('login', $parame);
         }
-
     }
 
 

@@ -122,6 +122,27 @@
 <script src="<?php echo $this->_theme_url; ?>assets/subassembly/wenda/js/touch.js" type="text/javascript" charset="utf-8"></script>
 <script src="<?php echo $this->_theme_url; ?>assets/subassembly/wenda/js/layout.js" type="text/javascript" charset="utf-8"></script>
 <script>
+   /**
+     *   ┏┓　　　┏┓
+     * ┏┛┻━━━┛┻┓
+     * ┃　　　　　　　┃
+     * ┃　　　━　　　┃
+     * ┃　┳┛　┗┳　┃
+     * ┃　　　　　　　┃
+     * ┃　　　┻　　　┃
+     * ┃　　　　　　　┃
+     * ┗━┓　　　┏━┛
+     *    ┃　　　┃
+     *    ┃　　　┃
+     *    ┃　　　┗━━━┓
+     *    ┃　　　　　　　┣┓
+     *    ┃　　　　　　　┏┛
+     *    ┗┓┓┏━┳┓┏┛
+     *      ┃┫┫　┃┫┫
+     *      ┗┻┛　┗┻┛
+     *        神兽保佑
+     *        代码无BUG!
+     */
     var d = <?php echo $time;?>;
     var f = <?php echo $info['start_time'] ?>;
     var g = <?php echo $info['end_time'] ?>;
