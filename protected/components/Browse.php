@@ -91,7 +91,7 @@ class Browse
      */
 
     public static function  add_activity_browse($pid=0,$aid=0,$model=''){
-            if(empty($pid) && empty($mid)){
+            if(empty($pid)){
                 return false;
             }
             $time=time();
@@ -99,10 +99,10 @@ class Browse
 
             $now = date('Ymd',$time);
             $tmp = array();
-            $sql_uv="select * from dym_activity_browse where model='".$model."'and pid=".$pid." and ip='".$mid."' and aid=".$aid." and createtime=".$now;
+            $sql_uv="select * from dym_activity_browse where type=2 and  model='".$model."' and pid=".$pid." and ip='".$ip."' and aid=".$aid." and createtime=".$now;
             $arr_uv = Mod::app()->db->createCommand($sql_uv)->queryRow();
 
-            $sql_pv="select * from dym_activity_browse where type=1 and aid= ".$aid." and pid=".$pid." and createtime=".$now;
+            $sql_pv="select * from dym_activity_browse where type=1 and  model='".$model."' and aid= ".$aid." and pid=".$pid." and createtime=".$now;
             $arr_pv = Mod::app()->db->createCommand($sql_pv)->queryRow();
 
             if($arr_pv){
@@ -113,6 +113,8 @@ class Browse
             if(!$arr_uv){
                 $sql.= "INSERT INTO dym_activity_browse (type, pid , aid ,ip ,model,createtime) VALUES (2, $pid , $aid , '$ip' ,'$model',$now)";
             }
-            $res = Mod::app()->db->createCommand($sql)->execute();
+            if($sql) {
+                $res = Mod::app()->db->createCommand($sql)->execute();
+            }
     }
 }

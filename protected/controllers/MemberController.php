@@ -3,6 +3,12 @@
 class MemberController extends FrontController
 {
 
+
+
+    private  $appid;
+    private $secret;
+
+
     public function init()
     {
         parent::init();
@@ -980,10 +986,12 @@ class MemberController extends FrontController
     //其他位置 H5公共等登录入口    
     public function actionAjaxlogin()
     {
+
         //start wenlijiang
         $backurl = trim(Tool::getValidParam('backurl', 'string'));//回调地址
         $username = trim(Tool::getValidParam('mobile', 'string'));
         $smsCode = trim(Tool::getValidParam('smsCode', 'string'));
+        $city=Tool::getValidParam('city','integer');
         $upwd = trim(Tool::getValidParam('upwd', 'string'));
         $zid = trim(Tool::getValidParam('id', 'integer'));  //组件的id
         $table = trim(Tool::getValidParam('table', 'string'));  //组件的表名
@@ -1168,7 +1176,7 @@ class MemberController extends FrontController
             Mod::app()->session['member'] = $member_info->attributes;
 
         }
-        $return_url = $this->_siteUrl . '/house/site';
+        $return_url = $this->_siteUrl . '/house/site/index/city/'.$city;
         $result['state'] = 1;
         $result['message'] = '登录成功';
         $result['return_url'] = $return_url;
@@ -2160,6 +2168,21 @@ class MemberController extends FrontController
     {
         //获取跳转地址 兼 匹配字符串
         $str = Tool::getValidParam('state', 'string');
+
+        //判断是否有房产金融的登录
+        $housestr = Tool::getValidParam('house', 'string');
+
+
+        if($housestr && $housestr==md5(HOUSEWEIXINAPPID)){
+
+            Mod::app()->memcache->set('weixinappid',HOUSEWEIXINAPPID);
+            Mod::app()->memcache->set('weixinsecret',HOUSEWEIXINSECRET);
+        }else{
+            Mod::app()->memcache->set('weixinappid',HOUSEWEIXINAPPID);
+            Mod::app()->memcache->set('weixinsecret',HOUSEWEIXINSECRET);
+        }
+
+
         //去掉分享之后 微信带的参数
         $state = substr($str, 0, strpos($str, "?"));
 
@@ -2174,7 +2197,7 @@ class MemberController extends FrontController
             $this->actionWeixinGetuserinfo();
         }
         $redirect_uri = $this->_siteUrl . "/member/Gettoken";
-        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" . WEIXINAPPID . "&redirect_uri=" . $redirect_uri . "&response_type=code&scope=snsapi_userinfo&state=" . Mod::app()->session['state'] . "#wechat_redirect";
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" . Mod::app()->memcache->get('weixinappid') . "&redirect_uri=" . $redirect_uri . "&response_type=code&scope=snsapi_userinfo&state=" . Mod::app()->session['state'] . "#wechat_redirect";
         header("Location:$url");
     }
 
@@ -2249,7 +2272,8 @@ class MemberController extends FrontController
             Mod::app()->memcache->set('projectid',$projectid);
 
 
-            $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" . WEIXINAPPID . "&secret=" . WEIXINSECRET . "&code=" . $code . "&grant_type=authorization_code ";
+            $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" .  Mod::app()->memcache->get('weixinappid') . "&secret=" .  Mod::app()->memcache->get('weixinsecret') . "&code=" . $code . "&grant_type=authorization_code ";
+           echo $url;
             $re = Tool::http_get($url);
             $res = json_decode($re, true);
             if (!$res['errcode']) {
@@ -2257,6 +2281,10 @@ class MemberController extends FrontController
                 Mod::app()->session['weixin_openid'] = $res['openid'];
                 //获取用户信息
                 $this->actionWeixinGetuserinfo($model, $aid);
+            }else{
+                echo "<h3>error:</h3> 10002";
+                echo "<h3>msg  :</h3> weixin return error";
+                exit;
             }
         } else {
             echo "<h3>error:</h3> 100024";

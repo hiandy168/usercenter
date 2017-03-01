@@ -9,40 +9,43 @@
             <?php }?>
             <table cellSpacing=0 width="100%" class="content_view">
                 <tr>
-                    <td class='t'>活动城市:</td><td>
-                        <select name="city" data-val="requir" data-title="活动城市"  >
+                    <td class='t'>活动城市:</td><td colspan="1">
+                        <select style="width: 288px;border-radius: 3px;" name="city" data-val="requir" data-title="活动城市"  <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?>  >
                             <option value="">请选择</option>
                             <option value="1" <?php if ($houseinfo['city']==1){ ?>selected<?php } ?>>武汉</option>
                             <option value="2" <?php if ($houseinfo['city']==2){ ?>selected<?php } ?>>郑州</option>
+                            <option value="3" <?php if ($houseinfo['city']==3){ ?>selected<?php } ?>>重庆</option>
                         </select>
                         <span style="color: red">*</span>
                     </td>
 
-                    <td rowspan="4" class="thumb" width="200" >
-                        <img  style="max-height:123px;width:176px;padding:2px;border:1px solid #e6e6e6;" onclick="upload_pic('img_thumb','share_img')" src="<?php  echo isset($houseinfo['share_img'])?(Tool::show_img($houseinfo['share_img'])):(Tool::show_img(''))?>" width="176" height='123' width="150" id="img_thumb">
+                    <td rowspan="4" class="thumb" colspan="2"  >
+                         <div style="    display: inline-block; margin: 0px 20px;">
+                               <img  style="max-height:123px;width:176px;padding:2px;border:1px solid #e6e6e6;" onclick="upload_pic('img_thumb','share_img')" src="<?php  echo isset($houseinfo['share_img'])?(Tool::show_img($houseinfo['share_img'])):(Tool::show_img(''))?>" width="176" height='123' width="150" id="img_thumb">
                         <input type="hidden" data-val="requir" data-title="图片"  name="share_img" id="share_img" value="<?php echo  isset($houseinfo['share_img']) ? $houseinfo['share_img'] : ''; ?>">
                         <p style="margin:5px 0 10px 0;width:176px;height:28px;text-align:center">
                             <span  class="btn btn-danger" onclick="upload_pic('img_thumb','share_img')">上传图片</span>
                         </p>
-                    </td>
-                    <td rowspan="4" class="thumb" width="200" >
+                          </div> 
+                          <div style="    display: inline-block; margin: 0px 20px;">
                         <img  style="max-height:123px;width:176px;padding:2px;border:1px solid #e6e6e6;" onclick="upload_pic('img_thumbs','img')" src="<?php  echo isset($houseinfo['img'])?(Tool::show_img($houseinfo['img'])):(Tool::show_img(''))?>" width="176" height='123' width="150" id="img_thumbs">
                         <input type="hidden" data-val="requir" data-title="图片"  name="img" id="img" value="<?php echo  isset($houseinfo['img']) ? $houseinfo['img'] : ''; ?>">
                         <p style="margin:5px 0 10px 0;width:176px;height:28px;text-align:center">
                             <span  class="btn btn-danger" onclick="upload_pic('img_thumbs','img')">上传图片</span>
                         </p>
+                        </div> 
                     </td>
-                    <td rowspan="4" class="thumb" style='border:0'></td>
+                   
                 </tr>
                 <tr>
                     <td class='t'>活动类型:</td>
                     <td>
                         <label class='w_30'>正式</label>
-                        <input class='w_30' type="radio"  name="type" value="1" <?php if (!isset($houseinfo['type']) || $houseinfo['type'] == 1) {
+                        <input class='w_30' type="radio"  name="type" value="1" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?>  <?php if (!isset($houseinfo['type']) || $houseinfo['type'] == 1) {
                             echo 'checked';
                         } ?> />
                         <label class='w_30'>测试</label>
-                        <input class='w_30' type="radio"  name="type" value="2" <?php if (isset($houseinfo['type']) || $houseinfo['type'] == 2) {
+                        <input class='w_30' type="radio"  name="type" value="2" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> <?php if (isset($houseinfo['type']) || $houseinfo['type'] == 2) {
                             echo 'checked';
                         } ?>  />
                     </td>
@@ -53,11 +56,11 @@
                     <td class='t'>是否核销:</td>
                     <td>
                         <label class='w_30'>是</label>
-                        <input class='w_30' type="radio" name="verfic" value="1" <?php if (!isset($houseinfo['verfic']) || $houseinfo['verfic'] == 1) {
+                        <input class='w_30' type="radio" name="verfic" value="1" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> <?php if (!isset($houseinfo['verfic']) || $houseinfo['verfic'] == 1) {
                             echo 'checked';
                         } ?> />
                         <label class='w_30'>否</label>
-                        <input class='w_30' type="radio" name="verfic" value="2" <?php if (isset($houseinfo['verfic']) && $houseinfo['verfic'] == 2) {
+                        <input class='w_30' type="radio" name="verfic" value="2" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> <?php if (isset($houseinfo['verfic']) && $houseinfo['verfic'] == 2) {
                             echo 'checked';
                         } ?>  />
                     </td>
@@ -65,13 +68,13 @@
                 </tr>
 
 
-                <tr><td class='t'>分享标题:</td><td colspan="3"><input data-val="requir" data-title="分享标题" type="text" name="share_title" id="share_title"  size="40"  value="<?php echo  isset($houseinfo['share_title']) ? $houseinfo['share_title'] : ''; ?>"><span style="color: red">*</span></td>
+                <tr><td class='t'>分享标题:</td><td colspan="1"><input data-val="requir" data-title="分享标题" type="text" name="share_title" id="share_title"  size="35"  value="<?php echo  isset($houseinfo['share_title']) ? $houseinfo['share_title'] : ''; ?>"><span style="color: red">*</span></td>
                 <tr>
                     <td class='t'>楼盘id:</td>
-                    <td ><input data-val="requir" data-title="楼盘id" type="text" name="houseid" size="40" id="houseid" value="<?php echo  isset($houseinfo['houseid']) ? $houseinfo['houseid'] : ''; ?>"> <input type="button" onclick="gethouseinfo()" value="查询" /><span style="color: red">*</span></td>
+                    <td ><input  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"  data-val="requir" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> data-title="楼盘id" type="text" name="houseid" size="35" id="houseid" value="<?php echo  isset($houseinfo['houseid']) ? $houseinfo['houseid'] : ''; ?>"> <input style=" width: 10%;background: #6fa3d9;border: none;color: #fff;line-height: 28px;border-radius: 3px;" type="button" onclick="gethouseinfo()" value="查询" /><span style="color: red">*</span></td>
                     <td class='t'>结算账户:</td>
                     <td colspan="2">
-                        <select name="accountid" data-val="requir" data-title="结算账户">
+                        <select style="width: 288px;border-radius: 3px;" name="accountid" data-val="requir" data-title="结算账户" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?>>
                             <?php if($result==1){?>
                                 <option value="<?php echo $tenant['id'] ?>" <?php if ($houseinfo['accountid']==$tenant['id']){ ?>selected<?php } ?>><?php echo $tenant['site'] ?></option>
                             <?php }else{ ?>
@@ -86,27 +89,27 @@
                 </tr>
                 <tr>
                     <td class='t'>主标题:</td>
-                    <td ><input data-val="requir" data-title="主标题" type="text" name="title" id="title" size="40"  value="<?php echo  isset($houseinfo['title']) ? $houseinfo['title'] : ''; ?>"><span style="color: red">*</span></td>
+                    <td ><input data-val="requir" data-title="主标题" type="text" name="title" id="title" size="35"  value="<?php echo  isset($houseinfo['title']) ? $houseinfo['title'] : ''; ?>"><span style="color: red">*</span></td>
                     <td class='t'>优惠:</td>
-                    <td colspan="2"><input  data-val="requir" data-title="优惠"  type="text" size="35" name="coupon" id="coupon" value="<?php echo  isset($houseinfo['coupon']) ? $houseinfo['coupon'] : ''; ?>"><span style="color: red">*</span></td>
+                    <td colspan="2"><input  data-val="requir" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> data-title="优惠"  type="text" size="35" name="coupon" id="coupon" value="<?php echo  isset($houseinfo['coupon']) ? $houseinfo['coupon'] : ''; ?>"><span style="color: red">*</span></td>
                 </tr>
                 <tr>
                     <td class='t'>活动有效期:</td>
                     <td >
-                        <input data-val="requir" data-title="活动有效期" type="text" name="actime" id="actime"  size="40"  value="<?php echo  isset($houseinfo['actime']) ? $houseinfo['actime'] : ''; ?>">
+                        <input data-val="requir" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> data-title="活动有效期" type="text" name="actime" id="actime"  size="35"  value="<?php echo  isset($houseinfo['actime']) ? $houseinfo['actime'] : ''; ?>">
 
                     </td>
                     <td class='t'>使用有效期:</td>
                     <td colspan="2">
-                        <input data-val="requir" data-title="使用有效期" type="text" name="validity"  size="40" id="validity"  value="<?php echo  isset($houseinfo['validity']) ? $houseinfo['validity'] : ''; ?>">
+                        <input data-val="requir" data-title="使用有效期" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> type="text" name="validity"  size="35" id="validity"  value="<?php echo  isset($houseinfo['validity']) ? $houseinfo['validity'] : ''; ?>">
                     </td>
                 </tr>
                 <tr>
                     <td class='t'>预存金额:</td>
-                    <td ><input data-val="requir" data-title="预存金额" type="text" name="figue" id="figue"  size="40"  value="<?php echo  isset($houseinfo['figue']) ? $houseinfo['figue'] : ''; ?>"><span style="color: red">*</span></td>
+                    <td ><input data-val="requir" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> data-title="预存金额"  name="figue" id="figue"  size="35"  type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"  value="<?php echo  isset($houseinfo['figue']) ? $houseinfo['figue'] : ''; ?>"><span style="color: red">*</span></td>
                     <td class='t'>选择理财活动:</td>
                     <td colspan="2">
-                        <select name="financingid" data-val="requir" data-title="选择理财活动" >
+                        <select name="financingid" style="width: 288px;border-radius: 3px;" data-val="requir" data-title="选择理财活动" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> >
                             <option value="">请选择</option>
                             <?php foreach($moneyinfo as $money) {?>
                                 <option value="<?php echo $money['id'] ?>" <?php if ($houseinfo['financingid']==$money['id']){ ?>selected<?php } ?>><?php echo $money['title'] ?></option>
@@ -116,16 +119,20 @@
                 </tr>
                 <tr>
                     <td class='t'>客服电话:</td>
-                    <td ><input data-val="requir" data-title="客服电话" type="text" name="phone" id="phone"  size="40"  value="<?php echo  isset($houseinfo['phone']) ? $houseinfo['phone'] : ''; ?>"><span style="color: red">*</span></td>
+                    <td ><input data-val="requir" data-title="客服电话" type="text" name="phone" id="phone"  size="35"  value="<?php echo  isset($houseinfo['phone']) ? $houseinfo['phone'] : ''; ?>"><span style="color: red">*</span></td>
                     <td class='t'>详情页title:</td>
                     <td colspan="2"><input data-val="requir" data-title="详情页title" type="text" name="dtitle"  id="dtitle"  size="35" value="<?php echo  isset($houseinfo['dtitle']) ? $houseinfo['dtitle'] : ''; ?>"><span style="color: red">*</span></td>
                 </tr>
                 <tr>
-                    <td class='t'>活动结束H5跳转地址:</td>
-                    <td ><input data-val="requir" data-title="活动结束H5跳转地址" type="text" name="endtimeurl" id="endtimeurl"  size="40"  value="<?php echo  isset($houseinfo['endtimeurl']) ? $houseinfo['endtimeurl'] : ''; ?>"><span style="color: red">*</span></td>
-                    <td class='t'>支付成功后H5跳转地址:</td>
-                    <td colspan="2"><input data-val="requir" data-title="支付成功后H5跳转地址" type="text" name="payurl"  id="payurl"  size="35" value="<?php echo  isset($houseinfo['payurl']) ? $houseinfo['payurl'] : ''; ?>"><span style="color: red">*</span></td>
+                    <td class='t'>库存:</td>
+                    <td colspan="3"><input placeholder="不填表示为无限" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> type="text" name="repertory" id="repertory" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"  size="35"  value="<?php echo  $houseinfo['repertory']==0 ? '无限' : $houseinfo['repertory']; ?>"><span style="color: red">*</span></td>
                 </tr>
+                <!--<tr>
+                    <td class='t'>活动结束H5跳转地址:</td>
+                    <td ><input data-val="requir" data-title="活动结束H5跳转地址" type="text" name="endtimeurl" id="endtimeurl"  size="35"  value="<?php /*echo  isset($houseinfo['endtimeurl']) ? $houseinfo['endtimeurl'] : ''; */?>"><span style="color: red">*</span></td>
+                    <td class='t'>支付成功后H5跳转地址:</td>
+                    <td colspan="2"><input data-val="requir" data-title="支付成功后H5跳转地址" type="text" name="payurl"  id="payurl"  size="35" value="<?php /*echo  isset($houseinfo['payurl']) ? $houseinfo['payurl'] : ''; */?>"><span style="color: red">*</span></td>
+                </tr>-->
                 <tr>
                     <td class='t'>活动详情:</td>
                     <td colspan="4" id="desc">
@@ -136,8 +143,8 @@
                 </tr>
                 <tr>
                 <tr>
-                    <td class='t'>分享说明:</td>
-                    <td colspan="4"><textarea data-val="requir" data-title="分享说明" style="width:600px;height:280px;" name="share_desc" id="share_desc" class=""><?php echo  isset($houseinfo['share_desc']) ? htmlspecialchars($houseinfo['share_desc']) : ''; ?></textarea></td></tr>
+                    <td class='t'>分享设置:</td>
+                    <td colspan="4"><textarea data-val="requir" data-title="分享说明" style="width:100%;height:280px;" name="share_desc" id="share_desc" class=""><?php echo  isset($houseinfo['share_desc']) ? htmlspecialchars($houseinfo['share_desc']) : ''; ?></textarea></td></tr>
                 <tr>
                 <tr>
                     <td width='80' align='right' style="border:none"></td>
@@ -208,6 +215,7 @@
         formatUploadUrl :false,
         filterMode : false,//关闭 要不然会过滤一些代码
         urlType:'',
+        width : "100%",
         afterBlur: function(){this.sync();},
         extraFileUploadParams : {
             PHPSESSID : '<?php echo session_id(); ?>'
@@ -237,88 +245,10 @@
             }
         });
     }
-
-
-
-
-
-    /* var url = "<?php echo $this->createUrl('/houseadmin/Hactivity/add'); ?>";
-     $('.save_button').click(function () {
-     var city      = $("select[name='city']").find('option:selected').val();
-     var type      = $('input[name="type"]:checked').val();
-     var validity      = $('input[name="validity"]:checked').val();
-     var share_title      = $("input[name='share_title']").val();
-     var img      = $("input[name='img']").val();
-     var share_img      = $("input[name='share_img']").val();
-     var share_desc         = $("textarea[name='share_desc']").val();
-     var houseid      = $("input[name='houseid']").val();
-     var accountid      = $("select[name='accountid']").find('option:selected').val();
-     var title      = $("input[name='title']").val();
-     var coupon      = $("input[name='coupon']").val();
-     var actime = $("input[name='actime']").val();
-     var validity = $("input[name='validity']").val();
-     var figue = $("input[name='figue']").val();
-     var financingid       = $("select[name='financingid']").find('option:selected').val();
-     var phone = $("input[name='phone']").val();
-     var dtitle = $("input[name='dtitle']").val();
-     var endtimeurl = $("input[name='endtimeurl']").val();
-     var payurl = $("input[name='payurl']").val();
-     var desc = $("textarea[name='desc']").val();
-     if(city==0){
-     layer.msg("请选择活动城市");
-     return false;
-     }
-     if(accountid==0){
-     layer.msg("请选择结算账户");
-     return false;
-     }
-     if(financingid==0){
-     layer.msg("请选择理财活动");
-     return false;
-     }
-     if(!city || !type || !validity || !share_title || !img|| ! share_img ||! share_desc || !accountid || !title || !coupon || !actime || !validity || !figue || !financingid || !dtitle || !endtimeurl || !actime){
-     layer.msg("所有参数为必填");
-     return false;
-     } */
-
-    /* var data = {
-     city:city,
-     type:type,
-     share_title:share_title,
-     img:img,
-     share_img:share_img,
-     share_desc:share_desc,
-     houseid:houseid,
-     accountid:accountid,
-     title:title,
-     coupon:coupon,
-     actime:actime,
-     validity:validity,
-     figue:figue,
-     financingid:financingid,
-     phone:phone,
-     dtitle:dtitle,
-     endtimeurl:endtimeurl,
-     payurl:payurl,
-     desc:desc
-     };
-     $.post(url,data,function(res){
-     var res = JSON.parse(res);
-     if(res.statue==1){
-     layer.msg(res.msg,{time:2000},function(){
-     window.location.href="<?php echo $this->createUrl('/house/Hactivity/list')?>";
-     })
-     }else{
-     layer.msg(res.msg)
-     }
-     })
-     })*/
-
     var requir=$("[data-val=requir]");
     var radio_checked=$("[data-radio=checked]");
     var checkbox_checked=$("[data-checkbox=checked]");
     $(".save_button").on("click",function(){
-
 
         for(var i=0;i<requir.length;i++){
             if(!requir.eq(i).val()){
@@ -339,8 +269,6 @@
                 return false;
             }
         }
-        //alert("成功");
-
     })
 
 

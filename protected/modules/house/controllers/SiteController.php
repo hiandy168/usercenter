@@ -19,14 +19,51 @@ class SiteController extends HouseController{
         if($cookie_mod!=$cityurl){
             Cookie::remove('city');
         }
-        $sql = "SELECT id,title,city,actime,coupon,figue,img FROM {{house_activity}} WHERE status=1 and type=1 and poststatus!=2 and city=$cookie_mod order by createtime desc limit 0,5";
+        $sql = "SELECT id,title,city,actime,coupon,figue,img FROM {{house_activity}} WHERE status=1 and type=1 and poststatus!=2 and recommend=2 and city=$cookie_mod order by createtime desc limit 0,5";
         $houselist=Mod::app()->db->createCommand($sql)->queryAll();
+
+        $resql = "SELECT id,title,city,actime,coupon,figue,img FROM {{house_activity}} WHERE status=1 and type=1 and poststatus!=2 and recommend=1 and city=$cookie_mod order by createtime desc";
+        $recommondlist=Mod::app()->db->createCommand($resql)->queryAll();
+
+        $imgsql = "SELECT img_url,url FROM {{house_img}} WHERE status=1 and city=$cookie_mod order by sort desc";
+        $imglist=Mod::app()->db->createCommand($imgsql)->queryAll();
+
+        $citysql = "SELECT phone FROM {{house_city}} WHERE status=1 and id=$cookie_mod";
+        $cityinfo=Mod::app()->db->createCommand($citysql)->queryRow();
+        $phone=explode('|',$cityinfo['phone']);
+        $houselist=$this->actionAclist($houselist);
+        $recommondlist=$this->actionAclist($recommondlist);
+        $signPackage = $this->wx_jssdk(Wzbank::Wxappid, Wzbank::Wxappsecret);
+        $data = array(
+            'config'=>array(
+                'site_title'=> "腾讯楼盘商城",
+                'Keywords'=>'腾讯楼盘商城',
+                'Description'=>'腾讯楼盘商城'
+            ),
+            'info'=>array(
+                'title'=> '腾讯楼盘商城',
+                'share_img'=>'http://mat1.gtimg.com/hb/0000000zhuanti/share2.png',
+                'share_desc'=>'我在用腾讯楼盘商城预存抵现，房源多多，实惠多多',
+                'share_url'=>$this->_siteUrl.'/house/site/index',
+            ),
+            'signPackage'=>$signPackage,
+            'houseinfo'=>$houselist,
+            'recommondlist'=>$recommondlist,
+            'imglist'=>$imglist,
+            'phone'=>$phone,
+        );
+        $this->render("index",$data);
+    }
+
+    /**
+     * @abstract 加载首页数据和推荐数据公共
+     * @author Fancy
+     */
+    public function actionAclist($houselist){
         foreach($houselist as $k=>$v) {
-            if($houselist[$k]['city']==1){
-                $houselist[$k]['city']="武汉";
-            }elseif($houselist[$k]['city']==2){
-                $houselist[$k]['city']="郑州";
-            }
+            $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$houselist[$k]['city'];
+            $city=Mod::app()->db->createCommand($sql)->queryRow();
+            $houselist[$k]['city']=$city['city'];
             $actime=explode("|",$houselist[$k]['actime']);
             if(!empty($actime[0])&&$actime[0]){
                 $houselist[$k]['actime1']=$actime[0];
@@ -53,16 +90,9 @@ class SiteController extends HouseController{
             }else{
                 $houselist[$k]['end']= "bg1";
             }
+
         }
-        $data = array(
-            'config'=>array(
-                'site_title'=> '腾讯●楼盘商城',
-                'Keywords'=>'腾讯●楼盘商城',
-                'Description'=>'腾讯●楼盘商城',
-            ),
-            'houseinfo'=>$houselist,
-        );
-        $this->render("index",$data);
+        return $houselist;
     }
 
 
@@ -76,17 +106,15 @@ class SiteController extends HouseController{
         $cookie_mod=Cookie::get('city');
         if($page<=2){$page=2;}
         $start = ($page-1)*$pagesize;
-        $sql = "SELECT id,title,actime,coupon,city,figue,img,share_img FROM {{house_activity}} WHERE status=1 and poststatus!=2 and city=$cookie_mod and type=1 order by createtime desc limit $start,$pagesize";
+        $sql = "SELECT id,title,actime,coupon,city,figue,img,share_img FROM {{house_activity}} WHERE status=1 and poststatus!=2 and recommend=2 and city=$cookie_mod and type=1 order by createtime desc limit $start,$pagesize";
         $houselist=Mod::app()->db->createCommand($sql)->queryAll();
         $sql = "SELECT count(id) as id FROM {{house_activity}}   WHERE status=1 and poststatus!=2 and type=1 ";
         $houtenum=Mod::app()->db->createCommand($sql)->queryRow();
         $page=ceil(intval($houtenum['id'])/5);
         foreach($houselist as $k=>$v) {
-            if($houselist[$k]['city']==1){
-                $houselist[$k]['city']="武汉";
-            }elseif($houselist[$k]['city']==2){
-                $houselist[$k]['city']="郑州";
-            }
+            $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$houselist[$k]['city'];
+            $city=Mod::app()->db->createCommand($sql)->queryRow();
+            $houselist[$k]['city']=$city['city'];
             $houselist[$k]['page'] = $page;
             if (mb_strlen($houselist[$k]['title'], 'utf8') > 28){
                 $houselist[$k]['ftitle']=mb_substr($houselist[$k]['title'], 0, 28, 'utf8') . '...';
@@ -163,14 +191,12 @@ class SiteController extends HouseController{
         $id=Tool::getValidParam('id','integer');
         $cookie_mod=Cookie::get('city');
         if(!empty($id)){
-            $sql = "SELECT a.id,a.phone,a.city,a.financingid,a.actime,a.coupon,a.desc,a.figue,a.img,a.dtitle,a.share_img,m.title,m.earnings FROM {{house_activity}} as a LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE a.status=1 and a.type=1 and city=$cookie_mod and a.id=$id";
+            $sql = "SELECT a.id,a.phone,a.city,a.financingid,a.actime,a.repertory,a.coupon,a.desc,a.figue,a.img,a.dtitle,a.share_img,m.title,m.earnings FROM {{house_activity}} as a LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE a.status=1 and a.type=1 and city=$cookie_mod and a.id=$id";
             $houseinfo=Mod::app()->db->createCommand($sql)->queryRow();
             if($houseinfo){
-                if($houseinfo['city']==1){
-                    $houseinfo['city']="武汉";
-                }elseif($houseinfo['city']==2){
-                    $houseinfo['city']="郑州";
-                }
+                $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$houseinfo['city'];
+                $city=Mod::app()->db->createCommand($sql)->queryRow();
+                $houseinfo['city']=$city['city'];
                 $actime=explode("|",$houseinfo['actime']);
                 if(!empty($actime[1])&&$actime[1]){
                     $houseinfo['actime']=$actime[1];
@@ -202,12 +228,20 @@ class SiteController extends HouseController{
         $phone= explode('|',$houseinfo['phone']);
         $houseinfo['createtime']=$phone[0];
         $houseinfo['updatetime']=$phone[1];
+        $signPackage = $this->wx_jssdk(Wzbank::Wxappid, Wzbank::Wxappsecret);
         $data = array(
             'config'=>array(
                 'site_title'=> $houseinfo['dtitle'],
                 'Keywords'=>'产品详细',
                 'Description'=>'产品详细'
             ),
+            'infos'=>array(
+                'title'=> $houseinfo['dtitle'],
+                'share_img'=>'http://mat1.gtimg.com/hb/0000000zhuanti/share2.png',
+                'share_desc'=>'我在用腾讯楼盘商城预存抵现，房源多多，实惠多多',
+                'share_url'=>'/house/site/detail/id/'.$id,
+            ),
+            'signPackage'=>$signPackage,
             'houseinfo'=>$houseinfo,
             'orderinfo'=>$orderinfo,
             'count'=>$ordercount['count'],

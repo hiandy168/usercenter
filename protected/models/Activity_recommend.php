@@ -54,7 +54,7 @@ class Activity_recommend extends CActiveRecord
         $list = null;
         $asModel = new Activity_recommend;
         $criteria = new CDbCriteria();
-        $criteria->order = 'start_time ASC';
+        $criteria->order = 'createtime DESC';
         $criteria->condition ='status=:status';
         $criteria->params =array(':status'=>1);
         $count = $asModel->count($criteria);

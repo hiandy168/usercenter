@@ -1,0 +1,87 @@
+* { -webkit-text-size-adjust: none; -moz-text-size-adjust: none; -ms-text-size-adjust: none; -webkit-tap-highlight-color: transparent; padding: 0; margin: 0; text-decoration: none; }
+*:not(input, textarea) { -webkit-touch-callout: inherit; -webkit-user-select: auto; }
+body { width: 100%; font-family: Hiragino Sans GB, Arial, Helvetica, "microsoft yahei", sans-serif; font-size: 14px; color: #000; -webkit-touch-callout: inherit; -webkit-user-select: auto; -webkit-box-align: stretch; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); -webkit-box-orient: vertical; background-color: #f4f7f8; color: #444444; }
+body, html { height: 100%; }
+a { text-decoration: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+a:hover { text-decoration: none; }
+img { vertical-align: middle; }
+button, input, select, textarea { font-size: 100%; margin: 0; padding: 0; outline: none; }
+textarea, input { resize: none; outline: none; -webkit-appearance: none; }
+ul, ol, li { list-style: none; }
+h1, h2, h3, h4, h5, h6, b { font-size: 100%; font-weight: normal; }
+em, i { font-style: normal; }
+::-webkit-scrollbar { width: 0; }
+::-webkit-scrollbar-thumb { width: 0; }
+.loading-div { position: absolute; z-index: 9999; top: 0; right: 0; bottom: 0; left: 0; display: block; text-align: center; background: #fff; }
+.loading-div span { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); }
+.loading-div span img { width: 30px; }
+.loading-div span i { font-size: 14px; display: block; margin-top: 5px; color: #45567d; }
+.div-main { position: relative; box-sizing: border-box; width: 100%; min-width: 320px; max-width: 750px; min-height: 100%; margin: 0 auto; background: url(../images/deggs-img2.jpg) repeat; background-size: .8rem; }
+.fl { float: left; }
+.fr { float: right; }
+.db { display: block; }
+.tc { text-align: center; }
+.pos-r { position: relative; }
+.pos-a { position: absolute; }
+.clearfix:after, .clearfix:before { display: table; clear: both; content: ''; }
+.clearfix:after { clear: both; }
+
+/*mask*/
+.mask { position: fixed; z-index: 999; background: rgba(0, 0, 0, .4); width: 100%; height: 100%; left: 0; right: 0; bottom: 0; top: 0; display: none; }
+.dial-pop { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); text-align: center; z-index: 1000; width: 100%; max-width: 13rem; min-width: 300px; display: none; background: #ffdc87; border-radius: 10px; box-shadow: 0px 0px 20px 1px rgba(255, 255, 255, .3); }
+.dial-poptxt h3 { font-size: 18px; color: #be7d01; font-weight: bold; margin: 20px 0px; }
+.dial-poptxt p { line-height: 24px; margin: 0px 20px; color: #997d3c; }
+.dial-confirmbtn { height: 44px; margin: 20px 20px; text-align: center; }
+.dial-confirmbtn a { display: inline-block; height: 100%; background: #ff6866; font-size: 16px; color: #fff; width: 50%; border-radius: 5px; line-height: 44px; }
+.dial-poptxt p i { color: #ff6866; }
+.dial-poptxt p b { color: #ff6866; font-weight: bold; font-size: 16px; padding: 0px 5px; }
+.active { animation: scale .8s ease both; -webkit-animation: scale .8s ease both; }
+@keyframes scale {
+    from { opacity: 0; top: -50%; }
+    to { opacity: 1; top: 50%; }
+}
+@-webkit-keyframes scale {
+    from { opacity: 0; top: -50%; }
+    to { opacity: 1; top: 50%; }
+}
+.deggs-za { height: 13rem;        /*-webkit-transform-style: preserve-3d;
+            -webkit-animation: cube-spin 5s infinite linear;
+            -moz-transform-style: preserve-3d;
+            -moz-animation: cube-spin 5s infinite linear;
+            -ms-transform-style: preserve-3d;
+            -ms-animation: cube-spin 5s infinite linear;
+            transform-style: preserve-3d;
+            animation: cube-spin 5s infinite linear;*/ }
+    @-webkit-keyframes cube-spin {
+        from { -webkit-transform: rotateZ(0); }
+        to { -webkit-transform: rotateZ(360deg); }
+    }
+    .deggs-za ul { }
+    .deggs-za ul li { height: 8.8rem; width: 6.4rem; transform: scale(.6); -webkit-transform: scale(.6); }
+    .deggs-za ul li:nth-of-type(1) { left: 50%; margin-left: -3.2rem; top: -1rem; }
+    .deggs-za ul li:nth-of-type(2) { left: 0rem; top: 3.5rem; }
+    .deggs-za ul li:nth-of-type(3) { right: 0rem; top: 3.5rem; }
+    .deggs-za ul li img:nth-of-type(1) { top: -4rem; width: 6rem; left: 1.5rem; visibility: hidden; transform: rotate(15deg); -webkit-transform: rotate(15deg); transition: all .3s linear; -webkit-transition: all .3s linear; -webkit-transform-origin: right bottom; transform-origin: right bottom; }
+    .deggs-za ul li img:nth-of-type(2) { width: 100%; }
+    .deggs-za ul li img:nth-of-type(3) { bottom: -26px; width: 7.9rem; opacity: 0; }
+    .deggs-za ul li.za img:nth-of-type(1) { visibility: visible; transform: rotate(-10deg); -webkit-transform: rotate(-10deg); }
+    .deggs-za ul li.za img:nth-of-type(2) { animation: po .1s .2s linear both; -webkit-animation: po .1s .2s linear both; }
+    .deggs-za ul li.za img:nth-of-type(3) { animation: po1 .1s .2s linear both; -webkit-animation: po1 .1s .2s linear both; }
+    @-webkit-keyframes po {
+        from { opacity: 1; transform: scaleY(1); -webkit-transform: scaleY(1); }
+        to { opacity: 0; transform: scaleY(.9); -webkit-transform: scaleY(.9); }
+    }
+    @-webkit-keyframes po1 {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .deggs-rule { background: #ffda78; margin: 0px 20px; margin-bottom: 30px; padding: 10px; border-radius: 5px;   /* transform: skewX(-5deg);
+                    -webkit-transform: skewX(-5deg);*/ }
+        .deggs-rule h3 { display: inline-block; background: #ff6866; color: #fff; padding: 5px 20px; position: relative; top: -20px; left: -10px; border-radius: 2px; box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.15); transform: skewX(10deg); -webkit-transform: skewX(10deg); }
+        .deggs-rule span { color: #2d2d2d; font-size: 14px; display: block; padding-bottom: 10px; line-height: 24px; word-wrap: break-word; }
+        .deggs-jlbtn { margin: 0px 20px; text-align: center; height: 44px; margin-bottom: 30px; background: #ff6866; line-height: 44px; font-size: 16px; color: #fff; border-radius: 5px; }
+ .pop-zjlist { font-size: .48rem; max-height: 8rem; overflow-y: auto; }
+  .pop-zjlist li { font-size: .6rem; margin-top: .5rem; overflow: hidden; line-height: .8rem; }
+   .pop-zjlist li span{ width:50%; float: left; text-align: center; }
+  .pop-zjlist li span { display: block; color: #ff6866; }
+        

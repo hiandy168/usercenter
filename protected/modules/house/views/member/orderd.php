@@ -22,19 +22,19 @@
             <a href="<?php echo $this->createUrl('/house/site/detail', array('id' => $orderdetail['houseid'])) ?>">
                 <div class="f-index-listdiv-img"><img src="<?php echo $this->_siteUrl . '/' . $orderdetail['img'] ?>"></div>
                 <div class="f-index-listdiv-txt">
-                    <h3>[<?php echo $orderdetail['city']==1?"武汉":"郑州"?>] <?php echo $orderdetail['title']?></h3>
+                    <h3>[<?php echo $orderdetail['city']?>] <?php echo $orderdetail['title']?></h3>
                     <p>在线预存：<i><?php echo $orderdetail['money']?></i></p>
                 </div>
             </a>
         </div>
         <?php if($orderdetail['paystatus']==1){?>
-            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d',$orderdetail['createtime'])?> 23:59:59前完成存款</p></div>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d H:i:s',$orderdetail['createtime'])?> 前完成存款</p></div>
         <?php }elseif($orderdetail['paystatus']==2){ ?>
-            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',$orderdetail['createtime'])?>  23:59:59过期，请于案场使用</p></div>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d H:i:s',$orderdetail['createtime'])?>  过期，请于案场使用</p></div>
         <?php }elseif($orderdetail['paystatus']==3){ ?>
-            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d h:i:s',$orderdetail['usetime'])?>取出存款</p></div>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d H:i:s',$orderdetail['usetime'])?>取出存款</p></div>
         <?php }elseif($orderdetail['paystatus']==4){ ?>
-            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',$orderdetail['createtime'])?> 23:59:59已结束</p></div>
+            <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d H:i:s',$orderdetail['createtime'])?> 已结束</p></div>
         <?php } ?>
     </div>
     <div class="bgfff mgt4 f-order-info">
@@ -63,15 +63,23 @@
             <i>购房优惠</i>
             <ul>
                 <?php if($orderdetail['paystatus']==1){?>
-                    <li><a onclick="checkpay()" href="javascript:void(0)" class="bg1 fcfff">立即预存</a></li>
+                    <?php if($orderdetail['actime']<time() && $orderdetail['createtime']>time()){?>
+                        <li><a onclick="checkpay()" href="javascript:void(0)" class="bg1 fcfff">立即预存</a></li>
+                    <?php }else{?>
+                        <li><a  href="javascript:void(0)" class="bg2 fcfff">立即预存</a></li>
+                    <?php } ?>
                 <?php }elseif($orderdetail['paystatus']==2){ ?>
 
-                    <?php if($orderdetail['createtime']<time()){?>
+                    <?php if($orderdetail['validity']<time() && $orderdetail['updatetime']>time() ){?>
                         <li><a onclick="confirmorder()" href="javascript:void(0)" class="bgfff fcf74 b1px boru5">确认使用</a></li>
                     <?php }else{ ?>
                         <li><a href="javascript:void(0)" class="bg2 fcfff">确认使用</a></li>
                     <?php } ?>
-                    <li><a onclick="withdraw()" href="javascript:void(0)" class="bg1 fcfff">申请提现</a></li>
+                    <?php if($orderdetail['createtime']<time()){?>
+                        <li><a onclick="withdraw()" href="javascript:void(0)" class="bg1 fcfff">申请提现</a></li>
+                    <?php }else{ ?>
+                        <li><a href="javascript:void(0)" class="bg2 fcfff">申请提现</a></li>
+                    <?php } ?>
                 <?php }elseif($orderdetail['paystatus']==3){ ?>
                     <li><a href="javascript:void(0)" class="bg2 fcfff">已使用</a></li>
                 <?php }elseif($orderdetail['paystatus']==4){ ?>
@@ -81,10 +89,7 @@
         </div>
     </div>
     <div class="fs28 f-user-ddlistdiv3 bgfff pos-r bb mgt4"><p>购买详情</p></div>
-
     <div class="bgfff pos-r bb f-order-buyinfo fs26 fc777">
-
-
         <p>用户姓名：<?php echo $this->member['realname']?></p>
         <p>联系电话：<?php echo $this->member['phone']?></p>
         <p>下单时间：<?php echo date('Y-m-d H:i:s',$orderdetail['applytime'])?></p>

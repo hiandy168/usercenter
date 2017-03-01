@@ -95,7 +95,7 @@
             </div>
         </form>
 
-        <div class="deggs-rule" style=" margin-top: -40px;">
+        <div class="deggs-rule" >
             <h3>活动规则</h3>
 	    		<span>
 	    			<?php echo $info['rule'];?>
@@ -243,4 +243,3 @@
 </html>
 
 
-}

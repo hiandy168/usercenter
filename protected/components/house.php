@@ -35,6 +35,14 @@ $menu = array(
           /*  array('title' => '新增商户', 'url' => 'htenant/add'),*/
         )
     ),
+    'housecity' => array(
+        'title' => '城市管理',
+        'children' => array(
+            array('title' => '城市列表', 'url' => 'housecity/list'),
+            array('title' => '新增城市', 'url' => 'housecity/add'),
+        )
+    ),
+
   /*  'houseorder' => array(
         'title' => '订单管理',
         'children' => array(

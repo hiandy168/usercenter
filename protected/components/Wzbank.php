@@ -18,6 +18,8 @@ class Wzbank {
     const  appid="W0000020";
     const  secret="CpGjNFl3Bo2HU48gAG8GBPRt66pWyTv3YYalAZydtqVj6wA6FxhDpUL6GRkEIHwV";*/
     const  version="1.0.0";
+    const  Wxappid="wxa8ba3a5d0f323f33";
+    const  Wxappsecret="4421ee6361a2cf1987c86df9dbb8da4b";
     /**
      * 检测是否有证书
      * author  Fancy

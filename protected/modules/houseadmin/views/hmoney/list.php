@@ -51,7 +51,7 @@
                             <td style="text-align: center"><?php echo date('Y-m-d H:i:s',$item['createtime']); ?></td>
                             <td style="text-align: center">
                                 <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">修改</a>
-                                <a class='delete' href="javascript:;" onclick="delActivity(<?php echo $item['id']?>)" >删除</a>
+                                <a class='delete' data-del-id="<?php echo $item['id']?>" href="javascript:;" onclick="delActivity(<?php echo $item['id']?>)" >删除</a>
                             </td>
                         </tr>
                     <?php } }?>
@@ -85,7 +85,7 @@
                 success:function(data){
                     if(data==100){
                         layer.msg('删除成功！', {icon: 1,time:2000},function(){
-                            location.reload()
+                            $("[data-del-id="+id+"]").parent().parent().remove();
                         });
                     }
                     else{

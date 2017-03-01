@@ -38,13 +38,13 @@ class LController extends CController {
 
     public function init() {
 //        echo Mod::app()->request->userHostAddress;die();
-       if(!in_array(Mod::app()->request->userHostAddress,array('127.0.0.1','111.47.243.43','14.17.22.54','27.17.15.94',
-        '183.61.38.182','10.68.51.192','14.17.22.35','61.135.172.68','14.17.22.33'//微众
+        if(!in_array(Mod::app()->request->userHostAddress,array('127.0.0.1','111.47.243.43','14.17.22.54','27.17.15.94',
+            '183.61.38.182','10.68.51.192','14.17.22.35','61.135.172.68','14.17.22.33'/*微众*/,'113.204.228.218'/*大渝网*/,'1.192.121.140'/*大预网*/
         ))){die('非法的IP访问地址');}
-         header("Content-type: text/html; charset=utf-8");
+        header("Content-type: text/html; charset=utf-8");
 
     }
 
- 
-    
+
+
 }

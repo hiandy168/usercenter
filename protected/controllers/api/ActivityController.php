@@ -51,7 +51,7 @@ class ActivityController extends FrontController
                     if ($val->type == 4) {//投票
                         if ($res->component == 0) {//报名
                             $msg['type'] = "报名";
-                            $msg['linkDetail'] = $this->_siteUrl . "/activity/vote/views/id/$res->id";
+                            $msg['linkDetail'] = $this->_siteUrl . "/activity/vote/signup/id/$res->id";
                             $msg['address'] = $res->address;
                             $msg['desc'] = $res->desc;
                             $msg['background'] = $res->background;
@@ -83,14 +83,15 @@ class ActivityController extends FrontController
               //  $datapage = array_slice($datas, $page, $num);
                 $data = array('code' => 1, 'data' => $datas);
             } else {
-                $data = array("code" => 1, 'data' => "There is no data");
+                $data = array("code" => 1, 'data' => array());
             }
         } else {
-            $data = array("code" => 1, 'data' => "There is no data");
+            $data = array("code" => 1, 'data' =>array());
         }
 
         $result = json_encode($data);
         echo "flightHandler($result)";
+        exit;
     }
 
 }

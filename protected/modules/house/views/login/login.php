@@ -34,6 +34,7 @@
 
         <div class="op-login-input">
             <input type="text" id="uname" placeholder="请输入用户名/手机号" value="">
+            <input type="hidden" id="city" name="city" value="<?php echo $city ?>">
         </div>
 
         <div class="op-login-input">

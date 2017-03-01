@@ -8,20 +8,20 @@
             <i class="fs36"><?php echo $this->member['phone'] ?></i>
         </div>
         <div class="f-user-sy2">
-            <i class="fs24 fcbbb">昨日新增(元)</i>
-            <p class="fcf74">200.00</p>
+            <i class="fs24 fcbbb">总投入(元)</i>
+            <p class="fcf74"><?php echo isset($invest)?$invest:'0' ?>.00</p>
         </div>
     </div>
 
     <div class="pos-r  bt bgfff  clearfix f-user-sy3">
         <ul>
             <li class="br pos-r">
-                <i class="fs24 fcbbb">累计收益（元）</i>
-                <p class="fs36 fcf74">10.00</p>
+                <i class="fs24 fcbbb">收益率</i>
+                <p class="fs36 fcf74"><?php echo $earning ?>%</p>
             </li>
             <li>
-                <i class="fs24 fcbbb">账户余额（元）</i>
-                <p class="fs36 fcf74">100000.00</p>
+                <i class="fs24 fcbbb">当天收益（元）</i>
+                <p class="fs36 fcf74"><?php echo $revenue ?></p>
             </li>
         </ul>
 
@@ -57,20 +57,20 @@
                     <a href="<?php echo $this->createUrl('/house/member/orderd',array('id'=>$order['id'])) ?>">
                         <div class="f-index-listdiv-img"><img src="<?php echo $this->_siteUrl . '/' . $order['img'] ?>"></div>
                         <div class="f-index-listdiv-txt">
-                            <h3>[<?php echo $order['city']==1?"武汉":"郑州"?>] <?php echo $order['title']?></h3>
+                            <h3>[<?php echo $order['city']?>] <?php echo $order['title']?></h3>
                             <p>在线预存：<i><?php echo $order['money']?>元</i></p>
                         </div>
                     </a>
                 </div>
 
                 <?php if($order['paystatus']==1){?>
-                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d',$order['actime'])?> 23:59:59前完成存款</p></div>
+                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>请于<?php echo date('Y-m-d H:i:s',$order['createtime']) ?> 前完成存款</p></div>
                 <?php }elseif($order['paystatus']==2){ ?>
-                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',$order['createtime'])?>  23:59:59过期，请于案场使用</p></div>
+                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d H:i:s',$order['createtime']) ?> 过期，请于案场使用</p></div>
                 <?php }elseif($order['paystatus']==3){ ?>
-                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d h:i:s',$order['usetime'])?>取出存款</p></div>
+                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>您于<?php echo date('Y-m-d H:i:s',$order['usetime']) ?>取出存款</p></div>
                 <?php }elseif($order['paystatus']==4){ ?>
-                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d',$order['createtime'])?> 23:59:59已结束</p></div>
+                    <div class="fs26 f-user-ddlistdiv3 pos-r bb"><p>活动于<?php echo date('Y-m-d H:i:s',$order['createtime']) ?> 已结束</p></div>
                 <?php } ?>
             </div>
         </li>

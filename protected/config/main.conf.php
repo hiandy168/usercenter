@@ -50,6 +50,15 @@ define('WEIXINAPPID', 'wx37e6cc950b4fd03a');
 //申请到的appkey
 define('WEIXINSECRET', "84ca70e17f41cf53e8994c353c40318f");
 
+/*
+ * 房产金融公众号
+ * */
+
+//申请到的appid
+define('HOUSEWEIXINAPPID', 'wxa8ba3a5d0f323f33');
+
+//申请到的appkey
+define('HOUSEWEIXINSECRET', "4421ee6361a2cf1987c86df9dbb8da4b");
 
 /***********************微信相关参数***********************/
 

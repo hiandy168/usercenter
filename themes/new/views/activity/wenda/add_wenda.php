@@ -238,8 +238,8 @@
                                 <tr>
                                     <td >排序</td>
                                     <td >题目</td>
-                                    <td >类型</td>
-                                    <td >操作</td>
+<!--                                    <td >类型</td>-->
+                                    <td colspan="2" style="text-align:center">操作</td>
                                 </tr>
                                 <tr id="nothing" <?php if($question_all){echo 'hidden="hidden"';}?> >
                                     <td colspan="4" style="text-align: center;padding-left: 0px">还没有配置题目</td>
@@ -255,8 +255,8 @@
                                         <tr class="lee">
                                             <td><?php echo isset($val['sort'])?$val['sort']:""; ?></td>
                                             <td><?php echo isset($val['question'])?$val['question']:""; ?></td>
-                                            <td><span data-span="span"   data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=edit_question(this)>编辑</span></td>
-                                            <td><span data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=del_question(this,"<?php echo $val['id']?>")>删除</span></td>
+                                            <td style="text-align:center"><span data-span="span"   data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=edit_question(this)>编辑</span></td>
+                                            <td style="text-align:center"><span data-data='<?php echo isset($val['body'])?$val['body']:"";?>' onclick=del_question(this,"<?php echo $val['id']?>")>删除</span></td>
                                         </tr>
                                     <?php  }} ?>
 
@@ -648,7 +648,7 @@
                         <div class="form-inp">
 	                          <span>
                             <input type="text"
-                                   value="<?php echo isset($activity_info['share_desc']) ? $activity_info['share_desc'] : '大转盘，开心转转'; ?>"
+                                   value="<?php echo isset($activity_info['share_desc']) ? $activity_info['share_desc'] : '问答，真相只有一个！'; ?>"
                                    name='share_desc' placeholder="分享描述" class="form-control" maxlength="10"/>
                         </span>
                         </div>
@@ -888,13 +888,13 @@
             if (type == "add") {
                 timu.no = len;
                 var data = JSON.stringify(timu);
-                var html = '<tr class="lee"><td>' + len + '</td><td>' + timu.question + '</td><td><span data-span="span"   data-data='+data+' onclick=edit_question(this)>编辑</span></td><td><span  data-data='+data+' onclick=del_question(this)>删除</span></td></tr>';
+                var html = '<tr class="lee"><td>' + len + '</td><td>' + timu.question + '</td><td style="text-align:center"><span data-span="span"   data-data='+data+' onclick=edit_question(this)>编辑</span></td><td style="text-align:center"><span  data-data='+data+' onclick=del_question(this)>删除</span></td></tr>';
                 $("#timu_table").append(html);
             }else{
                 timu.no = num;
                 var data = JSON.stringify(timu);
                 var num_id = num+1;
-                var edit_html='<td>' + num + '</td><td>' + timu.question + '</td><td><span data-span="span"   data-data='+data+' onclick=edit_question(this)>编辑</span></td><td><span   data-data='+data+' onclick=del_question(this,"'+timu.id+'")>删除</span></td>';
+                var edit_html='<td>' + num + '</td><td>' + timu.question + '</td><td style="text-align:center"><span data-span="span"   data-data='+data+' onclick=edit_question(this)>编辑</span></td><td style="text-align:center"><span   data-data='+data+' onclick=del_question(this,"'+timu.id+'")>删除</span></td>';
                 $("tr:eq("+num_id+")").html(edit_html);
             }
 
@@ -927,8 +927,8 @@
                 html += '<tr class="lee">';
                 html += '<td>'+(i+1)+'</td>';
                 html += '<td>'+arr1[i].question+'</td>';
-                html += '<td><span data-span="span" data-data='+jsonarr+' onclick="edit_question(this)">编辑</span></td>';
-                html+='<td><span data-data='+jsonarr+' onclick="del_question(this,\''+arr1[i].id+'\')">删除</span></td>';
+                html += '<td style="text-align:center"><span data-span="span" data-data='+jsonarr+' onclick="edit_question(this)">编辑</span></td>';
+                html+='<td style="text-align:center"><span data-data='+jsonarr+' onclick="del_question(this,\''+arr1[i].id+'\')">删除</span></td>';
                 html+='</tr>';
 //              console.log(html);
 

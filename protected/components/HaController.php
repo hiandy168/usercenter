@@ -4,7 +4,7 @@
  * Controller is the customized base controller class.
  * All controller classes for this application should extend from this base class.
  */
-class 
+class
 HaController extends CController {
 
     /**
@@ -39,16 +39,16 @@ HaController extends CController {
     protected $user = array();
     static public $treeList = array();
     public function init() {
-           if(!in_array(Mod::app()->request->userHostAddress,array('127.0.0.1','111.47.243.43','14.17.22.54','27.17.15.94',
-        '183.61.38.182','10.68.51.192','14.17.22.35','61.135.172.68','14.17.22.33'//微众
+        if(!in_array(Mod::app()->request->userHostAddress,array('127.0.0.1','111.47.243.43','14.17.22.54','27.17.15.94',
+            '183.61.38.182','10.68.51.192','14.17.22.35','61.135.172.68','14.17.22.33'/*微众*/,'113.204.228.218'/*大渝网*/,'1.192.121.140'/*大预网*/
         ))){die('非法的IP访问地址');}
 //        echo DIRECTORY_SEPARATOR;
-         $this->_module_id = $this->getModule()->id;
+        $this->_module_id = $this->getModule()->id;
         $this->lang = Lang::getLang();
         $this->_gets = Mod::app()->request;
         $this->_wwwPath = Mod::app()->basePath . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
         $this->_baseUrl = Mod::app()->baseUrl;
-		$this->_siteUrl = str_replace('index.php', '', Mod::app()->createAbsoluteUrl('/'));
+        $this->_siteUrl = str_replace('index.php', '', Mod::app()->createAbsoluteUrl('/'));
         $this->_adminUrl =$this->_siteUrl.'/houseadmin';
 
         $this->_theme = Mod::app()->theme;
@@ -113,58 +113,58 @@ HaController extends CController {
         if($this->user['group_id']==1){
             //超级管理员有所有权限
         }else if (!isset($permission[$control]) || !in_array($fun, $permission[$control])) {
-                $this->admin_message('没有权限，禁止操作！！！！！！！！！！！');
+            $this->admin_message('没有权限，禁止操作！！！！！！！！！！！');
         }
     }
 
 
-    
+
     function get_cachetype(){
-         $result  = Setting::model()->find("type='cache' and lang ='".$this->lang."'");   
+        $result  = Setting::model()->find("type='cache' and lang ='".$this->lang."'");
         if(!$result){
             return $cache_type = 'filecache';
         }else{
             return $cache_type = $result->attributes['value'];
         }
     }
-    
-    
-       public function get_admin_menu() {
-            $menu = $this->admin_menu();
-            if($this->user['group_id'] ==1){
-                return $menu;
-            }
-            $html = '';
-            $permission = unserialize($this->user['permission']);       
-            $class_arr = array_keys($permission);
-            //print_r($permission);
-         
-             //过滤有没有权限的菜单
-           foreach($menu as $m_k=>$m_v){
-               if(isset($m_v['children'])){
+
+
+    public function get_admin_menu() {
+        $menu = $this->admin_menu();
+        if($this->user['group_id'] ==1){
+            return $menu;
+        }
+        $html = '';
+        $permission = unserialize($this->user['permission']);
+        $class_arr = array_keys($permission);
+        //print_r($permission);
+
+        //过滤有没有权限的菜单
+        foreach($menu as $m_k=>$m_v){
+            if(isset($m_v['children'])){
                 foreach ($m_v['children'] as $k=>$c) {
-                        $temp_class_arr = explode('/', $c['url']);
-                        //print_r($temp_class_arr) ;
-                        //echo "<br>";
-                        
-                        $qiangzhi_view = (isset($menu[$m_k]['children'][$k]['view']) && $menu[$m_k]['children'][$k]['view']);
-                       if(!$qiangzhi_view){
+                    $temp_class_arr = explode('/', $c['url']);
+                    //print_r($temp_class_arr) ;
+                    //echo "<br>";
+
+                    $qiangzhi_view = (isset($menu[$m_k]['children'][$k]['view']) && $menu[$m_k]['children'][$k]['view']);
+                    if(!$qiangzhi_view){
                         if(!in_array(strtolower($temp_class_arr[0]),$class_arr)  ){
-                                unset($menu[$m_k]['children'][$k]);
+                            unset($menu[$m_k]['children'][$k]);
                         }else if(isset($temp_class_arr[1])&& $temp_class_arr[1]){
                             if(!in_array(strtolower($temp_class_arr[1]),$permission[$temp_class_arr[0]])){
                                 unset($menu[$m_k]['children'][$k]);
                             }
-                        } 
-                       }
+                        }
+                    }
                 }
-               }
-                if(isset($menu[$m_k]['children']) &&!count($menu[$m_k]['children'] ))
-                    unset($menu[$m_k]);
             }
+            if(isset($menu[$m_k]['children']) &&!count($menu[$m_k]['children'] ))
+                unset($menu[$m_k]);
+        }
 //            var_dump($menu);die;
-            return $menu;
-           
+        return $menu;
+
 //            foreach($menu as $m_k=>$m_v){
 //                $submenu='';
 //                if(isset($m_v['children'])&&$m_v['children']){

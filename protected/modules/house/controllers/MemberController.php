@@ -14,20 +14,38 @@ class MemberController extends HouseController{
 
     public function actionIndex(){
         $userid=$this->member['id'];
-        //$userid=7776;
-        //$userid=78120;
         $sql = "SELECT wxstatus  FROM {{member}} WHERE id=".$userid;
         $memberinfo=Mod::app()->db->createCommand($sql)->queryRow();
+        if(!$memberinfo){
+            echo "error";die();
+        }
+        try {
+            $osql = "SELECT SUM(money) as invest  FROM {{house_order}} WHERE mid=".$userid." and paystatus=2";
+            $invest=Mod::app()->db->createCommand($osql)->queryRow();
+            $msql = "SELECT m.earnings  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a ON o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id";
+            $earning=Mod::app()->db->createCommand($msql)->queryRow();
+        } catch (Exception $e) {
+            echo "error";die();
+        }
+
         if($memberinfo['wxstatus']==1){
             $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,o.usetime,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid order by o.createtime desc";
             $orderlist=Mod::app()->db->createCommand($sql)->queryAll();
-            //var_dump($orderlist);
+            if(!$orderlist){
+                echo "";die();
+            }
             foreach($orderlist as $k=>$v) {
+                $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$orderlist[$k]['city'];
+                $city=Mod::app()->db->createCommand($sql)->queryRow();
+                $orderlist[$k]['city']=$city['city'];
                 $actime=explode("|",$orderlist[$k]['actime']);
-                $activityinfo[$k]['actime']=$actime[0];
-                $activityinfo[$k]['createtime']=$actime[1];
+                $orderlist[$k]['actime']=$actime[0];
+                $orderlist[$k]['createtime']=$actime[1];
             }
         }
+        $invest=$invest['invest'];
+        $earning=$earning['earnings'];
+        $revenue=mb_substr($invest*($earning/360/100),0,4);
         $data = array(
             'config'=>array(
                 'site_title'=> '腾讯●楼盘商城',
@@ -35,6 +53,9 @@ class MemberController extends HouseController{
                 'Description'=>'腾讯●楼盘商城',
             ),
             'orderlist'=>$orderlist,
+            'invest'=>$invest,
+            'earning'=>$earning,
+            'revenue'=>$revenue,
         );
         $this->render('index',$data);
     }
@@ -46,21 +67,20 @@ class MemberController extends HouseController{
         $orderid=Tool::getValidParam('id','string');
         $userid=$this->member['id'];
         if(!empty($orderid)){
-            $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,o.usetime,o.houseid,a.title,a.img,a.financingid,a.actime,a.city,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
+            $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,o.usetime,o.houseid,a.title,a.img,a.financingid,a.actime,a.city,a.validity,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
             $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+            $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$orderdetail['city'];
+            $city=Mod::app()->db->createCommand($sql)->queryRow();
+            $orderdetail['city']=$city['city'];
             $actime=explode("|",$orderdetail['actime']);
             $validitys=explode("|",$orderdetail['validity']);
             $orderdetail['actime']=$actime[0];
             $orderdetail['createtime']=$actime[1];
             $orderdetail['validity']=$validitys['0'];
             $orderdetail['updatetime']=$validitys['1'];
-
         }else{
             echo "error";die();
         }
-
-
-        //var_dump($orderdetail);
         if(!$orderdetail){
             echo "error";
             die();

@@ -18,14 +18,15 @@
                     <th style="width: 80px;text-align: center">活动类型</th>
                     <th style="width: 100px;text-align: center">活动名称</th>
                     <th style="width: 80px;text-align: center">活动楼盘</th>
-                    <th style="width: 100px;text-align: center">创建时间</th>
+                   <!-- <th style="width: 100px;text-align: center">创建时间</th>-->
                     <th style="width: 100px;text-align: center">活动时间</th>
                     <th style="width: 100px;text-align: center">使用有效期</th>
                     <th style="width: 50px;text-align: center">发布状态</th>
                     <th style="width: 50px;text-align: center">预览页</th>
+                    <th style="width: 50px;text-align: center">总需人次</th>
                     <th style="width: 120px;text-align: center">管理操作</th>
                     <?php if($group_id==1){?>
-                        <th style="width: 50px;text-align: center">推荐</th>
+                        <th style="width: 200px;text-align: center">推荐</th>
                     <?php } ?>
 
                 </tr>
@@ -39,11 +40,11 @@
                             <td style="text-align: center"><?php echo $item['type']==1 ? "正式" : "测试" ; ?></td>
                             <td style="text-align: center"><?php echo $item['title']; ?></td>
                             <td style="text-align: center"><?php echo $item['dtitle']; ?></td>
-                            <td style="text-align: center"><?php echo date('Y-m-d H:i:s',$item['createtime']); ?></td>
-
+                         <!--   <td style="text-align: center"><?php /*echo date('Y-m-d H:i:s',$item['createtime']); */?></td>
+-->
                             <td style="text-align: center"><?php echo date('Y-m-d H:i:s',$item['actime']); ?> 至 <?php echo date('Y-m-d H:i:s',$item['createtime']); ?></td>
                             <td style="text-align: center"><?php echo date('Y-m-d H:i:s',$item['validity']); ?> 至 <?php echo date('Y-m-d H:i:s',$item['updatetime']); ?></td>
-                            <td style="text-align: center">
+                            <td style="text-align: center" data-fb-status="<?php echo $item['id']?>">
                                 <?php
                                 if($item['poststatus']==1){
                                     echo "已发布";
@@ -53,25 +54,35 @@
                                 ?>
                             </td>
                             <td style="text-align: center"><?php echo $item['preview']; ?></td>
+                            <td style="text-align: center"><?php echo $item['repertory']==0 ? "无限" : $item['repertory']; ?></td>
                             <td style="text-align: center">
                                 <a class='delete' target="_blank" href="<?php echo $this->createUrl('/house/site/detail', array('id' => $item['id'])) ?>">详情</a>
                                 <?php if($group_id!=1){?>
-                                    <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">编辑</a>
+                                    <?php if($item['status']==2){?>
+                                        <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">编辑</a>
+                                    <?php } ?>
                                 <?php } ?>
+                        <?php if($item['status']==2){?>
                                 <?php if($item['poststatus']==2){?>
                                     <a class='delete' data-fb-id="<?php echo $item['id']?>" href="javascript:;" onclick="changepoststatus(<?php echo $item['id']?>,1)">发布</a>
                                 <?php }elseif($item['poststatus']==1){ ?>
                                     <a class='delete' data-fb-id="<?php echo $item['id']?>" href="javascript:;" onclick="changepoststatus(<?php echo $item['id']?>,2)">取消发布</a>
                                 <?php } ?>
                                 <a class='delete' data-del-id="<?php echo $item['id']?>"  href="javascript:;" onclick="delActivity(<?php echo $item['id']?>)" >删除</a>
+                        <?php } ?>
                             </td>
+
+                            <?php if($item['createtime']>=time()) {?>
                             <?php if($group_id==1){?>
                                 <?php if($item['recommend']==2){?>
                                     <td style="text-align: center"><a class="delete"  data-reco-id="<?php echo $item['id']?>" onclick="recommend(<?php echo $item['id']?>,1)" href="javascript:;">推荐</a></td>
                                 <?php }elseif($item['recommend']==1){ ?>
                                     <td style="text-align: center"><a class="delete"  data-reco-id="<?php echo $item['id']?>" onclick="recommend(<?php echo $item['id']?>,2)" href="javascript:;">取消推荐</a></td>
                                 <?php } ?>
-                            <?php } ?>
+                            <?php }}else{ ?>
+                                <?php if($group_id==1){?>
+                                    <td style="text-align: center"><a class="delete"  data-reco-id="<?php echo $item['id']?>"  href="javascript:;">活动已结束</a></td>
+                            <?php }} ?>
                         </tr>
                     <?php } }?>
                 </tbody>
@@ -212,6 +223,7 @@
                             if(data==100){
                                 layer.msg('发布成功！', {icon: 1, time: 2000}, function () {
                                     $("[data-fb-id="+id+"]").text("取消发布");
+                                    $("[data-fb-status="+id+"]").text("发布");
                                     $("[data-fb-id="+id+"]").removeAttr("onclick").attr("onclick","changepoststatus("+id+",2)");
                                     nu=0;
                                 });
@@ -242,6 +254,7 @@
                             if(data==100){
                                 layer.msg('取消成功！', {icon: 1, time: 2000}, function () {
                                     $("[data-fb-id="+id+"]").text("发布");
+                                    $("[data-fb-status="+id+"]").text("未发布");
                                     $("[data-fb-id="+id+"]").removeAttr("onclick").attr("onclick","changepoststatus("+id+",1)");
                                     nu=0;
                                 });

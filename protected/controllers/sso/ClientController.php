@@ -72,14 +72,18 @@ class ClientController extends FrontController
         $this->url = $this->_siteUrl . $this->url;
         $this->test_connectiong();   //测试通讯
         //如果cookie存在session_token
+
         $this->sessionToken = Mod::app()->request->cookies['session_token'];
         //如果设置自动粘贴token并且sessiontoken为假,带上参数跳转的服务端
         $this->ip=Tool::getValidParam('ip','string')?Tool::getValidParam('ip','string'):$_SERVER['REMOTE_ADDR'];
         $this->user =Tool::getValidParam("username","string");
         $this->pass =Tool::getValidParam("password","string");
-        if ($auto_attach && !$this->sessionToken) {
+        $ticket = Tool::getValidParam("ticket", "string");
+     //   echo  $this->sessionToken;
+        if ($auto_attach && !$this->sessionToken && !$ticket) {
             //跳转至SSO
-            header("Location: " . $this->getAttachUrl() . "&redirect=" . urlencode("http://{$_SERVER["SERVER_NAME"]}{$_SERVER["REQUEST_URI"]}/username/$this->user/password/$this->pass"), true, 307);
+
+           header("Location: " . $this->getAttachUrl() . "&redirect=" . urlencode("http://{$_SERVER["SERVER_NAME"]}{$_SERVER["REQUEST_URI"]}/username/$this->user/password/$this->pass"), true, 307);
             exit;
         }
         //如果session有值的话，写入this->member
@@ -169,7 +173,6 @@ class ClientController extends FrontController
         $backurl =urldecode(Tool::getValidParam("backurl","string"));
         $re = $this->login($this->user,$this->pass);
 
-        echo $re['body'];
         //d登录成功，写入cookie  跨域
         if ($re['ret'] == 200 && is_array(json_decode($re['body'], true))) {
             header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
@@ -188,13 +191,17 @@ class ClientController extends FrontController
                 if (trim($v['url']) != '') {
                     $tmp_s = strstr($v['url'], '?') ? '&' : '?';
                     $url=$v['url'] . $tmp_s;
-                   echo  '<script type="text/javascript" src="' . $v['url'] . $tmp_s . '&ticket=' . $secretstring . '&sid=' . $phpsessid . '&token=' . $session_token . '" reload="1"></script>';
+                   echo  '<script type="text/javascript" src="' . $v['url'] . $tmp_s . 'ticket=' . $secretstring . '&sid=' . $phpsessid . '&token=' . $session_token . '" reload="1"></script>';
                 }
 
             }
             //header("Location: $backurl", true, 307);
-            echo 1;
+            echo $phpsessid;
             exit;
+        }else if($re['body']==2){
+            echo "账号密码错误";
+        }else{
+            echo $re['body'];
         }
 
     }
@@ -247,6 +254,34 @@ class ClientController extends FrontController
             echo false;
         }
     }
+
+/*
+ * 验证tickte，并返回用户信息*/
+
+    public  function actionreuser(){
+        $ticket = Tool::getValidParam("ticket", "string");
+        if (!empty($ticket)) {
+            //解密字符串
+            $ticketstring = $this->secret_string($ticket);
+            //验证是否解密成功
+            $ticketarray = explode('-', $ticketstring);
+            if ($ticketarray[0] == "SSO") {
+                $uid = $ticketarray[2];
+                $member = Member::model()->findByPk($uid);
+               // $this->member = $member->attributes;
+                echo json_encode($member->attributes);
+                //Mod::app()->session['member'] = $this->member;
+                exit;
+            }else{
+                echo 1;
+                exit;
+            }
+        }else{
+            echo -1;
+            exit;
+        }
+    }
+
 
 
     /**
@@ -359,7 +394,6 @@ class ClientController extends FrontController
      */
     protected function serverCmd($cmd, $vars = array())
     {
-
         $curl = curl_init($this->url . urlencode($cmd));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_COOKIE, "PHPSESSID=" . $this->getSessionId());
@@ -373,7 +407,6 @@ class ClientController extends FrontController
 
         $body = curl_exec($curl);
         $ret = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
         if (curl_errno($curl) != 0) throw new Exception("SSO failure: HTTP request to server failed. " . curl_error($curl));
         return array($ret, $body);
     }

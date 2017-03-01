@@ -19,16 +19,21 @@
 <!--banner end-->
 
 
-<div class="fs28 fcf74 f-cpdetail-div1">最高年化收益率 <?php echo $houseinfo['earnings']?></div>
+<?php if ($houseinfo['end'] == "bg1") {?>
+    <div class="fs28 fcf74 f-cpdetail-div1">最高年化收益率 <?php echo $houseinfo['earnings']?></div>
+<?php  if($houseinfo['repertory']>0){?>
+    <div class="f-cpdetail-div-jd"">
+    <span><i style="width: <?php echo ($count)/$houseinfo['repertory']*100 ?>%;"></i></span>
+    <em class="fs24"><i class="fl">可参与人次：<?php echo $houseinfo['repertory']?></i><i class="fr">已参与人次：<?php echo $count?></i></em>
+    </div>
+<?php }}?>
 
 <div class="bgfff fs28 f-cpdetail-div2">
     <h3>[<?php echo $houseinfo['city']?>] <?php echo $houseinfo['dtitle']?></h3>
     <p class="fcbbb fs26"><?php echo $houseinfo['coupon']?></p>
     <input type="hidden" id="houseid" value="<?php echo $houseinfo['id']?>">
 </div>
-
 <div class="mgt4 bgfff">
-
     <div class="fs28 pos-r bb f-cpdetail-div3">
         <span>在线预存<i class="fcf74">￥<b><?php echo $houseinfo['figue']?></b></i></span>
         <span class="fcbbb fr"><?php echo $count?>人参与</span>
@@ -48,9 +53,7 @@
             <?php } else { ?>
                 <?php   echo "该活动已结束";?>
             <?php } ?>
-
     </div>
-
     <div class="fs24 fcbbb pos-r bb f-cpdetail-div4">
         <ul>
             <li>腾讯出品</li>
@@ -58,10 +61,7 @@
             <li>认证商家</li>
         </ul>
     </div>
-
-
 </div>
-
 
 <div class="mgt4 bgfff">
     <div class="f-order-info1 pos-r bb">
@@ -162,15 +162,21 @@
     <img src="<?php echo $this->_siteUrl;?>/assets/house/images/f-detail-foot.jpg" width="100%"/>
 </div>
 <div class="f-cpdetail-btn bt bgfff">
+    <?php /* if($houseinfo['repertory']>$count){*/?>
     <?php if ($houseinfo['end'] == "bg1") {?>
         <a class="bg1 fcfff fs28 boru5 fbtn" href="<?php echo $this->createUrl('/house/stored/index', array('id' => $houseinfo['id'])) ?>">立即预存</a>
     <?php } else { ?>
         <a class="bg2 fcfff fs28 boru5 fbtn" href="javascript:void(0)">活动结束</a>
+   <!-- <?php /*}}else{ */?>
+        <a class="bg2 fcfff fs28 boru5 fbtn" href="javascript:void(0)">参与人数已满</a>-->
     <?php } ?>
-
 </div>
 </div>
 
+<!--微信分享-->
+<?php  echo $this->renderpartial('/layouts/wxshare',array('signPackage'=>$signPackage,'info'=>$infos)); ?>
+
+<!--微信分享-->
 
 </body>
 <script src="<?php echo $this->_siteUrl;?>/assets/house/js/slides.js" type="text/javascript" charset="utf-8"></script>

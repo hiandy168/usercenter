@@ -32,6 +32,13 @@ class HactivityController extends HaController{
         $pages->applyLimit($criteria);
         $activityinfo= $application_class->findAll($criteria);
         foreach($activityinfo as $k=>$v) {
+            $sql = "SELECT count(id) as count FROM {{house_order}} WHERE houseid=".$activityinfo[$k]['id'];
+            $orderinfo=Mod::app()->db->createCommand($sql)->queryRow();
+            if($orderinfo['count']>0){
+                $activityinfo[$k]['status']=1;
+            }else{
+                $activityinfo[$k]['status']=2;
+            }
             $actime=explode("|",$activityinfo[$k]['actime']);
             $validitys=explode("|",$activityinfo[$k]['validity']);
             $activityinfo[$k]['actime']=$actime[0];
@@ -39,6 +46,7 @@ class HactivityController extends HaController{
             $activityinfo[$k]['validity']=$validitys[0];
             $activityinfo[$k]['updatetime']=$validitys[1];
         }
+
         $returnData['houslist']=$activityinfo;
         /*$endtime_temp=explode("|", $returnData['houslist']['validity']);
         $endtime=$endtime_temp[1];*/
@@ -57,6 +65,12 @@ class HactivityController extends HaController{
         $house_model = House_activity::model();
         $houseinfo = null;
         if(!empty($id)){
+            $sql = "SELECT count(id) as count FROM {{house_order}} WHERE houseid=".$id;
+            $orderinfo=Mod::app()->db->createCommand($sql)->queryRow();
+            if($orderinfo['count']>0){
+                echo "error";
+                die();
+            }
             $houseinfo = $house_model->findByPk($id);
             $actime=explode("|",$houseinfo['actime']);
             $validitys=explode("|",$houseinfo['validity']);
@@ -86,44 +100,52 @@ class HactivityController extends HaController{
             foreach($data as $_k => $_v){
                 $house_model -> $_k = $_v;
             }
-            $actime=$house_model['actime'];
-            $tmp=explode("|",$actime);
-            if(!empty($tmp[0])&&$tmp[0]){
-                $actime1=$tmp[0];
-            }else{
-                echo "error";
-                die();
+            if($houseinfo['poststatus']!=1){
+                $actime=$house_model['actime'];
+                $tmp=explode("|",$actime);
+                if(!empty($tmp[0])&&$tmp[0]){
+                    $actime1=$tmp[0];
+                }else{
+                    echo "error";
+                    die();
+                }
+                if(!empty($tmp[1])&&$tmp[1]){
+                    $actime2=$tmp[1];
+                }else{
+                    echo "error";
+                    die();
+                }
+                $actimes=strtotime($actime1).'|'.strtotime($actime2);
+                $validity=$house_model['validity'];
+                $tmps=explode("|",$validity);
+                if(!empty($tmps[0])&&$tmps[0]){
+                    $validity1=$tmps[0];
+                }else{
+                    echo "error";
+                    die();
+                }
+                if(!empty($tmps[1])&&$tmps[1]){
+                    $validity2=$tmps[1];
+                }else{
+                    echo "error";
+                    die();
+                }
+                $validitys=strtotime($validity1).'|'.strtotime($validity2);
+                $house_model -> actime = $actimes;
+                $house_model -> validity = $validitys;
             }
-            if(!empty($tmp[1])&&$tmp[1]){
-                $actime2=$tmp[1];
-            }else{
-                echo "error";
-                die();
+
+            if(!isset($_POST['type'])){
+                $house_model -> type = 1;
             }
-            $actimes=strtotime($actime1).'|'.strtotime($actime2);
-            $validity=$house_model['validity'];
-            $tmps=explode("|",$validity);
-            if(!empty($tmps[0])&&$tmps[0]){
-                $validity1=$tmps[0];
-            }else{
-                echo "error";
-                die();
-            }
-            if(!empty($tmps[1])&&$tmps[1]){
-                $validity2=$tmps[1];
-            }else{
-                echo "error";
-                die();
-            }
-            $validitys=strtotime($validity1).'|'.strtotime($validity2);
+
             $house_model -> preview = "h5";
             $house_model -> updatetime = time();
             if($group_id!=1){
                 $house_model -> authorid = $admininfo['id'];
                 $house_model -> author = $admininfo['name'];
             }
-            $house_model -> actime = $actimes;
-            $house_model -> validity = $validitys;
+
             if($house_model->save()){
                 Tool::alertpop('操作成功','/houseadmin/hactivity/list');
             }

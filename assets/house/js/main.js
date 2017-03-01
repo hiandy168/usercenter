@@ -107,6 +107,7 @@
  function ajaxlogin(){
      var account=$("#uname").val(),
          password=$("#upwd").val(),
+         city=$("#city").val(),
          win=$(".op-login-error");
      var verify = $('#verify').val();
      var rember = 0;
@@ -136,6 +137,7 @@
                  verify:verify,
                  rember:rember,
                  smsCode:codes,
+                 city:city
              },
            //  url: Siteurl+'/member/Ajaxsitelogin',   //输入密码登录地址
              url: Siteurl+'/member/Ajaxlogin',  //输入验证码登录地址

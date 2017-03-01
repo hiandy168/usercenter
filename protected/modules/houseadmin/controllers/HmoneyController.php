@@ -82,7 +82,7 @@ class HmoneyController extends HaController{
             $house_model -> authorid = $admininfo['id'];
             $house_model -> author = $admininfo['name'];
             if($house_model->save()){
-                Tool::alert('操作成功','/houseadmin/hmoney/list');
+                Tool::alertpop('操作成功','/houseadmin/hmoney/list');
             }
         }
         $viewData['houseinfo'] = $houseinfo;

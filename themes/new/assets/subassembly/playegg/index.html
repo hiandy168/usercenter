@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="Keywords" content="砸金蛋" />
+		<meta name="description" content="砸金蛋" />
+		<title>砸金蛋</title>
+		<link rel="stylesheet" type="text/css" href="css/app.css"/>
+	</head>
+	<body>
+		
+		<div id="loaddiv" class="loading-div">
+		<span>
+			<img src="images/loading.gif"/>
+			<i>努力加载中...</i>
+		</span>
+	    </div>
+	    
+	    <div class="mask"></div>
+	    <div class="dial-pop">
+	    	
+	    	<div class="dial-poptxt">
+		  		<h3>恭喜！你中奖了</h3>
+		  		<p>中得<i>“一等奖”</i>领奖码 <i>123456</i><br />
+                                         你还有<b>8</b>次刮奖机会</p>
+		  		</div>
+		  		
+		   <div class="dial-confirmbtn">
+		   	       <a href="">确定</a>
+		   </div>  		
+	    </div>
+	   
+		
+	    <div class="div-main">
+	    	
+	    	<div class=""><img src="images/deggs-img1.jpg" width="100%"/></div>
+	    	
+	    	<div class="deggs-za pos-r">
+	    		<ul>
+	    			
+	    		    <li class="pos-a">
+	    		    	<img class="pos-a" src="images/deggs-img5.png"/>
+	    		    	<img class="pos-a" src="images/deggs-img4.png"/>
+	    		    	<img class="pos-a" src="images/deggs-img3.png"/>
+	    		    </li>
+	    		    <li class="pos-a">
+	    		    	<img class="pos-a" src="images/deggs-img5.png"/>
+	    		    	<img class="pos-a" src="images/deggs-img4.png"/>
+	    		    	<img class="pos-a" src="images/deggs-img3.png"/>
+	    		    </li>
+	    		    <li class="pos-a">
+	    		    	<img class="pos-a" src="images/deggs-img5.png"/>
+	    		    	<img class="pos-a" src="images/deggs-img4.png"/>
+	    		    	<img class="pos-a" src="images/deggs-img3.png"/>
+	    		    </li>
+	    		</ul>
+	    		
+	    	</div>
+	    	
+	    	<div style="overflow: hidden;padding-top: 10px;">
+	    	<div class="deggs-rule">
+	    		<h3>活动规则</h3>
+	    		<span>
+	    			2015.07.02 - 2015.07.30
+	    		</span>
+	    	</div>
+	    	
+	    	<div class="deggs-rule">
+	    		<h3>参与对象</h3>
+	    		<span>
+	    			仅限上海、北京、武汉、广州地区的用户参与。
+	    		</span>
+	    	</div>
+	    	
+	    	<div class="deggs-rule">
+	    		<h3>参与方法</h3>
+	    		<span>
+	    			活动期间，同一用户每天可参与一次抽
+奖的机会，过时作废。
+	    		</span>
+	    	</div>
+	    	</div>
+	    	
+	    </div>
+		
+		<script src="js/zepto.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/touch.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/layout.js" type="text/javascript" charset="utf-8"></script>
+		
+		  <script type="text/javascript" charset="utf-8">
+		    var bRotate = false;
+		    var egg=$(".deggs-za ul li");
+		    var eggBroken=function(){}
+		    	egg.on("tap",function(){
+		        if(bRotate)return;
+		    	var _this=$(this);
+		    	egg.removeClass("za");
+		    	_this.addClass("za");
+		    	bRotate=!bRotate;
+		    	eggBroken();
+		     });
+		  </script>
+		  
+		  
+       		
+		
+		
+	</body>
+</html>

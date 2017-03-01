@@ -16,14 +16,17 @@ class StoredController extends HouseController{
         $id=Tool::getValidParam('id','integer');
         $cookie_mod=Cookie::get('city');
         if(!empty($id)){
-            $sql = "SELECT a.id,a.phone,a.city,a.financingid,a.actime,a.coupon,a.desc,a.figue,a.img,a.dtitle,m.title,m.earnings,m.cycle FROM {{house_activity}} as a LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE a.status=1 and a.type=1 and city=$cookie_mod and a.id=$id";
+            $sql = "SELECT a.id,a.phone,a.city,a.financingid,a.actime,a.coupon,a.repertory,a.desc,a.figue,a.img,a.dtitle,m.title,m.earnings,m.cycle FROM {{house_activity}} as a LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE a.status=1 and a.type=1 and city=$cookie_mod and a.id=$id";
             $houseinfo=Mod::app()->db->createCommand($sql)->queryRow();
+           /* $count="SELECT count(*) as count FROM {{house_order}} where status=1 and paystatus!=1 and houseid=".$id;
+            $ordercount=Mod::app()->db->createCommand($count)->queryRow();
+            if(intval($houseinfo['repertory'])<intval($ordercount)){
+                echo "error";die();
+            }*/
             if($houseinfo){
-                if($houseinfo['city']==1){
-                    $houseinfo['city']="武汉";
-                }elseif($houseinfo['city']==2){
-                    $houseinfo['city']="郑州";
-                }
+                $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$houseinfo['city'];
+                $city=Mod::app()->db->createCommand($sql)->queryRow();
+                $houseinfo['city']=$city['city'];
                 $actime=explode("|",$houseinfo['actime']);
                 if(!empty($actime)&&$actime){
                     $houseinfo['actime']=$actime[1];
@@ -203,9 +206,9 @@ class StoredController extends HouseController{
         $app_Id=Wzbank::appid;
         $version=Wzbank::version;
         $timestamp=time();
-        $sql = "SELECT a.authorid,a.actime,o.houseid  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid";
+        $sql = "SELECT a.authorid,a.validity,o.houseid  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid";
         $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
-        $actime=explode("|",$orderdetail['actime']);
+        $validity=explode("|",$orderdetail['validity']);
         $data=array(
             'orderNo'=>$orderid,//订单号
             'userId'=>$userid,//个人用户userId
@@ -213,7 +216,7 @@ class StoredController extends HouseController{
             'productId'=>$orderdetail['houseid'],//产品ID
             'amount'=>$money.".10",//定期金额
             'companyProceeds'=>$money,//公司收款金额
-            'expireTime'=>date('Y-m-d',$actime['1']),//定期到期日期
+            'expireTime'=>date('Y-m-d',$validity['0']),//定期到期日期
             'companySummaryCode'=>"30000005",//公司摘要码
             'personalSummaryCode'=>"",//个人摘要码
         );
@@ -226,7 +229,7 @@ class StoredController extends HouseController{
             'productId'=>$orderdetail['houseid'],//产品ID
             'amount'=>$money.".10",//定期金额
             'companyProceeds'=>$money,//公司收款金额
-            'expireTime'=>date('Y-m-d',$actime['1']),//定期到期日期
+            'expireTime'=>date('Y-m-d',$validity['0']),//定期到期日期
             'companySummaryCode'=>"30000005",//公司摘要码
             'personalSummaryCode'=>"",//个人摘要码
         );
