@@ -167,7 +167,11 @@
           <div class="login-mian-tab login-mian-slide">
             <div class="login-tab login-mian-slide-div">
                 <div class="login-title clearfix">
-                    <h3>绑定大楚通行证</h3>
+                    <?php  if(strpos(Mod::app()->session['state'],"house")){?>
+                    <h3>房产金融通行证</h3>
+                    <?php }else{ ?>
+                        <h3>绑定大楚通行证</h3>
+                    <?php } ?>
                    <!--  <a class="close" href="javascript:;"></a> -->
                 </div>
                 <!--title end-->

@@ -172,7 +172,6 @@ class ClientController extends FrontController
         if($this->user && $this->pass && Mod::app()->request->isPostRequest) {
             $backurl = urldecode(Tool::getValidParam("backurl", "string"));
             $re = $this->login($this->user, $this->pass);
-
             //d登录成功，写入cookie  跨域
             if ($re['ret'] == 200 && is_array(json_decode($re['body'], true))) {
                 //header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
