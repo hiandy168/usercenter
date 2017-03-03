@@ -23,7 +23,7 @@
 <div class="op-mask"></div>
 <div class="op-login-div" style="padding: 20px 40px; " >
     <!-- <i class="close" id="loginhide"><img src="<?php echo $this->_theme_url; ?>assets/index/images/login-close.png"></i> -->
-    <form id="op-login-div">
+    <form id="op-login-div" action="" method="post">
 
         <div class="op-login-tit">
             <img src="<?php echo $this->_siteUrl; ?>/assets/index/images/login-div-txt.png"/>
@@ -82,24 +82,22 @@
             return false;
         }else {
 
-            $.ajax({
+      /*      $.ajax({
                 type: "post",
                 cache: !1,
                 async: !1,
                 data: {
                     username:account,
-                    password:password,
-                    backurl:backUrl,
                     codes:codes,
                 },
                 //  url: Siteurl+'/member/Ajaxsitelogin',   //输入密码登录地址
-                url: Siteurl+'/sso/client/index',  //输入验证码登录地址
+                url: Siteurl+'/sso/ssologin/login',  //输入验证码登录地址
                 dataType: "json",
                 success: function(data) {
                     if (data.state == 1) {
                         win.html(data.message);
                         setTimeout(function(){
-                            window.location.href = data.return_url;
+                            window.location.href = <?php echo $backurl?>;
                         },400);
                     } else {
                         win.html(data.message);
@@ -108,8 +106,11 @@
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     win.html("网络异常");
                 }
-            })
+            })*/
 
+            //用 sumbit  提交
+
+            $("#op-login-div").submit()
         }
     }
 </script>

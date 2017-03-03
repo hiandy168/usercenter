@@ -106,9 +106,7 @@
                 </tr>
                 <tr>
                     <td class='t'>预存金额:</td>
-                    <td >
-                        <input data-val="requir" placeholder="预存金额必须大于50" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> data-title="预存金额"  name="figue" id="figue"  size="35"  type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"  value=""><span style="color: red">*</span>
-                    </td>
+                    <td ><input data-val="requir" placeholder="预存金额必须大于50" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> data-title="预存金额"  name="figue" id="figue"  size="35"  type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"  value="<?php echo  isset($houseinfo['figue']) ? $houseinfo['figue'] : ''; ?>"><span style="color: red">*</span></td>
                     <td class='t'>选择理财活动:</td>
                     <td colspan="2">
                         <select name="financingid" style="width: 288px;border-radius: 3px;" data-val="requir" data-title="选择理财活动" <?php echo $houseinfo['poststatus']==1 ? 'disabled="disabled"' : ''; ?> >
@@ -250,7 +248,6 @@
     var requir=$("[data-val=requir]");
     var radio_checked=$("[data-radio=checked]");
     var checkbox_checked=$("[data-checkbox=checked]");
-
     $(".save_button").on("click",function(){
         var figue= $("input[name='figue']").val();
         for(var i=0;i<requir.length;i++){
