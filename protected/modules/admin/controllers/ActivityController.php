@@ -8,6 +8,102 @@
 class ActivityController extends AController
 {
 
+    //活动项目管理列表
+    public function actionProjectlist()
+    {
+        $where = ' status=!1 ';
+        $res = Mod::app()->db->createCommand()->select('*')->from('dym_project')->where($where)->order("id desc")->queryAll();
+        $this->render('projectlist', array('datalist' => $res, 'title' => $title, 'id' => $id, 'type_id' => $type[$id], 'project' => $project, 'projectid' => $projectid));
+
+    }
+
+    public function actionProlist(){
+        $data['config'] = $this->site_config;
+        $data['phone']=$this->member['name'];
+
+        //
+        $model = new Project();
+        $criteria = new CDbCriteria();
+        if(isset($_GET['status'])){
+            $criteria->compare('status','0');
+        }
+        $membergroup = $this->selectmembergroup();
+        if($membergroup) {
+            $tmp = $this->getpermission();
+            if($tmp){
+                $criteria->compare('t.mid', $tmp);
+            }
+        }else{
+            $criteria->compare('t.mid', $this->member['id']);
+        }
+
+
+        $criteria->compare('t.status',1);
+        //$search_text=Mod::app()->request->getParam('search_text');
+        $search_text=Tool::getValidParam('search_text','string');
+        if($search_text) {
+            $criteria->addSearchCondition('name',$search_text);
+            $criteria->addSearchCondition('introduction',$search_text,true,'OR');
+            $criteria->addSearchCondition('appid',$search_text,true,'OR');
+        }
+
+        $criteria->order = 'createtime DESC';
+        $count = $model->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageSize = 10;
+        $criteria->limit = $pages->pageSize;
+        $criteria->offset = $pages->currentPage * $pages->pageSize;
+        $result = $model->findAll($criteria);
+        $temp_arr = array();
+
+
+
+        foreach ($result as  $k=>$v){
+            $temp_arr[]=$v->attributes;
+            foreach ($temp_arr as $k1=>$v1){
+                //求昨日
+                $sql = "select count(0) z_counts from  dym_member_project where pid=".$v1['id']." and  date_sub(curdate(),interval 1 day) = from_unixtime(createtime,'%Y-%m-%d')";
+                $res = Mod::app()->db->createCommand($sql)->queryRow();
+                //求本周
+                $sql = "select count(0) w_counts from  dym_member_project where pid=".$v1['id']." and   YEARWEEK(from_unixtime(createtime)) = YEARWEEK(now())";
+                $res2 = Mod::app()->db->createCommand($sql)->queryRow();
+                $v1['z_counts']=$res['z_counts'];
+                $v1['w_counts']=$res2['w_counts'];
+                $temp_arr[$k1]=$v1;
+            }
+        }
+        //计算资料完整度
+        $total = 4;
+        $num = 0;
+        $meb = Member::model()->findByPk($this->member['id']);
+        $num = ($meb->company)?($num+1):$num;
+        $num = ($meb->address)?($num+1):$num;
+        $num = ($meb->username)?($num+1):$num;
+        $num = ($meb->email)?($num+1):$num;
+        //$num = ($meb->com_url)?($num+1):$num;
+        $degree = round(($num/$total)*100,0);
+        $config['site_title'] = '管理中心-大楚用户开放平台首页';
+        $config['config']['site_keywords'] = "大楚用户开放平台首页,腾讯大楚网,腾讯新闻网";
+        $config['config']['site_description'] ="大楚用户开放平台首页";
+        $config['active'] = 'guanlizhongxin';
+
+        $user_session = Mod::app()->session['member'];
+        $user = array(
+            'id'=>$user_session['id'],
+            'name'=>$user_session['name'],
+            'phone'=>$user_session['phone'],
+            'username'=>$user_session['username']
+        );
+        $config['admin'] =$user;
+
+        $config['position'] = array(
+            array('name'=>'管理中心'),
+            array('name'=>'应用管理'),
+        );
+        $this->render('prolist', array ('datalist' => $temp_arr , 'pagebar' => $pages,'degree'=> $degree ,'config'=>$config));
+    }
+
+
     //活动管理列表
     public function actionList()
     {

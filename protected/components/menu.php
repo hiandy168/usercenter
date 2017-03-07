@@ -20,6 +20,9 @@
         'title' => '活动组件',
          'menu'=>'true',//是否是多级菜单 一定要加啊 不然报错
          'children'=>array(
+             array('title'=>'活动项目管理', 'children'=>array(
+                 array('title'=>'项目列表','url'=>'activity/projectlist'),
+             )),
              array('title'=>'活动管理', 'children'=>array(
                 array('title'=>'活动列表','url'=>'activity/list'),
                 array('title'=>'推荐列表','url'=>'activity/RecommendedList'),

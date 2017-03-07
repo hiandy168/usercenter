@@ -143,6 +143,11 @@
      *        神兽保佑
      *        代码无BUG!
      */
+
+   <?php if(!$param['mid']){?>
+   showlogin();
+   <?php } ?>
+
     var d = <?php echo $time;?>;
     var f = <?php echo $info['start_time'] ?>;
     var g = <?php echo $info['end_time'] ?>;
@@ -164,10 +169,7 @@
             }
         }
 //        console.log(answer_arr_id);
-        <?php if(!$this->member['id']){?>
-            showlogin();
-        $("#winlogin").hide();
-        <?php } ?>
+
 
         var _this=$(this);
 

@@ -239,10 +239,10 @@ class ProjectController extends FrontController {
                 }
                 $config['year']=$now_year;
                 $config['month']=$now_month;
-                $num = $now_year-2016;
-                $count_month = $num*12+$now_month;
+//                $num = $now_year-2016;
+                $count_month = $now_month;
 //                 echo $count_month;exit;
-                if($count_month==12){
+                if($count_month == 12){
                     $i=6;
                 }else{
                     $i=1;
@@ -267,13 +267,18 @@ class ProjectController extends FrontController {
                 $activity=Tool::getValidParam('behaviorid','string');
 
 
+
                 //查询每个月的用户数据
                 $count=0;
                 foreach($year_arr as $key=>$val){
                     if($activity){
-                        $count_user[$key] = Mod::app()->db->createCommand()->select('count(*)')->from('dym_member_behavior')->where('pid='.$pid.' and type=1 and tablename like "%'.$activity.'%" and (createtime between '.strtotime($key).' and '.strtotime($val['last_day']).')')->queryRow();
+                        $count_user[$key] = Mod::app()->db->createCommand()->select('count(*)')->from('dym_member_activity')->where('pid=' . $pid . ' and model like "%'.$activity.'%"  and (createtime between '.strtotime($key).' and '.strtotime($val['last_day']).')')->queryRow();
+
+//                        $count_user[$key] = Mod::app()->db->createCommand()->select('count(*)')->from('dym_member_behavior')->where('pid='.$pid.' and type=1 and model like "%'.$activity.'%" and (createtime between '.strtotime($key).' and '.strtotime($val['last_day']).')')->queryRow();
                     }else{
-                        $count_user[$key] = Mod::app()->db->createCommand()->select('count(*)')->from('dym_member_behavior')->where('pid='.$pid.' and type=1 and (createtime between '.strtotime($key).' and '.strtotime($val['last_day']).')')->queryRow();
+                        $count_user[$key] = Mod::app()->db->createCommand()->select('count(*)')->from('dym_member_activity')->where('pid=' . $pid . '  and (createtime between '.strtotime($key).' and '.strtotime($val['last_day']).')')->queryRow();
+
+//                        $count_user[$key] = Mod::app()->db->createCommand()->select('count(*)')->from('dym_member_behavior')->where('pid='.$pid.' and type=1 and (createtime between '.strtotime($key).' and '.strtotime($val['last_day']).')')->queryRow();
 
                     }
                     $count+=$count_user[$key]['count(*)'];
