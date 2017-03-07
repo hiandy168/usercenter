@@ -64,13 +64,18 @@ class MemberController extends HouseController{
      * author  Fancy
      */
     public function actionOrderd(){
-        $orderid=Tool::getValidParam('id','string');
+        $orderid=Tool::getValidParam('id','integer');
         $userid=$this->member['id'];
         if(!empty($orderid)){
-            $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,o.usetime,o.houseid,a.title,a.img,a.financingid,a.actime,a.city,a.validity,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
-            $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
-            $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$orderdetail['city'];
-            $city=Mod::app()->db->createCommand($sql)->queryRow();
+            try {
+                $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.applytime,o.code,o.usetime,o.houseid,a.title,a.img,a.financingid,a.actime,a.city,a.validity,a.coupon,m.earnings,m.cycle  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE o.status=1 and o.mid=$userid and o.id=$orderid order by o.createtime desc";
+                $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+                $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$orderdetail['city'];
+                $city=Mod::app()->db->createCommand($sql)->queryRow();
+            }
+            catch(Exception $e) {
+                echo "error";die();
+            }
             $orderdetail['city']=$city['city'];
             $actime=explode("|",$orderdetail['actime']);
             $validitys=explode("|",$orderdetail['validity']);
@@ -101,11 +106,16 @@ class MemberController extends HouseController{
      */
     public function actionConfirmorder(){
         $access_token=Mod::app()->memcache->get('access_token');
-        $id=Tool::getValidParam('id','string');
+        $id=Tool::getValidParam('id','integer');
         $app_Id=Wzbank::appid;
         $userid=$this->member['id'];
-        $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$id";
-        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        try {
+            $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$id";
+            $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        }
+        catch(Exception $e) {
+            echo "error";die();
+        }
         $orderid=$orderdetail['ordernum'];
         if($orderdetail){
             $nonce = Wzbank::strings(32);
@@ -130,11 +140,16 @@ class MemberController extends HouseController{
      */
     public function actionWithdraw(){
         $access_token=Mod::app()->memcache->get('access_token');
-        $id=Tool::getValidParam('id','string');
+        $id=Tool::getValidParam('id','integer');
         $userid=$this->member['id'];
         $app_Id=Wzbank::appid;
-        $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$id";
-        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        try {
+            $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$id";
+            $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        }
+        catch(Exception $e) {
+            echo "error";die();
+        }
         $orderid=$orderdetail['ordernum'];
         if($orderdetail){
             $nonce = Wzbank::strings(32);
@@ -157,10 +172,15 @@ class MemberController extends HouseController{
      * author  Fancy
      */
     public function actionPay(){
-        $id=Tool::getValidParam('id','string');
+        $id=Tool::getValidParam('id','integer');
         $userid=$this->member['id'];
-        $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$id";
-        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        try {
+            $sql = "SELECT id,ordernum  FROM {{house_order}}  WHERE status=1 and mid=$userid and id=$id";
+            $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        }
+        catch(Exception $e) {
+            echo "error";die();
+        }
         $ordernum=$orderdetail['ordernum'];
         if($orderdetail){
             $access_token=Mod::app()->memcache->get('access_token');
@@ -181,15 +201,11 @@ class MemberController extends HouseController{
     }
 
 
-
-
     /**
      * 查询定期存入支取订单结果
      * author  Fancy
      */
     public function actionChecksave(){
-        /*  $orderid="011911665728";
-          $userid="7776";*/
         $orderid=Tool::getValidParam('orderid','string');
         $userid=$this->member['id'];
         $app_Id=Wzbank::appid;
@@ -220,8 +236,6 @@ class MemberController extends HouseController{
      */
 
     public function actionCheckget(){
-        /* $orderid="011911665728";
-         $userid="7776";*/
         $orderid=Tool::getValidParam('orderid','string');
         $userid=$this->member['id'];
         $app_Id=Wzbank::appid;
@@ -245,9 +259,4 @@ class MemberController extends HouseController{
         $result= Wzbank::curl_post_ssl($postUrl,json_encode($postData));
         var_dump($result);
     }
-
-
-
-
-
 }

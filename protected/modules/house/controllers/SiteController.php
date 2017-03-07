@@ -106,10 +106,15 @@ class SiteController extends HouseController{
         $cookie_mod=Cookie::get('city');
         if($page<=2){$page=2;}
         $start = ($page-1)*$pagesize;
-        $sql = "SELECT id,title,actime,coupon,city,figue,img,share_img FROM {{house_activity}} WHERE status=1 and poststatus!=2 and recommend=2 and city=$cookie_mod and type=1 order by createtime desc limit $start,$pagesize";
-        $houselist=Mod::app()->db->createCommand($sql)->queryAll();
-        $sql = "SELECT count(id) as id FROM {{house_activity}}   WHERE status=1 and poststatus!=2 and type=1 ";
-        $houtenum=Mod::app()->db->createCommand($sql)->queryRow();
+        try {
+            $sql = "SELECT id,title,actime,coupon,city,figue,img,share_img FROM {{house_activity}} WHERE status=1 and poststatus!=2 and recommend=2 and city=$cookie_mod and type=1 order by createtime desc limit $start,$pagesize";
+            $houselist=Mod::app()->db->createCommand($sql)->queryAll();
+            $sql = "SELECT count(id) as id FROM {{house_activity}}   WHERE status=1 and poststatus!=2 and type=1 ";
+            $houtenum=Mod::app()->db->createCommand($sql)->queryRow();
+        }
+        catch(Exception $e) {
+            echo "error";die();
+        }
         $page=ceil(intval($houtenum['id'])/5);
         foreach($houselist as $k=>$v) {
             $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$houselist[$k]['city'];

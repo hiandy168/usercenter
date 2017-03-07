@@ -9,7 +9,7 @@
 ?>
 <html>
 <head>
-    <title></title>
+    <title>大楚通行证登录</title>
     <link href="<?php echo $this->_theme_url; ?>assets/css/reset.css" rel="stylesheet" type="text/css"/>
     <link href="<?php echo $this->_theme_url; ?>assets/css/style.css" rel="stylesheet" type="text/css"/>
     <script src="<?php echo $this->_theme_url; ?>assets/js/jquery-1.12.0.min.js" type="text/javascript"
@@ -58,6 +58,9 @@
         <div class="op-login-dlbtn op-login-regbtn">
             <a href="<?php echo $this->createUrl('/member/regone'); ?>">注册</a>
         </div>
+        <a href="<?php echo $this->createUrl('member/qqlogin/')?>?state=<?php echo urlencode($this->createUrl('/sso/ssologin/Callsetticket/'))?>" class="three" ><img src="<?php echo $this->_theme_url; ?>assets/images/QQ.png"></a>
+        <a href="<?php echo $this->createUrl('member/WXgetcode/')?>?state=<?php echo urlencode($this->createUrl('/sso/ssologin/Callsetticket/'))?>" ><img src="<?php echo $this->_theme_url; ?>assets/images/weixin.png"></a>
+
     </form>
 </div>
 </body>

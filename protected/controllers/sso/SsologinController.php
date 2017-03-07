@@ -40,14 +40,14 @@ class SsologinController extends FrontController
                 $res = Sso_broker::model()->find("agentid=:agentid and secret=:secret", array(':agentid' => $agentids, ':secret' => $secret));
                 //如果为真表示身份合法
                 if (!$res) {
-                    echo "非法访问1";
+                    echo "非法访问！";
                     exit;
                 }
                 //保存接入伙伴名称便于注册
                 $this->user =Mod::app()->session['ssouser']=$res->attributes;
 
             } else {
-                echo "非法访问2";
+                echo "非法访问。";
                 exit;
             }
         }else{
@@ -168,6 +168,24 @@ class SsologinController extends FrontController
     }
 
     /*
+     * 这个是为了快捷登录  qq  微信  登录成功之后回调过来生成票据 ticket
+     * */
+    public function actionCallsetticket(){
+        //如果登录成功之后  session 应该是有值的
+        $mid= $this->member['id'];
+        if(!$mid){
+            echo 'state: 0, message: 登录失败，请重试！';
+            exit;
+        }
+       $ticket= self::getTicket($mid);//生成ticket 并加密
+        header("Location: ".$this->user['url']."?ticket=$ticket");
+        exit;
+
+    }
+
+
+
+    /*
      * 注册用户
      * */
 
@@ -233,8 +251,10 @@ class SsologinController extends FrontController
 
     /**
      * 生成ticket
-     *
+     *@param uid  int
+     *@param key  bool
      * @return string
+     *
      */
     protected function getTicket($uid,$key=true)
     {

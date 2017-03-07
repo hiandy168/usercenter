@@ -36,6 +36,14 @@
                             echo "selected";
                         } ?>>海报
                         </option>
+                        <option value="7" <?php if ($id == 7) {
+                            echo "selected";
+                        } ?>>砸金蛋
+                        </option>
+                        <option value="8" <?php if ($id == 8) {
+                            echo "selected";
+                        } ?>>问答
+                        </option>
                     </select>
                     <span>标题</span>
                     <input type="text" name="title" value="<?php echo $title?>" placeholder="请输入标题">
@@ -44,6 +52,38 @@
             </div>
             </from>
 
+            <?php
+            switch ($id){
+                case "1":
+                    $model = "";
+                    break;
+                case "2":
+                    $model = "scratchcard";
+                    break;
+                case "3":
+                    $model = "";
+                    break;
+                case "4";
+                    $model = "vote";
+                    break;
+                case "5";
+                    $model = "bigwheel";
+                    break;
+                case "6";
+                    $model = "poster";
+                    break;
+                case "7";
+                    $model = "playegg";
+                    break;
+                case "8";
+                    $model = "wenda";
+                    break;
+                default:
+                    $model = "scratchcard";
+                    break;
+            }
+
+            ?>
 
             <div class="clearfix"></div>
             <div class="list">
@@ -59,6 +99,7 @@
                                 <th>开始时间</th>
                                 <th>结束时间</th>
                                 <th>状态</th>
+                                <th>数据统计</th>
                                 <th>操作</th>
                      
 					 </tr>
@@ -87,11 +128,12 @@
                                         }
                                         ?></td>
                                     <td><?php echo $item['status']==1?'已推荐':'未推荐'; ?></td>
+                                    <td><a href="javascript:;" onclick="getActivityList(<?php echo $item['id'];?>,'<?php echo $model; ?>');">数据统计</a></td>
                                     <td>
 <!--                                        <a href="http://<?php /*echo $_SERVER['HTTP_HOST'] */?>/activity/<?php /*echo $type*/?>/view/id/<?php /*echo $item['id']*/?>">预览</a>&nbsp;|&nbsp;-->
 
                                        <?php if($item['status']==1){?>
-                                           <a href="javascript:;" onclick="recommend(<?php echo $item['rid'];?>,2);">取消推荐</a>
+                                           <a href="javascript:;" onclick="recommend(<?php echo $item['rid'];?>);">未推荐</a>
                                         <?php }else{?>
                                            <a href="javascript:;" onclick="recommend(<?php echo $item['id'];?>,1);">推荐</a>
                                         <?php  }?>
@@ -122,7 +164,9 @@
 
 
 
-        </div>   
+        </div>
+
+<script type="text/javascript" src="<?php echo $this->_baseUrl;?>/themes/new/assets/js/layer/layer.js"></script>
 
 <script>
     function chooes(){
@@ -160,4 +204,29 @@
 
     }
 
+    //ajax 请求获取中奖名单
+    function getActivityList(param,model){
+        layer.confirm('查看以下哪种统计图', {
+            btn: ['PVUV统计图','用户参与注册统计'] //按钮
+        }, function(){
+            layer.closeAll('dialog');
+            layer.open({
+                type: 2,
+                title:'PVUV数据统计图',
+                area: ['700px', '500px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: ["<?php echo $this->createUrl('/activity')?>/"+model+"/Activitylist/fid/"+param+"/tag/pvuv"]
+            });
+        }, function(){
+            layer.open({
+                type: 2,
+                title:'用户参与注册数据统计图',
+                area: ['700px', '500px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: ["<?php echo $this->createUrl('/activity')?>/"+model+"/Activitylist/fid/"+param+"/tag/user"]
+            });
+        });
+        //var index = layer.load(2,{shade: [0.3, '#393D49']});
+
+    }
 </script>

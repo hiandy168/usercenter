@@ -83,8 +83,8 @@ class StoredController extends HouseController{
                 $sqls = "UPDATE  {{member}} SET realcard='".$realid."',realname='".$realname."' WHERE id= ".$userid;
                 $res=Mod::app()->db->createCommand($sqls)->execute();
             }
-            $id=Tool::getValidParam('id','string');
-            $money=Tool::getValidParam('money','int');
+            $id=Tool::getValidParam('id','integer');
+            $money=Tool::getValidParam('money','integer');
             $app_Id=Wzbank::appid;
             $version=Wzbank::version;
             $sqlm="SELECT id,ordernum FROM {{house_order}} WHERE houseid=".$id." and status=1 and paystatus=1 and mid=".$userid;
@@ -94,7 +94,7 @@ class StoredController extends HouseController{
             }else{
                 $orderid=$oinfo['ordernum'];
             }
-            $username="fancy";
+            $username=$realname;
             $arr['mid']  =$userid;
             $arr['houseid']  =$id;
             $arr['ordernum']  =$orderid;
@@ -180,8 +180,13 @@ class StoredController extends HouseController{
         $orderid=Tool::getValidParam('orderid','string');
         $type=Tool::getValidParam('type','string');
         $status=Tool::getValidParam('status','string');
-        $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,a.title,a.img,a.actime,a.city,a.coupon  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid order by o.createtime desc";
-        $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        try {
+            $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,a.title,a.img,a.actime,a.city,a.coupon  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum='".$orderid."' order by o.createtime desc";
+            $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
+        }
+        catch(Exception $e) {
+            echo "error";die();
+        }
         if(!$orderdetail){
             echo "error";die();
         }

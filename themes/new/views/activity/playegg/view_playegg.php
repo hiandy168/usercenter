@@ -51,7 +51,7 @@ $end_time=$info['end_time'];
 	<div class="dial-poptxt">
 		<h3>恭喜！你中奖了</h3>
 		<p>中得<i>“一等奖”</i>领奖码 <i>123456</i><br />
-			你还有<b>8</b>次刮奖机会</p>
+			你还有<b>8</b>次抽奖机会</p>
 	</div>
 
 	<div class="dial-confirmbtn">
