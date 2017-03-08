@@ -839,15 +839,18 @@ class MemberController extends FrontController
             echo json_encode(array('state' => 0, 'message' => '手机号码不合法'));
             exit;
         }
-        
+
+
         if ($data['username']) {
             //短信验证码是否正确或已过期
             $auth_code = Mod::app()->memcache->get('dachuw' . $data['username']);
             if ($codes != $auth_code || !$codes) {
                 echo json_encode(array('state' => 0, 'message' => '验证码错误'));
                 exit;
+
             }
         }
+
 
         //初始化登陆模型
         $login_model = new Memberloginform();

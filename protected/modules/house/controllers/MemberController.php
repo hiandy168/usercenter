@@ -72,6 +72,7 @@ class MemberController extends HouseController{
             catch(Exception $e) {
                 echo "error";die();
             }
+            $orderdetail['citynum']=$orderdetail['city'];
             $orderdetail['city']=$city['city'];
             $actime=explode("|",$orderdetail['actime']);
             $validitys=explode("|",$orderdetail['validity']);

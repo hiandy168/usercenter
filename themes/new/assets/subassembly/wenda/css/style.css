@@ -16,7 +16,7 @@ em, i { font-style: normal; }
 .loading-div span { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); }
 .loading-div span img { width: 30px; }
 .loading-div span i { font-size: 14px; display: block; margin-top: 5px; color: #45567d; }
-.div-main { position: relative; box-sizing: border-box; width: 100%; min-width: 320px; max-width: 750px; min-height: 100%; margin: 0 auto; background: -webkit-linear-gradient(30deg, #34235a, #503266); }
+.div-main { position: relative; box-sizing: border-box; width: 100%; min-width: 320px; max-width: 750px; min-height: 100%; margin: 0 auto;     background: -webkit-linear-gradient(90deg, #fe6488, #fe6488); }
 .fl { float: left; }
 .fr { float: right; }
 .db { display: block; }
@@ -30,35 +30,35 @@ em, i { font-style: normal; }
 .card_cont { left: 15px; right: 15px; box-sizing: border-box; margin: 0 auto; position: absolute; background: #fff7e3; border-radius: 5px; box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, .05);  /* padding:8px 20px 18px; */ transition: all linear .5s; -webkit-transition: all linear .5s; -moz-transition: all linear .5s; -ms-transition: all linear .5s; transform: scale(0, 0); -moz-transform: scale(0, 0); -ms-transform: scale(0, 0); -o-transform: scale(0, 0); -webkit-transform: scale(0, 0); bottom: 0; display: none; }
 .card { height: 100%; position: relative; margin: 0 auto; }
 .card .card_bottom { width: 100%; left: 0; box-sizing: border-box; padding: 20px 18px; }
-.card .card_bottom a { color: #c733c5; cursor: pointer; }
+.card .card_bottom a { color: #fe6488; cursor: pointer; }
 .card .card_bottom span { float: right; color: #909090 }
 .card .card_bottom span b { color: #666; font-weight: inherit }
 .card_cont.card1 { display: block; transform: scale(1, 1) translate(0, 0) !important; -ms-transform: scale(1, 1) translate(0, 0) !important; -moz-transform: scale(1, 1) translate(0, 0) !important; -webkit-transform: scale(1, 1) translate(0, 0) !important; }
 .card_cont.card2 { display: block; -webkit-transform: scale(1, 1) translate(200%, 0) !important; }
 .card_cont.card3 { display: block; -webkit-transform: scale(1, 1) translate(200%, 0) !important; }
 .card_cont.cardn { display: block; -webkit-transform: translate(-200%, 0) !important; }
-.question { display: block; font-size: 16px; font-weight: 100; color: #ffffff; line-height: 1.4; padding: 10px 20px; background: #d96eae; border-radius: 5px 5px 0px 0px; }
+.question {display: block;font-size: 16px;font-weight: 100;color: #ffffff;line-height: 1.4;padding: 10px 20px;background: #79d5fe;border-radius: 5px 5px 0px 0px;}
 .question span { }
 
 /*Radio Specific styles*/
 input[type='radio'] { display: none; cursor: pointer; }
 input[type='radio']:focus, input[type='radio']:active { outline: none; }
-input[type='radio'] + label { cursor: pointer; display: inline-block; position: relative; padding-left: 28px; color: #d96eae; }
-input[type='radio']:checked + label { color: #d96eae !important; }
+input[type='radio'] + label { cursor: pointer; display: inline-block; position: relative; padding-left: 28px; color: #79d5fe; }
+input[type='radio']:checked + label { color: #79d5fe !important; }
 input[type='radio'] + label:before, input[type='radio'] + label:after { content: ''; font-family: helvetica; display: inline-block; width: 20px; height: 20px; left: 0; top: 0; text-align: center; position: absolute; }
 input[type='radio'] + label:before { background-color: transparent; }
 input[type='radio'] + label:after { color: #79d5fe; }
-input[type='radio']:checked + label:before { -moz-box-shadow: inset 0 0 0 5px #fff; -webkit-box-shadow: inset 0 0 5px #fff; box-shadow: inset 0 0 0 5px #fff; border: 1px solid #d96eae; background-color: #d96eae; }
-input[type='radio'] + label:before { -moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%; border: 1px solid #d96eae; }
+input[type='radio']:checked + label:before { -moz-box-shadow: inset 0 0 0 5px #fff; -webkit-box-shadow: inset 0 0 5px #fff; box-shadow: inset 0 0 0 5px #fff; border: 1px solid #79d5fe; background-color: #79d5fe; }
+input[type='radio'] + label:before { -moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%; border: 1px solid #79d5fe; }
 input[type='radio'] + label:hover:after { color: #c733c5; }
 input[type='radio']:checked + label:after, input[type='radio']:checked + label:hover:after { color: #c733c5; }
 ul.select { padding: 0 18px; margin-top: 20px; }
 ul.select li { line-height: 1.5; padding: 10px 0px; }
 .dati-submit { margin: 20px 15px; margin-top: 30px; overflow: hidden; border-radius: 5px; }
 .dati-submit input[type="button"] { background: rgba(244, 247, 248, 0.33); border: none; color: #fff; font-size: 16px; width: 100%; height: 50px; display: block; }
-.deggs-rule { margin: 0px 15px; margin-bottom: 30px; padding: 10px; border-radius: 5px; background: rgba(244, 247, 248, 0.33); text-align: center; position: relative; }
-.deggs-rule h3 { display: inline-block; background: #da2b5a; color: #fff; padding: 5px 20px; position: relative; top: -20px; border-radius: 22px; box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.15); }
-.deggs-rule span { color: #f9e277; font-size: 14px; display: block; padding-bottom: 10px; line-height: 24px; text-align: left; }
+.deggs-rule {margin: 0px 15px;margin-bottom: 30px;padding: 10px;border-radius: 5px;background: rgba(244, 247, 248, 0.33);text-align: center;position: relative;margin-top: 50px;}
+.deggs-rule h3 {display: inline-block;background: #79d5fe;color: #fff;padding: 5px 20px;position: relative;top: -20px;border-radius: 22px;box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.15);}
+.deggs-rule span {color: #ffffff;font-size: 14px;display: block;padding-bottom: 10px;line-height: 24px;text-align: left;}
 /*mask*/
 .mask { position: fixed; z-index: 999; background: rgba(0, 0, 0, .4); width: 100%; height: 100%; left: 0; right: 0; bottom: 0; top: 0; display: none; }
 .dial-pop { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); text-align: center; z-index: 1000; width: 100%; max-width: 13rem; min-width: 300px; display: none; background: #ffdc87; border-radius: 10px; box-shadow: 0px 0px 20px 1px rgba(255, 255, 255, .3); }

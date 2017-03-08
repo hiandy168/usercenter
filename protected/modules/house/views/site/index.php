@@ -54,7 +54,7 @@
             if ($house['type'] ==2) { ?>
                 <li>
                     <div class="f-index-listdiv clearfix">
-                        <a href="<?php echo $this->createUrl('/house/site/detail', array('id' => $house['id'])) ?>">
+                        <a href="<?php echo $this->createUrl('/house/site/detail', array('id' => $house['id'],'city' => $cityurl)) ?>">
                             <div class="f-index-listdiv-img"><img
                                     src="<?php echo $this->_siteUrl . '/' . $house['img'] ?>"/></div>
                             <div class="f-index-listdiv-txt">

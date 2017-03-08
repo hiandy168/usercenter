@@ -19,7 +19,7 @@
             </i>
         </div>
         <div class="f-index-listdiv clearfix pos-r bb bt">
-            <a href="<?php echo $this->createUrl('/house/site/detail', array('id' => $orderdetail['houseid'])) ?>">
+            <a href="<?php echo $this->createUrl('/house/site/detail', array('id' => $orderdetail['houseid'],'city' => $orderdetail['citynum'])) ?>">
                 <div class="f-index-listdiv-img"><img src="<?php echo $this->_siteUrl . '/' . $orderdetail['img'] ?>"></div>
                 <div class="f-index-listdiv-txt">
                     <h3>[<?php echo $orderdetail['city']?>] <?php echo $orderdetail['title']?></h3>

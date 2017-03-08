@@ -33,7 +33,7 @@ class HouseController extends FrontController {
     public function init() {
         parent::init();
        if(!$this->member['id']){
-            header("location:".$this->_siteUrl."/house/login");
+            $this->redirect($this->createAbsoluteUrl("/house/login/index/",array('return_url'=>  base64_encode(Mod::app()->request->url?Mod::app()->request->url:($this->_siteUrl."/house/site")))));
             exit;
         }
         $this->_wwwPath = Mod::app()->basePath . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;

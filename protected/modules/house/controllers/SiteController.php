@@ -51,6 +51,7 @@ class SiteController extends HouseController{
             'recommondlist'=>$recommondlist,
             'imglist'=>$imglist,
             'phone'=>$phone,
+            'cityurl'=>$cityurl,
         );
         $this->render("index",$data);
     }
@@ -194,16 +195,21 @@ class SiteController extends HouseController{
      */
     public function actionDetail(){
         $id=Tool::getValidParam('id','integer');
-        $city=Tool::getValidParam('city','integer');
-        if($city){
-            Cookie::set('city', $city);
-        }
-        $cookie_mod=Cookie::get('city');
+//        $city=Tool::getValidParam('city','integer');
+//        if($city){
+//            Cookie::set('city', $city);
+//        }
+//        $cookie_mod=Cookie::get('city');
 
         if(!empty($id)){
-            $sql = "SELECT a.id,a.phone,a.city,a.financingid,a.actime,a.repertory,a.coupon,a.desc,a.figue,a.img,a.dtitle,a.share_img,m.title,m.earnings FROM {{house_activity}} as a LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE a.status=1 and a.type=1 and city=$cookie_mod and a.id=$id";
+            $sql = "SELECT a.id,a.phone,a.city,a.financingid,a.actime,a.repertory,a.coupon,a.desc,a.figue,a.img,a.dtitle,a.share_img,m.title,m.earnings FROM {{house_activity}} as a LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE a.status=1 and a.type=1 and a.id=$id";
             $houseinfo=Mod::app()->db->createCommand($sql)->queryRow();
             if($houseinfo){
+                
+                $cookie_mod= $houseinfo['city'];
+                Cookie::set('city', $houseinfo['city']);
+                        
+                        
                 $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$houseinfo['city'];
                 $city=Mod::app()->db->createCommand($sql)->queryRow();
                 $houseinfo['city']=$city['city'];
@@ -249,7 +255,7 @@ class SiteController extends HouseController{
                 'title'=> $houseinfo['dtitle'],
                 'share_img'=>'http://mat1.gtimg.com/hb/0000000zhuanti/share2.png',
                 'share_desc'=>'我在用腾讯楼盘商城预存抵现，房源多多，实惠多多',
-                'share_url'=>'/house/site/detail/id/'.$id,
+                'share_url'=>'/house/site/detail/id/'.$id.'/city'.$city,
             ),
             'signPackage'=>$signPackage,
             'houseinfo'=>$houseinfo,

@@ -217,6 +217,7 @@ class SsologinController extends FrontController
      * 接收 ticket返回对应的用户信息
      * */
     public function actionGetuserinfo(){
+
         $ticket = Tool::getValidParam("ticket", "string");
         $agentids = Tool::getValidParam('agentids', 'string');
         $secret = Tool::getValidParam('secret', 'string');
@@ -232,15 +233,17 @@ class SsologinController extends FrontController
 
             exit;
         }
-
-
-        if (!empty($ticket)) {
+        if ($ticket) {
             //解密字符串
             $ticketstring = $this->secret_string($ticket);
             //验证是否解密成功
             $ticketarray = explode('-', $ticketstring);
-            $str=md5('session' . $this->key . $this->user['agentids'] . $this->user['secret']);
-            if ($ticketarray[0] == "SSO" && $ticketarray[4]==$str) {
+            $str=md5('session' . $this->key . $agentids . $secret);
+            if ($ticketarray[0] == "SSO") {
+                if($ticketarray[4]==$str){
+                    echo json_encode(array('state' => 10004, 'message' => 'ticket is invalid'));
+                    exit;
+                }
                 //检查时间是否超时，默认是7200 秒
                 if($ticketarray[3]<time()){
                     echo json_encode(array('state' => 10001, 'message' => 'ticket is overdue'));
@@ -250,7 +253,7 @@ class SsologinController extends FrontController
                 //查看 该用户是否存在
                 $member = Member::model()->findByPk($uid);
                 if(!$member){
-                    echo json_encode(array('state' => 10005, 'message' => 'ticket is invalid'));
+                    echo json_encode(array('state' => 10005, 'message' => 'ticket is invalidu'));
                     exit;
                 }
                 $this->member=Mod::app()->session['member']= $member->attributes;
