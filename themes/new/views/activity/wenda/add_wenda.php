@@ -181,7 +181,7 @@
                                                 ?>
                                                 <option value="<?php echo $val->id ?>"
                                                         <?php if ($activity_info['activity_id'] == $val->id){ ?>selected="selected "<?php } ?> ><?php echo $val->title ?></option>
-                                                <?
+                                                <?php
                                             }
                                         } else {
                                             ?>
@@ -217,12 +217,54 @@
                             </p>
                         </div>
                         <style>
-                            #timu_table{ width: 100%}
-                            #timu_table tr{}
+                            #timu_table{ width: 100%;table-layout: fixed;}
+                            #timu_table tr{ line-height: 44px;}
+                            #timu_table tr.lee:nth-of-type(odd){    background: #f3f3f3;
+    border-radius: 5px;}
+                            #timu_table tr.lee td:nth-of-type(3) span{    padding: 3px 10px;
+    background: #39c0ff;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #fff;}              #timu_table tr.lee td:nth-of-type(2){    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    text-align: center;}
+                            #timu_table tr.lee td:nth-of-type(4) span{    padding: 3px 10px;
+    background: #b6b6b6;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #fff;}   
                             #timu_table tr.t1{}
-                            #timu_table tr td{}
+                            #timu_table tr td{ text-align: center;}
+                            #nothing td{    padding: 30px;
+    background: #f8f8f8;
+    border-radius: 5px;}
 
+    .wenda_num{}
+    .wenda_num div{    margin-top: 20px;
+    padding: 0px 20px;}
+    .wenda_num div p{    color: #0091d5;}
+    .wenda_num div input[type=radio]{    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+    position: relative;
+    top: 2px;
+    cursor: pointer;}
+    .wenda_num div input[type=text]{    margin-top: 10px;}
+    .layui-layer-content input[type=button]{    margin: 20px;
+    width: 20%;
+    line-height: 36px;
+    display: inline-block;
+    background: #2b87c7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;}
 
+                             
                         </style>
 
 
@@ -236,13 +278,13 @@
 
                             <table  border="0" cellspacing="0" cellpadding="0" id="timu_table">
                                 <tr>
-                                    <td >排序</td>
-                                    <td >题目</td>
+                                    <td style="width: 10%;" >排序</td>
+                                    <td style="width: 50%;">题目</td>
 <!--                                    <td >类型</td>-->
-                                    <td colspan="2" style="text-align:center">操作</td>
+                                    <td style="width: 10%;" colspan="2" style="text-align:center">操作</td>
                                 </tr>
                                 <tr id="nothing" <?php if($question_all){echo 'hidden="hidden"';}?> >
-                                    <td colspan="4" style="text-align: center;padding-left: 0px">还没有配置题目</td>
+                                    <td colspan="4" >还没有配置题目,点击下方按钮添加题目吧</td>
                                 </tr>
                                 <?php if($question_all){
                                     foreach ($question_all as $val){
@@ -263,7 +305,7 @@
                             </table>
 
 
-                            <div class="input upload_pic clearfix" style="    padding: 10px;
+                            <div class="input upload_pic clearfix" style=" margin-top: 20px;    padding: 10px;
     background: #fff;
     border-radius: 5px;
     text-align: center;">
@@ -635,8 +677,8 @@
             var html="";
             for (var i=0; i<arr1.length;i++){
                 arr1[i].no = i+1;
-                console.log(arr1[i]);
-                console.log(JSON.stringify(arr1[i]));
+                // console.log(arr1[i]);
+                // console.log(JSON.stringify(arr1[i]));
                 var jsonarr =JSON.stringify(arr1[i]);
                 html += '<tr class="lee">';
                 html += '<td>'+(i+1)+'</td>';

@@ -55,9 +55,10 @@
 <div class="div-main">
 
 
-    <div class=""><img src="<?php echo $this->_theme_url; ?>assets/subassembly/wenda/images/dati-img2.jpg" width="100%"/></div>
-    <div class="pos-r" style="overflow: hidden;"><img src="<?php echo $this->_theme_url; ?>assets/subassembly/wenda/images/dati-img3.jpg" width="100%"/>
-        <form action="" method="post" style="position: absolute;width: 100%;top: 0;">
+    <div class=""><img src="<?php echo $this->_theme_url; ?>assets/subassembly/wenda/images/dati-img1.jpg" width="100%"/></div>
+    <div class="pos-r" style="overflow: hidden;">
+    <!-- <img src="<?php echo $this->_theme_url; ?>assets/subassembly/wenda/images/dati-img3.jpg" width="100%"/> -->
+        <form action="" method="post" >
             <div class="wrapper">
                 <div id="answer" class="card_wrap">
                     <!--Q1-->
@@ -201,7 +202,7 @@
                 "answer_arr_id":answer_arr_id,
             },
             success: function (data) {
-                var url = "<?php echo $this->createUrl('activity/wenda/view',array('id'=>$info['id']))?>";
+                var url = "<?php echo $this->createUrl('activity/wenda/view',array('id'=>$info['id']))?>?v"+Math.random();
                 if(data.status==200){
                     //是否参与抽奖
                     if(<?php echo $info['is_prize']?1:0;?>){

@@ -307,7 +307,7 @@ class WendaController extends FrontController
                 try {
                     if($question_arr) {
                         foreach ($question_arr as $key => $val) {
-                            $question = json_decode($val, true);
+                            $question = json_decode(str_replace("\\","",$val), true);
                             //步骤1  更新的 对比现在的题目  更新之前编辑的题目
                             if ($question['id']) {
                                 $quest_update_data['body'] = $val;
@@ -360,7 +360,7 @@ class WendaController extends FrontController
                  if($question_arr) {
                      //   步骤3：对比现在的题目  写入新增的题目
                      foreach ($question_arr as $key => $val) {
-                         $question = json_decode($val, true);
+                         $question = json_decode(str_replace("\\","",$val), true);
                          //新增的
                          if (!$question['id']) {
 
@@ -413,9 +413,9 @@ class WendaController extends FrontController
                 }
 
 
-            } else { //新增题库
+            } else { //新增题库            
                 foreach ($question_arr as $key => $val) {
-                    $question = json_decode($val, true);
+                    $question = json_decode(str_replace("\\","",$val), true);
                     $data_question['body'] = $val;
                     $data_question['sort'] = $question['no'];
                     $data_question['question'] = $question['question'];
