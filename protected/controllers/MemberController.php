@@ -839,14 +839,13 @@ class MemberController extends FrontController
             echo json_encode(array('state' => 0, 'message' => '手机号码不合法'));
             exit;
         }
-        if($data['username']!='13871312136') {
-            if ($data['username']) {
-                //短信验证码是否正确或已过期
-                $auth_code = Mod::app()->memcache->get('dachuw' . $data['username']);
-                if ($codes != $auth_code || !$codes) {
-                    echo json_encode(array('state' => 0, 'message' => '验证码错误'));
-                    exit;
-                }
+        
+        if ($data['username']) {
+            //短信验证码是否正确或已过期
+            $auth_code = Mod::app()->memcache->get('dachuw' . $data['username']);
+            if ($codes != $auth_code || !$codes) {
+                echo json_encode(array('state' => 0, 'message' => '验证码错误'));
+                exit;
             }
         }
 
@@ -983,7 +982,7 @@ class MemberController extends FrontController
 //        }
     }
 
-    //其他位置 H5公共等登录入口    
+    //其他位置 H5公共等登录入口
     public function actionAjaxlogin()
     {
 
@@ -1066,7 +1065,7 @@ class MemberController extends FrontController
         } else {
             $member_info = Member::model()->findByAttributes(array('name' => $username));
             //                验证验证码或者密码
-            if(!$username=13323163036) {
+            if(1) {
                 $checkres = $this->checkmember($username, $smsCode, $upwd, $member_info);
                 if (!$member_info && $checkres) {
                     $temptable = str_replace('_', '', $table);

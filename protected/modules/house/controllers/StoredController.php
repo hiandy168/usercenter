@@ -18,11 +18,11 @@ class StoredController extends HouseController{
         if(!empty($id)){
             $sql = "SELECT a.id,a.phone,a.city,a.financingid,a.actime,a.coupon,a.repertory,a.desc,a.figue,a.img,a.dtitle,m.title,m.earnings,m.cycle FROM {{house_activity}} as a LEFT JOIN {{house_money}} as m on a.financingid=m.id WHERE a.status=1 and a.type=1 and city=$cookie_mod and a.id=$id";
             $houseinfo=Mod::app()->db->createCommand($sql)->queryRow();
-           /* $count="SELECT count(*) as count FROM {{house_order}} where status=1 and paystatus!=1 and houseid=".$id;
-            $ordercount=Mod::app()->db->createCommand($count)->queryRow();
-            if(intval($houseinfo['repertory'])<intval($ordercount)){
-                echo "error";die();
-            }*/
+            /* $count="SELECT count(*) as count FROM {{house_order}} where status=1 and paystatus!=1 and houseid=".$id;
+             $ordercount=Mod::app()->db->createCommand($count)->queryRow();
+             if(intval($houseinfo['repertory'])<intval($ordercount)){
+                 echo "error";die();
+             }*/
             if($houseinfo){
                 $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$houseinfo['city'];
                 $city=Mod::app()->db->createCommand($sql)->queryRow();
@@ -94,7 +94,7 @@ class StoredController extends HouseController{
             }else{
                 $orderid=$oinfo['ordernum'];
             }
-            $username=$realname;
+            $username="fancy";
             $arr['mid']  =$userid;
             $arr['houseid']  =$id;
             $arr['ordernum']  =$orderid;
@@ -214,12 +214,17 @@ class StoredController extends HouseController{
         $sql = "SELECT a.authorid,a.validity,o.houseid  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid and o.ordernum=$orderid";
         $orderdetail=Mod::app()->db->createCommand($sql)->queryRow();
         $validity=explode("|",$orderdetail['validity']);
+        if(Mod::app()->request->hostInfo == DACHUUC_HOST_INFO){
+            $money=$money;
+        }else{
+            $money=$money.'0.10';
+        }
         $data=array(
             'orderNo'=>$orderid,//订单号
             'userId'=>$userid,//个人用户userId
             'companyUserId'=>"h".$orderdetail['authorid'],//公司用户userId
             'productId'=>$orderdetail['houseid'],//产品ID
-            'amount'=>$money.".10",//定期金额
+            'amount'=>$money,//定期金额
             'companyProceeds'=>$money,//公司收款金额
             'expireTime'=>date('Y-m-d',$validity['0']),//定期到期日期
             'companySummaryCode'=>"30000005",//公司摘要码
@@ -232,7 +237,7 @@ class StoredController extends HouseController{
             'userId'=>$userid,//个人用户userId
             'companyUserId'=>"h".$orderdetail['authorid'],//公司用户userId
             'productId'=>$orderdetail['houseid'],//产品ID
-            'amount'=>$money.".10",//定期金额
+            'amount'=>$money,//定期金额
             'companyProceeds'=>$money,//公司收款金额
             'expireTime'=>date('Y-m-d',$validity['0']),//定期到期日期
             'companySummaryCode'=>"30000005",//公司摘要码

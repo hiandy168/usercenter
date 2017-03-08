@@ -16,9 +16,14 @@ class LoginController extends Controller{
         $city=Tool::getValidParam('city','string');
         $house=md5('wxa8ba3a5d0f323f33');
         $data = array(
-            'reurl' => "/house/$house?state=".$this->_siteUrl."/house/site/index",
+            'reurl' => "/house/$house?state=".$this->createAbsoluteUrl('/house/site/index',array('city'=>$city?$city:1)),
             'city' => $city,
         );
-        $this->render("login",$data);
+
+         if(Mod::app()->request->hostInfo == DACHUUC_HOST_INFO){
+               $this->render("login",$data);
+         }else{
+               $this->render("login_test",$data);
+         }
     }
 }

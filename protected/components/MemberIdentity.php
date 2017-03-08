@@ -44,7 +44,7 @@ class MemberIdentity extends CUserIdentity
             }
 
             //如果用户名不存在
-            if($member_model == null || empty($member_model)){
+            if($member_model == null || empty($member_model) || !$member_model){
               // echo  $member_model->password ."!==". Tool::md5str($this->password,$member_model->source);
                 $this ->errorCode = self::ERROR_USERNAME_INVALID;
             }/* else if ($member_model->password !== Tool::md5str($this->password,$member_model->source)){

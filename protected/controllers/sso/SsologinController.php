@@ -218,6 +218,22 @@ class SsologinController extends FrontController
      * */
     public function actionGetuserinfo(){
         $ticket = Tool::getValidParam("ticket", "string");
+        $agentids = Tool::getValidParam('agentids', 'string');
+        $secret = Tool::getValidParam('secret', 'string');
+        if ($secret && $agentids) {
+            $res = Sso_broker::model()->find("agentid=:agentid and secret=:secret", array(':agentid' => $agentids, ':secret' => $secret));
+            //如果为真表示身份合法
+            if (!$res) {
+                echo "非法访问！";
+                exit;
+            }
+        }else{
+            echo json_encode(array('state' => 10005, 'message' =>  "agentids or secret is null"));
+
+            exit;
+        }
+
+
         if (!empty($ticket)) {
             //解密字符串
             $ticketstring = $this->secret_string($ticket);
@@ -225,11 +241,13 @@ class SsologinController extends FrontController
             $ticketarray = explode('-', $ticketstring);
             $str=md5('session' . $this->key . $this->user['agentids'] . $this->user['secret']);
             if ($ticketarray[0] == "SSO" && $ticketarray[4]==$str) {
+                //检查时间是否超时，默认是7200 秒
                 if($ticketarray[3]<time()){
                     echo json_encode(array('state' => 10001, 'message' => 'ticket is overdue'));
                     exit;
                 }
                 $uid = $ticketarray[2];
+                //查看 该用户是否存在
                 $member = Member::model()->findByPk($uid);
                 if(!$member){
                     echo json_encode(array('state' => 10005, 'message' => 'ticket is invalid'));

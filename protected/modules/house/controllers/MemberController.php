@@ -19,14 +19,10 @@ class MemberController extends HouseController{
         if(!$memberinfo){
             echo "error";die();
         }
-        try {
-            $osql = "SELECT SUM(money) as invest  FROM {{house_order}} WHERE mid=".$userid." and paystatus=2";
-            $invest=Mod::app()->db->createCommand($osql)->queryRow();
-            $msql = "SELECT m.earnings  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a ON o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id";
-            $earning=Mod::app()->db->createCommand($msql)->queryRow();
-        } catch (Exception $e) {
-            echo "error";die();
-        }
+        $osql = "SELECT SUM(money) as invest  FROM {{house_order}} WHERE mid=".$userid." and paystatus=2";
+        $invest=Mod::app()->db->createCommand($osql)->queryRow();
+        $msql = "SELECT m.earnings  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a ON o.houseid=a.id LEFT JOIN {{house_money}} as m on a.financingid=m.id";
+        $earning=Mod::app()->db->createCommand($msql)->queryRow();
 
         if($memberinfo['wxstatus']==1){
             $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,o.usetime,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid order by o.createtime desc";

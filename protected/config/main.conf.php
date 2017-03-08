@@ -6,7 +6,7 @@ define('CONFIG_PATH', dirname(__FILE__));
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 
-
+define('DACHUUC_HOST_INFO', "https://m.tengchu.com");
 /***********************qq 相关参数-----*********************/
 //申请到的appid
 //define('APPID', 101369824);

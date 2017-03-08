@@ -22,8 +22,8 @@ class Member extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name, password,group_id,admin,source','required', 'on'=>'create,edit'),
-            array('id,password,name,email,phone,address,regip,lastloginip,lastlogintime,regtime,status,admin,remark,source', 'safe'),
+//            array('name, password,group_id,admin,source','required', 'on'=>'create,edit'),
+//            array('id,password,name,email,phone,address,regip,lastloginip,lastlogintime,regtime,status,admin,remark,source', 'safe'),
         );
     }
     
