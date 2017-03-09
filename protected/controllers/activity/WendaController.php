@@ -95,7 +95,7 @@ class WendaController extends FrontController
             'signPackage' => $signPackage,
             'time' => time(),
             'config'=>array(
-                'site_title'=> $info['title'].'-大转盘抽奖',
+                'site_title'=> $info['title'].'-问答抽奖',
                 'Keywords'=>$info['title'].',问答,抽奖,一等奖',
                 'Description'=>$info['title'].',问答,抽奖,一等奖',
             ),
@@ -281,13 +281,14 @@ class WendaController extends FrontController
 
 
             $question_id_arr =array();
-            $question_arr = Tool::getValidParam('question_arr');
+            $question_arr = $_POST['question_arr'];
             $qanda_id = Tool::getValidParam('qanda_id');
+            if(!$qanda_id){
+                $qanda_id = array();
+            }
             $question_query = true ; //编辑成功判断
 
             if ($activity_id) {
-//                var_dump($question_arr);
-//                var_dump($qanda_id);exit;
                 //步骤1：查找之前的题目
                 $wenda_question_arr_id = array();
                 $sql = "select * from {{activity_wenda_question}} where wendaid=".$activity_info['id']." and status =1";
@@ -296,18 +297,22 @@ class WendaController extends FrontController
                     $wenda_question_arr_id[] = $val['id'];
                 }
 
-                //取交集
-                $qanda_id_intersect = array_intersect($wenda_question_arr_id,$qanda_id);
-                //取差集
-                $qanda_id_diff = array_diff($wenda_question_arr_id,$qanda_id);
+                $qanda_id_diff = array_diff($wenda_question_arr_id, $qanda_id);
 
+                if($wenda_question_arr_id) {
+                    //取交集
+                    $qanda_id_intersect = array_intersect($wenda_question_arr_id, $qanda_id);
+                    //取差集
+                    $qanda_id_diff = array_diff($wenda_question_arr_id, $qanda_id);
+
+                }
 
                 //开启事务
                 $transaction = Mod::app()->db->beginTransaction();
                 try {
                     if($question_arr) {
                         foreach ($question_arr as $key => $val) {
-                            $question = json_decode(str_replace("\\","",$val), true);
+                            $question = json_decode($val, true);
                             //步骤1  更新的 对比现在的题目  更新之前编辑的题目
                             if ($question['id']) {
                                 $quest_update_data['body'] = $val;
@@ -360,7 +365,7 @@ class WendaController extends FrontController
                  if($question_arr) {
                      //   步骤3：对比现在的题目  写入新增的题目
                      foreach ($question_arr as $key => $val) {
-                         $question = json_decode(str_replace("\\","",$val), true);
+                         $question = json_decode($val, true);
                          //新增的
                          if (!$question['id']) {
 
@@ -415,7 +420,7 @@ class WendaController extends FrontController
 
             } else { //新增题库            
                 foreach ($question_arr as $key => $val) {
-                    $question = json_decode(str_replace("\\","",$val), true);
+                    $question = json_decode($val, true);
                     $data_question['body'] = $val;
                     $data_question['sort'] = $question['no'];
                     $data_question['question'] = $question['question'];

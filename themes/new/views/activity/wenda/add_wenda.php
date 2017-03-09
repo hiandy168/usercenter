@@ -643,12 +643,12 @@
             layer.closeAll();
             if (type == "add") {
                 timu.no = len;
-                var data = JSON.stringify(timu);
+                var data = "'"+JSON.stringify(timu)+"'";
                 var html = '<tr class="lee"><td>' + len + '</td><td>' + timu.question + '</td><td style="text-align:center"><span data-span="span"   data-data='+data+' onclick=edit_question(this)>编辑</span></td><td style="text-align:center"><span  data-data='+data+' onclick=del_question(this)>删除</span></td></tr>';
                 $("#timu_table").append(html);
             }else{
                 timu.no = num;
-                var data = JSON.stringify(timu);
+                var data = "'"+JSON.stringify(timu)+"'";
                 var num_id = num+1;
                 var edit_html='<td>' + num + '</td><td>' + timu.question + '</td><td style="text-align:center"><span data-span="span"   data-data='+data+' onclick=edit_question(this)>编辑</span></td><td style="text-align:center"><span   data-data='+data+' onclick=del_question(this,"'+timu.id+'")>删除</span></td>';
                 $("tr:eq("+num_id+")").html(edit_html);
@@ -679,7 +679,7 @@
                 arr1[i].no = i+1;
                 // console.log(arr1[i]);
                 // console.log(JSON.stringify(arr1[i]));
-                var jsonarr =JSON.stringify(arr1[i]);
+                var jsonarr = "'"+JSON.stringify(arr1[i])+"'";
                 html += '<tr class="lee">';
                 html += '<td>'+(i+1)+'</td>';
                 html += '<td>'+arr1[i].question+'</td>';

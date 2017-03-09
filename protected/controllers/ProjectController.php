@@ -652,7 +652,8 @@ class ProjectController extends FrontController {
         $id = Tool::getValidParam('id','integer');
         //防止ID遍历
         $projectinfo =  JkCms::getprojectByid($id);
-        if($this->member['id'] !=   $projectinfo['mid'] ){
+
+        if($this->memberverify($projectinfo['mid'])){
             $this->redirect(Mod::app()->request->getHostInfo());
             exit;
         }
@@ -680,7 +681,7 @@ class ProjectController extends FrontController {
         $pid = Tool::getValidParam('id','integer');
         //防止ID遍历
         $projectinfo =  JkCms::getprojectByid($pid);
-        if($this->member['id'] !=   $projectinfo['mid'] ){
+        if($this->memberverify($projectinfo['mid'] )){
             $this->redirect(Mod::app()->request->getHostInfo());
             exit;
         }
@@ -718,7 +719,7 @@ class ProjectController extends FrontController {
         $pid = trim(Tool::getValidParam('pid','integer'));
         //防止ID遍历
         $projectinfo =  JkCms::getprojectByid($pid);
-        if($this->member['id'] !=   $projectinfo['mid'] ){
+        if($this->memberverify( $projectinfo['mid'] ) ){
             $this->redirect(Mod::app()->request->getHostInfo());
             exit;
         }
@@ -780,7 +781,7 @@ class ProjectController extends FrontController {
         $wx_appid = trim(Tool::getValidParam('wx_appid','string'));
         //防止ID遍历
         $projectinfo =  JkCms::getprojectByid($pid);
-        if($this->member['id'] !=   $projectinfo['mid'] ){
+        if($this->memberverify( $projectinfo['mid'] )){
             $this->redirect(Mod::app()->request->getHostInfo());
             exit;
         }
@@ -796,6 +797,7 @@ class ProjectController extends FrontController {
 //            $project_model->wechat_url = $wechaturl;
             $project_model->updatetime = time();
             $project_model->save();
+            $transaction->commit();
             echo json_encode(array('code' => 200, 'mess' => '更新成功'));
         }catch(Exception $e){ //如果有一条查询失败，则会抛出异常
             $transaction->rollBack();
