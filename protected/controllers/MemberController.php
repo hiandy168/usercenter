@@ -2177,13 +2177,12 @@ class MemberController extends FrontController
 
         if($housestr && $housestr==md5(HOUSEWEIXINAPPID)){
 
-            Mod::app()->memcache->set('weixinappid',HOUSEWEIXINAPPID);
-            Mod::app()->memcache->set('weixinsecret',HOUSEWEIXINSECRET);
+            Mod::app()->memcache->set('weixinappid',HOUSEWEIXINAPPID,300);
+            Mod::app()->memcache->set('weixinsecret',HOUSEWEIXINSECRET,300);
         }else{
-            Mod::app()->memcache->set('weixinappid',HOUSEWEIXINAPPID);
-            Mod::app()->memcache->set('weixinsecret',HOUSEWEIXINSECRET);
+            Mod::app()->memcache->set('weixinappid',WEIXINAPPID,300);
+            Mod::app()->memcache->set('weixinsecret',WEIXINSECRET,300);
         }
-
 
         //去掉分享之后 微信带的参数
         $state = substr($str, 0, strpos($str, "?"));

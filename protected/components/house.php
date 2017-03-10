@@ -42,6 +42,20 @@ $menu = array(
             array('title' => '新增城市', 'url' => 'housecity/add'),
         )
     ),
+    'user' => array(
+        'title' => '用户中心',
+        'children' => array(
+            array('title' => '用户管理', 'url' => 'user'),
+        )
+    ),
+    'address' => array(
+        'title' => '白名单',
+        'children' => array(
+            array('title' => '白名单管理', 'url' => 'houseip/list'),
+            array('title' => '新增白名单', 'url' => 'houseip/add'),
+        )
+    ),
+
 
   /*  'houseorder' => array(
         'title' => '订单管理',

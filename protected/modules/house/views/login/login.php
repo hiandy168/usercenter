@@ -23,6 +23,7 @@
 </head>
 
 <body style=" height: 100%;background: #fff;">
+    
 <a id="wxlogin" href="<?php echo $this->_siteUrl ?>/member/WeixinLogin<?php echo $reurl?>" style="
     display: block;
     height: 100%;

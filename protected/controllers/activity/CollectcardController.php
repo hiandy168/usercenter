@@ -21,6 +21,14 @@ class CollectcardController extends FrontController
 
     public function actionView()
     {
+        //目前考虑的是通过 签到 投票 报名等方式来集卡
+        //思路
+        /*
+         * 1、当 投票或者报名成功之后  给一个跳转提示，来到集卡活动页面，然后通过抽奖系统，生成卡片
+         * 2、在投票或者签到或者报名 活动处设置是否开启集卡，是，则签到成功的时候 通过抽奖算法 生成卡片，然后到集卡活动页面查看 和合成
+         *
+         * */
+        $this->render('view');
 
 
     }

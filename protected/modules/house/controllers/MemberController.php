@@ -28,16 +28,18 @@ class MemberController extends HouseController{
             $sql = "SELECT o.ordernum,o.id,o.money,o.paystatus,o.mid,o.usetime,a.title,a.img,a.actime,a.city  FROM {{house_order}} as o LEFT JOIN {{house_activity}} as a on o.houseid=a.id WHERE o.status=1 and o.mid=$userid order by o.createtime desc";
             $orderlist=Mod::app()->db->createCommand($sql)->queryAll();
             if(!$orderlist){
-                echo "";die();
-            }
-            foreach($orderlist as $k=>$v) {
-                $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$orderlist[$k]['city'];
-                $city=Mod::app()->db->createCommand($sql)->queryRow();
-                $orderlist[$k]['city']=$city['city'];
-                $actime=explode("|",$orderlist[$k]['actime']);
-                $orderlist[$k]['actime']=$actime[0];
-                $orderlist[$k]['createtime']=$actime[1];
-            }
+                $orderlist = array();
+            } else {
+                
+                    foreach($orderlist as $k=>$v) {
+                        $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=".$orderlist[$k]['city'];
+                        $city=Mod::app()->db->createCommand($sql)->queryRow();
+                        $orderlist[$k]['city']=$city['city'];
+                        $actime=explode("|",$orderlist[$k]['actime']);
+                        $orderlist[$k]['actime']=$actime[0];
+                        $orderlist[$k]['createtime']=$actime[1];
+                    }
+            }   
         }
         $invest=$invest['invest'];
         $earning=$earning['earnings'];

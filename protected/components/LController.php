@@ -38,9 +38,16 @@ class LController extends CController {
 
     public function init() {
 //        echo Mod::app()->request->userHostAddress;die();
-        if(!in_array(Mod::app()->request->userHostAddress,array('127.0.0.1','111.47.243.43','14.17.22.54','27.17.15.94',
-            '183.61.38.182','10.68.51.192','14.17.22.35','61.135.172.68','14.17.22.33'/*微众*/,'113.204.228.218'/*大渝网*/,'1.192.121.140'/*大预网*/
-        ))){die('非法的IP访问地址');}
+        $sql = "SELECT ip FROM {{house_ip}}  WHERE  status=1";
+        $res_check=Mod::app()->db->createCommand($sql)->queryAll();
+        $tmp = array();
+        foreach($res_check as $k=>$v ){
+            $tmp[] = $v['ip'];
+        }
+        $ip=array('127.0.0.1','111.47.243.43','14.17.22.54','183.61.38.182','10.68.51.192','14.17.22.35','61.135.172.68','27.17.15.94'
+        );
+        $result=array_merge($ip,$tmp);
+        if(!in_array(Mod::app()->request->userHostAddress,$result)){die('Illegal IP access address');}
         header("Content-type: text/html; charset=utf-8");
 
     }

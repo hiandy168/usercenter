@@ -42,6 +42,7 @@ class LoginController extends Controller{
             'city' => $city,
         );
 
+
          if(Mod::app()->request->hostInfo == DACHUUC_HOST_INFO){
                $this->render("login",$data);
          }else{

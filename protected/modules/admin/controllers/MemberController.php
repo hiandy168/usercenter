@@ -81,7 +81,7 @@ class MemberController extends AController
         $criteria->limit = $pages->pageSize;
         $criteria->offset = $pages->currentPage * $pages->pageSize;
         $result = $model->findAll($criteria);
-        $this->render('member', array('s' => $data['s'], 'datalist' => $result,'phone'=>$phone, 'group' => $group, 'pagebar' => $pages));
+        $this->render('member', array('s' => $data['s'], 'datalist' => $result, 'phone' => $phone, 'group' => $group, 'pagebar' => $pages));
     }
 
     public function actionAdd()
@@ -137,15 +137,15 @@ class MemberController extends AController
 //                $data['password'] = Tool::md5str($data['password'], $data['source']);
             $model->status = Mod::app()->request->getParam('status');
             $model->remark = Mod::app()->request->getParam('remark');
-            $model->lastlogintime= time();
+            $model->lastlogintime = time();
             $model->lastloginip = Tool::get_ip();
 //                $model->attributes = $data;
 //                var_dump($data);exit;
-                if ($model->save()) {
-                    $target_url = $this->createUrl('/' . $this->getModule()->getId() . '/member/edit/id/' . $data['id']);
-                    $this->admin_message('编辑成功', $target_url);
-                    exit();
-                }
+            if ($model->save()) {
+                $target_url = $this->createUrl('/' . $this->getModule()->getId() . '/member/edit/id/' . $data['id']);
+                $this->admin_message('编辑成功', $target_url);
+                exit();
+            }
 //            } else {
 //                $target_url = $this->createUrl('/' . $this->getModule()->getId() . '/member/add');
 //                $this->admin_message('两次密码不一致', $target_url);
@@ -223,7 +223,7 @@ class MemberController extends AController
         $criteria->limit = $pages->pageSize;
         $criteria->offset = $pages->currentPage * $pages->pageSize;
         $result = $model->findAll($criteria);
-        $this->render('pcmember', array('datalist' => $result, 'group' => $group,'phone'=>$phone, 'pagebar' => $pages));
+        $this->render('pcmember', array('datalist' => $result, 'group' => $group, 'phone' => $phone, 'pagebar' => $pages));
     }
 
 
@@ -292,14 +292,115 @@ class MemberController extends AController
         $parameter = array(
             "datalist" => $member,
             "activity" => $info,
-            "phone"=>$phone,
-            "startdate"=>$startdate,
-            "enddate"=>$enddate,
-            "select"=>$activity,
+            "phone" => $phone,
+            "startdate" => $startdate,
+            "enddate" => $enddate,
+            "select" => $activity,
         );
         $this->render('fromlist', $parameter);
     }
 
+    /*
+     * 大楚通行证管理列表
+     *
+     * */
+    public function actionSsolist()
+    {
+        $model = new Sso_broker();
+        $criteria = new CDbCriteria();
+        $criteria->addCondition("t.status=1");
+        $criteria->order = 't.id DESC';
+        $count = $model->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageSize = 15;
+        $criteria->limit = $pages->pageSize;
+        $criteria->offset = $pages->currentPage * $pages->pageSize;
+        $result = $model->findAll($criteria);
+        $parmar = array('datalist' => $result, 'pagebar' => $pages);
+
+        $this->render('ssolist', $parmar);
+    }
+
+
+    /*
+     * 添加大楚通行证
+     * 编辑
+     * */
+    public function actionSsoadd()
+    {
+        $model = new Sso_broker();
+        $id = Tool::getValidParam('id', 'integer');
+        if (isset($_POST) && $_POST['name']) {
+            if ($id) {
+                $model = Sso_broker::model()->findbypk($id);
+                $call = '/member/ssoadd/id/' . $id;
+                $str = "修改";
+                if (!$model) {
+                    $target_url = $this->createUrl('/' . $this->getModule()->getId() . $call);
+                    $this->admin_message($str . '失败', $target_url);
+                    exit();
+                }
+
+            } else {
+                $call = '/member/ssoadd/';
+                $str = "添加";
+            }
+            $model->name = Tool::getValidParam('name', 'string');
+            $model->description = Tool::getValidParam('description', 'string');
+            $model->agentid = Tool::getValidParam('agentid', 'string');
+            $model->secret = Tool::getValidParam('secret', 'string');
+            $model->url = Tool::getValidParam('url', 'string');
+            $model->createtime = time();
+
+            if ($model->save()) {
+                $target_url = $this->createUrl('/' . $this->getModule()->getId() . '/member/ssolist');
+                $this->admin_message($str . '成功', $target_url);
+                exit();
+            } else {
+                $target_url = $this->createUrl('/' . $this->getModule()->getId() . $call);
+                $this->admin_message($str . '失败', $target_url);
+                exit();
+            }
+
+        }
+
+        $data = $model->findByPk($id);
+        $param = array('fun' => 'ssoadd', 'data' => $data);
+        $this->render('ssoadd', $param);
+    }
+
+    /*
+     * 删除 大楚通行证列表
+     * */
+
+    public function actionSsodel()
+    {
+        $id = Tool::getValidParam('id', 'integer');
+
+        if (!$id) {
+            echo json_encode(array('state' => 0, 'mess' => '删除失败'));
+            exit();
+        }
+        //查询记录是否存在
+        $model = Sso_broker::model()->findbypk($id);
+
+        if (!$model) {
+            echo json_encode(array('state' => 0, 'mess' => '删除失败'));
+            exit();
+        }
+        $model->updatetime = time();
+        $model->status = 0;
+
+        if ($model->save()) {
+            $mess = '删除成功！';
+            $state = 1;
+        } else {
+            $mess = '删除失败！';
+            $state = 0;
+        }
+        echo json_encode(array('state' => $state, 'mess' => $mess));
+        exit;
+    }
 
 }
 

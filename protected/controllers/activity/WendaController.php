@@ -325,7 +325,7 @@ class WendaController extends FrontController
 
 //                            $res = Mod::app()->db->createCommand()->update('{{activity_wenda_question}}', $quest_update_data, 'id=:id', $question['id']);
                                 if ($res) {
-                                    $sql = "select * from dym_activity_wenda_answer where questionid=" . $question['id'] . "  order by createtime asc limit 1";
+                                    $sql = "select * from dym_activity_wenda_answer where questionid=" . $question['id'] . "  order by id asc limit 1";
                                     $answer_arr = Mod::app()->db->createCommand($sql)->queryRow();
                                     if ($answer_arr) {
 //                                  var_dump($answer_arr);exit;

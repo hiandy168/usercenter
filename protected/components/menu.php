@@ -101,6 +101,10 @@
             array('title'=>'用户来源列表', 'children'=>array(
                 array('title' => '用户来源列表', 'url' => 'member/fromlists'),
             )),
+            array('title'=>'大楚通行证登录管理', 'children'=>array(
+                array('title' => '列表管理', 'url' => 'member/ssolist'),
+                array('title' => '添加', 'url' => 'member/ssoadd'),
+            )),
           
         )
     ),
