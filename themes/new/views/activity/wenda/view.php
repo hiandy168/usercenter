@@ -237,15 +237,15 @@
         $(".mask").show();
         $(".dial-pop").show().addClass("active");
         if (e == 1) {
-            $(".dial-poptxt").html('<h3>恭喜，棒棒棒哒</h3>' + '<p>答对了<i>“' + a + '”</i>道题目 <br />' + '点击下方按钮参与抽奖</p>');
+            $(".dial-poptxt").html('<h3>恭喜，棒棒棒哒</h3>' + '<p>答对了<i>“' + a + '”</i>道题目 <br />' + '去抽奖</p>');
             $("[data-a-link='a']").removeAttr("href").attr("href",b)
         }
         if (e == 2) {
-            $(".dial-poptxt").html('<h3>很遗憾！答对的题数不够</h3>' + '<p>你还有<i>“' + c + '”</i>次机会！</p>');
+            $(".dial-poptxt").html('<h3>很遗憾！答对的题数不够</h3>' + '<p>答对了'+ a +'道题目，还有<i>“' + c + '”</i>次答题机会！</p>');
             $("[data-a-link='a']").removeAttr("href").attr("href",b)
         }
         if (e == 3) {
-            $(".dial-poptxt").html('<h3>恭喜，棒棒棒哒</h3>' + '<p>答对了<i>“' + a + '”</i>道题目 <br />' + '你还有<i>“' + c + '”</i>次机会！</p>');
+            $(".dial-poptxt").html('<h3>恭喜，棒棒棒哒</h3>' + '<p>答对了<i>“' + a + '”</i>道题目 <br />' + '你还有<i>“' + c + '”</i>次答题机会！</p>');
             $("[data-a-link='a']").removeAttr("href").attr("href",b)
         }
         if (e == 4) {

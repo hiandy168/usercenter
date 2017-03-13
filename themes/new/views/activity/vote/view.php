@@ -456,9 +456,11 @@
                         //抽奖组件 等于2 是大转盘  等于1 是刮刮卡
                         <?php if($info['activity_type']==2){ ?>
                             var url="<?php echo $this->createUrl('/activity/bigwheel/view/id/'.$info['activity_id'])?>"+callback;
-                        <?php }else{ ?>
+                        <?php }else if($info['activity_type']==3){ ?>
+                            var url="<?php echo $this->createUrl('/activity/playegg/view/id/'.$info['activity_id'])?>"+callback;
+                        <?php }else { ?>
                             var url="<?php echo $this->createUrl('/activity/scratchcard/view/id/'.$info['activity_id'])?>"+callback;
-                        <?php }?>
+                            <?php }?>
 
                         $("#btnall").html('<div class="closebtn fs30" id="closeBtn">确定</div><a href="'+url+'"><div  class="closebtn fs30" >前往抽奖</div></a>');
                         showpop('恭喜，您已成功投票，点击"前往抽奖"！',1,imgsrc,vid);

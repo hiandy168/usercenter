@@ -442,3 +442,18 @@ CREATE TABLE `dym_activity_wenda_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='问答活动参与用户表';
 
+
+
+/*单点登录表  修改*/
+
+ALTER TABLE `dym_sso_broker`
+MODIFY COLUMN `agentid`  int(11) NOT NULL DEFAULT 0 COMMENT '接入方 appid' AFTER `id`,
+MODIFY COLUMN `secret`  varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '接入方密钥' AFTER `agentid`,
+MODIFY COLUMN `url`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '回调地址' AFTER `secret`,
+MODIFY COLUMN `name`  varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '接入方名称' AFTER `url`,
+MODIFY COLUMN `description`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '描述' AFTER `type`,
+MODIFY COLUMN `createtime`  int(11) NOT NULL DEFAULT 0 COMMENT '创建时间' AFTER `description`,
+MODIFY COLUMN `updatetime`  int(11) NOT NULL DEFAULT 0 COMMENT '修改时间' AFTER `createtime`;
+MODIFY COLUMN `status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '1：正常;0:违规；' AFTER `updatetime`;
+
+

@@ -136,6 +136,7 @@
                                         <select name="activity_type" id="activity_type" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
                                             <option value="1" <?php if($activity_info['is_lucky']==1){ ?>selected ="selected "<?php } ?>>刮刮卡</option>
                                             <option value="2" <?php if($activity_info['is_lucky']==2){ ?>selected ="selected "<?php } ?>>大转盘</option>
+                                            <option value="3" <?php if($activity_info['is_lucky']==3){ ?>selected ="selected "<?php } ?>>砸金蛋</option>
                                         </select>
                                     </div>
 
@@ -196,6 +197,7 @@
                                             <select name="activity_type" id="activity_type" style="display: block;width: 94%;height: 36px;border: 1px solid #ccc;color: #444;border-radius: 4px;cursor: pointer;outline: none;"  class="display_type">
                                                 <option value="1">刮刮卡</option>
                                                 <option value="2">大转盘</option>
+                                                <option value="3">砸金蛋</option>
                                             </select>
                                         </div>
 
@@ -546,16 +548,24 @@
     <script>
         $("#activity_type").change(function(){
             var activity_type=$(this).val();
+            //大转盘
             if(activity_type==2){
                 <?php $activitylist=Activity_bigwheel::model()->findAll("pid=:pid",array(':pid'=>$pid)) ?>
                 <?php if($activitylist){ foreach($activitylist as $k=>$v){ ?>
                 $("#activitylist").html('<option value="<?php echo $v->id ?>"><?php echo $v->title ?></option>');
                 <?php }}else{?>
                 $("#activitylist").html('<option value="0">该组件下没有活动</option>');
-
                 <?php }?>
-            }else{
+                //砸金蛋
+            }else if(activity_type==3){
+                <?php $activitylist=Activity_playegg::model()->findAll("pid=:pid",array(':pid'=>$pid)) ?>
+                <?php if($activitylist){ foreach($activitylist as $k=>$v){ ?>
+                $("#activitylist").html('<option value="<?php echo $v->id ?>"><?php echo $v->title ?></option>');
+                <?php }}else{?>
+                $("#activitylist").html('<option value="0">该组件下没有活动</option>');
+                <?php }?>
 
+            }else{
                 <?php if($activityscratch){ foreach($activityscratch as $k=>$v){ ?>
                 $("#activitylist").html('<option value="<?php echo $v->id ?>"><?php echo $v->title ?></option>');
                 <?php }}else{?>

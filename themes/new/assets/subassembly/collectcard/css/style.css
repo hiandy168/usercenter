@@ -1,0 +1,43 @@
+﻿* { -webkit-text-size-adjust: none; -moz-text-size-adjust: none; -ms-text-size-adjust: none; -webkit-tap-highlight-color: transparent; padding: 0; margin: 0; text-decoration: none; }
+*:not(input, textarea) { -webkit-touch-callout: inherit; -webkit-user-select: auto; }
+body { width: 100%; font-family: Hiragino Sans GB, Arial, Helvetica, "microsoft yahei", sans-serif; font-size: 14px; color: #000; -webkit-touch-callout: inherit; -webkit-user-select: auto; -webkit-box-align: stretch; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); -webkit-box-orient: vertical; background-color: #f4f7f8; color: #444444; }
+body, html { height: 100%; }
+a { text-decoration: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+a:hover { text-decoration: none; }
+img { vertical-align: middle; }
+button, input, select, textarea { font-size: 100%; margin: 0; padding: 0; outline: none; }
+textarea, input { resize: none; outline: none; -webkit-appearance: none; }
+ul, ol, li { list-style: none; }
+h1, h2, h3, h4, h5, h6, b { font-size: 100%; font-weight: normal; }
+em, i { font-style: normal; }
+::-webkit-scrollbar { width: 0; }
+::-webkit-scrollbar-thumb { width: 0; }
+.loading-div { position: absolute; z-index: 9999; top: 0; right: 0; bottom: 0; left: 0; display: block; text-align: center; background: #fff; }
+.loading-div span { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); }
+.loading-div span img { width: 30px; }
+.loading-div span i { font-size: 14px; display: block; margin-top: 5px; color: #45567d; }
+.div-main { position: relative; box-sizing: border-box; width: 100%; min-width: 320px; max-width: 750px; min-height: 100%; margin: 0 auto; background: -webkit-linear-gradient(90deg, #ffffff, #ffffff); overflow: hidden; }
+.fl { float: left; }
+.fr { float: right; }
+.db { display: block; }
+.tc { text-align: center; }
+.pos-r { position: relative; }
+.pos-a { position: absolute; }
+.clearfix:after, .clearfix:before { display: table; clear: both; content: ''; }
+.clearfix:after { clear: both; }
+.jika-slide { overflow-y: hidden; background: rgba(255, 255, 255, .3); padding-left: 15px; border-bottom: 1px solid #f7d27b; margin-top: 20px; overflow-x: scroll; }
+.jika-slide ul { width: 999px; padding-top: 15px; padding-bottom: 10px; }
+.jika-slide ul li { display: inline-block; width: 128px; height: 128px; overflow: hidden; margin-right: 13px; border-radius: 5px; box-shadow: 1px 1px 1px 1px rgba(211, 179, 102, .5); }
+.jika-slide ul li img { width: 100%; }
+.jika-tips { margin: 15px; margin-top: 30px; font-size: 14px; color: #d3b366; background: rgba(255, 255, 255, .3); padding: 10px; border-radius: 5px; box-sizing: border-box; box-shadow: 1px 1px 1px 1px rgba(211, 179, 102, .5); }
+.jika-tips h3 { font-size: 16px; }
+.jika-tips p { line-height: 24px; margin-top: 5px; }
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+.jika-slide::-webkit-scrollbar { width: 3px; height: 3px; }
+
+/*定义滚动条轨道 内阴影+圆角*/
+.jika-slide::-webkit-scrollbar-track { border-radius: 3px; background-color: rgba(255, 255, 255, .5); }
+
+/*定义滑块 内阴影+圆角*/
+.jika-slide::-webkit-scrollbar-thumb { border-radius: 5px; background-color: #d3b366; }
