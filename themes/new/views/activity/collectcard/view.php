@@ -29,7 +29,10 @@
 
     <div class="jika-slide" id="jslide">
         <ul>
-            <li><img src="<?php echo $this->_theme_url; ?>assets/subassembly/collectcard/images/jika-img1_1.jpg" /></li>
+            <li style="position: relative;">
+                <p style="background-color: #FFC902; position: absolute;top: 0;right: 5px;">x1</p>
+                <img src="<?php echo $this->_theme_url; ?>assets/subassembly/collectcard/images/jika-img1_1.jpg" />
+            </li>
             <li><img src="<?php echo $this->_theme_url; ?>assets/subassembly/collectcard/images/jika-img1.jpg" /></li>
             <li><img src="<?php echo $this->_theme_url; ?>assets/subassembly/collectcard/images/jika-img1_1.jpg" /></li>
             <li><img src="<?php echo $this->_theme_url; ?>assets/subassembly/collectcard/images/jika-img1_1.jpg" /></li>

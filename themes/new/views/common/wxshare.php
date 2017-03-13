@@ -4,7 +4,7 @@
 
     echo '<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>';
 
-    if ($info['share_switch'] == 1) {
+    if (!isset($info['share_switch']) || $info['share_switch'] == 1) {
         if (isset($info['share_url'])) {
             $url = $info['share_url'];
         } else {

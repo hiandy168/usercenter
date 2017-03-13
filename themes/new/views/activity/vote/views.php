@@ -340,15 +340,14 @@ $userinfo = Activity_signup::getuserinfo($openid,$pid);
 </body>
 
 <?php
-if(strpos($user_agent, 'MicroMessenger') === true){
-    if($info['share_url']){
-        $url=$info['share_url'];
-    }else{
-        $url=$this->createUrl('/activity/signup/view', array('id' => $id));
-    }
 
-    echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info,'url'=>$url));
-}?>
+    if ($info['share_url']) {
+        $url = $info['share_url'];
+    } else {
+        $url = $this->createUrl('/activity/vote/signup/', array('id' => $id));
+    }
+    echo $this->renderpartial('/common/wxshare', array('signPackage' => $signPackage, 'info' => $info, 'url' => $url));
+?>
 
 
 

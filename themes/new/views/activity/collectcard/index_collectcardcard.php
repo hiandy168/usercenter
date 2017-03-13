@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="format-detection" content="telephone=no">
-	<title>刮刮乐</title>
+	<title>集卡片</title>
 	<link rel="stylesheet" type="text/css" href="/assets/scratch/default/css/base.css">
         <script src="<?php echo Mod::app()->createUrl('/')?>/assets/js/jquery.js" type="text/javascript"></script>
 	<script type="text/javascript" src="<?php echo Mod::app()->createUrl('/')?>/assets/scratch/default/js/wx.js"></script>        	

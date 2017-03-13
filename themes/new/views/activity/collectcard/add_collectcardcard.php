@@ -68,9 +68,9 @@
                     </li>
                     <li>
                         <?php if($activity_info['id']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/collectcard/prize',array('id'=>$activity_info['id']))?>">奖品/概率</a>
+                        <a href="<?php echo $this->createUrl('/activity/collectcard/prize',array('id'=>$activity_info['id']))?>">卡片/概率</a>
                         <?php }else{ ?>
-                         <a href="javascript:void(0)">奖品/概率</a>
+                         <a href="javascript:void(0)">卡片/概率</a>
                          <?php } ?>
                     </li>
                     <li class="">

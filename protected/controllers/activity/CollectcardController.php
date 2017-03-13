@@ -26,9 +26,77 @@ class CollectcardController extends FrontController
         /*
          * 1、当 投票或者报名成功之后  给一个跳转提示，来到集卡活动页面，然后通过抽奖系统，生成卡片
          * 2、在投票或者签到或者报名 活动处设置是否开启集卡，是，则签到成功的时候 通过抽奖算法 生成卡片，然后到集卡活动页面查看 和合成
-         *
+         *3、点击按钮直接抽卡片  （采用）
          * */
-        $this->render('view');
+
+
+
+
+        $id = trim(Tool::getValidParam('id', 'integer'));
+        //查询活动信息
+        $sql = "SELECT * FROM {{activity_collectcard}} WHERE id=$id";
+        $info = Mod::app()->db->createCommand($sql)->queryRow();
+
+        Browse::add_usernum($info['pid']);  //计算独立访客数量
+        Browse::add_browsenum($info['pid']); //计算浏览量
+        Browse::add_activity_browse($info['pid'],$id,"collectcard");
+        if (!$info || empty($info)) {
+            die('非法请求');
+        }
+
+
+        if ($this->member['id']) {//登录状态
+            $mid = $this->member['id'];
+        }
+
+        $sql = "SELECT * FROM {{project}} WHERE id=" . $info['pid'];
+        $project_info = Mod::app()->db->createCommand($sql)->queryRow();
+
+        $signPackage = $this->wx_jssdk($project_info['wx_appid'], $project_info['wx_appsecret']);
+        //token验证
+//        $checkToken = $this->checkToken($project_info['id'],$token);
+        // if(!$checkToken || empty($checkToken)){die('token is error');}
+
+//        $backUrl = "?id=".$id."&accesstoken=".$token."&openid=".$openid;
+
+        $prize_id = explode(',', rtrim($info['prize_id'], ','));
+        foreach ($prize_id as $key => $val) {
+            //查询奖品信息
+            $sql = "SELECT * FROM {{activity_collectcard_prize}} WHERE id=$val";
+            $prize[$key] = Mod::app()->db->createCommand($sql)->queryRow();
+        }
+        $images= Activity_collectcard_img::model()->find("collectcard_id=:id",array(':id'=>$id));
+        $parame = array(
+            'info' => $info,
+            'prize' => $prize,
+            'images' => $images,
+            'countprize' => count($prize),
+            'param' => array(
+                "appid" => $project_info['appid'],
+                "appsecret" => $project_info['appsecret'],
+//                "token"=>$token,
+                "id" => $id,
+                "openid" => $mid,
+                "backUrl" => $url?$url:0,
+//                "status" => $mid,
+                "mid" => $mid,
+                "pid" => $info['pid'],
+            ),
+            'signPackage' => $signPackage,
+            'time' => time(),
+            'config'=>array(
+                'site_title'=> $info['title'].'-大转盘抽奖',
+                'Keywords'=>$info['title'].',大转盘,抽奖,一等奖',
+                'Description'=>$info['title'].',大转盘,抽奖,一等奖',
+            ),
+
+        );
+
+//        echo "<pre>";
+//        print_r($parame);
+//        exit;
+        $this->render('view', $parame);
+
 
 
     }

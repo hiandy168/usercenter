@@ -65,9 +65,9 @@
                     </li>
                     <li  class="selected" >
                         <?php if($activity_info['id']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/collectcard/prize',array('id'=>$activity_info['id']))?>">奖品/概率</a>
+                        <a href="<?php echo $this->createUrl('/activity/collectcard/prize',array('id'=>$activity_info['id']))?>">卡片/概率</a>
                         <?php }else{ ?>
-                         <a href="javascript:void(0)">奖品/概率</a>
+                         <a href="javascript:void(0)">卡片/概率</a>
                          <?php } ?>
                     </li>
                     <li class="">
@@ -95,7 +95,7 @@
 
 
                     <div class="form-content  dail-formdiv1">
-                        <h3>奖品/概率</h3>
+                        <h3>卡片/概率</h3>
 
                         <div class="tips" style="margin-bottom: 0;">
                             <em>*Tips：</em>
@@ -128,6 +128,7 @@
 
                         <?php
                         if($prize){
+                            $i=1;
                             foreach ($prize as $val){
                                 ?>
                                 <div class="s_num" style=''>
@@ -154,9 +155,22 @@
                                         <input type="text"  value="<?php echo $val['probability']?>" placeholder="" class="form-control" name="p_v[]"/>
                                     </div>
                                 </div>
-                       
+                                <div>
+                                    <form id="form_shareimg" method="POST" enctype="multipart/form-data">
+                                        <img id="<?php echo 'imgages'.$i?>" src="<?php if ($activity_info['img']) {
+                                            echo JkCms::show_img($activity_info['img']);
+                                        } else {
+                                            echo $this->_theme_url."assets/subassembly/collectcard/newassets/images/dial-bg1_weixin.jpg";
+                                        } ?> "  onclick="upload('<?php echo 'input'.$i?>')"/>
+                                        <input class="fileinput" style="display: none" type="file"
+                                               onchange="uploadImages(this,'<?php echo "img".$i?>','<?php echo "imgages".$i?>')"
+                                               name="imgFile" id="<?php echo "input".$i?>" value=""/>
+                                    </form>
+                                    <input type="hidden" name="p_img[]" id="<?php echo "img".$i?>" value="<?php echo $images->biaoyu?>"/>
+                                </div>
                        
                                 <?php
+                                $i++;
                             }
                         }else{ ?>
 
@@ -217,7 +231,11 @@
         </div>
     </div>
 
-
+    <script>
+        function upload(id) {
+            document.getElementById(id).click();
+        }
+    </script>
 
     <!-- 组件 end -->
     <script type="text/javascript">

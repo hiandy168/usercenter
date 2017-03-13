@@ -257,13 +257,13 @@ $count = Activity_pccheckin_user::getcheckinnum($mid, $id);
 <script src="<?php echo $this->_theme_url; ?>assets/vote/js/layout.js?v=dasd" type="text/javascript"
         charset="utf-8"></script>
 <?php
-if (strpos($user_agent, 'MicroMessenger') === true) {
+
     if($pccheckin['share_url']){
         $url=$pccheckin['share_url'];
     }else{
         $url=$this->createUrl('/activity/pccheckin/view', array('id' => $id));
     }
     echo $this->renderpartial('/common/wxshare', array('signPackage' => $signPackage, 'info' => $pccheckin, 'url' =>$url ));
-} ?>
+ ?>
 </body>
 </html>

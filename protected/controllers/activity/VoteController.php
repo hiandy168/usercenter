@@ -1197,7 +1197,7 @@ class VoteController extends FrontController{
      * @abstract 添加参赛者
      * @author Fancy
      */
-    public function actionadminAdd(){
+    public function actionAdminAdd(){
         if(!$this->member  ||  !$this->member['id']) {
             $this->redirect(Mod::app()->request->getHostInfo());
             exit;
@@ -1812,7 +1812,7 @@ class VoteController extends FrontController{
         $criteria->limit = 10;
         $list= $joinModel->findAll($criteria);
 
-
+       
         $parameter=array('mylist'=>$list);
         $this->render('mysignup',$parameter);
     }

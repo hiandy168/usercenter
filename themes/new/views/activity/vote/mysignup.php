@@ -8,7 +8,7 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="Keywords" content="<?php echo $info['title']?>" />
     <meta name="description" content="<?php echo $info['title']?>" />
-    <title><?php echo $info['title']?></title>
+    <title>我的报名</title>
     <link rel="stylesheet" type="text/css" href="<?php echo $this->_theme_url;?>assets/h5/login/css/login1.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $this->_theme_url; ?>assets/vote/css/style.css?vdassdaddss"/>
     <script src="<?php echo $this->_theme_url; ?>assets/vote/js/layout.js" type="text/javascript" charset="utf-8"></script>
@@ -32,8 +32,9 @@
         <div class="vote-myvote-list clearfix">
             <ul>
                 <?php foreach ($mylist as $k=>$v){?>
+                    <a href="<?php echo $this->createUrl('/activity/vote/signup/', array('id' => $v['vote']->id));?>">
                     <li class="clearfix bsd1">
-                        <span class="fl"><img src="<?php echo JkCms::show_img($v->img) ?>" /></span>
+                        <span class="fl"><img src="<?php echo JkCms::show_img($v['vote']->img) ?>" /></span>
 
                         <span class="">
                             <p class="fs24">活动标题：<?php echo $v->vote->title ?></p>
@@ -42,6 +43,7 @@
                             <p class="fs24">报名电话：<b><?php echo $v->phone?></b></p>
                         </span>
                     </li>
+                    </a>
                 <?php } ?>
             </ul>
 
