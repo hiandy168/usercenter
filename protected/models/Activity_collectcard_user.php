@@ -47,16 +47,19 @@ class Activity_collectcard_user extends CActiveRecord {
 
 
     //活动列表带分页
-    public function getUserListPager($id,$is_win,$search,$username){
+    public function getUserListPager($id,$is_win="",$search="",$username=""){
         $as_list = array();
         $list = null;
         $asModel = new Activity_collectcard_user;
         $criteria = new CDbCriteria();
         $criteria->order = 'time DESC';
+        $criteria->group = 'mid';
         if($is_win==2){
+
             $criteria->condition ='is_win=0 and collectcard_id='.$id;
         }elseif($is_win==1){
-            $criteria->condition ='is_win=1 and collectcard_id='.$id;
+            $criteria->condition ='is_win=99 and collectcard_id='.$id;
+
         }else{
             if(!empty($search)&&!empty($username)){
                 $criteria->condition = 't.collectcard_id =:collectcard_id and t.code like :code and member.username like :username';
@@ -65,9 +68,10 @@ class Activity_collectcard_user extends CActiveRecord {
                 $criteria->condition = 't.collectcard_id =:collectcard_id and t.code like :code';
                 $criteria->params = array(':collectcard_id'=>$id,':code'=> '%'.$search.'%');
             }elseif(!empty($username)&&empty($search)){
-                $criteria->condition = 't.collectcard_id =:collectcard_id and member.username like :username';
-                $criteria->params = array(':collectcard_id'=>$id,':username'=>'%'.$username.'%');
+                $criteria->condition = 't.collectcard_id =:collectcard_id and member.phone like :phone';
+                $criteria->params = array(':collectcard_id'=>$id,':phone'=>'%'.$username.'%');
             }else{
+
                 $criteria->condition ='collectcard_id='.$id;
             }
         }

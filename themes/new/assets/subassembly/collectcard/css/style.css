@@ -28,8 +28,15 @@ em, i { font-style: normal; }
 .jika-slide { overflow-y: hidden; background: rgba(255, 255, 255, .3); padding-left: 15px; border-bottom: 1px solid #f7d27b; margin-top: 20px; overflow-x: scroll; }
 .jika-slide ul { width: 999px; padding-top: 15px; padding-bottom: 10px; }
 .jika-slide ul li { display: inline-block; width: 128px; height: 128px;  margin-right: 13px;  position: relative; }
-.jika-slide ul li span{ display: inline-block; width: 128px; height: 128px; overflow: hidden; border-radius: 5px; box-shadow: 1px 1px 1px 1px rgba(211, 179, 102, .5);}
-
+.jika-slide ul li span { display: inline-block; width: 128px; height: 128px; overflow: hidden; border-radius: 5px; box-shadow: 1px 1px 1px 1px rgba(211, 179, 102, .5);}
+.jika-slide ul li p{    text-align: center;
+    margin-top: 5px;
+    padding: 0px 5px;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #b6262e;}
 .jika-slide ul li i{     border-radius: 999px;
     position: absolute;
     background: #f7d27b;

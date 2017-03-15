@@ -456,4 +456,96 @@ MODIFY COLUMN `createtime`  int(11) NOT NULL DEFAULT 0 COMMENT '创建时间' AF
 MODIFY COLUMN `updatetime`  int(11) NOT NULL DEFAULT 0 COMMENT '修改时间' AFTER `createtime`;
 MODIFY COLUMN `status`  tinyint(1) NOT NULL DEFAULT 1 COMMENT '1：正常;0:违规；' AFTER `updatetime`;
 
+/*
+集卡活动组件 表
+
+*/
+
+DROP TABLE IF EXISTS `dym_activity_collectcard`;
+CREATE TABLE `dym_activity_collectcard` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `pid` int(10) NOT NULL DEFAULT '0' COMMENT '项目id',
+  `mid` int(11) NOT NULL DEFAULT '0' COMMENT '用户id  主要是记录最后一次谁操作的用户id',
+  `prize_id` varchar(255) NOT NULL DEFAULT '' COMMENT '奖品id',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '活动标题',
+  `start_time` int(11) NOT NULL DEFAULT '0' COMMENT '开始时间',
+  `end_time` int(11) NOT NULL DEFAULT '0' COMMENT '结束时间',
+  `win_num` int(11) NOT NULL DEFAULT '0' COMMENT '可中奖次数',
+  `day_count` int(11) NOT NULL DEFAULT '0' COMMENT '每天可抽奖次数',
+  `share_num` int(11) NOT NULL DEFAULT '0' COMMENT '有效分享次数',
+  `share_add_num` int(11) NOT NULL DEFAULT '0' COMMENT '分享一次获得刮奖次数',
+  `lose_msg` varchar(255) NOT NULL DEFAULT '很遗憾您没有中奖' COMMENT '没中奖提示',
+  `win_msg` varchar(255) NOT NULL DEFAULT '' COMMENT '中奖提示',
+  `rule` text NOT NULL COMMENT '活动规则',
+  `lingjiang` varchar(255) NOT NULL DEFAULT '' COMMENT '领奖方式',
+  `end_num_msg` varchar(255) NOT NULL DEFAULT '' COMMENT '次数结束提醒',
+  `end_msg` varchar(255) NOT NULL DEFAULT '' COMMENT '结束提醒',
+  `jishu` int(11) NOT NULL DEFAULT '0' COMMENT '概率基数',
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '刮刮卡活动状态(0表示结束，1表示正在进行）',
+  `add_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `share_url` varchar(255) NOT NULL DEFAULT '' COMMENT '分享地址',
+  `share_desc` varchar(255) NOT NULL DEFAULT '' COMMENT '分享描述',
+  `img` varchar(255) NOT NULL DEFAULT '',
+  `tag` varchar(200) NOT NULL DEFAULT '' COMMENT '活动标签',
+  `prize_number` tinyint(1) NOT NULL DEFAULT '1' COMMENT '分享开关，1开 2关',
+  `share_switch` tinyint(1) NOT NULL DEFAULT '1' COMMENT '分享开关，1开 2关',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2033 DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `dym_activity_collectcard_img`;
+CREATE TABLE `dym_activity_collectcard_img` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `collectcard_id` int(11) NOT NULL DEFAULT '0' COMMENT '对应活动id',
+  `share_img` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '分享图片',
+  `biaoyu` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '活动标语图片',
+  `background` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '-转盘背景图片',
+  `bootmbackground` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '底部背景图片',
+  `rotaryfive` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '转盘图片（五）五种种奖项',
+  `pointer` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '转盘指针图片',
+  `recordbutton` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '中奖记录按钮',
+  `rules` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '活动规则按钮',
+  `colse` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '弹窗关闭按钮',
+  `alertyes` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '恭喜弹窗背景图',
+  `alertno` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '遗憾（未能中奖或是其他）弹窗背景图',
+  `winninglist` varchar(120) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '中奖记录弹窗背景图',
+  `createtime` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `updatetime` int(11) NOT NULL DEFAULT '0' COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `dym_activity_collectcard_prize`;
+CREATE TABLE `dym_activity_collectcard_prize` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '奖项名称',
+  `aid` int(11) NOT NULL DEFAULT '0' COMMENT '活动id',
+  `mid` int(11) NOT NULL DEFAULT '0' COMMENT '用户id  主要是记录最后一次谁操作的用户id',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '奖品名称',
+  `count` int(11) NOT NULL DEFAULT '0' COMMENT '奖品数量',
+  `probability` int(11) NOT NULL DEFAULT '0' COMMENT '中奖概率',
+  `remainder` int(11) NOT NULL DEFAULT '0' COMMENT '剩余奖品',
+  `img` varchar(255) NOT NULL DEFAULT '' COMMENT '奖品图片',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态值',
+  `updatetime` int(11) NOT NULL DEFAULT '0',
+  `createtime` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4281 DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `dym_activity_collectcard_user`;
+CREATE TABLE `dym_activity_collectcard_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `collectcard_id` int(11) NOT NULL DEFAULT '0' COMMENT '活动ID',
+  `day_count` int(11) NOT NULL DEFAULT '0' COMMENT '每天可抽奖数量',
+  `mid` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
+  `openid` varchar(55) NOT NULL DEFAULT '' COMMENT '微信用户的openid',
+  `time` int(11) NOT NULL DEFAULT '0' COMMENT '抽奖时间',
+  `is_win` int(11) NOT NULL DEFAULT '0' COMMENT '是否中奖',
+  `prize_id` int(11) NOT NULL DEFAULT '0' COMMENT '如果中奖了显示奖品id，没有中奖则为空',
+  `code` int(11) NOT NULL DEFAULT '0' COMMENT '中奖领取码,没中奖为空',
+  `accept` int(11) NOT NULL DEFAULT '0' COMMENT '中奖者是否领奖',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=45330 DEFAULT CHARSET=utf8 COMMENT='集卡用户表';
 

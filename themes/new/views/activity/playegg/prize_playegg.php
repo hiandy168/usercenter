@@ -60,7 +60,7 @@
                         <?php if($activity_info['id']){ ?>
                         <a href="<?php echo $this->createUrl('/activity/playegg/add',array('id'=>$activity_info['id']))?>">编辑砸金蛋</a>
                         <?php }else if($config['pid']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/bigwheel/add',array('pid'=>$config['pid']))?>">添加大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/bigwheel/add',array('pid'=>$config['pid']))?>">添加砸金蛋</a>
                         <?php } ?>
                     </li>
                     <li class="selected" >
@@ -91,7 +91,7 @@
 
                         <div class="tips" style="margin-bottom: 0;">
                             <em>*Tips：</em>
-                            <p>本模块为大转盘活动基本信息，为了保证活动顺利创建，除活动规则和领奖方式选填外其余的为必填。</p>
+                            <p>本模块为砸金蛋活动基本信息，为了保证活动顺利创建，除活动规则和领奖方式选填外其余的为必填。</p>
                             <p style='color:#ff0000'>停止状态才可以编辑提交成功</p>
                            
                         </div>
@@ -218,7 +218,7 @@
             var len = $(".s_num").length + 1;
             console.log(len);
             if (len > 5) {
-                layer.msg("大转盘奖品最多只能添加5个噢！");
+                layer.msg("砸金蛋奖品最多只能添加5个噢！");
                 return false;
             }
             // var tit = '';

@@ -59,7 +59,7 @@
             <div class="ad-edit-app-navsd ">
                 <ul>
                    <li  >
-                        <a href="<?php echo $this->createUrl('/activity/scratchcard/add',array('id'=>$activity_info['id']))?>">编辑大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/scratchcard/add',array('id'=>$activity_info['id']))?>">编辑砸金蛋</a>
                     </li>
                     <li>
                         <a href="<?php echo $this->createUrl('/activity/scratchcard/prize',array('id'=>$activity_info['id']))?>">奖品/概率</a>

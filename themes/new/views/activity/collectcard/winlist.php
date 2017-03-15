@@ -26,25 +26,28 @@
 <body>
     <form action="<?php echo $this->createUrl('/activity/collectcard/WinList/fid/'.$id)?>" method="post">
     <div style="margin: 10px;">
-        <input type="text" value="<?php echo $search ?>" name='search' placeholder="请输入兑奖码" class="btn" style="margin-right: 10px; border: 1px solid #ccc" />
-        <input type="text" value="<?php echo $username ?>" name='username' placeholder="请输入用户名" class="btn" style="margin-right: 10px; border: 1px solid #ccc" />
+       <!-- <input type="text" value="<?php /*echo $search */?>" name='search' placeholder="请输入兑奖码" class="btn" style="margin-right: 10px; border: 1px solid #ccc" />-->
+        <input type="text" value="<?php echo $username ?>" name='username' placeholder="请输入手机号" class="btn" style="margin-right: 10px; border: 1px solid #ccc" />
         <button type="submit" class="btn btn-primary">搜索</button>
     </div>
     <div style="margin: 10px;">
-        <a class="btn <?php echo $active=='active_all' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/collectcard/WinList/fid/'.$id)?>" role="button">所有用户</a>
-        <a class="btn <?php echo $active=='active_win' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/collectcard/WinList/fid/'.$id.'/datatype/1')?>" role="button">中奖用户</a>
-        <a class="btn <?php echo $active=='active_no' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/collectcard/WinList/fid/'.$id.'/datatype/2')?>" role="button">未中奖用户</a>
-        <a class="btn btn-success" href="<?php echo $this->createUrl('/activity/collectcard/ExportCsv',array('fid'=>$id,'type'=>1))?>" role="button">导出中奖列表</a>
+        <a class="btn <?php echo $active=='active_all' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/collectcard/WinList/fid/'.$id)?>" role="button">参与集卡的用户</a>
+        <a class="btn <?php echo $active=='active_win' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/collectcard/WinList/fid/'.$id.'/datatype/1')?>" role="button">已集齐的用户</a>
+        <a class="btn <?php echo $active=='active_no' ? 'btn-primary' : 'btn-default'?>" href="<?php echo $this->createUrl('/activity/collectcard/WinList/fid/'.$id.'/datatype/2')?>" role="button">未集齐的用户</a>
+        <a class="btn btn-success" href="<?php echo $this->createUrl('/activity/collectcard/ExportCsv',array('fid'=>$id,'type'=>1))?>" role="button">导出集齐用户列表</a>
     </div>
     <table class="table table-striped">
         <thead>
             <th>活动ID</th>
             <th>用户手机</th>
             <th>用户名</th>
-            <th>兑奖码</th>
-            <th>奖品等级</th>
-            <th>中奖时间</th>
-            <th>领奖状态</th>
+            <?php if($is_win==1){?>
+                <th>抽奖时间</th>
+                <th>领奖状态</th>
+            <?php }else{?>
+                <th>活动开始时间</th>
+                <th>活动结束时间</th>
+        <?php }?>
         </thead>
         <?php 
         if($users){
@@ -53,17 +56,22 @@
             <td><?php echo $val['collectcard_id']?></td>
             <td><?php echo $val['phone']?></td>
             <td><?php echo $val['username']?></td>
-            <td><?php echo $val['code'] ? $val['code'] :""?></td>
-            <td><?php echo $val['level'] ? $val['level'] : ""?></td>
+                <?php if($is_win==1){?>
             <td><?php echo date('Y-m-d H:i',$val['time'])?></td>
             <td>
             <?php 
-            if($val['code']){
+            if($val['is_win']==99){
                 echo $val['accept']==1 ? '<font color="green">已领</font>' : '<font color="red" onclick="set_lingjiang('.$val[id].')">未领</font>';
             }else{
                 echo '<font color="Gray">未中奖</font>';
             }
-            ?></td>
+            ?>
+                <?php }else{?>
+                    <td><?php echo date('Y-m-d H:i',$activity_info['start_time'])?></td>
+                    <td><?php echo date('Y-m-d H:i',$activity_info['end_time'])?></td>
+                    <?php }?>
+
+            </td>
         </tr>
         <?php 
             }

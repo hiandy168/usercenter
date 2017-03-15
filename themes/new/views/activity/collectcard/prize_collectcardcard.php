@@ -27,7 +27,9 @@
 .s_num{        border-bottom: 1px solid #c1c1c1;
     padding-bottom: 30px;
     margin-bottom: 10px;
-    width: 93%;}
+    width: 93%;
+    position: relative;
+}
 .s_num .form-control{ width:97%}
 .s_num .t_title{padding: 10px 0px;}
 .s_num .delbtn{display: inline-block;
@@ -38,6 +40,24 @@
     text-align: center;
     position: relative;
     top: -5px;}
+
+         .right_img{
+             position: absolute;
+             right: 8%;
+             top: 30%;
+         }
+         .form-inp{
+             width: 60%;
+         }
+         .pp{
+             border: 2px solid #ccc;
+             -moz-border-radius: 5px;
+             -webkit-border-radius: 5px;
+             /* border: 1px solid #000; */
+             padding: 3px;
+             margin-top: 5px;
+             text-align: center;
+         }
             </style>
 
     <!--act nav-->
@@ -151,17 +171,17 @@
                                     <div class="form-inp">
                                         <input type="text"  value="<?php echo $val['probability']?>" placeholder="" class="form-control" name="p_v[]"/>
                                     </div>
-                                </div>
-                                <div>
-                                    <form id="<?php echo "form".$i?>" method="POST" enctype="multipart/form-data">
+
+                                    <form id="<?php echo "form".$i?>" method="POST" class="right_img" enctype="multipart/form-data">
                                         <img id="<?php echo 'imgages'.$i?>" src="<?php if ($val['img']) {
                                             echo JkCms::show_img($val['img']);
                                         } else {
                                             echo $this->_theme_url."assets/subassembly/collectcard/newassets/images/dial-bg1_weixin.jpg";
-                                        } ?> "  onclick="upload('<?php echo 'input'.$i?>')"  style="width: 100px;height: 100px;"/>
+                                        } ?> "  onclick="upload('<?php echo 'input'.$i?>')"  style="width: 120px;height: 120px;"/>
                                         <input class="fileinput" style="display: none" type="file"
                                                onchange="uploadImg(this,'<?php echo "img".$i?>','<?php echo "imgages".$i?>','<?php echo "form".$i?>')"
                                                name="imgFile" id="<?php echo "input".$i?>" value=""/>
+                                        <p class="pp">点击更换图片</p>
                                     </form>
                                     <input type="hidden" name="p_img[]" id="<?php echo "img".$i?>" value="<?php echo $val['img']?>"/>
                                 </div>
@@ -261,21 +281,23 @@
                 '<input type="text" value="" placeholder="" class="form-control" name="p_num[]"/>' +
 
                 '</div>' +
-                '<div class="t_title">卡片剩余数量(用户每中奖一次数量就会随之减少，请不要随意修改)</div>' +
+                '<div class="t_title">卡片剩余数量(每收集一张数量会随之减少,请不要随意修改)</div>' +
                 '<div class="form-inp">' +
                 '<input type="text" value="" placeholder="" class="form-control" name="p_snum[]"/>' +
 
                 '</div>' +
-                '<div class="t_title">卡片概率<span>(请填入整数，例如5，概率是以下面的概率基数为分母，填入数值为分子，默认概率基数为100000，中奖概率为10万分之5)</span></div>' +
+                '<div class="t_title">卡片概率<span>(请填入整数，例如，概率基数为分母，卡片概率为分子)</span></div>' +
                 '<div class="form-inp">' +
                 '<input type="text" value="" placeholder="" class="form-control" name="p_v[]"/>' +
 
-                '</div></div><div>'+
-                '<form id="form'+len+'" method="POST" enctype="multipart/form-data">'+
-                    '<img id="imgages'+len+'" src=""  onclick="upload(\'input'+len+'\')"  style="width: 100px;height: 100px;"/>'+
+                '</div>'+
+                '<form id="form'+len+'" method="POST" class="right_img" enctype="multipart/form-data">'+
+                    '<img id="imgages'+len+'" src="<?php echo $this->_theme_url?>assets/images/1471257729_add_cross_new_plus_create.png"  onclick="upload(\'input'+len+'\')"  style="width: 100px;height: 100px;"/>'+
                    ' <input class="fileinput" style="display: none" type="file"onchange="uploadImg(this,\'img'+len+'\',\'imgages'+len+'\',\'form'+len+'\')" name="imgFile" id="input'+len+'" value=""/>'+
-               ' </form>'+
+                    '<p class="pp">点击图片上传</p>'+
+                ' </form>'+
                ' <input type="hidden" name="p_img[]" id="img'+len+'" value=""/>'+
+
                 '</div>'
                 ;
 

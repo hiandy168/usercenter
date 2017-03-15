@@ -31,7 +31,7 @@
                         <?php if($activity_info['id']){ ?>
                         <a href="<?php echo $this->createUrl('/activity/playegg/add',array('id'=>$activity_info['id']))?>">编辑砸金蛋</a>
                         <?php }else if($config['pid']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/bigwheel/add',array('pid'=>$config['pid']))?>">添加大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/bigwheel/add',array('pid'=>$config['pid']))?>">添加砸金蛋</a>
                         <?php } ?>
                     </li>
                     <li>

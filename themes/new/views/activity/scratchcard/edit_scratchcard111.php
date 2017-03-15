@@ -23,19 +23,19 @@
                             <div class="item_wrap">
                                 <div class="item">
                                     <img src="<?php echo Mod::app()->baseUrl?>/assets/images/18.png" height="53" width="53">
-                                    <div class="text">大转盘</div>
+                                    <div class="text">刮刮卡</div>
                                 </div>
                                 <div class="item">
                                     <img src="<?php echo Mod::app()->baseUrl?>/assets/images/18.png" height="53" width="53">
-                                    <div class="text">大转盘</div>
+                                    <div class="text">刮刮卡</div>
                                 </div>
                                 <div class="item">
                                     <img src="<?php echo Mod::app()->baseUrl?>/assets/images/18.png" height="53" width="53">
-                                    <div class="text">大转盘</div>
+                                    <div class="text">刮刮卡</div>
                                 </div>
                                 <div class="item">
                                     <img src="<?php echo Mod::app()->baseUrl?>/assets/images/18.png" height="53" width="53">
-                                    <div class="text">大转盘</div>
+                                    <div class="text">刮刮卡</div>
                                 </div>
                             </div>
                         </li>

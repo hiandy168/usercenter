@@ -47,7 +47,13 @@
 
 <div class="div-main">
 
-    <div class=""><img src="<?php echo $this->_theme_url; ?>assets/subassembly/collectcard/images/jika-img1.jpg" width="100%" /></div>
+    <div class="">
+        <?php if($images->biaoyu){ ?>
+        <img src="<?php echo JkCms::show_img($images->biaoyu)?>" width="100%" />
+        <?php }else{?>
+            <img src="<?php echo $this->_theme_url; ?>assets/subassembly/collectcard/images/jika-img1.jpg" width="100%" />
+        <?php }?>
+    </div>
 
     <div class="jika-slide" id="jslide">
         <ul>
@@ -61,6 +67,7 @@
             <span>
                 <img src="<?php echo JkCms::show_img($val['img'])?>" />
                 </span>
+                <p><?php echo $val['name']?></p>
             </li>
             <?php  }}else{ ?>
              <li>
@@ -68,6 +75,7 @@
             <span>
                 <img src="<?php echo $this->_theme_url; ?>assets/subassembly/collectcard/images/jika-img1_2.jpg" />
                 </span>
+                <p>来张卡</p>
             </li>
             <?php }?>
         </ul>
@@ -149,7 +157,6 @@
                             return false
                         }
                         if(a.code>0){
-
                            showpop("", a.prizeName, "", (a.dayCount), 1);
                            $('[data-cardkind='+a.prizeKind+']').removeClass('gray');
                            var mum=parseInt($('[data-cardkind='+a.prizeKind+']').find("i").text())+1;
