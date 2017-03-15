@@ -1523,9 +1523,11 @@ try {
      *  活动PVUV统计图表
      */
     public function actionActivitylist(){
-        if(!$this->member  ||  !$this->member['id'] || !$this->member['pstatus']){
-            $this->redirect(Mod::app()->request->getHostInfo());
-            exit;
+        if (!isset(Mod::app()->session['admin_user'])) {  //后台管理员可看
+            if (!$this->member || !$this->member['id'] || !$this->member['pstatus']) {
+                $this->redirect(Mod::app()->request->getHostInfo());
+                exit;
+            }
         }
         $config['aid'] = trim(Tool::getValidParam('fid', 'integer'));//活动ID 开发写的不一致
         $config['tag'] = trim(Tool::getValidParam('tag', 'string'));//活动ID 开发写的不一致

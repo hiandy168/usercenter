@@ -23,7 +23,9 @@
                     <th style="width: 100px;text-align: center">电话</th>
                     <th style="width: 120px;text-align: center">创建时间</th>
                     <th style="width: 120px;text-align: center">创建人</th>
+                    <?php if($group_id==17){ ?>
                     <th style="width: 50px;text-align: center">操作管理</th>
+                    <?php } ?>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,6 +40,7 @@
                             <td style="text-align: center"><?php echo $item['operatorphone']; ?></td>
                             <td style="text-align: center"><?php echo date('Y-m-d H-m-s',$item['createtime']); ?></td>
                             <td style="text-align: center"><?php echo $item['author']; ?></td>
+                        <?php if($group_id==17){ ?>
                             <td style="text-align: center">
                                 <?php if($item['wxstatus']==2){ ?>
                                     <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">编辑</a>
@@ -46,6 +49,7 @@
                                     <a class='delete' href="<?php echo $this->createUrl('add',array('id'=>$item['id']));?>">钱包首页</a>
                                 <?php } ?>
                             </td>
+                        <?php } ?>
                         </tr>
                     <?php } }?>
                 </tbody>

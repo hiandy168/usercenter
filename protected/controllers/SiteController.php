@@ -6,7 +6,8 @@ class SiteController extends FrontController{
         parent::init();
     }
     
-    public function actionIndex() {    
+    public function actionIndex() {   
+
         $data['config']['active']='shouye';
         $data['config'] = $this->site_config;
         $data['config']['site_title'] = "大楚用户开放平台首页";

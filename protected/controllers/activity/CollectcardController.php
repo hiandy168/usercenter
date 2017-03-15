@@ -53,11 +53,7 @@ class CollectcardController extends FrontController
         $project_info = Mod::app()->db->createCommand($sql)->queryRow();
 
         $signPackage = $this->wx_jssdk($project_info['wx_appid'], $project_info['wx_appsecret']);
-        //token验证
-//        $checkToken = $this->checkToken($project_info['id'],$token);
-        // if(!$checkToken || empty($checkToken)){die('token is error');}
 
-//        $backUrl = "?id=".$id."&accesstoken=".$token."&openid=".$openid;
 
         $prize_id = explode(',', rtrim($info['prize_id'], ','));
         foreach ($prize_id as $key => $val) {
@@ -66,6 +62,20 @@ class CollectcardController extends FrontController
             $prize[$key] = Mod::app()->db->createCommand($sql)->queryRow();
         }
         $images= Activity_collectcard_img::model()->find("collectcard_id=:id",array(':id'=>$id));
+
+
+
+        //卡片拥有和卡片
+        foreach($prize as $k=>$v){
+            $is_win=Activity_collectcard_user::model()->count("prize_id=:prize_id and mid=:mid",array(":prize_id"=>$v['id'],":mid"=>$mid));
+            if($is_win){
+                $prize[$k]['win_num']=$is_win;
+            }else{
+                $prize[$k]['win_num']=0;
+            }
+        }
+
+
         $parame = array(
             'info' => $info,
             'prize' => $prize,
@@ -186,7 +196,7 @@ class CollectcardController extends FrontController
         $config['site_keywords'] = "大楚用户开放平台首页,腾讯大楚网,腾讯新闻网,活动组件,集卡";
         $config['site_description'] ="大楚用户开放平台首页";
         $config['active_1'] = 3;
-        $config['active'] = 10;
+        $config['active'] = 11;
         $config['pid'] = $pid;
         $parame = array(
             'project_list' => $project_list,
@@ -235,6 +245,7 @@ class CollectcardController extends FrontController
                     $p_snum = Tool::getValidParam('p_snum');//剩余奖品数量
                     $p_v = Tool::getValidParam('p_v');
                     $p_id = Tool::getValidParam('p_id');//奖品ID
+                    $p_img = Tool::getValidParam('p_img');//卡片图片
 
                     $prize_id_arr = array();
                     $prize_id = '';
@@ -277,6 +288,7 @@ class CollectcardController extends FrontController
                                     $prize_data['mid'] = $this->member['id'];
                                     $prize_data['name'] = $p_name[$key];
                                     $prize_data['count'] = $p_num[$key];
+                                    $prize_data['img'] = $p_img[$key];
                                     $prize_data['probability'] = $p_v[$key];
                                     $prize_data['remainder'] = $p_snum[$key]<=$p_num[$key]?$p_snum[$key]:0;
                                     $prize_data['updatetime']=time();
@@ -323,6 +335,7 @@ class CollectcardController extends FrontController
                                     $prize_data['mid'] = $this->member['id'];
                                     $prize_data['name'] = $p_name[$key];
                                     $prize_data['count'] = $p_num[$key];
+                                    $prize_data['img'] = $p_img[$key];
                                     $prize_data['probability'] = $p_v[$key];
                                     $prize_data['remainder'] = $p_snum[$key]<=$p_num[$key]?$p_snum[$key]:0;
                                     $prize_data['createtime']=time();
@@ -365,7 +378,7 @@ class CollectcardController extends FrontController
                     //head_app中的 应用首页（1）、基础配置（2）、应用组件（3）三个按钮选中加背景
                     $config['active_1'] = '3';
                     //组件assembly中的选中高亮背景图片 刮刮卡(1)、签到(2)、报名(3)
-                    $config['active'] = 10;
+                    $config['active'] = 11;
                     $config['site_title']='奖品设置-编辑集卡活动-大楚网用户开放平台';
                     $config['Keywords']='大楚网用户开放平台,集卡，抽奖，一等奖';
                     $config['Description']='添加集卡活动_编辑集卡活动'; 
@@ -464,7 +477,7 @@ class CollectcardController extends FrontController
         //head_app中的 应用首页（1）、基础配置（2）、应用组件（3）三个按钮选中加背景
         $config['active_1'] = '3';
         //组件assembly中的选中高亮背景图片 刮刮卡(1)、签到(2)、报名(3)
-        $config['active'] = 10;
+        $config['active'] = 11;
         $config['site_title']='奖品设置-编辑集卡活动-大楚网用户开放平台';
         $config['Keywords']='大楚网用户开放平台,集卡，抽奖，一等奖';
         $config['Description']='添加集卡活动_编辑集卡活动_活动图片上传';
@@ -641,7 +654,7 @@ class CollectcardController extends FrontController
             //head_app中的 应用首页（1）、基础配置（2）、应用组件（3）三个按钮选中加背景
             $config['active_1'] = '3';
             //组件assembly中的选中高亮背景图片 刮刮卡(1)、签到(2)、报名(3)
-            $config['active'] = 10;
+            $config['active'] = 11;
             $config['pid'] = $pid;
             $config['site_title']='添加集卡活动-编辑集卡活动-大楚网用户开放平台';
             $config['Keywords']='大楚网用户开放平台,集卡，抽奖，一等奖';
@@ -876,7 +889,11 @@ class CollectcardController extends FrontController
         $info = Mod::app()->db->createCommand($sql)->queryRow();
         
         if(!$id || !$mid || !$info){
-            echo "非法访问";
+            $res_arr = array(
+                'msg' => "非法访问",
+                'code' => "-1"
+            );
+            echo json_encode($res_arr);
             exit;
         }
 
@@ -893,7 +910,7 @@ class CollectcardController extends FrontController
         if($info['start_time']>time()){
             $res_arr = array(
                 'msg' => "活动未开始",
-                'code' => "-1"
+                'code' => "-2"
             );
             echo json_encode($res_arr);
             exit;
@@ -903,7 +920,7 @@ class CollectcardController extends FrontController
         if(!$info['status']){
             $res_arr = array(
                 'msg' => "活动暂停中",
-                'code' => "-2"
+                'code' => "-1"
             );
             echo json_encode($res_arr);
             exit;
@@ -947,11 +964,11 @@ class CollectcardController extends FrontController
             $prize_info = Mod::app()->db->createCommand($sql)->queryRow();
             if ($prize_info['remainder'] > 0) {
                 $prize_id = $prize_id;
-                //查询中奖的id 该用户是否中过此等奖 防止重复中奖
+               /* //查询中奖的id 该用户是否中过此等奖 防止重复中奖
                 $re=Activity_collectcard_user::model()->find('prize_id=:prize_id AND collectcard_id=:collectcard_id AND mid=:mid',array(':prize_id'=>$prize_id,':collectcard_id'=>$id,':mid'=>$this->member['id']));
                 if($re){
                     $prize_id = 0;
-                }
+                }*/
             } else {
                 $prize_id = 0;
             }
@@ -975,7 +992,7 @@ class CollectcardController extends FrontController
                 "prizeKind" => 0,
                 "prizeName" => "0",
                 'msg' => '今天没有抽奖次数了！',
-                'code' => "0"
+                'code' => "-4"
             );
             echo json_encode($res_arr);
             exit;
@@ -999,36 +1016,15 @@ try {
                 $data_user['prize_id'] = $prize_id;
                 $data_user['code'] = rand(100000, 999999);
 
-                //几等奖把文字换成数字
-                $prizeKind = 0;
-                switch ($prize_info['title']) {
-                    case "一等奖":
-                        $prizeKind = 1;
-                        break;
-                    case "二等奖":
-                        $prizeKind = 2;
-                        break;
-                    case "三等奖":
-                        $prizeKind = 3;
-                        break;
-                    case "四等奖":
-                        $prizeKind = 4;
-                        break;
-                    case "五等奖":
-                        $prizeKind = 5;
-                        break;
-                    case "六等奖":
-                        $prizeKind = 6;
-                        break;
-                }
+
 
                 $res_arr = array(
                     "startTime" => $info['start_time'],
                     "endTime" => $info['end_time'],
                     "dayCount" => $dayCount,
-                    "prizeKind" => $prizeKind,
+                    "prizeKind" => $prize_info['title'],
                     "prizeName" => $prize_info['name'],
-                    'msg' => $prize_info['title'],
+                    'msg' => "",
                     'code' => $data_user['code']
                 );
 
@@ -1050,7 +1046,7 @@ try {
                 "dayCount" => $dayCount,
                 "prizeKind" => 0,
                 "prizeName" => "0",
-                'msg' => "not prize",
+                'msg' => $info['lose_msg'],
                 'code' => "0"
             );
 
@@ -1495,7 +1491,7 @@ try {
             //head_app中的 应用首页（1）、基础配置（2）、应用组件（3）三个按钮选中加背景
             $config['active_1'] = '3';
             //组件assembly中的选中高亮背景图片 刮刮卡(1)、签到(2)、报名(3)
-            $config['active'] = 10;
+            $config['active'] = 11;
             $config['pid'] = $activity_info['pid'];
             $config['site_title']='开发者示例-编辑集卡活动-大楚网用户开放平台';
             $config['Keywords']='大楚网用户开放平台,集卡，抽奖，一等奖';

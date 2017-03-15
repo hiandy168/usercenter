@@ -144,7 +144,7 @@
                                            name="imgFile" id="input_biaoyu" value=""/>
                                 </form>
                     		    		<span>
-                                        <h4>图片样例说明--活动标语图片</h4>
+                                        <h4>图片样例说明--活动banner图片</h4>
                     		    		<p>活动标语图片宽度为750px，高度在300-500px之间</p>
                     		    		</span>
                             </div>

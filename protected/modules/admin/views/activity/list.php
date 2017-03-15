@@ -133,7 +133,7 @@
 <!--                                        <a href="http://<?php /*echo $_SERVER['HTTP_HOST'] */?>/activity/<?php /*echo $type*/?>/view/id/<?php /*echo $item['id']*/?>">预览</a>&nbsp;|&nbsp;-->
 
                                        <?php if($item['status']==1){?>
-                                           <a href="javascript:;" onclick="recommend(<?php echo $item['rid'];?>);">未推荐</a>
+                                           <a href="javascript:;" onclick="recommend(<?php echo $item['rid'];?>,2);">取消推荐</a>
                                         <?php }else{?>
                                            <a href="javascript:;" onclick="recommend(<?php echo $item['id'];?>,1);">推荐</a>
                                         <?php  }?>

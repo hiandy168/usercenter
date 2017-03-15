@@ -271,7 +271,7 @@
                                     <i>开启</i>
                                 </label>
                                 <label for="sss">
-                                    <input type="radio" id="sss" name="share_switch" value="2" <?php echo $activity_info['share_switch']==0?'checked="checked"':""; ?>>
+                                    <input type="radio" id="sss" name="share_switch" value="2" <?php echo $activity_info['share_switch']==2?'checked="checked"':""; ?>>
                                     <i>关闭</i>
                                 </label>
                             </div>
@@ -482,7 +482,7 @@
         var obj=document.getElementsByName('share_switch');
         var share_switch=1;
         for(var i=0; i<obj.length; i++){
-            if(obj[i].checked) share_switch+=obj[i].value;
+            if(obj[i].checked) share_switch=obj[i].value;
         }
 
 

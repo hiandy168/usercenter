@@ -13,10 +13,16 @@ class HtenantController extends HaController{
      */
     public function actionList(){
         $member=Mod::app()->session['admin_user'];
+        $group_id=$member['group_id'];
         $application_class = House_tenant::model();
         $criteria = new CDbCriteria();
-        $criteria->condition = 'authorid=:authorid and status=:status';
-        $criteria->params = array(':authorid'=>$member['id'],':status'=>1);
+        if($group_id==1){
+            $criteria->condition = 'status=:status';
+            $criteria->params = array(':status'=>1);
+        }elseif($group_id==17){
+            $criteria->condition = 'authorid=:authorid and status=:status';
+            $criteria->params = array(':authorid'=>$member['id'],':status'=>1);
+        }
         $count = $application_class->count($criteria);
         $pages = new CPagination($count);
         $pages->pageSize = 10;
@@ -28,9 +34,16 @@ class HtenantController extends HaController{
         }else{
             $result=1;
         }
-        $returnData['tenantlist']= $application_class->findAll($criteria);
+        $results= $application_class->findAll($criteria);
+        foreach($results as $k=>$v) {
+            $sql = "SELECT city FROM {{house_city}}   WHERE status=1 and id=" . $results[$k]['city'];
+            $city = Mod::app()->db->createCommand($sql)->queryRow();
+            $results[$k]['city']=$city['city'];
+        }
+        $returnData['tenantlist']=$results;
         $returnData['pages'] = $pages;
         $returnData['result'] = $result;
+        $returnData['group_id'] = $group_id;
         $this->render('list',$returnData);
     }
     /**

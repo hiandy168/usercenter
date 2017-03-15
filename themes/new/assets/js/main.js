@@ -248,8 +248,7 @@
                      // 上传成功
                      if (data.error==0) {
                          var base64 = rst.base64;
-                       //  var iv = document.getElementById(imgid);
-                         var iv = $("#"+imgid);
+                         var iv = document.getElementById(imgid);
                          iv.src = base64;
                          $("#"+name).attr("value",data.url);
                        /*  var html = '<img class="img" src="'+base64+'" width="79" height="79" /></li>';

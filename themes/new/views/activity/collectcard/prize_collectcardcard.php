@@ -1,5 +1,5 @@
 <?php echo $this->renderpartial('/common/header_new', $config); ?>
-  
+
     <!--组件目录-->
 <?php echo $this->renderpartial('/common/assembly', array('active' => $config['active'], 'pid' => $activity_info['pid'])) ?>
     <script src="<?php echo $this->_theme_url; ?>assets/js/jqueryform.js" type="text/javascript"
@@ -55,12 +55,12 @@
         <!--tit end-->
         <div class="ad-edit-app">
             <div class="ad-edit-app-navsd ">
-                <ul> 
+                <ul>
                    <li >
                         <?php if($activity_info['id']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('id'=>$activity_info['id']))?>">编辑大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('id'=>$activity_info['id']))?>">编辑集卡</a>
                         <?php }else if($config['pid']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('pid'=>$config['pid']))?>">添加大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('pid'=>$config['pid']))?>">添加集卡</a>
                         <?php } ?>
                     </li>
                     <li  class="selected" >
@@ -99,11 +99,11 @@
 
                         <div class="tips" style="margin-bottom: 0;">
                             <em>*Tips：</em>
-                            <p>本模块为大转盘活动基本信息，为了保证活动顺利创建，除活动规则和领奖方式选填外其余的为必填。</p>
+                            <p>本模块为集卡活动基本信息，为了保证活动顺利创建，除活动规则和领奖方式选填外其余的为必填。</p>
                             <p style='color:#ff0000'>停止状态才可以编辑提交成功</p>
                             <p>
-                            奖品设置是大转盘核心必填模块，我们支持三到五种奖品，其中活动创建最少添加三个活动奖品最多五个，超过或者少于均会创建失败。添加的奖品默认的第一个就是一等奖奖品，以此类推到五等奖奖品，添加的奖项里面的项目都是必填。<br/>
-                            奖品概率和数量请在活动开始前预算规划好设置好请不要随意修改，若不知道如何填写，请联系开发人员。
+                            卡片设置是集卡核心必填模块，我们支持三到五种卡片，其中活动创建最少添加三个活动卡片最多五个，超过或者少于均会创建失败。添加的卡片默认的第一个就是一等奖卡片，以此类推到五等奖卡片，添加的卡片里面的项目都是必填。<br/>
+                            卡片概率和数量请在活动开始前预算规划好设置好请不要随意修改，若不知道如何填写，请联系开发人员。
                             </p>
                         </div>
                         <?php
@@ -113,10 +113,10 @@
                             <?php
                         }
                         ?>
-                       
 
 
-                     
+
+
 
                     </div>
 
@@ -124,7 +124,7 @@
 
 
                     <div class="dail-formdiv1 dail-formdiv2">
-  
+
 
                         <?php
                         if($prize){
@@ -133,63 +133,60 @@
                                 ?>
                                 <div class="s_num" style=''>
                                     <input type="hidden" value="<?php echo $val['id']?>" name="p_id[]">
-                                    <div class="t_title">自定义名称  <span class="adbtn linear delbtn">删除该项</span></div>
-                                    <div class="form-inp">
-                                        <input type="text"  value="<?php echo $val['title']?>" placeholder="" class="form-control" name="p_title[]" />
-                                    </div>
-                                    <div class="t_title">奖品名称</div>
+                                        <input type="hidden"  value="<?php echo $val['title']?>" placeholder="" class="form-control" name="p_title[]" />
+                                    <div class="t_title">卡片名称 <span class="adbtn linear delbtn">删除该项</span></div>
                                     <div class="form-inp">
                                         <input type="text"  value="<?php echo $val['name']?>" placeholder="" class="form-control"  name="p_name[]" />
-                                     
+
                                     </div>
-                                    <div class="t_title">奖品数量</div>
+                                    <div class="t_title">卡片数量</div>
                                     <div class="form-inp">
                                         <input type="text"  value="<?php echo $val['count']?>" placeholder="" class="form-control" name="p_num[]"/>
                                     </div>
-                                    <div class="t_title">奖品剩余数量</div>
+                                    <div class="t_title">卡片剩余数量</div>
                                     <div class="form-inp">
                                         <input type="text"  value="<?php echo $val['remainder']?>" placeholder="" class="form-control" name="p_snum[]"/>
                                     </div>
-                                    <div class="t_title">奖品概率<span>(填入整数)</span></div>
+                                    <div class="t_title">卡片概率<span>(填入整数)</span></div>
                                     <div class="form-inp">
                                         <input type="text"  value="<?php echo $val['probability']?>" placeholder="" class="form-control" name="p_v[]"/>
                                     </div>
                                 </div>
                                 <div>
-                                    <form id="form_shareimg" method="POST" enctype="multipart/form-data">
-                                        <img id="<?php echo 'imgages'.$i?>" src="<?php if ($activity_info['img']) {
-                                            echo JkCms::show_img($activity_info['img']);
+                                    <form id="<?php echo "form".$i?>" method="POST" enctype="multipart/form-data">
+                                        <img id="<?php echo 'imgages'.$i?>" src="<?php if ($val['img']) {
+                                            echo JkCms::show_img($val['img']);
                                         } else {
                                             echo $this->_theme_url."assets/subassembly/collectcard/newassets/images/dial-bg1_weixin.jpg";
-                                        } ?> "  onclick="upload('<?php echo 'input'.$i?>')"/>
+                                        } ?> "  onclick="upload('<?php echo 'input'.$i?>')"  style="width: 100px;height: 100px;"/>
                                         <input class="fileinput" style="display: none" type="file"
-                                               onchange="uploadImages(this,'<?php echo "img".$i?>','<?php echo "imgages".$i?>')"
+                                               onchange="uploadImg(this,'<?php echo "img".$i?>','<?php echo "imgages".$i?>','<?php echo "form".$i?>')"
                                                name="imgFile" id="<?php echo "input".$i?>" value=""/>
                                     </form>
-                                    <input type="hidden" name="p_img[]" id="<?php echo "img".$i?>" value="<?php echo $images->biaoyu?>"/>
+                                    <input type="hidden" name="p_img[]" id="<?php echo "img".$i?>" value="<?php echo $val['img']?>"/>
                                 </div>
-                       
+
                                 <?php
                                 $i++;
                             }
                         }else{ ?>
 
-                    
+
                         <?php }?>
-                        
+
                             <div class="input upload_pic clearfix" style="margin-bottom: 20px;">
                             <div class="adbtn linear"
                                  style=" width: 23%;line-height: 36px;text-align: center;margin-top: 20px;"
-                                 id="continue_ad_20160422">添加奖项
+                                 id="continue_ad_20160422">添加卡片
                             </div>
                            <!--  <div class="adbtn linear"
                                  style=" width: 23%;line-height: 36px;text-align: center;margin-top: 20px;"
-                                 id="continue_del_20160422">删除一个奖项
+                                 id="continue_del_20160422">删除一个卡片
                             </div> -->
                         </div>
-                        
-                        
-                        <div class="t_title">概率基数<span style="color: #999;font-size: 12px;margin-left: 10px;">(奖品概率5,概率基数100000,则中奖概率十万分之五)</span>
+
+
+                        <div class="t_title">概率基数<span style="color: #999;font-size: 12px;margin-left: 10px;">(卡片概率5,概率基数100000,则中奖概率十万分之五)</span>
                         </div>
                         <div class="form-inp">
                                   <span>
@@ -220,12 +217,12 @@
                         保存返回活动列表
                     </button>
 
-                    
-                    
+
+
                 </div>
 
 
-                 
+
 
             </div>
         </div>
@@ -239,56 +236,48 @@
 
     <!-- 组件 end -->
     <script type="text/javascript">
-      
+
       $("html").on("click",".delbtn",function(){
         $(this).parent().parent().remove();
       })
 
-      
+
         $("#continue_ad_20160422").on('click', function () {
             var len = $(".s_num").length + 1;
             console.log(len);
-            if (len > 5) {
-                layer.msg("大转盘奖品最多只能添加5个噢！");
+            if (len > 12) {
+                layer.msg("卡片最多只能添加12张噢！");
                 return false;
             }
-            // var tit = '';
-            // if (len == 1) {
-            //     tit = '一等奖';
-            // } else if (len == 2) {
-            //     tit = '二等奖';
-            // } else if (len == 3) {
-            //     tit = '三等奖';
-            // } else if (len == 4) {
-            //     tit = '四等奖';
-            // } else if (len == 5) {
-            //     tit = '五等奖';
-            // } 
-            var temp_html = '<div class="s_num"><input type="hidden" value="" name="p_id[]"><div class="t_title">自定义名称 <span class="adbtn linear delbtn">删除该项</span></div>' +
-                '<div class="form-inp">' +
-                '<input type="text"   value="" placeholder=""   class="form-control" name="p_title[]" />' +
 
-                '</div>' +
-                '<div class="t_title">奖品名称</div>' +
+            var temp_html = '<div class="s_num"><input type="hidden" value="" name="p_id[]">' +
+                '<div class="t_title">卡片名称<span class="adbtn linear delbtn">删除该项</span></div>' +
                 '<div class="form-inp">' +
                 '<input type="text" value="" placeholder="" class="form-control"  name="p_name[]" />' +
-
+                '<input type="hidden"   value="a' + len + '" placeholder=""   class="form-control" name="p_title[]" />' +
                 '</div>' +
-                '<div class="t_title">奖品数量</div>' +
+                '<div class="t_title">卡片数量</div>' +
                 '<div class="form-inp">' +
                 '<input type="text" value="" placeholder="" class="form-control" name="p_num[]"/>' +
 
                 '</div>' +
-                '<div class="t_title">奖品剩余数量(用户每中奖一次数量就会随之减少，请不要随意修改)</div>' +
+                '<div class="t_title">卡片剩余数量(用户每中奖一次数量就会随之减少，请不要随意修改)</div>' +
                 '<div class="form-inp">' +
                 '<input type="text" value="" placeholder="" class="form-control" name="p_snum[]"/>' +
 
                 '</div>' +
-                '<div class="t_title">奖品概率<span>(请填入整数，例如5，概率是以下面的概率基数为分母，填入数值为分子，默认概率基数为100000，中奖概率为10万分之5)</span></div>' +
+                '<div class="t_title">卡片概率<span>(请填入整数，例如5，概率是以下面的概率基数为分母，填入数值为分子，默认概率基数为100000，中奖概率为10万分之5)</span></div>' +
                 '<div class="form-inp">' +
                 '<input type="text" value="" placeholder="" class="form-control" name="p_v[]"/>' +
 
-                '</div></div>';
+                '</div></div><div>'+
+                '<form id="form'+len+'" method="POST" enctype="multipart/form-data">'+
+                    '<img id="imgages'+len+'" src=""  onclick="upload(\'input'+len+'\')"  style="width: 100px;height: 100px;"/>'+
+                   ' <input class="fileinput" style="display: none" type="file"onchange="uploadImg(this,\'img'+len+'\',\'imgages'+len+'\',\'form'+len+'\')" name="imgFile" id="input'+len+'" value=""/>'+
+               ' </form>'+
+               ' <input type="hidden" name="p_img[]" id="img'+len+'" value=""/>'+
+                '</div>'
+                ;
 
             var parent = $(this).parents(".upload_pic");
             $(temp_html).insertBefore(parent);
@@ -301,7 +290,7 @@
                 if(len==index){
                     $(this).remove();
                 }else{
-                    
+
                     console.log(index)
                 }
             })
@@ -332,10 +321,10 @@
                         }
             }, function(){
 
-            });  
+            });
        }
-       
-       
+
+
         var url = "<?php echo $this->createUrl('/activity/collectcard/prize'); ?>";
 
 
@@ -356,7 +345,7 @@
           }
 
           if ($(".s_num").length < 3) {
-              layer.msg("请至少添加3个奖品噢！");
+              layer.msg("请至少添加3张卡片噢！");
               $('.save_button').removeAttr('disabled');
               $('.save_button').text("保存并下一步");
               return false;
@@ -374,7 +363,7 @@
           });
 
 
-          var obj_p_title = $("input[name='p_title[]']");//奖项
+          var obj_p_title = $("input[name='p_title[]']");//卡片
           var p_title = [];
           obj_p_title.each(function (index, item) {
               if (!$(this).val()) {
@@ -406,13 +395,13 @@
           });
 
 
-          /*奖品剩余数量*/
+          /*卡片剩余数量*/
           var obj_p_snum = $("input[name='p_snum[]']");
           var num = $("input[name='p_snum[]']");
           var p_snum = [];
           obj_p_snum.each(function (index, item) {
-              var snumber = $(num[index]).val();//剩余奖品数据
-              var number = $(this).val();//奖品数据量
+              var snumber = $(num[index]).val();//剩余卡片数据
+              var number = $(this).val();//卡片数据量
               if (!number || number <= snumber && snumber < 0) {
                   checkes = true;
               }
@@ -433,15 +422,28 @@
 
           });
 
+
+          //卡片图片
+          var obj_p_img = $("input[name='p_img[]']");
+          var p_img = [];
+          obj_p_img.each(function (index, item) {
+              if (!$(this).val()) {
+                  checkes = true;
+              }
+              p_img[index] = $(this).val();
+
+          });
+
+
           if (checkes) {
-              layer.msg("请添加奖项信息");
+              layer.msg("请添加卡片信息");
               $('.save_button').removeAttr('disabled');
               $('.save_button').text("保存并下一步");
               return false;
           }
 
           if (p_v_all > jishu) {
-              layer.msg("请注意,概率基数应大于或等于奖品概率总和");
+              layer.msg("请注意,概率基数应大于或等于卡片概率总和");
               $('.save_button').removeAttr('disabled');
               $('.save_button').text("保存并下一步");
               return false;
@@ -485,6 +487,7 @@
               p_snum: p_snum,
               p_v: p_v,
               p_id: p_id,
+              p_img: p_img,
               jishu: jishu
           };
           $.ajax({
