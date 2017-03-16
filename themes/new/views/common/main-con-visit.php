@@ -1,3 +1,6 @@
+<link rel="stylesheet" type"text/css" href="<?php echo $this->_theme_url; ?>assets/datetime-components/dateRange.css" />
+<script type="text/javascript" src="<?php echo $this->_theme_url; ?>assets/datetime-components/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->_theme_url; ?>assets/datetime-components/dateRange.js"></script>
 
 <div class="ad-data-con w1000 clearfix bxbg mgt30">
 
@@ -55,20 +58,27 @@
 
             <div class="fl date-select">
                 <form action="" method="post" name="reg_testdate">
-                    <div class="ad-data-search">
-
-                        <select name="z-year" onchange="YYYYDD(this.value)">
-                            <option value="">请选择 年</option>
-                            <option value="2017" <?php if($config['year']==2017){echo "selected=selected";}?>>2017</option>
-                            <option value="2016" <?php if($config['year']==2016){echo "selected=selected";}?>>2016</option>
-                        </select>
-                        <select name="z-month" onchange="MMDD(this.value)">
-                            <option value="">选择 月</option>
-                        </select>
-                        <select name="DD">
-                            <option value="">选择 日</option>
-                        </select>
-                        <input class="schbtn linear adbtn" type="submit" name="" id="" value="查询" />
+                    <div class="ad-data-search" style=" margin-top: 5px;">
+                        <button type="submit" class="btn btn-primary" style="    background: #0091d5;border: none;     margin-left: 10px; color: #fff;border-radius: 4px;height: 30px;font-size: 14px; cursor: pointer;outline: none;display: inline-block;padding: 0px 10px;">按时间对比</button>
+                        <div class="ta_date" id="div_date1">
+                            <em class="date_title" id="date1"></em>
+                            <a class="opt_sel" id="input_trigger1" href="#">
+                                <i class="i_orderd"></i>
+                            </a>
+                        </div>
+                        <div id="datePicker1"></div>
+                        <input type="hidden" id="startdate" name="startdate" value="">
+                        <input type="hidden" id="enddate" name="enddate" value="">
+<!--                        <select name="z-year" onchange="YYYYDD(this.value)">-->
+<!--                            <option value="">请选择 年</option>-->
+<!--                        </select>-->
+<!--                        <select name="z-month" onchange="MMDD(this.value)">-->
+<!--                            <option value="">选择 月</option>-->
+<!--                        </select>-->
+<!--                        <select name="DD">-->
+<!--                            <option value="">选择 日</option>-->
+<!--                        </select>-->
+<!--                        <input class="schbtn linear adbtn" type="submit" name="" id="" value="查询" />-->
                 </form>
 
 
@@ -298,7 +308,30 @@
 
 </script>
 
+<script type="text/javascript">
 
+    //var STATS_START_TIME = '1329148800';
+    var dateRange1 = new pickerDateRange('date1', {
+        isTodayValid : true,
+        startDate : '<?php echo isset($visit['start_time'])?$visit['start_time']:date("Y-m-d",strtotime("-6 day"));?>',
+        endDate : '<?php echo isset($visit['end_time'])?$visit['end_time']:date('Y-m-d',time())?>',
+        needCompare : false,
+        defaultText : ' 至 ',
+        autoSubmit : true,
+        inputTrigger : 'input_trigger1',
+        theme : 'ta',
+        success : function(obj) {
+            var startdate = Date.parse(new Date(obj.startDate));
+            startdate = startdate / 1000;
+            var enddate = Date.parse(new Date(obj.endDate));
+            enddate = enddate / 1000;
+            $("#startdate").attr("value",startdate);
+            $("#enddate").attr("value",enddate);
+
+        }
+    });
+
+</script>
 
 <script>
     //new YMDselect('year1','month1');

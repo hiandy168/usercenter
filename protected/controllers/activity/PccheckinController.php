@@ -29,8 +29,7 @@ class PccheckinController extends FrontController{
             exit;
         }
 
-        Browse::add_usernum($pid);  //计算独立访客数量
-        Browse::add_browsenum($pid); //计算浏览量
+
 
         //判断该用户是否需要登录
         $pwd = trim(Tool::getValidParam('pwd','integer'));
@@ -44,6 +43,8 @@ class PccheckinController extends FrontController{
         $info=Mod::app()->db->createCommand($sql)->queryRow();
         if(!$info || empty($info)){die('非法请求');}
 
+       
+        Browse::add_activity_browse($info['pid'],$id,"pccheckin");
 
         if($this->member['id']){//登录状态
             $mid = $this->member['id'];
@@ -131,13 +132,13 @@ class PccheckinController extends FrontController{
                 if(!$activity_info['pid']){die('数据非法');}
                 //防止ID遍历
                 $projectinfo =  JkCms::getprojectByid($activity_info['pid']);
-                if($this->member['id'] !=   $projectinfo['mid'] ){
+                if($this->memberverify($projectinfo['mid']) ){
                     die('非法访问');
                 }
             }else if($pid){//添加 //添加必带项目ID
                 if(!$pid) die('非法访问');
                 $projectinfo =  JkCms::getprojectByid($pid);
-                if($this->member['id'] !=   $projectinfo['mid'] ){
+                if($this->memberverify($projectinfo['mid']) ){
                     die('非法访问');
                 }
             }else{
@@ -191,7 +192,7 @@ class PccheckinController extends FrontController{
             $pid = trim(Tool::getValidParam('pid', 'integer'));
 
             $projectinfo =  JkCms::getprojectByid($pid);
-            if($this->member['id'] !=   $projectinfo['mid']  || !$this->member['pstatus']){
+            if($this->memberverify($projectinfo['mid'])  || !$this->member['pstatus']){
                 die('非法访问');
             }
 
@@ -202,7 +203,7 @@ class PccheckinController extends FrontController{
                 if(!$activity_info['pid']){die('数据非法');}
                 //防止ID遍历
                 $projectinfo =  JkCms::getprojectByid($activity_info['pid']);
-                if($this->member['id'] !=   $projectinfo['mid'] ){
+                if($this->memberverify($projectinfo['mid']) ){
                     $this->redirect(Mod::app()->request->getHostInfo());
                     exit;
                 }
@@ -265,7 +266,7 @@ class PccheckinController extends FrontController{
         }
         //获取当前应用
         $project_model = Project::model()->findByPk($pid);
-         if($this->member['id'] != $project_model['mid']){
+         if($this->memberverify($project_model['mid'])){
             $this->redirect(Mod::app()->request->getHostInfo());
             exit;
          }
@@ -320,7 +321,7 @@ class PccheckinController extends FrontController{
             exit;
         }
         $projectinfo =  JkCms::getprojectByid($respcck->pid);
-        if($this->member['id'] !=   $projectinfo['mid'] ){
+        if($this->memberverify($projectinfo['mid']) ){
             $mess = array('errorcode'=>1,'status'=>'fail');
             echo json_encode($mess);
             exit;
@@ -364,13 +365,13 @@ class PccheckinController extends FrontController{
             if(!$activity_info['pid']){die('数据非法');}
             //防止ID遍历
             $projectinfo =  JkCms::getprojectByid($activity_info['pid']);
-            if($this->member['id'] !=   $projectinfo['mid'] ){
+            if($this->memberverify($projectinfo['mid']) ){
                 die('非法访问');
             }
         }else if($pid){//添加 //添加必带项目ID
             if(!$pid) die('非法访问');
             $projectinfo =  JkCms::getprojectByid($pid);
-            if($this->member['id'] !=   $projectinfo['mid'] ){
+            if($this->memberverify($projectinfo['mid']) ){
                 die('非法访问');
             }
         }else{
@@ -524,13 +525,13 @@ class PccheckinController extends FrontController{
             if(!$activity_info['pid']){die('数据非法');}
             //防止ID遍历
             $projectinfo =  JkCms::getprojectByid($activity_info['pid']);
-            if($this->member['id'] !=   $projectinfo['mid'] ){
+            if($this->memberverify($projectinfo['mid']) ){
                 die('非法访问');
             }
         }else if($pid){//添加 //添加必带项目ID
             if(!$pid) die('非法访问');
             $projectinfo =  JkCms::getprojectByid($pid);
-            if($this->member['id'] !=   $projectinfo['mid'] ){
+            if($this->memberverify($projectinfo['mid']) ){
                 die('非法访问');
             }
         }else{
@@ -581,13 +582,13 @@ class PccheckinController extends FrontController{
             if(!$activity_info['pid']){die('数据非法');}
             //防止ID遍历
             $projectinfo =  JkCms::getprojectByid($activity_info['pid']);
-            if($this->member['id'] !=   $projectinfo['mid'] ){
+            if($this->memberverify($projectinfo['mid']) ){
                 die('非法访问');
             }
         }else if($pid){//添加 //添加必带项目ID
             if(!$pid) die('非法访问');
             $projectinfo =  JkCms::getprojectByid($pid);
-            if($this->member['id'] !=   $projectinfo['mid'] ){
+            if($this->memberverify($projectinfo['mid']) ){
                 die('非法访问');
             }
         }else{
@@ -687,6 +688,71 @@ class PccheckinController extends FrontController{
         );
 
         $this->render('pcview', $parame);
+    }
+
+
+    /*
+    *  活动PVUV统计图表
+    */
+    public function actionActivitylist(){
+        if (!isset(Mod::app()->session['admin_user'])) {  //后台管理员可看
+            if (!$this->member || !$this->member['id'] || !$this->member['pstatus']) {
+                $this->redirect(Mod::app()->request->getHostInfo());
+                exit;
+            }
+        }
+        $config['aid'] = trim(Tool::getValidParam('fid', 'integer'));//活动ID 开发写的不一致
+        $config['tag'] = trim(Tool::getValidParam('tag', 'string'));//活动ID 开发写的不一致
+        $config['model'] = "pccheckin";
+        if (Mod::app()->request->isPostRequest) {
+            $startdate = Tool::getValidParam('startdate', 'integer');
+            $enddate = Tool::getValidParam('enddate', 'integer');
+            $day = intval(($enddate - $startdate) / 86400) + 1;
+        }
+        switch ($config['tag']) {
+            case "pvuv";
+                if (empty($startdate) && empty($enddate)) {
+                    $day = 7; //查询当前开始前7天的数据
+                    $now = date('Y-m-d', time());
+                } else {
+                    $now = date('Y-m-d', $enddate);
+                }
+                for ($i = 0; $i < $day; $i++) {
+                    $day_date = date('Ymd', strtotime($now . "-" . $i . " day"));
+                    $last = date('Y-m-d', strtotime($now . "-" . $i . " day"));
+                    $day_arr[$i]['day_date'] = $day_date;
+                }
+                foreach ($day_arr as $k => $v) {
+                    $pv = Mod::app()->db->createCommand()->select('count_num')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=1 and model = "' . $config['model'] . '" and createtime=' . $v['day_date'])->queryRow();
+                    $uv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=2 and model = "' . $config['model'] . '" and createtime=' . $v['day_date'])->queryRow();
+                    $pvuv[$v['day_date']]['pv'] = $pv['count_num'];
+                    $pvuv[$v['day_date']]['uv'] = $uv['count(0)'];
+
+                }
+                $config ['pvuv'] = $pvuv;
+                $config ['time']['start_time'] = $last;
+                $config ['time']['end_time'] = $now;
+                break;
+            case "user":
+                if (empty($startdate) && empty($enddate)) {
+                    $now = time(); //查询当前开始前7天的数据
+                    $last= date('Y-m-d', strtotime(date('Y-m-d', $now) . "- 6 day"));
+                } else {
+                    $now = strtotime(date('Y-m-d', $enddate) . "+ 1 day")-1;
+                    $last = date('Y-m-d',$startdate);
+                }
+                $table_user = "dym_activity_pccheckin_user";
+                $data['signup'] = Mod::app()->db->createCommand()->select('count(0)')->from('dym_member_activity')->where('aid=' . $config['aid'] . ' and model = "' . $config['model'] . '" and (createtime between '.strtotime($last).' and '.$now.')')->queryRow();
+                $data['join'] = Mod::app()->db->createCommand()->select('count(0)')->from($table_user)->where('pccheckin_id=' . $config['aid'] . '  and (add_time between '.strtotime($last).' and '.$now.')')->queryRow();
+                $config['userdata']['signup'] = $data['signup']['count(0)'];
+                $config['userdata']['join'] = $data['join']['count(0)'];
+                $config ['time']['start_time'] = $last;
+                $config ['time']['end_time'] = date('Y-m-d',$now);
+                break;
+        }
+
+
+        $this->render('activitylist',$config);
     }
 
 }

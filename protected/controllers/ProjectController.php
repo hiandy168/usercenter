@@ -75,14 +75,36 @@ class ProjectController extends FrontController {
         foreach ($result as  $k=>$v){
             $temp_arr[]=$v->attributes;
             foreach ($temp_arr as $k1=>$v1){
+                //求今日
+                $sql_today_pv = "select sum(count_num) as pv_today from dym_activity_browse where pid=".$v1['id']." and type=1 and TO_DAYS( NOW( ) ) = TO_DAYS( FROM_UNIXTIME(UNIX_TIMESTAMP(createtime)))";
+                $sql_today_uv = "select count(0) as uv_today from dym_activity_browse where pid=".$v1['id']." and type=2 and TO_DAYS( NOW( ) ) = TO_DAYS( FROM_UNIXTIME(UNIX_TIMESTAMP(createtime)))";
+                $sql_today_adduser = "select count(0) as adduser_today from dym_member_activity where pid=".$v1['id']." and TO_DAYS( NOW( ) ) = TO_DAYS( FROM_UNIXTIME(createtime))";
+                $res_today_pv = Mod::app()->db->createCommand($sql_today_pv)->queryRow();
+                $res_today_uv = Mod::app()->db->createCommand($sql_today_uv)->queryRow();
+                $res_today_adduser = Mod::app()->db->createCommand($sql_today_adduser)->queryRow();
+                $v1['pv_today']=$res_today_pv['pv_today'];
+                $v1['uv_today']=$res_today_uv['uv_today'];
+                $v1['adduser_today']=$res_today_adduser['adduser_today'];
                 //求昨日
-                $sql = "select count(0) z_counts from  dym_member_project where pid=".$v1['id']." and  date_sub(curdate(),interval 1 day) = from_unixtime(createtime,'%Y-%m-%d')";
-                $res = Mod::app()->db->createCommand($sql)->queryRow();
+                $sql_yesterday_pv = "select sum(count_num) as pv_yesterday from  dym_activity_browse where pid=".$v1['id']." and type=1 and TO_DAYS( NOW( ) ) - TO_DAYS( FROM_UNIXTIME(UNIX_TIMESTAMP(createtime))) = 1 ";
+                $sql_yesterday_uv = "select count(0) uv_yesterday from  dym_activity_browse where pid=".$v1['id']." and type=2 and TO_DAYS( NOW( ) ) - TO_DAYS( FROM_UNIXTIME(UNIX_TIMESTAMP(createtime))) = 1 ";
+                $sql_yesterday_adduser = "select count(0)  adduser_yesterday from dym_member_activity where pid=".$v1['id']." and TO_DAYS( NOW( ) ) - TO_DAYS( FROM_UNIXTIME(createtime)) = 1";
+                $res_yesterday_pv = Mod::app()->db->createCommand($sql_yesterday_pv)->queryRow();
+                $resl_yesterday_uv = Mod::app()->db->createCommand($sql_yesterday_uv)->queryRow();
+                $res_yesterday_adduser = Mod::app()->db->createCommand($sql_yesterday_adduser)->queryRow();
+                $v1['pv_yesterday']=$res_yesterday_pv['pv_yesterday'];
+                $v1['uv_yesterday']=$resl_yesterday_uv['uv_yesterday'];
+                $v1['adduser_yesterday']=$res_yesterday_adduser['adduser_yesterday'];
                 //求本周
-                $sql = "select count(0) w_counts from  dym_member_project where pid=".$v1['id']." and   YEARWEEK(from_unixtime(createtime)) = YEARWEEK(now())";
-                $res2 = Mod::app()->db->createCommand($sql)->queryRow();
-                $v1['z_counts']=$res['z_counts'];
-                $v1['w_counts']=$res2['w_counts'];
+                $sql_week_pv = "select sum(count_num) as pv_week from  dym_activity_browse where pid=".$v1['id']." and type=1 and   YEARWEEK(FROM_UNIXTIME(UNIX_TIMESTAMP(createtime)),1) = YEARWEEK(now())";
+                $sql_week_uv = "select count(0) uv_week from  dym_activity_browse where pid=".$v1['id']." and type=2 and   YEARWEEK(FROM_UNIXTIME(UNIX_TIMESTAMP(createtime)),1) = YEARWEEK(now())";
+                $sql_week_adduser = "select count(0) adduser_week from dym_member_activity where pid=".$v1['id']." and  YEARWEEK(FROM_UNIXTIME(createtime),1) = YEARWEEK(now())";
+                $res_week_pv = Mod::app()->db->createCommand($sql_week_pv)->queryRow();
+                $res_week_uv = Mod::app()->db->createCommand($sql_week_uv)->queryRow();
+                $res_week_adduser = Mod::app()->db->createCommand($sql_week_adduser)->queryRow();
+                $v1['pv_week']=$res_week_pv['pv_week'];
+                $v1['uv_week']=$res_week_uv['uv_week'];
+                $v1['adduser_week']=$res_week_adduser['adduser_week'];
                 $temp_arr[$k1]=$v1;
             }
         }
@@ -217,9 +239,20 @@ class ProjectController extends FrontController {
         if($this->memberverify($project_model->mid)){
              $this->redirect('/project/prolist');
         }
-        //
+        //查看权限
+        $criteria = new CDbCriteria();
+        $criteria->compare('t.status',1);
+        $membergroup = $this->selectmembergroup();
+        if($membergroup) {
+            $tmp = $this->getpermission();
+            if($tmp){
+                $criteria->compare('t.mid', $tmp);
+            }
+        }else{
+            $criteria->compare('t.mid', $this->member['id']);
+        }
         //获取应用列表
-        $project_list = Project::model()->findAll("mid=:mid",array(":mid"=>$this->member['id']));
+        $project_list = Project::model()->findAll($criteria);
 
         switch($tab){
             //操作数据库查询用户数据
@@ -411,83 +444,44 @@ class ProjectController extends FrontController {
                 break;
             //操作数据库查询访问数据
             default:
-                //默认的最开始的时间是2016-01
-                if($_POST){
-                    $now_year=Tool::getValidParam('z-year','integer');
-                    $now_month=Tool::getValidParam('z-month','integer');
-                }else {
-                    $now_year = date('Y', time());
-                    $now_month = date('m', time());
-                    if(1<= $now_month && $now_month <=6){
-                        $now_month=6;
-                    }else{
-                        $now_month=12;
-                    }
+                $startdate = Tool::getValidParam('startdate', 'integer');
+                $enddate = Tool::getValidParam('enddate', 'integer');
+                $day = intval(($enddate - $startdate) / 86400) + 1;
+                if (empty($startdate) && empty($enddate)) {
+                    $day = 7; //查询当前开始前7天的数据
+                    $now = date('Y-m-d', time());
+                } else {
+                    $now = date('Y-m-d', $enddate);
                 }
-                $config['year']=$now_year;
-                $config['month']=$now_month;
-//                echo $now_month;
-//                echo $now_year;exit;
-                $num = $now_year-2016;
-                $count_month = $num*12+$now_month;
-//                 echo $count_month;exit;
-                if($count_month==12){
-                    $i=6;
-                }else{
-                    $i=1;
+                for ($i = 0; $i < $day; $i++) {
+                    $day_date = date('Ymd', strtotime($now . "-" . $i . " day"));
+                    $last = date('Y-m-d', strtotime($now . "-" . $i . " day"));
+                    $day_arr[$i]['day_date'] = $day_date;
                 }
-                for($i;$i<=$count_month;$i++){
-                    $year = floor($i/12);
-                    $month= $i%12;
-                    if($month==0){
-                        $month = 12;
-                        $year  = $year-1;
-                    }
-                    $year = 2016+$year.'-'.$month;
-                    $year = strtotime($year);
-                    $year = date('Y-m',$year);
-                    $first_day = date('Ym', strtotime($year));
-                    $last_day  = date('Y-m-d', strtotime(date('Y-m-01', strtotime($year)) . ' +1 month -1 day'));
-                    $days = date('d', strtotime(date('Y-m-01', strtotime($year)) . ' +1 month -1 day'));
-                    $year_arr[$year]['days']=$days;
-                    $year_arr[$year]['first_day']=$first_day;
-                    $year_arr[$year]['last_day'] =$last_day;
+                foreach ($day_arr as $k => $v) {
+                    $pv = Mod::app()->db->createCommand()->select('sum(count_num) as count_num')->from('dym_activity_browse')->where('pid= '. $pid .' and type=1  and createtime=' . $v['day_date'])->queryRow();
+                    $uv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('pid=' . $pid . ' and type=2  and createtime=' . $v['day_date'])->queryRow();
+                    $visit['count_visit'][$v['day_date']]['count_pv'] = isset($pv['count_num'])?$pv['count_num']:0;
+                    $visit['count_visit'][$v['day_date']]['count_uv'] = $uv['count(0)'];
+                    $visit['count_all_pv']+=$pv['count_num'];
+                    $visit['count_all_uv']+=$uv['count(0)'];
+//                    $temp[$key]=$arr;
+
                 }
-                $arr_con=json_decode(file_get_contents("userbrowse.txt"),true);
-
-
-                $visit=array();
-
-                //查询每个月的用户数据
-                foreach($year_arr as $key=>$val){
-                    $sql="select count_num as count_pv from dym_browse_num where pid=$pid and datetime=".$val['first_day'];
-                    $arr = Mod::app()->db->createCommand($sql)->queryRow();
-                    $temp_uv=array();
-                    if(count($arr_con)) {
-                        foreach ($arr_con as $ks => $vs) {
-                            if (strtotime($key) <= $vs['c_time'] && $vs['c_time'] <= strtotime($val['last_day']) && $vs['pid'] == $pid) {
-                                $temp_uv[] = $vs;
-                            }
-                        }
-                    }
-                    if(!$arr['count_pv']) $arr['count_pv']=0;
-
-                    $arr['count_uv']=count($temp_uv);
-                    $visit['count_all_pv']+=$arr['count_pv'];
-                    $visit['count_all_uv']+=$arr['count_uv'];
-                    $temp[$key]=$arr;
-                }
-
                 $visit['count_all']=$visit['count_all_uv']+$visit['count_all_pv'];
-                    if($visit['count_all']!=0) {
-                        $visit['pv_num'] = sprintf("%.2f", $visit['count_all_pv'] / $visit['count_all']);
-                        $visit['uv_num'] = sprintf("%.2f", $visit['count_all_uv'] / $visit['count_all']);
-                    }else{
-                        $visit['pv_num']=0;
-                        $visit['pv_num']=0;
-                    }
-                $visit['count_visit']=$temp;
- 
+
+                if($visit['count_all']!=0) {
+                    $visit['pv_num'] = sprintf("%.2f", $visit['count_all_pv'] / $visit['count_all']);
+                    $visit['uv_num'] = sprintf("%.2f", $visit['count_all_uv'] / $visit['count_all']);
+                }else{
+                    $visit['pv_num']=0;
+                    $visit['pv_num']=0;
+                }
+//                $visit['count_visit']=$temp;
+//                $config ['pvuv'] = $pvuv;
+                $visit ['start_time']= $now;
+                $visit ['end_time'] = $last;
+
                 break;
         }
 

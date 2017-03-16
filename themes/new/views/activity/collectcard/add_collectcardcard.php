@@ -61,9 +61,9 @@
                 <ul>
                     <li  class="selected" >
                         <?php if($activity_info['id']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('id'=>$activity_info['id']))?>">编辑大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('id'=>$activity_info['id']))?>">编辑集卡</a>
                         <?php }else if($config['pid']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('pid'=>$config['pid']))?>">添加大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('pid'=>$config['pid']))?>">添加集卡</a>
                         <?php } ?>
                     </li>
                     <li>
@@ -101,7 +101,7 @@
 
                         <div class="tips" style="margin-bottom: 0;">
                             <em>*Tips：</em>
-                            <p>本模块为大转盘活动基本信息，为了保证活动顺利创建，除活动规则和领奖方式选填外其余的为必填。</p>
+                            <p>本模块为集卡活动基本信息，为了保证活动顺利创建，除活动规则和领奖方式选填外其余的为必填。</p>
                         </div>
                         <input type="hidden" value="<?php echo $config['pid'] ?>" name="pid">
                         <?php
@@ -196,7 +196,7 @@
 	                          <span>
 
 	                             <input type="text"
-                                        value="<?php echo isset($activity_info['win_msg']) ? $activity_info['win_msg'] : '恭喜您，中奖率'; ?>"
+                                        value="<?php echo isset($activity_info['win_msg']) ? $activity_info['win_msg'] : '恭喜您，抽中一张'; ?>"
                                         name='win_msg' placeholder="中奖提示" class="form-control" maxlength="10"/>
                         </div>
 
@@ -205,7 +205,7 @@
                         <div class="form-inp">
 	                          <span>
 	                             <input type="text"
-                                        value="<?php echo isset($activity_info['lose_msg']) ? $activity_info['lose_msg'] : '太遗憾了，没中奖'; ?>"
+                                        value="<?php echo isset($activity_info['lose_msg']) ? $activity_info['lose_msg'] : '太遗憾了，没抽中'; ?>"
                                         name='lose_msg' placeholder="没中奖提示" class="form-control" maxlength="10"/>
 
                                 </span>
@@ -217,7 +217,7 @@
                         <div class="form-inp">
 	                          <span>
                             <input type="text"
-                                   value="<?php echo isset($activity_info['share_desc']) ? $activity_info['share_desc'] : '大转盘，开心转转'; ?>"
+                                   value="<?php echo isset($activity_info['share_desc']) ? $activity_info['share_desc'] : '集卡，迎福'; ?>"
                                    name='share_desc' placeholder="分享描述" class="form-control" maxlength="10"/>
                         </span>
                         </div>

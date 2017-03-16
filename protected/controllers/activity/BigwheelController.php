@@ -42,9 +42,7 @@ class BigwheelController extends FrontController
         //查询活动信息
         $sql = "SELECT * FROM {{activity_bigwheel}} WHERE id=$id";
         $info = Mod::app()->db->createCommand($sql)->queryRow();
-
-        Browse::add_usernum($info['pid']);  //计算独立访客数量
-        Browse::add_browsenum($info['pid']); //计算浏览量
+        
         Browse::add_activity_browse($info['pid'],$id,"bigwheel");
         if (!$info || empty($info)) {
             die('非法请求');

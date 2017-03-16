@@ -549,3 +549,5 @@ CREATE TABLE `dym_activity_collectcard_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=45330 DEFAULT CHARSET=utf8 COMMENT='集卡用户表';
 
+
+

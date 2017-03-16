@@ -1,4 +1,21 @@
 
+<style type="text/css">
+    /*pagelist*/
+    .ad-page-list { }
+    .ad-page-list .pagelist { width: 100%; text-align: center; }
+    .ad-page-list .pagelist li { display: inline-block; margin: 3px; }
+    .ad-page-list .pagelist li a { padding: 7px 12px; border: 1px solid #c5c5c5; border-radius: 3px; background: #fff; color: #a5a5a5; }
+    .ad-page-list .pagelist li span { color: #a5a5a5; }
+    .ad-page-list .pagelist li.thisclass { padding: 7px 12px; color: #fff; border-radius: 3px; background: #008bcc; }
+    .ad-nodata { text-align: center; position: relative; }
+    .ad-nodata p { position: absolute; width: 100%; left: 0; top: 40px; font-size: 20px; }
+    .ad-nodata a { width: 150px; display: block; line-height: 36px; margin: 30px auto; }
+    .pages, .ad-page-list { width: 100%; text-align: center; margin-top: 30px; margin-bottom: 40px; }
+    .pages li, .ad-page-list li { display: inline-block; margin: 3px; }
+    .pages li a, .ad-page-list li a { padding: 7px 12px; border: 1px solid #c5c5c5; border-radius: 3px; background: #fff; color: #a5a5a5; }
+    .pages li.selected a, .ad-page-list li.selected a { padding: 7px 12px; color: #fff; border-radius: 3px; background: #008bcc; }
+    .ad-page-list .yiiPager { margin-bottom: 10px; }
+</style>
         <div class='bgf clearfix'>
           
             <div class="center_top clearfix">
@@ -26,7 +43,7 @@
 
                         <option value="4" <?php if ($id == 4) {
                             echo "selected";
-                        } ?>>投票
+                        } ?>>投票&报名
                         </option>
                         <option value="5" <?php if ($id == 5) {
                             echo "selected";
@@ -92,8 +109,8 @@
                         <thead>
                             <tr>
                                 <th style='width:50px;text-align:center'>id</th>
-                                <th>标题</th>
-                                <th>类型</th>
+                                <th style='width:500px;'>标题</th>
+                                <th >类型</th>
                                 <th>项目</th>
                                 <th>活动图片</th>
                                 <th>开始时间</th>
@@ -107,15 +124,25 @@
                         <tbody>	
                             <?php 
                             foreach ($datalist as $k => $item) { ?>
+                                <?php
+                                $reco = Mod::app()->db->createCommand()->select('*')->from('dym_activity_recommend')->where('aid=' . $item->id . ' AND type=' . $id)->queryRow();
+                                if ($reco) {
+                                    $status = $reco['status'];
+                                    $rid = $reco['id'];
+                                } else {
+                                    $status = 0;
+                                }
+                                $pro = Project::model()->findByPk($item->pid)
+                                ?>
                                 <tr id="list_<?php echo $item['id'] ?>">
 
                                 <?php $image=isset($item['img'])?$item['img']:$item['share_img'];?>
                                     <td style='width:50px;text-align:center'><?php echo $item['id'] ?></td>
-                                    <td><?php echo $item['title'] ?></td>
+                                    <td width="30px"><?php echo $item['title'] ?></td>
                                     <td>
                                         <?php echo $type_id[0] ;$type=$type_id[1]?>
                                     </td>
-                                    <td><?php echo $item['project'] ?></td>
+                                    <td><?php echo $pro->name ?></td>
                                     <td><img width="80px" height="80px" src="<?php echo JkCms::show_img($image) ?>" alt="活动图片"/></td>
                                     <td><?php
                                         if(!empty($item['start_time'])){
@@ -132,8 +159,8 @@
                                     <td>
 <!--                                        <a href="http://<?php /*echo $_SERVER['HTTP_HOST'] */?>/activity/<?php /*echo $type*/?>/view/id/<?php /*echo $item['id']*/?>">预览</a>&nbsp;|&nbsp;-->
 
-                                       <?php if($item['status']==1){?>
-                                           <a href="javascript:;" onclick="recommend(<?php echo $item['rid'];?>,2);">取消推荐</a>
+                                       <?php if($status==1){?>
+                                           <a href="javascript:;" onclick="recommend(<?php echo $rid;?>,2);">取消推荐</a>
                                         <?php }else{?>
                                            <a href="javascript:;" onclick="recommend(<?php echo $item['id'];?>,1);">推荐</a>
                                         <?php  }?>
@@ -160,6 +187,24 @@
                         ); */
                         ?></div>
                 </form>
+            </div>
+
+
+            <div class="ad-page-list mgt30 mgb30">
+                <ul class="pagelist">
+                    <?php
+                    $this->widget('CoLinkPager', array('pages' => $pagebar,
+                            'cssFile' => false,
+                            'header'=>'',
+                            'firstPageLabel' => '首页', //定义首页按钮的显示文字
+                            'lastPageLabel' => '尾页', //定义末页按钮的显示文字
+                            'nextPageLabel' => '下一页', //定义下一页按钮的显示文字
+                            'prevPageLabel' => '前一页',
+                        )
+                    );
+                    ?>
+
+                </ul>
             </div>
 
 

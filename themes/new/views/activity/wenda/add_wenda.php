@@ -629,7 +629,7 @@
 //            $(temp_html).insertBefore(parent);
         });
 
-        function sub_form(type="",num=""){
+        function sub_form(type,num){
             var len = $(".lee").length + 1;
             var timu = new Object();
                 timu.question = $("input[name='question']").val(), //题目文案

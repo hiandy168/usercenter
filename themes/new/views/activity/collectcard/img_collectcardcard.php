@@ -58,9 +58,9 @@
                 <ul> 
                    <li >
                         <?php if($activity_info['id']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('id'=>$activity_info['id']))?>">编辑大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('id'=>$activity_info['id']))?>">编辑集卡</a>
                         <?php }else if($config['pid']){ ?>
-                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('pid'=>$config['pid']))?>">添加大转盘</a>
+                        <a href="<?php echo $this->createUrl('/activity/collectcard/add',array('pid'=>$config['pid']))?>">添加集卡</a>
                         <?php } ?>
                     </li>
                     <li  class="" >
@@ -106,14 +106,14 @@
                         <li class="clearfix">
 
                             <div class="dail-upimgl fl" onclick="upload('input_shareimg')">
-                                <input type="hidden" name="share_img" id="share_img" value="<?php echo $activity_info['share_img']?>"/>
+                                <input type="hidden" name="share_img" id="share_img" value="<?php echo $images->share_img?>"/>
                             </div>
                             <div class="dail-upimgr clearfix">
                                 <form id="form_shareimg" method="POST" enctype="multipart/form-data">
-                                    <img id="img_shareimg" src="<?php if ($activity_info['share_img']) {
-                                        echo JkCms::show_img($activity_info['share_img']);
+                                    <img id="img_shareimg" src="<?php if ($images->share_img) {
+                                        echo JkCms::show_img($images->share_img);
                                     } else {
-                                        echo $this->_theme_url."assets/subassembly/collectcard/newassets/images/dial-bg1_weixin.jpg";
+                                        echo $this->_theme_url."assets/subassembly/collectcard/images/jika-img1_2.jpg";
                                     } ?> "/>
                                     <input class="fileinput" style="display: none" type="file"
                                            onchange="uploadImages(this,'share_img','img_shareimg')"
@@ -137,7 +137,8 @@
                                     <img id="img_biaoyu" src="<?php if ($images->biaoyu) {
                                         echo JkCms::show_img($images->biaoyu);
                                     } else {
-                                        echo $this->_theme_url.'assets/subassembly/collectcard/newassets/images/dial-bg1.jpg';
+                                        echo  $this->_theme_url."assets/subassembly/collectcard/images/jika-img1.jpg" ;
+;
                                     } ?> "/>
                                     <input class="fileinput" style="display: none" type="file"
                                            onchange="uploadImg(this,'biaoyu','img_biaoyu','form_biaoyu')"

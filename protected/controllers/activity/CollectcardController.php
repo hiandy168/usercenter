@@ -35,8 +35,7 @@ class CollectcardController extends FrontController
         $sql = "SELECT * FROM {{activity_collectcard}} WHERE id=$id";
         $info = Mod::app()->db->createCommand($sql)->queryRow();
 
-        Browse::add_usernum($info['pid']);  //计算独立访客数量
-        Browse::add_browsenum($info['pid']); //计算浏览量
+  
         Browse::add_activity_browse($info['pid'], $id, "collectcard");
         if (!$info || empty($info)) {
             die('非法请求');
@@ -62,7 +61,8 @@ class CollectcardController extends FrontController
 
         //banner 或者  其他图片
         $images = Activity_collectcard_img::model()->find("collectcard_id=:id", array(':id' => $id));
-
+        //分享图片
+        $info['share_img']=$images->share_img;
 
         //卡片拥有和卡片
         foreach ($prize as $k => $v) {
@@ -460,7 +460,7 @@ class CollectcardController extends FrontController
                     $str = "新增";
                 }
             } else {
-                echo json_encode(array('state' => 0, 'msg' => '没有数据提交，请联系管理员！'));
+                echo json_encode(array('state' => 0, 'msg' => '没有数据提交！'));
                 exit;
             }
             if ($imgre) {

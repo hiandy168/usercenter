@@ -231,3 +231,8 @@
 
 
 </script>
+
+
+<!--微信分享-->
+<?php  echo $this->renderpartial('/common/wxshare',array('signPackage'=>$signPackage,'info'=>$info)); ?>
+<!--微信分享-->

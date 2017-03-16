@@ -56,8 +56,8 @@ class Activity_pccheckin_user extends CActiveRecord {
         $criteria = new CDbCriteria();
         $criteria->order = 't.add_time DESC';
         if(!empty($username)){
-            $criteria->condition ='t.pid='.$pid;
-            $criteria->condition = 't.pid =:pid and member.username like :username';
+//            $criteria->condition ='t.pid='.$pid;
+            $criteria->condition = 't.pid =:pid and (member.username like :username or member.name like :username)';
             $criteria->params = array(':pid'=>$pid,':username'=> '%'.$username.'%');
         }else{
             $criteria->condition ='t.pid='.$pid;

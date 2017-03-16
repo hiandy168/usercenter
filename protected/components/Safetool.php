@@ -2,13 +2,30 @@
 
 class Safetool {
 
+  
     public static function SafeFilter($value) {
-        $value = Safetool::remove_xss($value);
-        //$value = mysql_escape_string($value);
-       // $value = mysql_real_escape_string($value);
+         if(is_array($value)){
+                        foreach($value as  $k=>&$v){
+                            if(is_array($v)){
+                                 $v =  self::SafeFilter($v);
+                            }else{
+                                  $v = self::Filter($v);
+                            }
+                        } unset($k,$v);
+         }else{
+            $value = self::Filter($value);
+         }
         return $value;
     }
-
+    
+    public static function Filter($value) {
+        $value = strval($value);
+        $value = Safetool::remove_xss($value);
+        //$value = mysql_escape_string($value);
+        // $value = mysql_real_escape_string($value);
+        return $value;
+    }
+    
     /**
      * 去掉字符串中的HTML的图片
      */

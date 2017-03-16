@@ -55,7 +55,7 @@ $end_time=$info['end_time'];
 	</div>
 
 	<div class="dial-confirmbtn">
-		<a href="/activity/playegg/view/id/<?php echo $info['id']?>">确定</a>
+	<a href="javascript:void(0)" onclick="window.location.href='/activity/playegg/view/id/<?php echo $info['id']?>'+new Date()">确定</a>
 	</div>
 </div>
 

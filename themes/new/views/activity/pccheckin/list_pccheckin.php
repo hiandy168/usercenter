@@ -69,6 +69,7 @@
                                     <li class="l2" onclick="getWinList(<?php echo $val->id?>,'<?php echo $val->title?>')"><i></i>用户数据</li>
                                     <li <?php if($result['status'] == 1){echo 'class="l3_1" ';}else{echo 'class="l3" '; }?>  href="javascript:void(0)" onclick="getStatus('<?php echo $result['message']?>',<?php echo $val->id?>)"><?php if($result['status'] == 0 ){ echo '<i></i>活动已结束';} if( $result['status']==-1){echo '<i></i>活动未开始';}if($result['status'] == 1){echo '<i></i>活动进行中';}?></li>
                                     <li class="l4" onclick="delActivity(<?php echo $val->id?>)"><i></i>删除活动</li>
+                                    <li class="l1" onclick="getActivityList(<?php echo $val->id?>)"><i></i>数据统计</li>
                                 </ul>
                             </div>
                         </li>
@@ -176,6 +177,32 @@
           });                           
         });return;      
     
+    }
+
+    //ajax 请求获取中奖名单
+    function getActivityList(param){
+        layer.confirm('查看以下哪种统计图', {
+            btn: ['PVUV统计图','用户参与注册统计'] //按钮
+        }, function(){
+            layer.closeAll('dialog');
+            layer.open({
+                type: 2,
+                title:'PVUV数据统计图',
+                area: ['700px', '500px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: ["<?php echo $this->createUrl('/activity/pccheckin/Activitylist')?>/fid/"+param+"/tag/pvuv"]
+            });
+        }, function(){
+            layer.open({
+                type: 2,
+                title:'用户参与注册数据统计图',
+                area: ['700px', '500px'],
+                skin: 'layui-layer-rim', //加上边框
+                content: ["<?php echo $this->createUrl('/activity/pccheckin/Activitylist')?>/fid/"+param+"/tag/user"]
+            });
+        });
+        //var index = layer.load(2,{shade: [0.3, '#393D49']});
+
     }
  </script>
 <?php echo $this->renderpartial('/common/footer', $config); ?>

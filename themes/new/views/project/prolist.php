@@ -134,6 +134,7 @@
                                     <div class="ad-app-listdiv-datanav">
                                         <ul>
                                             <li class="selected">昨日数据</li>
+                                            <li>今日数据</li>
                                             <li>本周数据</li>
                                         </ul>
                                     </div>
@@ -142,15 +143,15 @@
                                             <ul>
                                                 <li>
                                                     <p>新增用户数</p>
-                                                    <em><?php echo isset($v['z_counts'])?$v['z_counts']:0;?></em>
+                                                    <em><?php echo isset($v['adduser_yesterday'])?$v['adduser_yesterday']:0;?></em>
                                                 </li>
                                                 <li class="midd">
                                                     <p>独立访客数（UV）</p>
-                                                    <em>0</em>
+                                                    <em><?php echo isset($v['uv_yesterday'])?$v['uv_yesterday']:0;?></em>
                                                 </li>
                                                 <li>
                                                     <p>浏览量（PV）</p>
-                                                    <em>0</em>
+                                                    <em><?php echo isset($v['pv_yesterday'])?$v['pv_yesterday']:0;?></em>
                                                 </li>
                                             </ul>
                                         </div>
@@ -158,15 +159,31 @@
                                             <ul>
                                                 <li>
                                                     <p>新增用户数</p>
-                                                    <em><?php echo isset($v['w_counts'])?$v['w_counts']:0;?></em>
+                                                    <em><?php echo isset($v['adduser_today'])?$v['adduser_today']:0;?></em>
                                                 </li>
                                                 <li class="midd">
                                                     <p>独立访客数（UV）</p>
-                                                    <em>0</em>
+                                                    <em><?php echo isset($v['uv_today'])?$v['uv_today']:0;?></em>
                                                 </li>
                                                 <li>
                                                     <p>浏览量（PV）</p>
-                                                    <em>0</em>
+                                                    <em><?php echo isset($v['pv_today'])?$v['pv_today']:0;?></em>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="datadiv1" style="display: none;">
+                                            <ul>
+                                                <li>
+                                                    <p>新增用户数</p>
+                                                    <em><?php echo isset($v['adduser_week'])?$v['adduser_week']:0;?></em>
+                                                </li>
+                                                <li class="midd">
+                                                    <p>独立访客数（UV）</p>
+                                                    <em><?php echo isset($v['uv_week'])?$v['uv_week']:0;?></em>
+                                                </li>
+                                                <li>
+                                                    <p>浏览量（PV）</p>
+                                                    <em><?php echo isset($v['pv_week'])?$v['pv_week']:0;?></em>
                                                 </li>
                                             </ul>
                                         </div>

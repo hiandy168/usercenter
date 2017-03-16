@@ -57,8 +57,7 @@ class ScratchcardController extends FrontController {
         //     }
         // }
 
-        Browse::add_usernum($info['pid']);  //计算独立访客数量
-        Browse::add_browsenum($info['pid']); //计算浏览量
+       
         Browse::add_activity_browse($info['pid'],$id,"scratchcard");
 
 

@@ -37,49 +37,63 @@ class ActivityController extends AController
         if ($title) {
             $where .= ' and title like "%' . $title . '%"';
         }
+
+        $criteria = new CDbCriteria();
+
+
         switch ($id) {
             case 1:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_pccheckin')->where($where)->order("id desc")->queryAll();
+                $asModel = new Activity_pccheckin;
                 break;
 //            case 3:
-//                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_signup')->where($where)->queryAll();
 //                break;
             case 4:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_vote')->where($where)->order("id desc")->queryAll();
+                $asModel = new Activity_vote;
                 break;
             case 5:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_bigwheel')->where($where)->order("id desc")->queryAll();
+                $asModel = new Activity_bigwheel;
                 break;
             case 6:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_poster')->where($where)->order("id desc")->queryAll();
+                $asModel = new Activity_poster;
                 break;
             case 7:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_playegg')->where($where)->order("id desc")->queryAll();
+                $asModel = new Activity_playegg;
                 break;
             case 8:
-                $res = Mod::app()->db->createCommand()->select('*')->from('dym_activity_wenda')->where($where)->order("id desc")->queryAll();
+                $asModel = new Activity_wenda;
                 break;
             default:
-                $res = Mod::app()->db->createCommand()->select('id,pid,prize_id,title,start_time,end_time,win_num,day_count,share_num,share_add_num,win_msg,rule,lingjiang,end_num_msg,end_msg,jishu,share_img as img,banner_img,bg_img,scratch_img,myprize_img,status,add_time')->from('dym_activity_scratch')->where($where)->order("id desc")->queryAll();
+                $asModel = new Activity_scratch;
+                 $criteria->select= 'id,pid,prize_id,title,start_time,end_time,win_num,day_count,share_num,share_add_num,win_msg,rule,lingjiang,end_num_msg,end_msg,jishu,share_img as img,banner_img,bg_img,scratch_img,myprize_img,status,add_time';
                 break;
         }
 
-        foreach ($res as $k => $v) {
-            $reco = Mod::app()->db->createCommand()->select('*')->from('dym_activity_recommend')->where('aid=' . $v['id'] . ' AND type=' . $id)->queryRow();
-            if ($reco) {
-                $res[$k]['status'] = $reco['status'];
-                $res[$k]['rid'] = $reco['id'];
-            } else {
-                $res[$k]['status'] = 0;
-            }
-            $pro = Project::model()->findByPk($v['pid']);
-            if ($pro) {
-                $res[$k]['project'] = $pro->name;
-            }
-        }
+        //分页
+
+        $criteria->order = 'id DESC';
+        $criteria->condition =$where;
+        $count = $asModel->count($criteria);
+        $pages = new CPagination($count);
+        $pages->pageSize = 10;
+        $criteria->limit = $pages->pageSize;
+        $criteria->offset = $pages->currentPage * $pages->pageSize;
+        $as_list['count'] = $count;
+        $as_list['pagebar'] = $pages;
+        $as_list['criteria'] = $asModel->findAll($criteria);
+
         //项目列表
         $project = Project::model()->findAll("status>0");
-        $this->render('list', array('datalist' => $res, 'title' => $title, 'id' => $id, 'type_id' => $type[$id], 'project' => $project, 'projectid' => $projectid));
+        $param= array(
+            'datalist' => $as_list['criteria'],
+            'pagebar' => $as_list['pagebar'],
+            'count' => $as_list['count'],
+            'title' => $title,
+            'id' => $id,
+            'type_id' => $type[$id],
+            'project' => $project,
+            'projectid' => $projectid
+        );
+        $this->render('list',$param);
     }
 
 
@@ -111,8 +125,12 @@ class ActivityController extends AController
         if ($activityid) {
             $where.=' and type=' . $activityid;
         }
+        $count = Mod::app()->db->createCommand()->select('id')->from('dym_activity_recommend')->where($where)->order("id desc")->queryAll();
 
-        $list = Mod::app()->db->createCommand()->select('*')->from('dym_activity_recommend')->where($where)->order("id desc")->queryAll();
+        $pages = new CPagination(count($count));
+        $pages->pageSize = 10;
+
+        $list = Mod::app()->db->createCommand()->select('*')->from('dym_activity_recommend')->where($where)->order("id desc")->limit($pages->pageSize,$pages->currentPage * $pages->pageSize)->queryAll();
 
         foreach ($list as $k => $v) {
             $list[$k]['type'] = $type[$v['type']];
@@ -122,6 +140,9 @@ class ActivityController extends AController
             }
         }
 
+
+
+
         $project = Project::model()->findAll("status>:status", array(":status" => 0));
 
         $parameter = array(
@@ -130,6 +151,7 @@ class ActivityController extends AController
             "projectid" => $projectid,
             "activityid" => $activityid,
             "title" => $title,
+            'pagebar' =>$pages,
         );
         $this->render('RecommendedList', $parameter);
 

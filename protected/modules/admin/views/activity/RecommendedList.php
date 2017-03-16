@@ -1,4 +1,24 @@
 <style>
+
+
+    /*pagelist*/
+    .ad-page-list { }
+    .ad-page-list .pagelist { width: 100%; text-align: center; }
+    .ad-page-list .pagelist li { display: inline-block; margin: 3px; }
+    .ad-page-list .pagelist li a { padding: 7px 12px; border: 1px solid #c5c5c5; border-radius: 3px; background: #fff; color: #a5a5a5; }
+    .ad-page-list .pagelist li span { color: #a5a5a5; }
+    .ad-page-list .pagelist li.thisclass { padding: 7px 12px; color: #fff; border-radius: 3px; background: #008bcc; }
+    .ad-nodata { text-align: center; position: relative; }
+    .ad-nodata p { position: absolute; width: 100%; left: 0; top: 40px; font-size: 20px; }
+    .ad-nodata a { width: 150px; display: block; line-height: 36px; margin: 30px auto; }
+    .pages, .ad-page-list { width: 100%; text-align: center; margin-top: 30px; margin-bottom: 40px; }
+    .pages li, .ad-page-list li { display: inline-block; margin: 3px; }
+    .pages li a, .ad-page-list li a { padding: 7px 12px; border: 1px solid #c5c5c5; border-radius: 3px; background: #fff; color: #a5a5a5; }
+    .pages li.selected a, .ad-page-list li.selected a { padding: 7px 12px; color: #fff; border-radius: 3px; background: #008bcc; }
+    .ad-page-list .yiiPager { margin-bottom: 10px; }
+
+
+
     .dail-upimgl {
         position: relative;
         width: 80px;
@@ -114,7 +134,7 @@
                         <tr id="list_<?php echo $item['id'] ?>">
 
                             <td style='width:50px;text-align:center'><?php echo $item['id'] ?></td>
-                            <td><?php echo $item['title'] ?></td>
+                            <td width="30px"><?php echo $item['title'] ?></td>
                             <td>
                                 <?php echo $item['type'][0];
                                 $type = $item['type'][1] ?>
@@ -158,7 +178,7 @@
 
                 <div class="pages clearfix">
                     <?php
-                    /* $this->widget('CLinkPager', array('pages' => $pagebar,
+                     $this->widget('CLinkPager', array('pages' => $pagebar,
                                                     'cssFile' => false,
                                                     'header'=>'',
                                                     'firstPageLabel' => '首页', //定义首页按钮的显示文字
@@ -166,7 +186,7 @@
                                                     'nextPageLabel' => '下一页', //定义下一页按钮的显示文字
                                                     'prevPageLabel' => '前一页',
                                                         )
-                    ); */
+                    );
                     ?></div>
             </form>
         </div>

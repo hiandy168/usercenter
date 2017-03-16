@@ -38,8 +38,7 @@ class VoteController extends FrontController{
         if($this->member['id']){//登录状态
             $mid = $this->member['id'];
         }
-        Browse::add_usernum($info['pid']);  //计算独立访客数量
-        Browse::add_browsenum($info['pid']); //计算浏览量
+        
         Browse::add_activity_browse($info['pid'],$id,"vote");
 
         $sql = "SELECT * FROM {{project}} WHERE id=".$info['pid'];
@@ -355,6 +354,16 @@ class VoteController extends FrontController{
 
             $data['start_time']=strtotime(trim(Tool::getValidParam('start_time','string')));
             $data['end_time']  =strtotime(trim(Tool::getValidParam('end_time','string')));
+            $desc=trim(Tool::getValidParam('desc','string'));
+            $background=trim(Tool::getValidParam('background','string'));
+            //处理换行
+            $data['desc'] = str_replace('\n',"<br>",$desc);
+            $data['desc'] = str_replace('\r\n',"<br>",$desc);
+            $data['desc'] = str_replace('\r',"<br>",$desc);
+
+            $data['background'] = str_replace('\n',"<br>",$background);
+            $data['background'] = str_replace('\r\n',"<br>",$background);
+            $data['background'] = str_replace('\r',"<br>",$background);
 
             if(!$data['share_img']){
                 unset($data['share_img']);
@@ -1852,8 +1861,7 @@ class VoteController extends FrontController{
             $mid=0;
         }
 
-        Browse::add_usernum($info['pid']);  //计算独立访客数量
-        Browse::add_browsenum($info['pid']); //计算浏览量
+        
         Browse::add_activity_browse($info['pid'],$id,"vote");
 
 

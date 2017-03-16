@@ -95,7 +95,7 @@ class Browse
                 return false;
             }
             $time=time();
-            $ip=$_SERVER["REMOTE_ADDR"];
+            $ip=Mod::app()->session->sessionID;
 
             $now = date('Ymd',$time);
             $tmp = array();

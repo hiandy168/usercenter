@@ -223,14 +223,14 @@ $userinfo = Activity_signup::getuserinfo($openid,$pid);
                 <h4>2、 如何享受满减优惠？    </h4>
                 <p>满减活动期间，单一订单购买商品总金额达。</p>
                  -->
-                <?php echo $signup['desc'] ?>
+                <?php echo $signup['desc']; ?>
             </div>
 
             <div class="act-xx-txtcon1">
                 <p>活动时间:<?php echo date('Y年m月d日 H时i分s秒',$signup['start_time']) == "00:00:00"?date("Y年m月d日",$signup['start_time']):date("Y年m月d日",$signup['start_time']) ?>
                     -- <?php echo date("Y年m月d日 H时i分s秒",$signup['end_time']) == "00:00:00"?date("Y年m月d日",$signup['end_time']-1):date("Y年m月d日",$signup['end_time']) ?></p>
                 <p>活动地点:<?php echo $signup['address']?></p>
-                <p>联系方式::<?php echo $signup['phone']?></p>
+                <p>联系方式:<?php echo $signup['phone']?></p>
                 <!-- <p><i>报名人数 </i>/ <i>总需人数 </i> / <i>咨询电话</i></p>
                 <p><i>564人次 </i> / <i>20</i> / <i>15107130636</i></p> -->
             </div>

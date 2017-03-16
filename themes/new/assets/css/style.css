@@ -192,7 +192,7 @@ border-color: #008bcc; }
 .ad-app-listdiv-data { width: 466px; border: 1px solid #f2f2f2; height: 116px; }
 .ad-app-listdiv-datanav { height: 30px; line-height: 30px; background: #f2f2f2; width: 100%; }
 .ad-app-listdiv-datanav ul { }
-.ad-app-listdiv-datanav ul li { font-size: 12px; float: left; width: 33.3%; display: block; text-align: center; border-right: 1px solid #fff; color: #858585; cursor: pointer; }
+.ad-app-listdiv-datanav ul li { font-size: 12px; float: left; width: 33%; display: block; text-align: center; border-right: 1px solid #fff; color: #858585; cursor: pointer; }
 .ad-app-listdiv-datanav ul li.selected { background: #fff; color: #008bcc; }
 .ad-app-listdiv-datadiv { }
 .ad-app-listdiv-datadiv .datadiv1 { margin: 25px 0px; }
