@@ -208,7 +208,7 @@
                         $('.save_button').text("提交中....");
                         if (res.state == 1) {
                             layer.msg(res.msg, {time: 2000}, function () {
-                                    window.location.href = "<?php echo $this->createUrl('/activity/collectcard/list') . '/pid/' . $config['pid'] . '/active/1'; ?>";
+                                    window.location.href = "<?php echo $this->createUrl('/activity/collectcard/list') . '/pid/' . $config['pid'] . '/active/'.$config['active']; ?>";
                             });
 
 

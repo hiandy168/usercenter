@@ -24,36 +24,7 @@ class SsologinController extends FrontController
 
     private $key = "dachuw";
 
-    /**
-     * 构造函数
-     */
-    public function init()
-    {
-        parent::init();
 
-         //首先需要接受几个参数验证身份，是不是我们的接入伙伴
-     //$this->agentid . $this->secret
-        if(!Mod::app()->session['ssouser']) {
-            $agentids = Tool::getValidParam('agentids', 'string');
-            $secret = Tool::getValidParam('secret', 'string');
-            if ($secret && $agentids) {
-                $res = Sso_broker::model()->find("agentid=:agentid and secret=:secret", array(':agentid' => $agentids, ':secret' => $secret));
-                //如果为真表示身份合法
-                if (!$res) {
-                    echo "非法访问！";
-                    exit;
-                }
-                //保存接入伙伴名称便于注册
-                $this->user =Mod::app()->session['ssouser']=$res->attributes;
-
-            } else {
-                echo "非法访问。";
-                exit;
-            }
-        }else{
-            $this->user =Mod::app()->session['ssouser'];
-        }
-    }
 
     /**
      * 退出单点登录

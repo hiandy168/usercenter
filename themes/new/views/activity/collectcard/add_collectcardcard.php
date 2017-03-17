@@ -631,7 +631,7 @@
                         if (stat) {
                             window.location.href = "<?php echo $this->createUrl('/activity/collectcard/prize')?>" + '?id=' + res.aid;
                         } else {
-                            window.location.href = "<?php echo $this->createUrl('/activity/collectcard/list') . '/pid/' . $config['pid'] . '/active/1'; ?>";
+                            window.location.href = "<?php echo $this->createUrl('/activity/collectcard/list') . '/pid/' . $config['pid'] . '/active/'. $config['active']; ?>";
                         }
                     });
 

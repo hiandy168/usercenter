@@ -299,8 +299,10 @@ class CollectcardController extends FrontController
                         $update_id = array(':id' => $val);
 
                         //查询历史中数量
-                        $sql = "select * from {{activity_collectcard_user}} where collectcard_id =" . $activity_info['id'] . " and prize_id = " . $val . " and is_win =1 ";
+                        $sql = "select * from {{activity_collectcard_user}} where collectcard_id =" . $activity_info['id'] . " and prize_id = " . $val . " and (is_win =1 or is_win=99) ";
                         $this_win_list = Mod::app()->db->createCommand($sql)->queryAll();
+
+
                         if (($prize_data['remainder'] + count($this_win_list)) > $prize_data['count']) {
                             $transaction->rollBack();
 
@@ -487,6 +489,7 @@ class CollectcardController extends FrontController
         $config['active_1'] = '3';
         //组件assembly中的选中高亮背景图片 刮刮卡(1)、签到(2)、报名(3)
         $config['active'] = 11;
+        $config['pid'] = $activity_info['pid'];
         $config['site_title'] = '奖品设置-编辑集卡活动-大楚网用户开放平台';
         $config['Keywords'] = '大楚网用户开放平台,集卡，抽奖，一等奖';
         $config['Description'] = '添加集卡活动_编辑集卡活动_活动图片上传';
@@ -1613,8 +1616,8 @@ class CollectcardController extends FrontController
                 foreach ($day_arr as $k => $v) {
                     $pv = Mod::app()->db->createCommand()->select('count_num')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=1 and model = "' . collectcard . '" and createtime=' . $v['day_date'])->queryRow();
                     $uv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=2 and model = "' . collectcard . '" and createtime=' . $v['day_date'])->queryRow();
-                    $pvuv[$v['day_date']]['pv'] = $pv['count_num'];
-                    $pvuv[$v['day_date']]['uv'] = $uv['count(0)'];
+                    $pvuv[$v['day_date']]['pv'] = !empty($pv['count_num'])?$pv['count_num']:0;
+                    $pvuv[$v['day_date']]['uv'] = !empty($uv['count(0)'])?$uv['count(0)']:0;
 
                 }
                 $config ['pvuv'] = $pvuv;

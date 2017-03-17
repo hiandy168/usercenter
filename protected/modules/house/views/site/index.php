@@ -12,7 +12,7 @@
 </div>
 
 <!--banner end-->
-<?php if($houseinfo){ ?>
+<?php if($houseinfo||$recommondlist){ ?>
 <div class="f-index-list" id="indexlist">
     <ul>
         <?php if($recommondlist) { ?>

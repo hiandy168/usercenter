@@ -63,8 +63,11 @@
 
 <!--                                    查询活动标题-->
                                     <?php
-                                    $models="Activity_".$item->model;
-                                    $activity=$models::model()->findByPk($item->aid);
+                                    if($item->aid>1){
+                                        $models="Activity_".$item->model;
+                                        $activity=$models::model()->findByPk($item->aid);
+                                    }
+
                                     ?>
                                     <td><a href="<?php echo $this->_siteUrl."/activity/".$item->model."/pcview/id/".$item->aid?>"><?php echo $activity->title ?></a></td>
                                     <td><?php echo $item->Member->status ? Mod::t('admin', 'state_1') : Mod::t('admin', 'state_0'); ?></td>

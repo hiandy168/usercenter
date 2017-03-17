@@ -532,7 +532,7 @@
                           if (stat) {
                               window.location.href = "<?php echo $this->createUrl('/activity/collectcard/uploadimg')?>" + '?id=' + res.aid;
                           } else {
-                              window.location.href = "<?php echo $this->createUrl('/activity/collectcard/list') . '/pid/' . $activity_info['pid'] . '/active/1'; ?>";
+                              window.location.href = "<?php echo $this->createUrl('/activity/collectcard/list') . '/pid/' . $activity_info['pid'] . '/active/'. $config['active']; ?>";
                           }
                       });
 

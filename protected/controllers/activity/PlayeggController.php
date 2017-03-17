@@ -1385,8 +1385,8 @@ try {
                 foreach ($day_arr as $k => $v) {
                     $pv = Mod::app()->db->createCommand()->select('count_num')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=1 and model = "' . playegg . '" and createtime=' . $v['day_date'])->queryRow();
                     $uv = Mod::app()->db->createCommand()->select('count(0)')->from('dym_activity_browse')->where('aid=' . $config['aid'] . ' and type=2 and model = "' . playegg . '" and createtime=' . $v['day_date'])->queryRow();
-                    $pvuv[$v['day_date']]['pv'] = $pv['count_num'];
-                    $pvuv[$v['day_date']]['uv'] = $uv['count(0)'];
+                    $pvuv[$v['day_date']]['pv'] = !empty($pv['count_num'])?$pv['count_num']:0;
+                    $pvuv[$v['day_date']]['uv'] = !empty($uv['count(0)'])?$uv['count(0)']:0;
 
                 }
                 $config ['pvuv'] = $pvuv;

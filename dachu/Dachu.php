@@ -10,9 +10,7 @@ class Dachu {
     public $appsecret = '';
     public $openid = '';
     public $host = 'http://m.dachuw.net';
-
-//    public $demoHost = 'http://m.hb.qq.com';
-   // public $demoHost = 'http://127.0.0.1';
+//    public $host = 'http://127.0.0.1/ucenter';
 
     public $access_token = "";
 
@@ -65,7 +63,7 @@ class Dachu {
      * GET 请求
      * @param string $url
      */
-    static public function http_get($url, $timeout=1) {
+    static public function http_get($url, $timeout=5) {
         $oCurl = curl_init();
         if (stripos($url, "https://") !== FALSE) {
             curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -78,6 +76,7 @@ class Dachu {
         curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
         $sContent = curl_exec($oCurl);
         $aStatus = curl_getinfo($oCurl);
+        $res= curl_error($oCurl);
         curl_close($oCurl);
         if (intval($aStatus["http_code"]) == 200) {
             return $sContent;
@@ -132,10 +131,10 @@ class Dachu {
      *获取访问凭证  拉取数据的时候用accesstolen
      */
     public function getAccessToken() {
-        $url = $this->host .'/api/token/get'.'?appid=' . $this->appid . '&appsecret=' . $this->appsecret.'&grant_type=client_credential';
-        $json=  self::http_get($url);
-        $json = json_decode($json, true);
-        $this->access_token = $json['access_token'];
+         $url = $this->host .'/api/token/get'.'?appid=' . $this->appid . '&appsecret=' . $this->appsecret.'&grant_type=client_credential';
+         $json=  self::http_get($url);
+         $json = json_decode($json, true);
+         $this->access_token = $json['access_token'];
         return $json;
     }
     
@@ -226,13 +225,13 @@ class Dachu {
      */
     public function sendver($phone) {
         //用户中心需要实现该接口
-        $url = $this->host .'/api/member/sendver'. '?openid=' . $this->openid . '&access_token=' . $this->access_token.'&phone='.$phone;
-        $json=  self::http_get($url);
+          $url = $this->host .'/api/member/sendver'. '?openid=' . $this->openid . '&access_token=' . $this->access_token.'&phone='.$phone;
+         $json =  self::http_get('http://127.0.0.1/ucenter/api/member/sendver?openid=testwen&access_token=byWg9Y3PRwr8eNO1286244550&phone=15997567510');
         return json_decode($json, true);
     }
 
     /**
-     * 通过帐号密码登录
+     * 第三方授权登陆
      *
      * @param string $phone 手机号
      * @param string $pass 密码
@@ -240,10 +239,31 @@ class Dachu {
      */
     public function login() {
         //用户中心需要实现该接口
-        $url = $this->host .'/api/member/login'. '?openid=' . $this->openid . '&access_token=' . $this->access_token;
+        $url = $this->host .'/api/member/login?openid=' . $this->openid . '&access_token=' . $this->access_token;
         $json=  self::http_get($url);
         return json_decode($json, true);
     }
+    
+     /**
+     * 开放授权登陆
+     *
+     * @param string sgin 签名
+     *
+     */
+    public function loginSso() {
+        $url = $this->host ."/sso/service/login?";
+        $timestamp=time()*1000;
+        $params=array("appid"=>$this->appid,"appsecret"=>$this->appsecret,"timestamp"=>$timestamp);
+        $sign= self::sign($params);
+        $params['sign'] = $sign;
+        unset($params['appsecret']);
+        $url = $url.http_build_query($params);
+        return $url;
+        
+    }
+    
+    
+    
     
     public function b2clogin($name,$pass){
         //B2C商城登录接口

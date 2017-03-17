@@ -1,45 +1,28 @@
 <?php
 
+/**
+ * 单点登录服务
+ */
 class ServiceController extends FrontController
 {
-
-
-    const ERROR_NONE = 0;
-    const ERROR_USERNAME_INVALID = 1;
-    const ERROR_PASSWORD_INVALID = 2;
-    const ERROR_UNKNOWN_IDENTITY = 100;
-    const ERROR_PSTATUS = 9;
-    const ERROR_STATUS = 11;
-    public $member_info;
-    // public $agentid_model;
-    public $username;
-    public $password;
-    private $_id;
-    public $errorCode;
-    public $client_addr;
+    /**
+     * 取消服务端 HTTP401
+     */
+    public $pass401 = false;
 
     /**
-     * session存储位置
-     * @var string
+     * 用户信息
+     * @var array
      */
-    public $links_path;
+    protected $userinfo;
 
-    /**
-     * 标识sessioin是否开启
-     * @var boolean
-     */
-    protected $started = false;
+    public $ip;
+    public $project;
+    public $pass;
 
-    /**
-     * 当前应用
-     * @var string
-     */
-    protected $agentid = null;
+    public $error;
 
-    /**
-     * 当前用户
-     */
-    protected $user = null;
+    private $key = "dachuw";
 
     /**
      * 构造函数
@@ -47,375 +30,380 @@ class ServiceController extends FrontController
     public function init()
     {
         parent::init();
-
-//        $this->load->model('broker_model');
-//
-//        $this->load->model('user_model');
-
-        //如果创建连接函数没有开启，$link_path系统默认存储session目录
-        //if (!function_exists('symlink')) $this->links_path = sys_get_temp_dir();
-//        $this->links_path = sys_get_temp_dir();
+        $this->testconnected();//测试是否连接
+        
+//        $this->access_token = Tool::getValidParam('access_token','string');
+//        $this->project = Jkcms::getProjectByAccesstoken($this->access_token);  
     }
-
-
-
-
-
-
-    /**
-     * 登录
+    
+    
+     /**
+     * testsso
      */
-    public function actionLogin()
-    {
-
-
-        $this->username = Tool::getValidParam('username', 'string');
-        $this->client_addr = Tool::getValidParam('client_addr', 'string');
-        $this->password = Tool::getValidParam('password', 'string');
-
-        $this->_session_start();
-//        $this->username= 15997567510;
-//        $this->password=  888888;
-
-        if (empty($this->username))
-            $this->failLogin("no_user_name");
-
-        if (empty($this->password))
-            $this->failLogin("no_password");
-
-        //数据库验证
-        $member_model = Member::model()->with('Membergroup')->find('( t.name=:name)', array(':name' => $this->username));
-
-        //如果用户名不存在
-        if ($member_model == null || empty($member_model)) {
-            // echo  $member_model->password ."!==". Tool::md5str($this->password,$member_model->source);
-            $this->errorCode = self::ERROR_USERNAME_INVALID;
-            $this->failLogin(self::ERROR_USERNAME_INVALID);
-        } else if ($member_model->password !== Tool::md5str($this->password, $member_model->source)) {
-            //密码判断
-            $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            $this->failLogin(self::ERROR_PASSWORD_INVALID);
-        } /*else if ($member_model->pstatus == 0) {
-            //账号类型判断
-            $this->errorCode = self::ERROR_PSTATUS;  //==9 表示 不是pc端注册用户不能登陆
-            $this->failLogin(self::ERROR_PSTATUS);
-        } else if ($member_model->status == 0) {
-            //审核状态判断
-            $this->errorCode = self::ERROR_STATUS;  //==11 表示 没有通过审核
-            $this->failLogin(self::ERROR_STATUS);
-        } */else {
-            $this->errorCode = self::ERROR_NONE;
-            Mod::app()->session['member'] = $member_model->attributes;
-            $this->info();
-        }
-
-    }
-
-    /**
-     * PC登录
-     */
-    public function pc_login()
-    {
-
-        $this->_session_start();
-
-        $cihiuserno = Tool::getValidParam('cihiuserno', 'string');
-
-        $cihikey = Tool::getValidParam('cihikey', 'string');
-
-        if (empty($cihiuserno))
-            $this->failLogin("no_cihiuserno");
-
-        if (empty($cihikey))
-            $this->failLogin("no_cihikey");
-
-        //数据库验证
-//        $info = $this->user_model->_pc_login($cihiuserno, $cihikey);
-        $member_model = Member::model()->with('Membergroup')->find('( t.name=:name)', array(':name' => $this->username));
-
-        //如果用户名不存在
-        if ($member_model == null || empty($member_model)) {
-            // echo  $member_model->password ."!==". Tool::md5str($this->password,$member_model->source);
-            $this->errorCode = self::ERROR_USERNAME_INVALID;
-            $this->failLogin(self::ERROR_USERNAME_INVALID);
-        } else if ($member_model->password !== Tool::md5str($this->password, $member_model->source)) {
-            //密码判断
-            $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            $this->failLogin(self::ERROR_PASSWORD_INVALID);
-        } else if ($member_model->pstatus == 0) {
-            //账号类型判断
-            $this->errorCode = self::ERROR_PSTATUS;  //==9 表示 不是pc端注册用户不能登陆
-            $this->failLogin(self::ERROR_PSTATUS);
-        } else if ($member_model->status == 0) {
-            //审核状态判断
-            $this->errorCode = self::ERROR_STATUS;  //==11 表示 没有通过审核
-            $this->failLogin(self::ERROR_STATUS);
-        } else {
-            $this->errorCode = self::ERROR_NONE;
-            Mod::app()->session['member'] = $member_model->attributes;
-            $this->info();
+     public function testconnected(){
+        if (isset($_GET['testsso']) && $_GET['testsso'] == 1) {
+            echo "connected";
+            exit();
         }
     }
 
     /**
-     * 退出
+     * 退出单点登录
      */
-    public function logout()
+    public function actionLogout()
     {
-        header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 
-        $this->load->model('broker_model');
+        //header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
+        list($ret, $body) = $this->serverCmd('logout');
 
-       // $agentids = $this->agentid_model->get_all_broker();
-        $agentids = Sso_broker::model()->findAll();
+//                setcookie('session_token', '');
 
-        $res = '';
-        foreach ($agentids as $k => $v) {
-            if (trim($v['url']) != '') {
-                $tmp_s = strstr($v['url'], '?') ? '&' : '?';
-                $res .= '<script type="text/javascript" src="' . $v['url'] . $tmp_s . '&time=' . time() . ' reload="1"></script>';
-            }
-        }
+        $cookie = Yii::app()->request->getCookies();
+        unset($cookie['session_token']);
+        echo $body;
 
-
-        $this->_session_start();
-        unset(Mod::app()->session['member']);
-        echo $res;
-    }
-
-    /**
-     * 输出用户信息
-     */
-    public function info()
-    {
-        $this->_session_start();
-        //如果不存在登陆用户 返回提示
-        $member = Mod::app()->session['member'];
-        if (!$member) {
-            $this->failLogin("Not logged in");
-        }
-        echo json_encode($member);
-        exit();
-    }
-
-    /**
-     * 连接session
-     */
-    public function actionAttach()
-    {
-        //开启回话
-        $redirect = Tool::getValidParam('redirect', 'string');
-
-        $this->_session_start();
-
-        //检验broker
-
-        $agentid = Tool::getValidParam('agentid', 'string');
-        if (empty($agentid))
-            $this->fail("No broker specified");
-        //检验token
-        $token = Tool::getValidParam('token', 'string');
-        if (empty($token))
-            $this->fail("No token specified");
-        //检验校验码
-        $checksum = Tool::getValidParam('checksum', 'string');
-        $ip = Tool::getValidParam('ip', 'string');
-
-        if (empty($checksum) || $this->generateAttachChecksum($agentid, $token,$ip) != $checksum) {
-            $this->fail("Invalid_checksum");
-        }
-
-        //如果没有设置session存储位置
-
-        if (!isset($this->links_path)) {
-
-            //拼接session存储文件  
-            $link = (session_save_path() ? session_save_path() : sys_get_temp_dir()) . "/sess_" . $this->generateSessionId($agentid, $token);
-            //如果sessioin文件不存在 把本文件链接到系统的session_id上
-
-            if (!file_exists($link))
-                $attached = symlink('sess_' . session_id(), $link);
-            //如果没有链接成功，报错
-            if (!$attached)
-                trigger_error("Failed to attach; Symlink wasn't created.", E_USER_ERROR);
-        } else {
-            //指定session路径存放session
-
-            $link = "{$this->links_path}/" . $this->generateSessionId($agentid, $token);
-            if (!file_exists($link))
-                $attached = file_put_contents($link, session_id());
-            if (!$attached)
-                trigger_error("Failed to attach; Link file wasn't created.", E_USER_ERROR);
-        }
-        //跳转至broker经纪人
-
-        if (isset($redirect)) {
-            header("Location: " . $redirect, true, 307);
-            exit;
-        }
-
-        // 输出图片用于ajax登录
-        header("Content-Type: image/png");
-        readfile("empty.png");
     }
 
     /*
-     * 开启session并且防止session劫持
-     */
+     * 登录
+     * 通过账号密码或者验证码登录
+     * */
+    public function actionLogin(){
 
-    protected function _session_start()
-    {
-        //如果session已经启  false
+        $appid =  Tool::getValidParam('appid', 'string');
+        $sign =  Tool::getValidParam('sign', 'string');
+        $timestamp =  Tool::getValidParam('timestamp', 'string');
+        
+        $this->project=Project::model()->findByAttributes(array('appid'=>$appid))->attributes;
 
-        if ($this->started) {
-            return;
+        
+        $params=array("appid"=>$appid,"appsecret"=>$this->project['appsecret'],"timestamp"=>$timestamp);
+        $params['sign'] = $sign;
+
+        // echo "sign1: ".md5($sign)."<br>sign2: <br>";
+        $res  = Tool::signVerify($this->project['appsecret'],$params);
+
+        //验证$sgin失效验证
+        if(!$res){
+            //验证失败
+            //验证$sgin合法性
+            $returnCode['code'] = 40005;
+            $returnCode['mess'] = urlencode($this->error_code[$returnCode['code']]);
+
+            echo urldecode(json_encode($returnCode));exit;
         }
-
-        $this->started = true;
-        // 应用session
-        $matches = null;
-
-//        $cookie=new CHttpCookie($name,$value);  
-//        $cookie->expire =time()+60*60*24;  
-//        Mod::app()->request->cookies[$name]=$cookie;  
-//        //获取Cookie  
-//        $cookie=Mod::app()->request->cookies[$name];  
-//        $value=$cookie->value;  
-//        //删除Cookie  
-//        $cookie = Mod::app()->request->getCookies();  
-//        unset($cookie[$name]);
+       //根据timestamp验证$sgin  5分钟失效验证
 
 
-        // 开启用户会话
-        session_start();
-        //如果存在客户端IP并且客户端IP和服务端不一致，更新SESSIONID
-        /*$client_addr = Mod::app()->session['client_addr'];*/
-        $client_addr = $this->client_addr;
-        if ($client_addr && $client_addr != $_SERVER['REMOTE_ADDR']) {
-            session_regenerate_id(true);
-        }
-        //如果存在客户端IP并且一致，客户端IP设置为服务端IP
+        
+        
+        //接受表单
+        if (Mod::app()->request->isPostRequest) {
+            $data['username'] = trim(Tool::getValidParam('username', 'string'));
+            $codes = trim(Tool::getValidParam('codes', 'integer'));
+            //验证用户名(手机合法性)
+            $pattern = '/^1[3-9]+\\d{9}$/';
+            $match = preg_match($pattern, $data['username']);
+            if (!$match) {
+                echo 'state: 0, message: 手机号码不合法';
+              //  echo json_encode(array('state' => 0, 'message' => '手机号码不合法'));
+                exit;
+            }
+            if ($data['username']) {
+                //短信验证码是否正确或已过期
+                $auth_code = Mod::app()->memcache->get('dachuw' . $data['username']);
+                if ($codes != $auth_code || !$codes) {
+                  //  echo json_encode(array('state' => 0, 'message' => '验证码错误'));
+                    echo 'state: 0, message: 验证码错误';
+                    exit;
+                }
+            }
 
-        if (!$client_addr) {
-            Mod::app()->session['client_addr'] = $this->getIp();
-        }
-        $cookie_mod = Mod::app()->request->cookies[session_name()];
-        $cookie = $cookie_mod->value;
+            //初始化登陆模型
+            $login_model = new Memberloginform();
+            $login_model->username = $data['username'];
+            $login_model->password = "";
+            //不能直接把数组给attributes  但是可以单独的给key赋值
+            $member = $login_model->login();
 
-        //如果通过request方式获取到PHPSSID 并且匹配本规则
-        if (isset($cookie) && preg_match('/^SSO-(\w*+)-(\w*+)-([a-z0-9]*+)$/', $cookie, $matches)) {
-            $sid = $cookie;
-            if (isset($this->links_path) && file_exists("{$this->links_path}/$sid")) {
-                session_id(file_get_contents("{$this->links_path}/$sid"));
-                session_start();
-//                setcookie(session_name(), "", 1);
-                $cookie = new CHttpCookie(session_name(), "");
-                $cookie->expire = time() + 1;
-                Mod::app()->request->cookies[session_name()] = $cookie;
+            $array['phone']=$data['username'];
+            $array['name']=$this->project['name']."接入用户";
 
+            if ($member && is_array($member)) {
+                $uid = $member['id'];
+                if ($uid > 0) {
+                    $ticket=self::getTicket($uid);
+
+                    header("Location: ".$this->project['callback']."?ticket=$ticket");
+                    exit;
+                } else if ($uid == -1) {
+                    echo 'state: 0, message: UCenter数据错误';
+                   // echo json_encode(array('state' => 0, 'message' => 'UCenter数据错误'));
+                    exit;
+
+                } else if ($uid == -2) {
+                    echo 'state: 0, message: UCenter密码错';
+                   // echo json_encode(array('state' => 0, 'message' => 'UCenter密码错'));
+                    exit;
+                } else {
+                    echo 'state: 0, message: 未定义';
+                   // echo json_encode(array('state' => 0, 'message' => '未定义'));
+                    exit;
+                }
+            } else if ($member == 1) {
+                //如果用户不存在就要给用户进行注册,返回 mid
+                $re=$this->reg_member($array);
+                $ticket=self::getTicket($re);
+
+                header("Location: ".$this->project['url']."?ticket=$ticket");
+                exit;
+
+            } else if ($member == 9) {
+                echo 'state: 0, message: 用户不能登陆没有平台权限，需审核';
+               // echo json_encode(array('state' => 0, 'message' => '用户不能登陆没有平台权限，需审核'));
+
+                exit;
+            } else if ($member == 11) {
+                echo 'state: 0, message: 请等待审核';
+             //   echo json_encode(array('state' => 0, 'message' => '请等待审核'));
+
+                exit;
             } else {
-                session_start();
+                echo 'state: 0, message: 用户名或者密码错误';
+              //  echo json_encode(array('state' => 0, 'message' => '用户名或者密码错误'));
+
             }
 
-            if (!$client_addr) {
-                session_destroy();
-                $this->fail("Not attached");
-            }
-
-            if ($this->generateSessionId($matches[1], $matches[2], $client_addr) != $sid) {
-                session_destroy();
-                $this->fail("Invalid session id");
-            }
-
-            $this->agentid = $matches[1];
-            return;
-        }
-
-    }
-
-    /**
-     * 通过session token生成session id
-     *
-     * @return string
-     */
-    protected function generateSessionId($agentid, $token, $client_addr = null)
-    {
-        //验证broker
-        // $info = $this->agentid_model->get_broker_by_broker($agentid);
-        $info = Sso_broker::model()->find('agentid=:agentid', array(':agentid' => $agentid));
-
-        if ($info) {
-            $secret = $info['secret'];
         } else {
-            return null;
+
+           $this->render('login', array("backurl" => $this->project['url']));
         }
-        //如果客户端地址没有设置，获取客户端IP
 
-        if (!isset($client_addr))
-            $client_addr = $_SERVER['REMOTE_ADDR'];
-        //根据 参数生出客户端session文件名称
 
-        return "SSO-{$agentid}-{$token}-" . md5('session' . $token . $client_addr . $secret);
     }
 
+    /*
+     * 这个是为了快捷登录  qq  微信  登录成功之后回调过来生成票据 ticket
+     * */
+    public function actionCallsetticket(){
+        //如果登录成功之后  session 应该是有值的
+         $mid= $this->member['id'];
+        if(!$mid){
+            echo 'state: 0, message: 登录失败，请重试！';
+            exit;
+        }
+       $ticket= self::getTicket($mid);//生成ticket 并加密
+       if($this->project['url']){
+        header("Location: ".$this->project['url']."?ticket=$ticket");
+        exit;
+       }else{
+           die('回调地址没有设置');
+       }
+
+    }
+
+
+
+    /*
+     * 注册用户
+     * */
+
+    public function reg_member($array){
+
+        $member_model = new Member();
+        $member_model->name =$array['name'] ;
+        $member_model->regtime = time();
+        $member_model->regip = Mod::app()->request->userHostAddress;
+        $member_model->status = 1;
+        $member_model->pstatus = 1;
+        $member_model->phone = $array['phone'];
+        $member_model->sex = 1;
+        $member_model->username = "匿名用户";
+        $member_model->createtime = time();
+        $member_model->updatetime = time();
+        $member_model->save();
+        $member_id = Mod::app()->db->getLastInsertID();
+        $member_info = $member_model->attributes;
+        if($member_id){
+            return $member_id;
+        }else{
+            return false;
+        }
+
+    }
+
+    /*
+     * 接收 ticket返回对应的用户信息
+     * */
+    public function actionGetuserinfo(){
+       
+        $ticket = Tool::getValidParam("ticket", "string");
+        $appid = Tool::getValidParam('agentids', 'string');
+        $secret = Tool::getValidParam('secret', 'string');
+        
+
+        if ($secret && $appid) {
+            $res = Project::model()->find("appid=:appid and appsecret=:secret", array(':appid' => $appid, ':secret' => $secret));
+            //如果为真表示身份合法
+            if (!$res) {
+                echo "非法访问！";
+                exit;
+            }
+        }else{
+            echo json_encode(array('state' => 10005, 'message' =>  "agentids or secret is null"));
+
+            exit;
+        }
+        if ($ticket) {
+            //解密字符串
+            $ticketstring = $this->secret_string($ticket);
+            //验证是否解密成功
+            $ticketarray = explode('-', $ticketstring);
+            $str=md5('session' . $this->key . $agentids . $secret);
+            if ($ticketarray[0] == "SSO") {
+                if($ticketarray[4]==$str){
+                    echo json_encode(array('state' => 10004, 'message' => 'ticket is invalid'));
+                    exit;
+                }
+                //检查时间是否超时，默认是7200 秒
+                if($ticketarray[3]<time()){
+                    echo json_encode(array('state' => 10001, 'message' => 'ticket is overdue'));
+                    exit;
+                }
+                $uid = $ticketarray[2];
+                //查看 该用户是否存在
+                $member = Member::model()->findByPk($uid);
+                if(!$member){
+                    echo json_encode(array('state' => 10005, 'message' => 'ticket is invalidu'));
+                    exit;
+                }
+                $this->member=Mod::app()->session['member']= $member->attributes;
+                echo json_encode( $this->member);
+                exit;
+            }else{
+                echo json_encode(array('state' => 10002, 'message' => 'ticket is invalid'));
+                exit;
+            }
+        }else{
+            echo json_encode(array('state' => 10004, 'message' => 'ticket is null'));
+            exit;
+        }
+    }
+
+
     /**
-     * 通过session token生成session id
-     *
+     * 生成ticket
+     *@param uid  int
+     *@param key  bool
      * @return string
+     *
      */
-    protected function generateAttachChecksum($agentid, $token,$ip="")
+    protected function getTicket($uid,$key=true)
     {
-
-
-//    ctype_alnum — 检查字符串中只包含数字或字母，相当于正则[A-Za-z0-9].
-//    ctype_alpha — 检查字符串中只包含字母。
-//    ctype_cntrl — 检查字符串中是否只包含" '\n' '\r' '\t' " 这样的控制字符。
-//    ctype_digit — 检查字符串中是否只包含数字。
-//    ctype_graph — 检查字符串中是否只包含可以输出的字符。
-//    ctype_lower — 检查字符串中是否只包含小写的英文字母。
-//    ctype_print — 检查字符串中是否只包含可以打印的字符。
-//    ctype_punct — 检查字符串中是否只包含可以打印的字符，并且这样字符不能是非空格、数字、字符。
-//    ctype_space — 检查字符串中是否只包含空格或者" " .
-//    ctype_upper — 检查字符串中是否只包含大写的英文字母。
-//    ctype_xdigit — 检查字符串中是否是16进制的字符串。     
-        //验证broker
-        $sql = 'select * from {{sso_broker}} where agentid = ' . $agentid;
-        $info = Mod::app()->db->createCommand($sql)->queryRow();
-
-        if ($info) {
-            $secret = $info['secret'];
-        } else {
-            return null;
+        //过期时间为7200 秒
+        $time=time()+7200;
+        $str="SSO-{$this->getIp()}-{$uid}-{$time}-" . md5('session' . $this->key . $this->project['agentids'] . $this->project['secret']);
+        //如果为真进行加密处理
+        if($key){
+            $str=$this->string_secret($str);
         }
 
-        $ip=$ip?$ip:$_SERVER['REMOTE_ADDR'];
-        return md5('attach' . $token . $ip . $secret);
+        return $str;
     }
+    
+//    protected function AttachChecksum($agentid, $token,$ip=""){
+//     
+//        //验证broker
+//        $sql = 'select * from {{sso_broker}} where agentid = ' . $agentid;
+//        $info = Mod::app()->db->createCommand($sql)->queryRow();
+//
+//        if ($info) {
+//            $secret = $info['secret'];
+//        } else {
+//            return null;
+//        }
+//
+//        $ip=$ip?$ip:$_SERVER['REMOTE_ADDR'];
+//        return md5('attach' . $token . $ip . $secret);
+//    }
+//    
 
     /**
-     * 错误
-     *
-     * @param string $message
+     * 获取错误信息
      */
-    protected function fail($message)
+
+    public function get_error()
     {
-        header("HTTP/1.1 406 Not Acceptable");
-        echo $message;
-        exit;
+        return $this->error;
     }
 
-    /**
-     * 登录失败
-     *
-     * @param string $message
-     */
-    protected function failLogin($message)
+
+    /*
+     * 对称加密字符串
+     * */
+
+    public function string_secret($string)
     {
-        header("HTTP/1.1 401 Unauthorized");
-        echo $message;
-        exit;
+        $key = $this->key;
+
+        //密锁串，不能出现重复字符，内有A-Z,a-z,0-9,/,=,+,_,
+        $lockstream = 'st=lDEFABCNOPyzghi_jQRST-UwxkVWXYZabcdef+IJK6/7nopqr89LMmGH012345uv';
+        //随机找一个数字，并从密锁串中找到一个密锁值
+        $lockLen = strlen($lockstream);
+        $lockCount = rand(0, $lockLen - 1);
+        $randomLock = $lockstream[$lockCount];
+        //结合随机密锁值生成MD5后的密码
+        $password = md5($key . $randomLock);
+        //开始对字符串加密
+        $txtStream = base64_encode($string);
+        $tmpStream = '';
+        $i = 0;
+        $j = 0;
+        $k = 0;
+        for ($i = 0; $i < strlen($txtStream); $i++) {
+            $k = ($k == strlen($password)) ? 0 : $k;
+            $j = (strpos($lockstream, $txtStream[$i]) + $lockCount + ord($password[$k])) % ($lockLen);
+            $tmpStream .= $lockstream[$j];
+            $k++;
+        }
+        return $tmpStream . $randomLock;
     }
 
+    /*
+     * 解密字符串*/
+    public function secret_string($string)
+    {
+        $key = $this->key;
+
+        //密锁串，不能出现重复字符，内有A-Z,a-z,0-9,/,=,+,_,
+        $lockstream = 'st=lDEFABCNOPyzghi_jQRST-UwxkVWXYZabcdef+IJK6/7nopqr89LMmGH012345uv';
+
+        $lockLen = strlen($lockstream);
+        //获得字符串长度
+        $txtLen = strlen($string);
+        //截取随机密锁值
+        $randomLock = $string[$txtLen - 1];
+        //获得随机密码值的位置
+        $lockCount = strpos($lockstream, $randomLock);
+        //结合随机密锁值生成MD5后的密码
+        $password = md5($key . $randomLock);
+        //开始对字符串解密
+        $txtStream = substr($string, 0, $txtLen - 1);
+        $tmpStream = '';
+        $i = 0;
+        $j = 0;
+        $k = 0;
+        for ($i = 0; $i < strlen($txtStream); $i++) {
+            $k = ($k == strlen($password)) ? 0 : $k;
+            $j = strpos($lockstream, $txtStream[$i]) - $lockCount - ord($password[$k]);
+            while ($j < 0) {
+                $j = $j + ($lockLen);
+            }
+            $tmpStream .= $lockstream[$j];
+            $k++;
+        }
+        return base64_decode($tmpStream);
+    }
 
     public function getIp()
     {
@@ -439,6 +427,29 @@ class ServiceController extends FrontController
         }
         return preg_match('/^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$/', $str);
     }
+    
+        /**
+     * 错误
+     *
+     * @param string $message
+     */
+    protected function fail($message)
+    {
+        header("HTTP/1.1 406 Not Acceptable");
+        echo $message;
+        exit;
+    }
 
+    /**
+     * 登录失败
+     *
+     * @param string $message
+     */
+    protected function failLogin($message)
+    {
+        header("HTTP/1.1 401 Unauthorized");
+        echo $message;
+        exit;
+    }
 
 }

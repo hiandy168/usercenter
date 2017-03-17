@@ -255,7 +255,7 @@ class MemberController extends AController
     }
 
     /*用户来源列表*/
-    public function actionfromlists()
+    public function actionFromlists()
     {
         $phone = Tool::getValidParam("phone", "string");
         $startdate = Tool::getValidParam("startdate", "string");
@@ -283,6 +283,7 @@ class MemberController extends AController
             $where = "";
             $params = array();
         }
+
         $member = $Member_activity_model->getMemberListPager($where, $params);
 
         //组件列表

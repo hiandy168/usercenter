@@ -79,18 +79,15 @@ class ClientController extends FrontController
         $this->user =Tool::getValidParam("username","string");
         $this->pass =Tool::getValidParam("password","string");
         $ticket = Tool::getValidParam("ticket", "string");
-     //   echo  $this->sessionToken;
-        if ($auto_attach && !$this->sessionToken && !$ticket) {
-            //跳转至SSO
-
-           header("Location: " . $this->getAttachUrl() . "&redirect=" . urlencode("http://{$_SERVER["SERVER_NAME"]}{$_SERVER["REQUEST_URI"]}/username/$this->user/password/$this->pass"), true, 307);
+//        echo  $this->sessionToken;
+//        
+  
+        //如果设置自动粘贴token并且sessiontoken为假,带上参数跳转的服务端
+        if ($auto_attach && !$this->sessionToken) {
+                //跳转至SSO
+            header("Location: " . $this->getAttachUrl() . "&redirect=". urlencode("http://{$_SERVER["SERVER_NAME"]}{$_SERVER["REQUEST_URI"]}"), true, 307);
             exit;
         }
-        //如果session有值的话，写入this->member
-        if (isset(Mod::app()->session['member'])) {
-            $this->member = Mod::app()->session['member'];
-        }
-
     }
 
     //测试通讯
@@ -153,52 +150,20 @@ class ClientController extends FrontController
      *
      * @return string
      */
-    public function getAttachUrl()
+     public function getAttachUrl()
     {
-        $token = $this->getSessionToken();
-        //根据token和IP和代理端密钥生成校验码传递给服务端
-        $checksum = md5("attach{$token}{$this->ip}{$this->secret}");
-        //拼接URL 传递 sessioin_token和校验码到服务端
-        return "{$this->url}attach?agentid={$this->agentid}&token=$token&checksum=$checksum&ip=$this->ip";
-    }
+                $token = $this->getSessionToken();
+                //根据token和IP和代理端密钥生成校验码传递给服务端
+                $checksum = md5("attach{$token}{$_SERVER['REMOTE_ADDR']}{$this->secret}");
+                //拼接URL 传递 sessioin_token和校验码到服务端
+                return "{$this->url}attach?agentid={$this->agentid}&token=$token&checksum=$checksum";
+    }   
 
-    public function actionindex()
+    public function actionIndex()
     {
         $backurl = urldecode(Tool::getValidParam("backurl", "string"));
-//
-        //进行登录请求
-        if($this->user && $this->pass && Mod::app()->request->isPostRequest) {
+        $this->render('login', array("backurl"=>$backurl));
 
-            $re = $this->login($this->user, $this->pass);
-            //d登录成功，写入cookie  跨域
-            if ($re['ret'] == 200 && is_array(json_decode($re['body'], true))) {
-
-                $this->member = json_decode($re['body'], true);
-
-                //header("Location: $backurl", true, 307);
-               $data= array(
-                    'state'=>1,
-                    'message'=>'登录成功',
-
-                );
-                echo json_encode($data);
-                exit;
-            } else if ($re['body'] == 2) {
-                echo json_encode(array('state'=>0,'message'=>'账号或者密码错误'));
-                exit;
-            } else if($re['body'] == 11){
-                echo json_encode(array('state'=>0,'message'=>'该账号没有绑定手机号'));
-                exit;
-            } else if($re['body'] == 1){
-                echo json_encode(array('state'=>0,'message'=>'用户不存在'));
-                exit;
-            }else{
-                echo json_encode(array('state'=>0,'message'=>'网络异常'));
-                exit;
-            }
-        }else{
-            $this->render('login', array("backurl"=>$backurl));
-        }
     }
 
 
@@ -253,7 +218,7 @@ class ClientController extends FrontController
 /*
  * 验证tickte，并返回用户信息*/
 
-    public  function actionreuser(){
+    public  function actionReuser(){
         $ticket = Tool::getValidParam("ticket", "string");
         if (!empty($ticket)) {
             //解密字符串

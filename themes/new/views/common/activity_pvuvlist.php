@@ -43,7 +43,9 @@
     day.push(<?php echo "'".$key."'"?>);
 
     <?php }?>
-
+    console.log("uv:"+uv);
+    console.log("pv:"+pv);
+    console.log(day);
     // 指定图表的配置项和数据
     var  option = {
         title : {
