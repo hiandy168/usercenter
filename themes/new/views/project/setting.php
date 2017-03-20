@@ -84,6 +84,16 @@
                        <!-- (<b style="color: #ff0000;">注：刷新appsecret时，对应的access_token也会更新！</b>) <a  id="update_apper_a" target="_blank" href="javascript:void(0);"  onclick="updateapp_ser('<?php /*echo $view['id'];*/?>')">刷新appsecret</a></em>-->
                     <i></i>
                 </li>
+                
+                <li>
+                    <span><b style="color: #ff0000;">*</b> 登陆回调URL :</span>
+                    <em>
+                        <input type="text" class="form-control" id="callback" name="callback" value="<?php echo $view['callback']?>">
+                        <b> 通过授权登陆回调的URL</b>
+                    </em>
+                    <i></i>
+                </li>
+                
                 <li class="e1"><span><b style="color: #ff0000;">*</b>wx_appid :</span>
                     <em>
                         <input type="text" class="form-control" id="wx_appid" name="wx_appid" value="<?php echo $view['wx_appid']?>">

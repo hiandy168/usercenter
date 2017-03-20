@@ -20,7 +20,7 @@
 
 
 <?php if ($houseinfo['end'] == "bg1") {?>
-    <div class="fs28 fcf74 f-cpdetail-div1">最高年化收益率 <?php echo $houseinfo['earnings']?></div>
+    <div class="fs28 fcf74 f-cpdetail-div1">最高年化收益率 <?php echo $houseinfo['earnings']?>%</div>
 <?php  if($houseinfo['repertory']>0){?>
     <div class="f-cpdetail-div-jd"">
     <span><i style="width: <?php echo ($count)/$houseinfo['repertory']*100 ?>%;"></i></span>

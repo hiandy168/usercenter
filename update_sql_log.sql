@@ -551,3 +551,11 @@ CREATE TABLE `dym_activity_collectcard_user` (
 
 
 
+ALTER TABLE `dym_activity_collectcard_prize`
+ADD COLUMN `share_desc`  varchar(200) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '分享描述' AFTER `probability`;
+
+
+ALTER TABLE `dym_project`
+ADD COLUMN `callback`  varchar(255) NOT NULL DEFAULT '' COMMENT '授权登陆回调URL' AFTER `wechat_url`;
+ALTER TABLE `dym_project`
+MODIFY COLUMN `wechat_url`  varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' AFTER `status`;

@@ -30,10 +30,7 @@ class ServiceController extends FrontController
     public function init()
     {
         parent::init();
-        $this->testconnected();//测试是否连接
-        
-//        $this->access_token = Tool::getValidParam('access_token','string');
-//        $this->project = Jkcms::getProjectByAccesstoken($this->access_token);  
+        $this->testconnected();//测试是否连接 
     }
     
     
@@ -74,7 +71,7 @@ class ServiceController extends FrontController
         $sign =  Tool::getValidParam('sign', 'string');
         $timestamp =  Tool::getValidParam('timestamp', 'string');
         
-        $this->project=Project::model()->findByAttributes(array('appid'=>$appid))->attributes;
+        Mod::app()->session['ssoproject'] =  $this->project = Project::model()->findByAttributes(array('appid'=>$appid))->attributes;
 
         
         $params=array("appid"=>$appid,"appsecret"=>$this->project['appsecret'],"timestamp"=>$timestamp);
@@ -93,6 +90,13 @@ class ServiceController extends FrontController
             echo urldecode(json_encode($returnCode));exit;
         }
        //根据timestamp验证$sgin  5分钟失效验证
+        if(($timestamp/1000 +300) < time()){
+             //验证失败
+            //验证$sgin合法性
+            $returnCode['code'] = 40006;
+            $returnCode['mess'] = urlencode($this->error_code[$returnCode['code']]);
+            echo urldecode(json_encode($returnCode));exit;
+        }
 
 
         
@@ -193,11 +197,21 @@ class ServiceController extends FrontController
             exit;
         }
        $ticket= self::getTicket($mid);//生成ticket 并加密
-       if($this->project['url']){
-        header("Location: ".$this->project['url']."?ticket=$ticket");
-        exit;
+       $this->project =   Mod::app()->session['ssoproject'];
+        if($this->project){
+            Mod::app()->session['ssoproject'] =  $this->project = Project::model()->findByPk($this->project['id'])->attributes;
+        }
+        
+        
+       if($this->project['callback']){
+            header("Location: ".$this->project['callback']."?ticket=$ticket");
+            exit;
        }else{
-           die('回调地址没有设置');
+            //回调地址没有设置
+            $returnCode['code'] = 40007;
+            $returnCode['mess'] = urlencode($this->error_code[$returnCode['code']]);
+            echo urldecode(json_encode($returnCode));exit;
+ 
        }
 
     }
@@ -235,31 +249,49 @@ class ServiceController extends FrontController
     /*
      * 接收 ticket返回对应的用户信息
      * */
-    public function actionGetuserinfo(){
+    public function actionGetinfo(){
        
         $ticket = Tool::getValidParam("ticket", "string");
-        $appid = Tool::getValidParam('agentids', 'string');
-        $secret = Tool::getValidParam('secret', 'string');
+        $appid =  Tool::getValidParam('appid', 'string');
+        $sign =  Tool::getValidParam('sign', 'string');
+        $timestamp =  Tool::getValidParam('timestamp', 'string');
         
+        Mod::app()->session['ssoproject'] =  $this->project = Project::model()->findByAttributes(array('appid'=>$appid))->attributes;
 
-        if ($secret && $appid) {
-            $res = Project::model()->find("appid=:appid and appsecret=:secret", array(':appid' => $appid, ':secret' => $secret));
-            //如果为真表示身份合法
-            if (!$res) {
-                echo "非法访问！";
-                exit;
-            }
-        }else{
-            echo json_encode(array('state' => 10005, 'message' =>  "agentids or secret is null"));
+        
+        $params=array("appid"=>$appid,"appsecret"=>$this->project['appsecret'],"timestamp"=>$timestamp,'ticket'=>$ticket);
+        $params['sign'] = $sign;
 
-            exit;
+
+        // echo "sign1: ".md5($sign)."<br>sign2: <br>";
+         $res  = Tool::signVerify($this->project['appsecret'],$params);
+
+        //验证$sgin失效验证
+        if(!$res){
+            //验证失败
+            //验证$sgin合法性
+            $returnCode['code'] = 40005;
+            $returnCode['mess'] = urlencode($this->error_code[$returnCode['code']]);
+
+            echo urldecode(json_encode($returnCode));exit;
         }
+       //根据timestamp验证$sgin  5分钟失效验证
+        if(($timestamp/1000 +300) < time()){
+             //验证失败
+            //验证$sgin合法性
+            $returnCode['code'] = 40006;
+            $returnCode['mess'] = urlencode($this->error_code[$returnCode['code']]);
+            echo urldecode(json_encode($returnCode));exit;
+        }
+       
+
         if ($ticket) {
             //解密字符串
-            $ticketstring = $this->secret_string($ticket);
+             $ticketstring = $this->secret_string($ticket);
             //验证是否解密成功
             $ticketarray = explode('-', $ticketstring);
-            $str=md5('session' . $this->key . $agentids . $secret);
+            var_dump($ticketarray);
+            $str=md5('session' . $this->key . $appid . $this->project['appsecret']);
             if ($ticketarray[0] == "SSO") {
                 if($ticketarray[4]==$str){
                     echo json_encode(array('state' => 10004, 'message' => 'ticket is invalid'));
@@ -302,7 +334,7 @@ class ServiceController extends FrontController
     {
         //过期时间为7200 秒
         $time=time()+7200;
-        $str="SSO-{$this->getIp()}-{$uid}-{$time}-" . md5('session' . $this->key . $this->project['agentids'] . $this->project['secret']);
+        $str="SSO-{$this->getIp()}-{$uid}-{$time}-" . md5('session' . $this->key . $this->project['appid'] . $this->project['secret']);
         //如果为真进行加密处理
         if($key){
             $str=$this->string_secret($str);

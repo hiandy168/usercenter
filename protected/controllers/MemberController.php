@@ -1602,9 +1602,8 @@ class MemberController extends FrontController
 
     /*
      * 当已经绑定过手机号之后给用户确认页面，手机号是否更改绑定，如果没有更改绑定直接跳到相应的页面*/
-    public function actionupphone()
+    public function actionUpphone()
     {
-
         if (Mod::app()->session['state'] == "computer") {
             $return_url = $this->_siteUrl . '/project/prolist';
         } else {
@@ -1941,7 +1940,7 @@ class MemberController extends FrontController
 
     /*第三方登录 qq */
 
-    public function actionqqlogin()
+    public function actionQqlogin()
     {
         $appid = APPID;
         $scope = SCOPE;
@@ -1959,7 +1958,7 @@ class MemberController extends FrontController
 
     /*qq  回调方法*/
 
-    public function actionqqcallback()
+    public function actionQqcallback()
     {
         $state = Tool::getValidParam('state', 'string');
         if ($state == Mod::app()->session['state']) //csrf

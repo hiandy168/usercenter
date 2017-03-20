@@ -95,12 +95,15 @@ class Browse
                 return false;
             }
             $time=time();
-            $ip=Mod::app()->session->sessionID;
-
+            $ip=isset(Mod::app()->session->sessionID)?Mod::app()->session->sessionID:'';
             $now = date('Ymd',$time);
             $tmp = array();
-            $sql_uv="select * from dym_activity_browse where type=2 and  model='".$model."' and pid=".$pid." and ip='".$ip."' and aid=".$aid." and createtime=".$now;
-            $arr_uv = Mod::app()->db->createCommand($sql_uv)->queryRow();
+            if(!empty($ip)) {
+                $sql_uv = "select * from dym_activity_browse where type=2 and  model='" . $model . "' and pid=" . $pid . " and ip='" . $ip . "' and aid=" . $aid . " and createtime=" . $now;
+                $arr_uv = Mod::app()->db->createCommand($sql_uv)->queryRow();
+            }else{
+                $arr_uv = true;
+            }
 
             $sql_pv="select * from dym_activity_browse where type=1 and  model='".$model."' and aid= ".$aid." and pid=".$pid." and createtime=".$now;
             $arr_pv = Mod::app()->db->createCommand($sql_pv)->queryRow();

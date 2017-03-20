@@ -48,7 +48,16 @@ class MemberController extends FrontController {
 
             echo urldecode(json_encode($returnCode));exit;
         }
-       //根据timestamp验证$sgin  5分钟失效验证
+         //根据timestamp验证$sgin  5分钟失效验证
+        if($timestamp/1000 +300 < time()){
+             //验证失败
+            //验证$sgin合法性
+            $returnCode['code'] = 40006;
+            $returnCode['mess'] = urlencode($this->error_code[$returnCode['code']]);
+
+            echo urldecode(json_encode($returnCode));exit;
+            
+        }
 
 
        //根据openid 和appid判断用户
@@ -322,8 +331,8 @@ class MemberController extends FrontController {
     /**
      * 通过帐号密码登录
      * 
-     * @param string $phone 手机号
-     * @param string $pass 密码
+     * @param string openid  第三方项目用户标识
+     * @param string $access_token  项目accesstoken
      * 
      */
     public function actionLogin(){
@@ -633,7 +642,7 @@ class MemberController extends FrontController {
         $project_info = Jkcms::getProjectByAccesstoken($access_token);   
         if($project_info){
             //发送短信验证码
-            $auth_code = $this->SendMessage($phone);
+            $auth_code = $this->_sendMessage($phone);
             if($auth_code['status']){
                 $returnCode['status'] = 1;
                 $returnCode['message'] = '发送短信验证码成功';
@@ -659,7 +668,7 @@ class MemberController extends FrontController {
      * @param  string $mobile  手机号
      * @return string $auth_code 短信码
      */
-    private function  SendMessage($mobile){
+    private function  _sendMessage($mobile){
          $resultCode = array('info'=>'','status'=>'');
          //验证手机合法性
          $pattern = '/^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$/'; 
