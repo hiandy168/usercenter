@@ -71,7 +71,7 @@
 			<?php if($user==1){ ?>
 				<a>已签到</a>
 			<?php }else{?>
-				<?php if( $this->member['status'] ==0){?>
+				<?php if( !$this->member['id'] ){?>
 				<a style="color: #fff;border-color: #fff;" href="/h5/member/login">去签到</a>
 				<?php }else{?>
 				<a style="color: #fff;border-color: #fff;" href="javascript:;" id="pccked">去签到</a>
@@ -84,10 +84,11 @@
 	<div class="mgb user-info clearfix">
 		<ul>
 			<li>
-				<?php if( $this->member['status'] ==0){?>
+				<?php if( !$this->member['id'] ){?>
 					<a href="/h5/member/login">
 					<?php }else{?>
-					<a href="/jfshop/b2c/wap/account/order_jflog.html">
+					<!--<a href="/jfshop/b2c/wap/account/order_jflog.html">-->
+					<a href="#">
 						<?php }?>
 					<p id="points">0</p>
 					<em>我的积分</em>
@@ -95,7 +96,7 @@
 			</li>
 
 			<li class="bl">
-				<?php if( $this->member['status'] ==0){?>
+				<?php if( !$this->member['id'] ){?>
 				<a href="/h5/member/login">
 					<?php }else{?>
 					<a href="<?php echo $this->createUrl('/h5/member/activity'.$param)?>">
@@ -105,7 +106,7 @@
 				</a>
 			</li>
 			<li class="bl">
-				<?php if( $this->member['status'] ==0){?>
+				<?php if( !$this->member['id'] ){?>
 				<a href="/h5/member/login">
 					<?php }else{?>
 					<a href="<?php echo $this->createUrl('/h5/member/message'.$param)?>">
@@ -120,7 +121,7 @@
 	<div class="mgb user-nav clearfix">
 		<ul>
 			<li class="bb">
-				<?php if( $this->member['status'] ==0){?>
+				<?php if( !$this->member['id'] ){?>
 				<a href="/h5/member/login">
 					<?php }else{?>
 					<a href="<?php echo $this->createUrl('/h5/calendar/index'.$param)?>">
@@ -128,17 +129,17 @@
 					<span><img src="<?php echo $this->_theme_url;?>assets/h5newstyle/images/user-icon-img3.png"/></span>
 					<em>日历</em>
 				</a></li>
-			<li class="bl bb">
-				<?php if( $this->member['status'] ==0){?>
+		<!--	<li class="bl bb">
+				<?php /*if( !$this->member['id'] ){*/?>
 				<a href="/h5/member/login">
-					<?php }else{?>
-					<a href="<?php echo $jfshop; ?>">
-						<?php } ?>
+					<?php /*}else{*/?>
+					<a href="<?php /*echo $jfshop; */?>">
+						<?php /*} */?>
              	    	<span>
-             	    		<!--<i class="tipsnum">2</i>-->
-             	    		<img src="<?php echo $this->_theme_url;?>assets/h5newstyle/images/user-icon-img4.png"/></span>
+             	    		<!--<i class="tipsnum">2</i>
+             	    		<img src="<?php /*echo $this->_theme_url;*/?>assets/h5newstyle/images/user-icon-img4.png"/></span>
 					<em>积分商城</em>
-				</a></li>
+				</a></li>-->
 			<!--<li class="bl bb">
 				<a href="<?php /*echo $this->createUrl('/h5/cityLife/index'.$param); */?>">
 					<i><img src="<?php /*echo $this->_theme_url;*/?>assets/h5newstyle/images/user-icon-img5.png"/></i>

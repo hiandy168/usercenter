@@ -328,62 +328,62 @@ class MemberController extends FrontController {
    
    
    
-    /**
-     * 通过帐号密码登录
-     * 
-     * @param string openid  第三方项目用户标识
-     * @param string $access_token  项目accesstoken
-     * 
-     */
-    public function actionLogin(){
-        $openid = Tool::getValidParam('openid','string');
-        $access_token = Tool::getValidParam('access_token','string');
-        $project_info = Jkcms::getProjectByAccesstoken($access_token);
-        //验证appid,appsecret是否合法
-        if($project_info){
-            $member_project_model = new Member_project();
-            $member_project_info = $member_project_model->findByAttributes(array('pid'=>$project_info['id'],'openid'=>$openid));
-            if(!$member_project_info){
-                $member_model = new Member();
-                $member_model->name ='匿名用户';
-                $member_model->regtime = time();
-                $member_model->regip = Mod::app()->request->userHostAddress;
-                $member_model->status = 0;
-                $member_model->save();
-                $member_id= Mod::app()->db->getLastInsertID();
-                //绑定mid,openid,pid
-                $member_project_model->mid = $member_id;
-                $member_project_model->pid = $project_info['id'];
-                $member_project_model->openid = $openid;
-                $member_project_model->status = 1;
-                $member_project_model->createtime = time();
-                $member_project_model->save();
-                Mod::app()->session['member_status']=0;
-            }else{
-                $member_id= $member_project_info->mid;
-                Mod::app()->session['member_status']=1;
-            }
-
-            $returnCode['result'] = true;
-            $returnCode['status'] = 1;
-            $returnCode['message'] = '登录成功';
-
-            //用户行为上报;
-            Member_behavior::report($member_id, $project_info['id'], $openid, 1);
-            Mod::app()->session['openid']=$openid;
-            Mod::app()->session['access_token']=$access_token;
-            Mod::app()->session['pid']=$project_info['id'];
-            Mod::app()->session['member_id']=$member_id;
-
-            Mod::app()->memcache->set('thisopenid' ,$member_id.'-001');
-
-        }
-        else{
-            $returnCode['message'] = '非法请求';
-        }
-
-        echo json_encode($returnCode);
-    }
+//    /**
+//     * 通过帐号密码登录
+//     * 
+//     * @param string openid  第三方项目用户标识
+//     * @param string $access_token  项目accesstoken
+//     * 
+//     */
+//    public function actionLogin(){
+//        $openid = Tool::getValidParam('openid','string');
+//        $access_token = Tool::getValidParam('access_token','string');
+//        $project_info = Jkcms::getProjectByAccesstoken($access_token);
+//        //验证appid,appsecret是否合法
+//        if($project_info){
+//            $member_project_model = new Member_project();
+//            $member_project_info = $member_project_model->findByAttributes(array('pid'=>$project_info['id'],'openid'=>$openid));
+//            if(!$member_project_info){
+//                $member_model = new Member();
+//                $member_model->name ='匿名用户';
+//                $member_model->regtime = time();
+//                $member_model->regip = Mod::app()->request->userHostAddress;
+//                $member_model->status = 0;
+//                $member_model->save();
+//                $member_id= Mod::app()->db->getLastInsertID();
+//                //绑定mid,openid,pid
+//                $member_project_model->mid = $member_id;
+//                $member_project_model->pid = $project_info['id'];
+//                $member_project_model->openid = $openid;
+//                $member_project_model->status = 1;
+//                $member_project_model->createtime = time();
+//                $member_project_model->save();
+//                Mod::app()->session['member_status']=0;
+//            }else{
+//                $member_id= $member_project_info->mid;
+//                Mod::app()->session['member_status']=1;
+//            }
+//
+//            $returnCode['result'] = true;
+//            $returnCode['status'] = 1;
+//            $returnCode['message'] = '登录成功';
+//
+//            //用户行为上报;
+//            Member_behavior::report($member_id, $project_info['id'], $openid, 1);
+//            Mod::app()->session['openid']=$openid;
+//            Mod::app()->session['access_token']=$access_token;
+//            Mod::app()->session['pid']=$project_info['id'];
+//            Mod::app()->session['member_id']=$member_id;
+//
+//            Mod::app()->memcache->set('thisopenid' ,$member_id.'-001');
+//
+//        }
+//        else{
+//            $returnCode['message'] = '非法请求';
+//        }
+//
+//        echo json_encode($returnCode);
+//    }
 
 
 
@@ -430,72 +430,72 @@ class MemberController extends FrontController {
     /**
      * 商城用户登录
      */
-    public function actionB2cLogin(){
-        $name = trim(Tool::getValidParam('name','string'));
-        $pass = trim(Tool::getValidParam('pass','string'));
-
-//        $appid = Tool::getValidParam('appid','string');
-//        $appsecret = Tool::getValidParam('appsecret','string');
-//        $project_info = Project::model()->findByAttributes(array('appid'=>$appid,'appsecret'=>$appsecret));
-
-        $access_token = Tool::getValidParam('access_token','string');
-        $project_info = Jkcms::getProjectByAccesstoken($access_token);
-        
-        $returnCode = array('result'=>'','status'=>0,'message'=>''); 
-//                http://m.hb.qq.com/api/member/B2cLogin?name=15997567510&pass=888888      
-        $member_info = Member::model()->find('name=:name',array(':name'=>$name));
-        $mem = array();
-        
-        //用户是否存在
-        if($member_info && $member_info->name){  
-            $result = Tool::md5str($pass,$member_info->source);
-            if($result == $member_info->password &&  $member_info->password){
-                foreach($member_info as $k=>$val){
-                    $mem = $member_info->attributes;
-                }
-                if($project_info){
-                    $member_project_info = Member_project::model()->findByAttributes(array('pid'=>$project_info['id'],'openid'=>$member_info->id));
-                    if(!$member_project_info){
-                        $member_project_model = new Member_project();
-                        $member_project_model->mid = $member_info->id;
-                        $member_project_model->pid = $project_info['id'];
-                        $member_project_model->openid = $member_info->id;
-                        $member_project_model->createtime = time();
-                        //添加一条记录
-                        if($member_project_model->save()){
-                            $result = TRUE;
-                        }
-
-                    }
-                }
-                $member_info = $member_info->attributes;
-                $mem_project=array();
-                $mem_project['openid'] = $mem['id'];
-                $mem_project['pid'] = $project_info['id']; //积分商城的appid
-                $mem_project['mid'] = $mem['id'];
-
-
-//                Mod::app()->session['member'] = $mem;
-//                Mod::app()->session['member_project'] = $mem_project;
-
-                $returnCode['status'] = 1;
-                $returnCode['message'] = '登录成功';
-                $returnCode['result'] = $mem;
-                $returnCode['result_project'] = $mem_project;
-
-            }
-            else{
-                $returnCode['status'] = 0;
-                $returnCode['message'] = '密码错误';                
-            }
-        }
-        else{
-             $returnCode['status'] = -1;
-             $returnCode['message'] = '用户名错误';
-        }      
-      
-        echo json_encode($returnCode);
-    }
+//    public function actionB2cLogin(){
+//        $name = trim(Tool::getValidParam('name','string'));
+//        $pass = trim(Tool::getValidParam('pass','string'));
+//
+////        $appid = Tool::getValidParam('appid','string');
+////        $appsecret = Tool::getValidParam('appsecret','string');
+////        $project_info = Project::model()->findByAttributes(array('appid'=>$appid,'appsecret'=>$appsecret));
+//
+//        $access_token = Tool::getValidParam('access_token','string');
+//        $project_info = Jkcms::getProjectByAccesstoken($access_token);
+//        
+//        $returnCode = array('result'=>'','status'=>0,'message'=>''); 
+////                http://m.hb.qq.com/api/member/B2cLogin?name=15997567510&pass=888888      
+//        $member_info = Member::model()->find('name=:name',array(':name'=>$name));
+//        $mem = array();
+//        
+//        //用户是否存在
+//        if($member_info && $member_info->name){  
+//            $result = Tool::md5str($pass,$member_info->source);
+//            if($result == $member_info->password &&  $member_info->password){
+//                foreach($member_info as $k=>$val){
+//                    $mem = $member_info->attributes;
+//                }
+//                if($project_info){
+//                    $member_project_info = Member_project::model()->findByAttributes(array('pid'=>$project_info['id'],'openid'=>$member_info->id));
+//                    if(!$member_project_info){
+//                        $member_project_model = new Member_project();
+//                        $member_project_model->mid = $member_info->id;
+//                        $member_project_model->pid = $project_info['id'];
+//                        $member_project_model->openid = $member_info->id;
+//                        $member_project_model->createtime = time();
+//                        //添加一条记录
+//                        if($member_project_model->save()){
+//                            $result = TRUE;
+//                        }
+//
+//                    }
+//                }
+//                $member_info = $member_info->attributes;
+//                $mem_project=array();
+//                $mem_project['openid'] = $mem['id'];
+//                $mem_project['pid'] = $project_info['id']; //积分商城的appid
+//                $mem_project['mid'] = $mem['id'];
+//
+//
+////                Mod::app()->session['member'] = $mem;
+////                Mod::app()->session['member_project'] = $mem_project;
+//
+//                $returnCode['status'] = 1;
+//                $returnCode['message'] = '登录成功';
+//                $returnCode['result'] = $mem;
+//                $returnCode['result_project'] = $mem_project;
+//
+//            }
+//            else{
+//                $returnCode['status'] = 0;
+//                $returnCode['message'] = '密码错误';                
+//            }
+//        }
+//        else{
+//             $returnCode['status'] = -1;
+//             $returnCode['message'] = '用户名错误';
+//        }      
+//      
+//        echo json_encode($returnCode);
+//    }
 
     /**
      * 商城用户登录

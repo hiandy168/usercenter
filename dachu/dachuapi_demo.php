@@ -9,9 +9,6 @@
    
   /*openid 为项目自身的用户标识*/
   //$dachu->openid   = 'testwen';
-   
-
-
 
 
 //   $redirect = $dachu->getMemberUrl();//获取会员中心URL
@@ -23,5 +20,13 @@
    
    
    /*开发登陆并回调*/
-    $dachu->loginSso();//获取自动登录URL
+   if(!$_GET['ticket']){
+   $url =  $dachu->loginSsourl();//获取自动登录URL
+    $dachu->redirect($url);die;
+   }else{
+  
+       $res  = $dachu->getinfobyticket($_GET['ticket']);
+       var_dump($res);
+       
+   }
 ?>  

@@ -561,19 +561,21 @@ class ProjectController extends FrontController {
         $config['pid'] = $pid;
 
         $project_model = Project::model()->findByPk($pid);
+
  
         //
         if($this->memberverify($project_model->mid)){
             $this->redirect('/project/prolist');
         }        //
-
+//        var_dump($project_model);die;
  
         if(Mod::app()->request->isPostRequest){
             $data = $_POST;
             //不能直接把数组给attributes  但是可以单独的给key赋值
-            foreach($project_model->attributes as $k=>$v){
-                isset($data[$k]) && $project_model->$k = Tool::getValidParam($k,'string');
-            }
+            $project_info = $project_model->attributes;
+             foreach($project_info as $k=>$v){
+                    isset($data[$k]) && $project_model->$k = $data[$k];
+                }
             $project_model->updatetime = time();
             if($project_model->save()){
                 echo json_encode(array('state'=>200,'mess'=>'修改成功!'));
@@ -706,99 +708,99 @@ class ProjectController extends FrontController {
  
  
     }
-    /**
-     * 刷新Appsecret和access_token
-     */
-    public function actionUpdateAppsecret(){
-        $pid = trim(Tool::getValidParam('pid','integer'));
-        //防止ID遍历
-        $projectinfo =  JkCms::getprojectByid($pid);
-        if($this->memberverify( $projectinfo['mid'] ) ){
-            $this->redirect(Mod::app()->request->getHostInfo());
-            exit;
-        }
-
-        $project_model = Project::model()->findByPk($pid);
- 
-        //生成新的appsecret
-        $mtime=explode(' ',microtime());
-        $startTime="$mtime[1]"."$mtime[0]";
-        $genStr = $startTime;
-        $appsecret = md5($genStr); // 16位MD5加密
- 
-        // 判断是否appkey是否已经存在
-        $project_model_app = Project::model()->find('appsecret ="'.$appsecret.'"' );
-        while ($project_model_app){
-            $appsecret = md5($genStr."1");
-            $appsecret = md5($genStr);
-            $project_model_app = Project::model()->find('appsecret ="'.$appsecret.'"' );
-        }
-        $data['appsecret']=$appsecret;
- 
- 
-        //开启事务
-        $transaction=Mod::app()->db->beginTransaction();
- 
-        try{
-            //不能直接把数组给attributes  但是可以单独的给key赋值
-            foreach($project_model->attributes as $k=>$v){
-                isset($data[$k]) && $project_model->$k = $data[$k];
-            }
-            $project_model->updatetime = time();
-            $project_model->save();
- 
-            //生成新的access_token
-            $expires_in = mt_rand(86400,100000);
-            $str = Tool::getrandtoken($project_model->attributes['id']);
-            Mod::app()->memcache->set($str,$project_model->attributes['id'],$expires_in-100);//通过access_token设置project_id;
-            Mod::app()->memcache->set('project_access_token_'.$project_model->attributes['id'],$str,$expires_in-100);//设置access_token
-            $returnCode['code'] = 200;
-            $returnCode['appsecret']=$appsecret;
-            $returnCode['access_token'] = $str;
-            $returnCode['expires_in'] = $expires_in;    //凭证有效时间，单位：秒
-            $transaction->commit();
-            echo json_encode($returnCode);
-        }catch(Exception $e){ //如果有一条查询失败，则会抛出异常
-            $transaction->rollBack();
-            echo json_encode(array('state' => -1, 'mess' => '刷新失败'));
-        }
- 
- 
-    }
-    /*
-        修改微信自定义链接
-    */
-    public function actionUpdateWecharurl(){
-        $pid = trim(Tool::getValidParam('pid','integer'));
-        $wechaturl = trim(Tool::getValidParam('wechaturl','string'));
-        $wx_appsecret = trim(Tool::getValidParam('wx_appsecret','string'));
-        $wx_appid = trim(Tool::getValidParam('wx_appid','string'));
-        //防止ID遍历
-        $projectinfo =  JkCms::getprojectByid($pid);
-        if($this->memberverify( $projectinfo['mid'] )){
-            $this->redirect(Mod::app()->request->getHostInfo());
-            exit;
-        }
- 
-        $project_model = Project::model()->findByPk($pid);
- 
-        $transaction=Mod::app()->db->beginTransaction();
- 
-        try{
-            $project_model->wx_appid = $wx_appid;
-            $project_model->wx_appsecret = $wx_appsecret;
- 
-//            $project_model->wechat_url = $wechaturl;
-            $project_model->updatetime = time();
-            $project_model->save();
-            $transaction->commit();
-            echo json_encode(array('code' => 200, 'mess' => '更新成功'));
-        }catch(Exception $e){ //如果有一条查询失败，则会抛出异常
-            $transaction->rollBack();
-            echo json_encode(array('state' => -1, 'mess' => '刷新失败'));
-        }
- 
-    }
+//    /**
+//     * 刷新Appsecret和access_token
+//     */
+//    public function actionUpdateAppsecret(){
+//        $pid = trim(Tool::getValidParam('pid','integer'));
+//        //防止ID遍历
+//        $projectinfo =  JkCms::getprojectByid($pid);
+//        if($this->memberverify( $projectinfo['mid'] ) ){
+//            $this->redirect(Mod::app()->request->getHostInfo());
+//            exit;
+//        }
+//
+//        $project_model = Project::model()->findByPk($pid);
+// 
+//        //生成新的appsecret
+//        $mtime=explode(' ',microtime());
+//        $startTime="$mtime[1]"."$mtime[0]";
+//        $genStr = $startTime;
+//        $appsecret = md5($genStr); // 16位MD5加密
+// 
+//        // 判断是否appkey是否已经存在
+//        $project_model_app = Project::model()->find('appsecret ="'.$appsecret.'"' );
+//        while ($project_model_app){
+//            $appsecret = md5($genStr."1");
+//            $appsecret = md5($genStr);
+//            $project_model_app = Project::model()->find('appsecret ="'.$appsecret.'"' );
+//        }
+//        $data['appsecret']=$appsecret;
+// 
+// 
+//        //开启事务
+//        $transaction=Mod::app()->db->beginTransaction();
+// 
+//        try{
+//            //不能直接把数组给attributes  但是可以单独的给key赋值
+//            foreach($project_model->attributes as $k=>$v){
+//                isset($data[$k]) && $project_model->$k = $data[$k];
+//            }
+//            $project_model->updatetime = time();
+//            $project_model->save();
+// 
+//            //生成新的access_token
+//            $expires_in = mt_rand(86400,100000);
+//            $str = Tool::getrandtoken($project_model->attributes['id']);
+//            Mod::app()->memcache->set($str,$project_model->attributes['id'],$expires_in-100);//通过access_token设置project_id;
+//            Mod::app()->memcache->set('project_access_token_'.$project_model->attributes['id'],$str,$expires_in-100);//设置access_token
+//            $returnCode['code'] = 200;
+//            $returnCode['appsecret']=$appsecret;
+//            $returnCode['access_token'] = $str;
+//            $returnCode['expires_in'] = $expires_in;    //凭证有效时间，单位：秒
+//            $transaction->commit();
+//            echo json_encode($returnCode);
+//        }catch(Exception $e){ //如果有一条查询失败，则会抛出异常
+//            $transaction->rollBack();
+//            echo json_encode(array('state' => -1, 'mess' => '刷新失败'));
+//        }
+// 
+// 
+//    }
+//    /*
+//        修改微信自定义链接
+//    */
+//    public function actionUpdateWecharurl(){
+//        $pid = trim(Tool::getValidParam('pid','integer'));
+//        $wechaturl = trim(Tool::getValidParam('wechaturl','string'));
+//        $wx_appsecret = trim(Tool::getValidParam('wx_appsecret','string'));
+//        $wx_appid = trim(Tool::getValidParam('wx_appid','string'));
+//        //防止ID遍历
+//        $projectinfo =  JkCms::getprojectByid($pid);
+//        if($this->memberverify( $projectinfo['mid'] )){
+//            $this->redirect(Mod::app()->request->getHostInfo());
+//            exit;
+//        }
+// 
+//        $project_model = Project::model()->findByPk($pid);
+// 
+//        $transaction=Mod::app()->db->beginTransaction();
+// 
+//        try{
+//            $project_model->wx_appid = $wx_appid;
+//            $project_model->wx_appsecret = $wx_appsecret;
+// 
+////            $project_model->wechat_url = $wechaturl;
+//            $project_model->updatetime = time();
+//            $project_model->save();
+//            $transaction->commit();
+//            echo json_encode(array('code' => 200, 'mess' => '更新成功'));
+//        }catch(Exception $e){ //如果有一条查询失败，则会抛出异常
+//            $transaction->rollBack();
+//            echo json_encode(array('state' => -1, 'mess' => '刷新失败'));
+//        }
+// 
+//    }
  
     public function actionActivityall(){
         $pid = trim(Tool::getValidParam('pid','integer'));

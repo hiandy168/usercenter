@@ -89,7 +89,6 @@ class Browse
     /*
      *  增加活动浏览量独立访问量
      */
-
     public static function  add_activity_browse($pid=0,$aid=0,$model=''){
             if(empty($pid)){
                 return false;

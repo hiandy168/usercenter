@@ -121,7 +121,7 @@
         <div class="fr ad-login">
             <ul>
                 <li><a class="linear" id="loginshow">登录</a></li>
-                <li><a class="linear ad-regbtn" href="<?php echo $this->createUrl('/member/regone'); ?>">注册</a></li>
+                <!--<li><a class="linear ad-regbtn" href="<?php /*echo $this->createUrl('/member/regone'); */?>">注册</a></li>-->
             </ul>
         </div>
         <?php }else{ ?>

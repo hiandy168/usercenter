@@ -118,7 +118,7 @@
 <!--                </li>-->
 
                 <li class="e2"><span></span>
-                    <em><input type="button" class="linear adbtn" name="" value="保存修改" onclick="update_wecharurl('<?php echo $view['id'];?>')">
+                    <em><input type="button" class="linear adbtn" name="" value="保存修改" onclick="doupdate('<?php echo $view['id'];?>')">
 
                     </em>
 
@@ -157,14 +157,15 @@
         }
     }
 
-    function update_wecharurl(pid){
+    function doupdate(id){
         url = $("#wechat_url").val();
         var wx_appid = $('#wx_appid').val();
         var wx_appsecret = $('#wx_appsecret').val();
+        var callback = $('#callback').val();
 
         $.ajax({
-            url:'<?php echo $this->createUrl("/project/UpdateWecharurl");?>',
-            data:{pid:pid,wechaturl:url,wx_appsecret:wx_appsecret,wx_appid:wx_appid},
+            url:'<?php echo $this->createUrl("/project/setting");?>',
+            data:{id:id,wechaturl:url,wx_appsecret:wx_appsecret,wx_appid:wx_appid,callback:callback},
             dataType:'json',
             type:'post',
             success : function (data) {
@@ -179,26 +180,4 @@
         });
     }
 
-    function updateapp_ser(pid){
-        $.ajax({
-            url:'<?php echo $this->createUrl("/project/UpdateAppsecret");?>',
-            data:{pid:pid},
-            dataType:'json',
-            type:'post',
-            beforeSend: function(){  //防止重复提交数据
-                $('.button').attr('onclick','javascript:void(0)');
-            },
-            success : function (data) {
-                if (data.code == 200) {
-                    alert("刷新成功");
-                    location.reload();
-
-                } else {
-                    alert(data.mess);
-                    location.reload();
-
-                }
-            }
-        });
-    }
 </script>

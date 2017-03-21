@@ -27,7 +27,9 @@
 <div class="op-login-div" style="padding: 20px 40px; ">
     <!-- <i class="close" id="loginhide"><img src="<?php echo $this->_theme_url; ?>assets/index/images/login-close.png"></i> -->
     <form id="op-login-div" action="<?php echo $this->createUrl('/sso/service/login'); ?>" method="post">
-
+        <input type="hidden" id="appid"  name="appid" value="<?php echo isset($_REQUEST['appid'])?$_REQUEST['appid']:''?>">
+        <input type="hidden" id="sign"  name="sign" value="<?php echo isset($_REQUEST['sign'])?$_REQUEST['sign']:''?>">
+        <input type="hidden" id="timestamp"  name="timestamp" value="<?php echo isset($_REQUEST['timestamp'])?$_REQUEST['timestamp']:''?>">
         <div class="op-login-tit">
             <img src="<?php echo $this->_siteUrl; ?>/assets/index/images/login-div-txt.png"/>
         </div>
@@ -174,7 +176,7 @@
 
             //用 sumbit  提交
 
-            $("#op-login-div").submit()
+            $("#op-login-div").submit();
         }
     }
 </script>

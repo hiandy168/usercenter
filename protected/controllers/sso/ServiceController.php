@@ -50,15 +50,13 @@ class ServiceController extends FrontController
     public function actionLogout()
     {
 
-        //header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
-        list($ret, $body) = $this->serverCmd('logout');
-
-//                setcookie('session_token', '');
-
-        $cookie = Yii::app()->request->getCookies();
-        unset($cookie['session_token']);
-        echo $body;
-
+        header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
+        unset(Mod::app()->session['member']);
+        Mod::app()->session->clear();
+        Mod::app()->session->destroy();
+        
+        $callback =  Tool::getValidParam('callback', 'string',$this->_siteUrl);
+        header( "Location:" . $callback);
     }
 
     /*
@@ -66,7 +64,7 @@ class ServiceController extends FrontController
      * 通过账号密码或者验证码登录
      * */
     public function actionLogin(){
-
+ 
         $appid =  Tool::getValidParam('appid', 'string');
         $sign =  Tool::getValidParam('sign', 'string');
         $timestamp =  Tool::getValidParam('timestamp', 'string');
@@ -129,7 +127,6 @@ class ServiceController extends FrontController
             $login_model->password = "";
             //不能直接把数组给attributes  但是可以单独的给key赋值
             $member = $login_model->login();
-
             $array['phone']=$data['username'];
             $array['name']=$this->project['name']."接入用户";
 
@@ -191,16 +188,18 @@ class ServiceController extends FrontController
      * */
     public function actionCallsetticket(){
         //如果登录成功之后  session 应该是有值的
-         $mid= $this->member['id'];
+        $mid= $this->member['id'];
         if(!$mid){
             echo 'state: 0, message: 登录失败，请重试！';
             exit;
         }
-       $ticket= self::getTicket($mid);//生成ticket 并加密
+       
        $this->project =   Mod::app()->session['ssoproject'];
         if($this->project){
             Mod::app()->session['ssoproject'] =  $this->project = Project::model()->findByPk($this->project['id'])->attributes;
         }
+        
+       $ticket= self::getTicket($mid);//生成ticket 并加密
         
         
        if($this->project['callback']){
@@ -250,6 +249,7 @@ class ServiceController extends FrontController
      * 接收 ticket返回对应的用户信息
      * */
     public function actionGetinfo(){
+
        
         $ticket = Tool::getValidParam("ticket", "string");
         $appid =  Tool::getValidParam('appid', 'string');
@@ -287,10 +287,9 @@ class ServiceController extends FrontController
 
         if ($ticket) {
             //解密字符串
-             $ticketstring = $this->secret_string($ticket);
+            $ticketstring =AESMcrypt::decrypt($ticket);
             //验证是否解密成功
             $ticketarray = explode('-', $ticketstring);
-            var_dump($ticketarray);
             $str=md5('session' . $this->key . $appid . $this->project['appsecret']);
             if ($ticketarray[0] == "SSO") {
                 if($ticketarray[4]==$str){
@@ -337,28 +336,13 @@ class ServiceController extends FrontController
         $str="SSO-{$this->getIp()}-{$uid}-{$time}-" . md5('session' . $this->key . $this->project['appid'] . $this->project['secret']);
         //如果为真进行加密处理
         if($key){
-            $str=$this->string_secret($str);
+        
+            $str = AESMcrypt::encrypt($str);
         }
 
         return $str;
     }
-    
-//    protected function AttachChecksum($agentid, $token,$ip=""){
-//     
-//        //验证broker
-//        $sql = 'select * from {{sso_broker}} where agentid = ' . $agentid;
-//        $info = Mod::app()->db->createCommand($sql)->queryRow();
-//
-//        if ($info) {
-//            $secret = $info['secret'];
-//        } else {
-//            return null;
-//        }
-//
-//        $ip=$ip?$ip:$_SERVER['REMOTE_ADDR'];
-//        return md5('attach' . $token . $ip . $secret);
-//    }
-//    
+  
 
     /**
      * 获取错误信息
@@ -370,73 +354,9 @@ class ServiceController extends FrontController
     }
 
 
-    /*
-     * 对称加密字符串
-     * */
+   
 
-    public function string_secret($string)
-    {
-        $key = $this->key;
-
-        //密锁串，不能出现重复字符，内有A-Z,a-z,0-9,/,=,+,_,
-        $lockstream = 'st=lDEFABCNOPyzghi_jQRST-UwxkVWXYZabcdef+IJK6/7nopqr89LMmGH012345uv';
-        //随机找一个数字，并从密锁串中找到一个密锁值
-        $lockLen = strlen($lockstream);
-        $lockCount = rand(0, $lockLen - 1);
-        $randomLock = $lockstream[$lockCount];
-        //结合随机密锁值生成MD5后的密码
-        $password = md5($key . $randomLock);
-        //开始对字符串加密
-        $txtStream = base64_encode($string);
-        $tmpStream = '';
-        $i = 0;
-        $j = 0;
-        $k = 0;
-        for ($i = 0; $i < strlen($txtStream); $i++) {
-            $k = ($k == strlen($password)) ? 0 : $k;
-            $j = (strpos($lockstream, $txtStream[$i]) + $lockCount + ord($password[$k])) % ($lockLen);
-            $tmpStream .= $lockstream[$j];
-            $k++;
-        }
-        return $tmpStream . $randomLock;
-    }
-
-    /*
-     * 解密字符串*/
-    public function secret_string($string)
-    {
-        $key = $this->key;
-
-        //密锁串，不能出现重复字符，内有A-Z,a-z,0-9,/,=,+,_,
-        $lockstream = 'st=lDEFABCNOPyzghi_jQRST-UwxkVWXYZabcdef+IJK6/7nopqr89LMmGH012345uv';
-
-        $lockLen = strlen($lockstream);
-        //获得字符串长度
-        $txtLen = strlen($string);
-        //截取随机密锁值
-        $randomLock = $string[$txtLen - 1];
-        //获得随机密码值的位置
-        $lockCount = strpos($lockstream, $randomLock);
-        //结合随机密锁值生成MD5后的密码
-        $password = md5($key . $randomLock);
-        //开始对字符串解密
-        $txtStream = substr($string, 0, $txtLen - 1);
-        $tmpStream = '';
-        $i = 0;
-        $j = 0;
-        $k = 0;
-        for ($i = 0; $i < strlen($txtStream); $i++) {
-            $k = ($k == strlen($password)) ? 0 : $k;
-            $j = strpos($lockstream, $txtStream[$i]) - $lockCount - ord($password[$k]);
-            while ($j < 0) {
-                $j = $j + ($lockLen);
-            }
-            $tmpStream .= $lockstream[$j];
-            $k++;
-        }
-        return base64_decode($tmpStream);
-    }
-
+  
     public function getIp()
     {
         $ip = '0.0.0.0';

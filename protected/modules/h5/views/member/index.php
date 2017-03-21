@@ -117,7 +117,7 @@
                 </a>
             </li>
             <li class="bb bt br">
-                <?php if (Mod::app()->session['app']['status'] == 0){ ?>
+                <?php if (!$this->member['id']){ ?>
                 <a href="/h5/member/login">
                     <?php }else{ ?>
                     <a href="<?php echo $jfshop; ?>">
@@ -186,8 +186,7 @@
     <div class="u-bot">
         <ul>
             <li class="bb bt">
-                <?php if (Mod::app()->session['app']['status'] == 0){ ?>
-
+                <?php if (!$this->member['id']){ ?>
                 <a href="/h5/member/login">
                     <?php }else{ ?>
                     <a href="<?php echo $this->createUrl('/h5/member/activity' . $param) ?>">
@@ -208,7 +207,7 @@
 	    			</a>
 	    		</li>-->
             <li class="bb bt">
-                <?php if (Mod::app()->session['app']['status'] == 0){ ?>
+                <?php if (!$this->member['id']){ ?>
                 <a href="/h5/member/login">
                     <?php }else{ ?>
                     <a href="/jfshop/b2c/wap/account/order_jflog.html">

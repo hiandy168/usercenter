@@ -9,7 +9,7 @@ class Dachu {
     public $appid = '';
     public $appsecret = '';
     public $openid = '';
-    public $host = 'http://m.dachuw.net';
+    public $host = 'https://m.tengchu.com';
 //    public $host = 'http://127.0.0.1/ucenter';
 
     public $access_token = "";
@@ -131,11 +131,18 @@ class Dachu {
      *获取访问凭证  拉取数据的时候用accesstolen
      */
     public function getAccessToken() {
-         $url = $this->host .'/api/token/get'.'?appid=' . $this->appid . '&appsecret=' . $this->appsecret.'&grant_type=client_credential';
-         $json=  self::http_get($url);
-         $json = json_decode($json, true);
-         $this->access_token = $json['access_token'];
-        return $json;
+        
+        $url = $this->host .'/api/token/get?';
+        $timestamp=time()*1000;
+        $params=array("appid"=>$this->appid,"appsecret"=>$this->appsecret,"timestamp"=>$timestamp,'grant_type'=>'client_credential');
+        $sign= self::sign($params);
+        $params['sign'] = $sign;
+        unset($params['appsecret']);
+       echo  $url = $url.http_build_query($params);
+        $json=  self::http_get($url);
+        $json = json_decode($json, true);
+        $this->access_token = $json['access_token'];
+        return $json;    
     }
     
     
@@ -175,7 +182,6 @@ class Dachu {
         return $url;
     }
 
-    
     /**
      * 检查openid和pid的绑定关系,是否有手机号
      * 
@@ -226,23 +232,23 @@ class Dachu {
     public function sendver($phone) {
         //用户中心需要实现该接口
           $url = $this->host .'/api/member/sendver'. '?openid=' . $this->openid . '&access_token=' . $this->access_token.'&phone='.$phone;
-         $json =  self::http_get('http://127.0.0.1/ucenter/api/member/sendver?openid=testwen&access_token=byWg9Y3PRwr8eNO1286244550&phone=15997567510');
+         $json =  self::http_get($url);
         return json_decode($json, true);
     }
 
-    /**
-     * 第三方授权登陆
-     *
-     * @param string $phone 手机号
-     * @param string $pass 密码
-     *
-     */
-    public function login() {
-        //用户中心需要实现该接口
-        $url = $this->host .'/api/member/login?openid=' . $this->openid . '&access_token=' . $this->access_token;
-        $json=  self::http_get($url);
-        return json_decode($json, true);
-    }
+//    /**
+//     * 第三方授权登陆
+//     *
+//     * @param string $phone 手机号
+//     * @param string $pass 密码
+//     *
+//     */
+//    public function login() {
+//        //用户中心需要实现该接口
+//        $url = $this->host .'/api/member/login?openid=' . $this->openid . '&access_token=' . $this->access_token;
+//        $json=  self::http_get($url);
+//        return json_decode($json, true);
+//    }
     
      /**
      * 开放授权登陆
@@ -250,7 +256,7 @@ class Dachu {
      * @param string sgin 签名
      *
      */
-    public function loginSso() {
+    public function loginSsourl() {
         $url = $this->host ."/sso/service/login?";
         $timestamp=time()*1000;
         $params=array("appid"=>$this->appid,"appsecret"=>$this->appsecret,"timestamp"=>$timestamp);
@@ -263,14 +269,34 @@ class Dachu {
     }
     
     
-    
-    
-    public function b2clogin($name,$pass){
-        //B2C商城登录接口
-        $url = $this->host .'/api/member/B2cLogin'. '?name='.$name.'&pass='.$pass;
+       /**
+     * 获取用户信息
+     *
+     * @param string ticket  用户签名信息
+     *
+     */
+    public function getinfobyticket($ticket){
+
+        $url = $this->host ."/sso/service/getinfo?";
+        $timestamp=time()*1000;
+        $params=array("appid"=>$this->appid,"appsecret"=>$this->appsecret,"timestamp"=>$timestamp,'ticket'=>$ticket);
+        $sign= self::sign($params);
+        $params['sign'] = $sign;
+        unset($params['appsecret']);
+        $url = $url.http_build_query($params);
         $json=  self::http_get($url);
         return json_decode($json, true);        
     }
+    
+    
+    
+    
+//    public function b2clogin($name,$pass){
+//        //B2C商城登录接口
+//        $url = $this->host .'/api/member/B2cLogin'. '?name='.$name.'&pass='.$pass;
+//        $json=  self::http_get($url);
+//        return json_decode($json, true);        
+//    }
     
     /**
      * 短信验证码验证

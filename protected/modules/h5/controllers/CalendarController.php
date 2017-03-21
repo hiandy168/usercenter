@@ -203,10 +203,10 @@ class CalendarController extends FrontController
         //  echo $sql;
         $list = Mod::app()->db->createCommand($sql)->queryAll();
         foreach ($list as $key => $values) {
-            if ($values['tablename'] == "" || $values['tablename'] == "null") {
+            if ($values['tablename'] == ""||$values['tablename'] == "computer" ||$values['tablename'] == "h5"|| $values['tablename'] == "null" || strpos($values['tablename'],"signup")|| strpos($values['tablename'],"computer")) {
                 unset($list[$key]);
             } else {
-                $sql = " SELECT * FROM {{" . $values['tablename'] . "}} WHERE id = " . $values['aid'];
+                $sql = " SELECT * FROM {{" . strtolower($values['tablename']) . "}} WHERE id = " . $values['aid'];
                 $res = Mod::app()->db->createCommand($sql)->queryRow();
 
                 //点击数
