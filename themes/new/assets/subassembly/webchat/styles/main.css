@@ -1,0 +1,82 @@
+* { -webkit-text-size-adjust: none; -moz-text-size-adjust: none; -ms-text-size-adjust: none; -webkit-tap-highlight-color: transparent; padding: 0; margin: 0; text-decoration: none; }
+*:not(input, textarea) { -webkit-touch-callout: inherit; -webkit-user-select: auto; }
+body { width: 100%; font-family: Hiragino Sans GB, Arial, Helvetica, "microsoft yahei", sans-serif; font-size: 14px; color: #000; -webkit-touch-callout: inherit; -webkit-user-select: auto; -webkit-box-align: stretch; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); -webkit-box-orient: vertical; background-color: #fff; color: #444444; }
+body, html { height: 100%; }
+a { text-decoration: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+a:hover { text-decoration: none; }
+img { vertical-align: middle; }
+button, input, select, textarea { font-size: 100%; margin: 0; padding: 0; outline: none; }
+textarea, input { resize: none; outline: none; -webkit-appearance: none; }
+ul, ol, li { list-style: none; }
+h1, h2, h3, h4, h5, h6, b { font-size: 100%; font-weight: normal; }
+em, i { font-style: normal; }
+::-webkit-scrollbar { width: 0; }
+::-webkit-scrollbar-thumb { width: 0; }
+.loading-div { position: absolute; z-index: 9999; top: 0; right: 0; bottom: 0; left: 0; display: block; text-align: center; background: #fff; }
+.loading-div span { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); }
+.loading-div span img { width: 30px; }
+.loading-div span i { font-size: 14px; display: block; margin-top: 5px; color: #45567d; }
+.div-main { position: relative; box-sizing: border-box; width: 100%; min-width: 320px; max-width: 750px; min-height: 100%; margin: 0 auto; background: -webkit-linear-gradient(30deg, #fff, #fff); }
+.fl { float: left; }
+.fr { float: right; }
+.db { display: block; }
+.tc { text-align: center; }
+.pos-r { position: relative; }
+.pos-a { position: absolute; }
+.clearfix:after, .clearfix:before { display: table; clear: both; content: ''; }
+.clearfix:after { clear: both; }
+.overplay { width: 100%; height: 100%; z-index: 10; position: fixed; background: #ccc; }
+.container { margin: 0px 20px 0 15px; margin-top: 2.5rem; }
+.border { border-bottom: 1px solid #f4f4f4; margin-bottom: 20px; }
+.user-bg { max-height: 10rem; width: 100%; overflow: hidden; min-height: 10rem; }
+.user-self { position: absolute; top: 7.6rem; right: 15px; }
+.like { }
+.like .i-like { color: #6495ED; margin-right: 5px; font-weight: bold; font-size: .48rem; }
+.comment { border-top: 1px solid #fff; }
+.reply { text-decoration: none; font-size: .48rem; color: #000; }
+.username {/* margin-top: 60px; */line-height: 3rem; }
+.username h1 { font-size: .68rem; color: #fff; }
+.left { float: left; }
+.user-icon { width: 3rem; height: 3rem; float: left; margin-left: 30px; padding: 5px; background-color: #ffffff; border: 1px solid #878787; }
+.user-icon img, .user-pic img, .user-content img { width: 100%; height: 100%; }
+.user-item { }
+.user-pic { width: 1.6rem; height: 1.6rem; float: left; }
+.user-content {margin-left: 2rem;padding: 0 0px 10px 10px;position: relative;}
+.user-content h2 { font-weight: bold; font-size: .48rem; color: #6495ED; }
+.user-content p { font-size: .5rem; }
+.spacing { margin-bottom: 10px; }
+.spacing-bottom { margin-bottom: .5rem; }
+.btn { width: 2.8rem; line-height: 1rem; text-align: center; display: inline-block; color: #fff; text-decoration: none; outline: none; font-size: .48rem; }
+.btn span { margin-right: 10px; font-size: .6rem; }
+.btn span:hover { color: cornflowerblue; }
+.btn-default {border: none;width: 1rem;height: 1rem;background: url(../images/sms.svg) no-repeat;position: absolute;right: 0px;bottom: 8px;outline: none;}
+.time { color: #ccc; font-size: .42rem; }
+.btn-left { border-right: 1px solid #000; }
+.commit { height: 1rem; padding: 2px 10px; background: #3d4e56; border-radius: 10px; position: absolute; bottom: 5px; right: 1.3rem; }
+.com-space { margin: 10px; }
+.hidden { display: none; }
+.comments { margin-left: 2rem; position: relative; }
+.top { margin: 0 0 20px 10px; padding: 5px 0; background: #F4F4F4; }
+.top p { margin: 10px; font-size: .48rem; position: relative; }
+.triangle { position: absolute; width: 0px; height: 0px; line-height: 0px; border-bottom: 8px solid #F4F4F4; border-left: 8px solid #fff; border-right: 8px solid #fff; left: 15px; top: -8px; }
+.top .user { font-size: .48rem; color: #6495ED; }
+.inset, .replybox { height: 2rem; background: #fff; position: fixed; right: 50%; z-index: 100; border: none; box-shadow: 2px 2px 5px #ccc inset; width: 90%; margin-right: -45%; }
+.inset input, .replybox input { outline: none; border: none; line-height: 1rem; font-size: .48rem; margin: .5rem; }
+.inset input:focus { border: none; }
+.replybox input:focus { border: none; }
+.icon-input { display: block; width: 1.2rem; height: 1.2rem; background: url(../images/11.png) no-repeat; float: left; opacity: 0.8; background-size: cover; margin: .4rem; }
+.input-button { float: right; background: #03A9F4; border: none; font-size: 18px; color: #fff; line-height: 2rem; padding: 0 20px; }
+.dh-black { color: #000000; }
+.like .user:last-child .dh-black { display: none; }
+.icon-heart-empty:before { content: "\f08a"; }
+.icon-comment-alt:before { content: "\f0e5"; }
+.icon-edit:before { content: "\f044"; }
+@font-face { font-family: 'FontAwesome'; src: url('../font/fontawesome-webfont.eot?v=3.2.1'); src: url('../font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('../font/fontawesome-webfont.woff?v=3.2.1') format('woff'), url('../font/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('../font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg'); font-weight: normal; font-style: normal; }
+[class^="icon-"], [class*=" icon-"] { font-family: FontAwesome; font-weight: normal; font-style: normal; text-decoration: inherit; -webkit-font-smoothing: antialiased; *margin-right: .3em; }
+[class^="icon-"]:before, [class*=" icon-"]:before { text-decoration: inherit; display: inline-block; speak: none; }
+a [class^="icon-"], a [class*=" icon-"] { display: inline; }
+.icon-large:before { vertical-align: -10%; font-size: 1.3333333333333333em; }
+
+/* increased font size for icon-large */
+[class^="icon-"].icon-fixed-width, [class*=" icon-"].icon-fixed-width { display: inline-block; width: 1.1428571428571428em; text-align: right; padding-right: 0.2857142857142857em; }
+[class^="icon-"].icon-fixed-width.icon-large, [class*=" icon-"].icon-fixed-width.icon-large { width: 1.4285714285714286em; }

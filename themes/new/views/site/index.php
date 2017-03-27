@@ -227,9 +227,9 @@
         <div class="p1-txt ">
             <h1 class="animate-delay200 animate-moveFromTopFade">大楚区域门户<em>云数据平台</em></h1>
             <h3 class="animate-delay700 animate-moveFromTopFade">一个用户中心,多个运营组件,配套积分体系!</h3>
-            <?php if(!$this->member){?>
-            <a href="<?php echo $this->createUrl('/member/regone'); ?>" class="linear animate-delay1000 animate-moveFromTopFade">立即注册</a>
-            <?php }?>
+           <!-- <?php /*if(!$this->member){*/?>
+            <a href="<?php /*echo $this->createUrl('/member/regone'); */?>" class="linear animate-delay1000 animate-moveFromTopFade">立即注册</a>
+            --><?php /*}*/?>
         </div>
     </div>
 
@@ -483,7 +483,7 @@
                 <div class="fr ad-app-footr">
                     <img src="<?php echo $this->_theme_url; ?>assets/images/ad-tel-icon.png" height="49" width="49" alt="">
                 <span>
-						<p>400-888-5555</p>
+						<p>027-86799988-473</p>
 						<em>电话（工作日  9:00-18:00）</em>
 					</span>
                 </div>

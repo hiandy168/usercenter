@@ -14,7 +14,7 @@
             <div class="fr ad-app-footr">
                 <img src="<?php echo $this->_theme_url; ?>assets/images/ad-tel-icon.png" height="49" width="49" alt="">
                 <span>
-                        <p>400-888-5555</p>
+                        <p>027-86799988-473</p>
                         <em>电话（工作日  9:00-18:00）</em>
                     </span>
             </div>
