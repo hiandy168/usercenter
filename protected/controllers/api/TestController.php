@@ -14,7 +14,7 @@ class TestController extends FrontController
     /*
      * 测试方法*/
    public function actionWebchat(){
-       
+
        $this->render('webchat');
    }
 }
